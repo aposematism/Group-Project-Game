@@ -18,7 +18,7 @@ public class Region {
 		setDefaultTile(d);
 		setWorldObjects(o);
 	}
-	
+
 	public ArrayList<WorldObject> getWorldObjects() {
 		return worldObjects;
 	}
@@ -48,7 +48,7 @@ public class Region {
 	 * @author J Woods
 	 *
 	 */
-	static enum Weather{
+	public static enum Weather{
 		SUNNY,
 		RAINY,
 		SNOWY,
