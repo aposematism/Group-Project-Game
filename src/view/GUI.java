@@ -32,9 +32,9 @@ import javafx.scene.paint.Color;
  * 
  */
 public class GUI extends Application {
-	
 	//window field
 	private Stage window;
+
 	
 	//main menu fields
 	private Scene mainMenu;
