@@ -1,7 +1,7 @@
 package entity;
 
-import graph.Node;
-import util.*;
+import util.Direction;
+import util.GridLocation;
 
 /**
  * NPC - Non Player Character - will be used for representing monsters and potentially other types of NPC
@@ -13,7 +13,7 @@ public class NPC extends Mob {
 
 	private Actions actions;
 
-	public NPC(Node spawnPos, int startingHealth, Direction direction){
+	public NPC(GridLocation spawnPos, int startingHealth, Direction direction){
 		super(spawnPos, startingHealth, direction);
 	}
 

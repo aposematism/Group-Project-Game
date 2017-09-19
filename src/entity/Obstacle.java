@@ -1,6 +1,6 @@
 package entity;
 
-import graph.Node;
+import util.GridLocation;
 
 /**
  * An object on the map that obstructs other entities from moving.
@@ -11,9 +11,9 @@ public class Obstacle implements Entity {
 
 	private Policy policy;
 
-	private Node position;
+	private GridLocation position;
 
-	public Obstacle(Node startingPos){
+	public Obstacle(GridLocation startingPos){
 		position = startingPos;
 	}
 
@@ -21,7 +21,7 @@ public class Obstacle implements Entity {
 		this.policy=actions;
 	}
 
-	public Node getPosition() {
+	public GridLocation getPosition() {
 		return position;
 	}
 

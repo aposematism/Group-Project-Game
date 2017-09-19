@@ -13,7 +13,7 @@ public class Region {
 	private Sprite defaultTile;	//default tile
 	private ArrayList<WorldObject> worldObjects;
 	
-	public Region(Weather w, Sprite d, ArrayList<WorldObject> o) {
+	public Region(Weather w, Sprite d, ArrayList<WorldObject> o, Grid grid) {
 		setWeather(w);
 		setDefaultTile(d);
 		setWorldObjects(o);
@@ -42,6 +42,7 @@ public class Region {
 	public void setWeather(Weather weather) {
 		this.weather = weather;
 	}
+
 
 	/**
 	 * Enumerations for weather in regions.
