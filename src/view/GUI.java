@@ -12,6 +12,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 import Exceptions.NotImplementedYetException;
@@ -32,7 +37,7 @@ import Exceptions.NotImplementedYetException;
  * -Make the menu pretty somehow
  * 
  */
-public class GUI extends Application implements Observer {
+public class GUI extends Application implements Observer, KeyListener, MouseListener{
 	//window field
 	private Stage window;
 
@@ -209,6 +214,7 @@ public class GUI extends Application implements Observer {
 		
 		/*add widgety stuff to change settings TODO*/
 		
+		
 		return layout;
 	}
 	
@@ -273,6 +279,67 @@ public class GUI extends Application implements Observer {
 		// TODO Auto-generated method stub
 		throw new NotImplementedYetException();
 		/*This should update all of the GUI components, namely the world graphics and HUD.*/
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		switch(arg0.getKeyCode()) {
+		case KeyEvent.VK_P:
+			/*if the game is running, add the pause menu to the main scene*/
+			throw new NotImplementedYetException();
+		}
+		
 	}
 
 }
