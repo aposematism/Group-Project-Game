@@ -1,9 +1,13 @@
 package entity;
 
 import graph.Node;
+import util.*;
 
 /**
- * Created by metcalmark on 19/09/17.
+ * NPC - Non Player Character - will be used for representing monsters and potentially other types of NPC
+ * Uses strategy pattern for deciding its actions.
+ *
+ * Created by Mark on 19/09/17.
  */
 public class NPC extends Mob {
 

@@ -1,9 +1,13 @@
 package entity;
 
 import graph.Node;
+import util.*;
 
 /**
- * Created by metcalmark on 19/09/17.
+ * Provides the basic implementation of functions that both Player and NPC would use,
+ * notably for changing their health values and changing where they are in the game world.
+ *
+ * Created by Mark on 19/09/17.
  */
 public abstract class Mob implements Entity {
 
