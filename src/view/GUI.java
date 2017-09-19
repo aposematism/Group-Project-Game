@@ -6,14 +6,15 @@ import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.text.*;
 import javafx.scene.*;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import java.util.Observable;
+import java.util.Observer;
+import Exceptions.NotImplementedYetException;
 
 /**
  * This is the main, top-level, wrapper class for the GUI, and for now also the main
@@ -31,7 +32,7 @@ import javafx.scene.paint.Color;
  * -Make the menu pretty somehow
  * 
  */
-public class GUI extends Application {
+public class GUI extends Application implements Observer {
 	//window field
 	private Stage window;
 
@@ -43,10 +44,11 @@ public class GUI extends Application {
 	private GridPane newGameMenu;
 	private GridPane loadGameMenu;
 	private GridPane quitMenu;
+	private Group HUD;
 	
 	//main game UI fields
 	private Scene gameUI;
-	private model.GameModel game;
+	//TODO add in the game model
 	
 	
 	public static void main (String[] args) {
@@ -175,8 +177,7 @@ public class GUI extends Application {
 		Button play = new Button("Play");
 		play.setPrefSize(100, 20);
 		play.setOnAction(e->{
-			game = new model.GameModel();
-			game.testRegion();
+			//TODO initialize the game
 			gameUI = initGameGUI();
 			window.setScene(gameUI);
 		});
@@ -251,22 +252,27 @@ public class GUI extends Application {
 	 * Initializes the game GUI.
 	 */
 	private Scene initGameGUI() {
-		Group root = new Group();
-		Scene s = new Scene(root, 1000, 650, Color.BLACK);
-
-		final Canvas canvas = new Canvas(1000,650);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		 
-		/*paint the region to the canvas TODO this needs to be in a separate method*/
-		for(int x = 0; x < 1000; x+=64) {
-			for(int y = 0; y < 650; y+=64) {
-				gc.drawImage(game.currentRegion.getDefaultTile().getImage(), x, y);
-			}
-		}
-		 
-		root.getChildren().add(canvas);
+		/*TODO implement the graphics library here*/
+		BorderPane pane = new BorderPane();	//TODO we may want to switch this for prettier GUI
+		Scene s = new Scene(pane, 1000, 650, Color.BLACK);
 		//create new scene
 		return s;
+	}
+	
+	/**
+	 * initializes the HUD.
+	 */
+	private Group initHUD() {
+		//TODO implement this
+		throw new NotImplementedYetException();
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		throw new NotImplementedYetException();
+		/*This should update all of the GUI components, namely the world graphics and HUD.*/
 	}
 
 }
