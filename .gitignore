@@ -1,2 +1,26 @@
-/bin/
+# Java Stuff
 *.class
+
+# BlueJ Stuff
+*.bluej
+*.ctxt
+
+# Eclipse Stuff
+*.classpath
+*.project
+/bin/
+/.classpath
+/.project
+/.settings/
+
+# IntelliJ Stuff
+.idea
+*.iws
+*.properties
+*.iml
+*.xml
+/out/
+/build/
+
+# Gradle
+/.gradle/
