@@ -19,7 +19,7 @@ public class Sprite {
 
     //TODO: will be final, initialized in one of the constructors, all
     //sprites must be part of a grid.
-    protected Grid grid;
+    Grid grid;
 
     /**
      * Creates sprite in centre of given cell of the given Grid object,
