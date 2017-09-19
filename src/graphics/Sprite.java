@@ -12,7 +12,7 @@ import util.GridLocation;
  * This will store data and provide public methods to facilitate drawing objects on the screen.
  * Created by weirjosh on 19/09/17.
  */
-public abstract class Sprite {
+public class Sprite {
     protected Point position;
     protected Image image;
     protected BoundingBox boundingBox;
