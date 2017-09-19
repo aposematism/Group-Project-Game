@@ -1,6 +1,6 @@
 package entity;
 
-import graph.Node;
+import util.GridLocation;
 
 /**
  * Overarching interface that defines all entities found in the game world.
@@ -9,5 +9,5 @@ import graph.Node;
  */
 public interface Entity {
 	void interact(Player player);
-	Node getPosition();
+	GridLocation getPosition();
 }

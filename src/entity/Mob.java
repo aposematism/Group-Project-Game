@@ -1,7 +1,7 @@
 package entity;
 
-import graph.Node;
-import util.*;
+import util.Direction;
+import util.GridLocation;
 
 /**
  * Provides the basic implementation of functions that both Player and NPC would use,
@@ -10,14 +10,22 @@ import util.*;
  * Created by Mark on 19/09/17.
  */
 public abstract class Mob implements Entity {
+	/**
+	 * A full health value.
+	 */
+	public static final int FULL_HEALTH = 100;
+	/**
+	 * An empty health value.
+	 */
+	public static final int NO_HEALTH = 0;
 
 	private final int startingHealth;
 	private int health;
 
-	private Node position;
+	private GridLocation position;
 	private Direction direction;
 
-	public Mob(Node spawnPos, int startingHealth, Direction direction){
+	public Mob(GridLocation spawnPos, int startingHealth, Direction direction){
 		this.position = spawnPos;
 		this.startingHealth = startingHealth;
 		this.health = startingHealth;
@@ -28,7 +36,7 @@ public abstract class Mob implements Entity {
 		//TODO
 	}
 
-	public Node getPosition(){
+	public GridLocation getPosition(){
 		return position;
 	}
 

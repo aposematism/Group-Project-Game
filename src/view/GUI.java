@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import logic.GameLogic;
 import model.GameModel;
 
 /**
@@ -36,12 +37,14 @@ import model.GameModel;
  * 
  * -Add in subordinate menu functionality for new game, load game, and settings
  * -Make the menu pretty somehow
+ * -Setup a timer to call 'gameLogic.update()'
  * 
  */
 public class GUI extends Application implements Observer, KeyListener, MouseListener{
 	//window field
 	private Stage window;
 	private GameModel game;
+	private GameLogic gameLogic;
 
 	
 	//main menu fields
@@ -59,6 +62,7 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	
 	public GUI(GameModel game) {
 		this.game = game;
+		this.gameLogic = new GameLogic(game);
 	}
 	
 	public static void main (String[] args) {

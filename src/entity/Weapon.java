@@ -1,6 +1,6 @@
 package entity;
 
-import graph.Node;
+import util.GridLocation;
 
 /**
  * Created by Mark on 19/09/2017.
@@ -11,7 +11,7 @@ public class Weapon extends Item {
 
 	private Actions actions;
 
-	public Weapon(Player player, Node spawnPos, double strength){
+	public Weapon(Player player, GridLocation spawnPos, double strength){
 		super(player, spawnPos);
 		this.STRENGTH = strength;
 	}

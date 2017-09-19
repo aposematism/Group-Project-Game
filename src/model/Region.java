@@ -12,11 +12,13 @@ public class Region {
 	private Weather weather;
 	private Sprite defaultTile;	//default tile
 	private ArrayList<WorldObject> worldObjects;
+	private Grid grid;
 	
-	public Region(Weather w, Sprite d, ArrayList<WorldObject> o) {
+	public Region(Weather w, Sprite d, ArrayList<WorldObject> o, Grid grid) {
 		setWeather(w);
 		setDefaultTile(d);
 		setWorldObjects(o);
+		this.grid = grid;
 	}
 	
 	public ArrayList<WorldObject> getWorldObjects() {
@@ -41,6 +43,10 @@ public class Region {
 
 	public void setWeather(Weather weather) {
 		this.weather = weather;
+	}
+	
+	public Grid getGrid() {
+		return this.grid;
 	}
 
 	/**
