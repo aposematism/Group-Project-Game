@@ -1,6 +1,6 @@
 package entity;
 
-import graph.Node;
+import util.GridLocation;
 
 /**
  * Item - can be picked up by the player and stored in their inventory,
@@ -11,11 +11,11 @@ import graph.Node;
 public class Item implements Entity {
 
 	private Player player;
-	private Node position;
+	private GridLocation position;
 
 	private Actions actions;
 
-	public Item(Player player, Node spawnPos){
+	public Item(Player player, GridLocation spawnPos){
 		this.player = player;
 		this.position = spawnPos;
 	}
@@ -41,7 +41,7 @@ public class Item implements Entity {
 		return false;
 	}
 
-	public Node getPosition() {
+	public GridLocation getPosition() {
 		return position;
 	}
 

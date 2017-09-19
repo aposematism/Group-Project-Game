@@ -1,6 +1,6 @@
 package entity;
 
-import graph.Node;
+import util.GridLocation;
 
 /**
  * Special Item that is designed to fit in the armour slots in player
@@ -22,7 +22,7 @@ public class Armour extends Item {
 
 	private final double RATING;
 
-	public Armour(Player player, Node spawnPos, TYPE type, double rating){
+	public Armour(Player player, GridLocation spawnPos, TYPE type, double rating){
 		super(player, spawnPos);
 		SLOT = type;
 		RATING = rating;

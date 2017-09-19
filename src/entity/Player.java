@@ -1,8 +1,11 @@
 package entity;
 
-import graph.Node;
-import util.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import util.Direction;
+import util.GridLocation;
 
 /**
  *
@@ -17,9 +20,13 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(Node spawnPos, int startingHealth, Direction direction){
+	public Player(GridLocation spawnPos, int startingHealth, Direction direction){
 		super(spawnPos, startingHealth, direction);
 		inventory = new ArrayList<>();
+	}
+	
+	public Player(GridLocation spawnPos, Direction direction) {
+		this(spawnPos, FULL_HEALTH, direction);
 	}
 
 	public void addItem(Item item){
