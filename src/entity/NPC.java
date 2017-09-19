@@ -7,30 +7,34 @@ import graph.Node;
  */
 public class NPC extends Mob {
 
-	private Type strategy;
+	private Actions actions;
 
-	public NPC(Node spawnPos, int startingHealth, FacingDirection direction){
+	public NPC(Node spawnPos, int startingHealth, Direction direction){
 		super(spawnPos, startingHealth, direction);
 	}
 
+	public void setActions(Actions actions){
+		this.actions = actions;
+	}
+
 	public void move(){
-		strategy.move(this);
+		actions.move(this);
 	}
 
 	public void attack(){
-		strategy.attack(this);
+		actions.attack(this);
 	}
 
 	public void die(){
-		strategy.die(this);
+		actions.die(this);
 	}
 
 	@Override
 	public void interact(Player player) {
-		strategy.receiveAttack(this);
+		actions.receiveAttack(this);
 	}
 
-	interface Type {
+	interface Actions {
 		void move(NPC npc);
 		void attack(NPC npc);
 		void receiveAttack(NPC npc);

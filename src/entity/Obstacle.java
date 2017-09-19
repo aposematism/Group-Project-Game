@@ -3,11 +3,13 @@ package entity;
 import graph.Node;
 
 /**
+ * An object on the map that obstructs other entities from moving.
+ *
  * Created by Mark on 19/09/2017.
  */
 public class Obstacle implements Entity {
 
-	private Actions actions;
+	private Policy policy;
 
 	private Node position;
 
@@ -15,15 +17,19 @@ public class Obstacle implements Entity {
 		position = startingPos;
 	}
 
-	public void setActions(Actions actions){
-		this.actions=actions;
+	public void setActions(Policy actions){
+		this.policy=actions;
+	}
+
+	public Node getPosition() {
+		return position;
 	}
 
 	public void interact(Player player) {
-		actions.move(player,this);
+		policy.move(player,this);
 	}
 
-	interface Actions {
+	interface Policy {
 		void move(Player player, Obstacle obstacle);
 	}
 }

@@ -7,20 +7,13 @@ import graph.Node;
  */
 public abstract class Mob implements Entity {
 
-	enum FacingDirection {
-		LEFT,
-		UP,
-		RIGHT,
-		DOWN
-	}
-
 	private final int startingHealth;
 	private int health;
 
-	Node position;
-	FacingDirection direction;
+	private Node position;
+	private Direction direction;
 
-	public Mob(Node spawnPos, int startingHealth, FacingDirection direction){
+	public Mob(Node spawnPos, int startingHealth, Direction direction){
 		this.position = spawnPos;
 		this.startingHealth = startingHealth;
 		this.health = startingHealth;
@@ -31,27 +24,27 @@ public abstract class Mob implements Entity {
 		//TODO
 	}
 
-	Node getPosition(){
+	public Node getPosition(){
 		return position;
 	}
 
-	FacingDirection getDirection(){
+	public Direction getDirection(){
 		return direction;
 	}
 
-	void setDirection(FacingDirection direction){
+	public void setDirection(Direction direction){
 		this.direction=direction;
 	}
 
-	int getHealth(){
+	public int getHealth(){
 		return health;
 	}
 
-	void damage(int amount){
+	public void damage(int amount){
 		health = health-amount<0 ? 0 : health-amount;
 	}
 
-	void heal(int amount){
+	public void heal(int amount){
 		health = health+amount>startingHealth ? startingHealth : health+amount;
 	}
 }

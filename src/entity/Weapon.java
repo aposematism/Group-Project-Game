@@ -7,32 +7,28 @@ import graph.Node;
  */
 public class Weapon extends Item {
 
-	final double STRENGTH;
+	private final double STRENGTH;
 
-	private Action action;
+	private Actions actions;
 
 	public Weapon(Player player, Node spawnPos, double strength){
 		super(player, spawnPos);
 		this.STRENGTH = strength;
 	}
 
-	public void attack(){
-		action.attack(this);
+	public double getStrength(){
+		return STRENGTH;
 	}
 
-	interface Action {
+	public void attack(){
+		actions.attack(this);
+	}
+
+	interface Actions extends Item.Actions {
 		void attack(Weapon weapon);
 	}
 
-	public void setAction(Action newAction){
-		this.action=newAction;
-	}
-
-	void pickup() {
-		//TODO
-	}
-
-	void use() {
-		//TODO
+	public void setActions(Actions newActions){
+		this.actions=newActions;
 	}
 }

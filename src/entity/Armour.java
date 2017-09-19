@@ -31,12 +31,4 @@ public class Armour extends Item {
 	public double getRating() {
 		return RATING;
 	}
-
-	void pickup() {
-		//TODO
-	}
-
-	void use() {
-		//TODO
-	}
 }

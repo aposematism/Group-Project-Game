@@ -5,27 +5,49 @@ import graph.Node;
 /**
  * Created by metcalmark on 19/09/17.
  */
-public abstract class Item implements Entity {
+public class Item implements Entity {
 
-	Player player;
-	Node pos;
+	private Player player;
+	private Node position;
+
+	private Actions actions;
 
 	public Item(Player player, Node spawnPos){
 		this.player = player;
-		this.pos = spawnPos;
+		this.position = spawnPos;
 	}
 
 	public void interact(Player player) {
 		//TODO
 	}
 
-	boolean playerPossesses(){
+	public void setActions(Actions actions){
+		this.actions = actions;
+	}
+
+	public void pickup(){
+		actions.pickup(this);
+	}
+
+	public void use(){
+		actions.use(this);
+	}
+
+	public boolean playerPossesses(){
 		//TODO
 		return false;
 	}
 
-	abstract void pickup();
+	public Node getPosition() {
+		return position;
+	}
 
-	abstract void use();
+	public Player getPlayer(){
+		return player;
+	}
 
+	interface Actions {
+		void pickup(Item item);
+		void use(Item item);
+	}
 }

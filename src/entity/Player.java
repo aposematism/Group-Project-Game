@@ -15,8 +15,8 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(Node spawnPos, int startingHealth, FacingDirection facingDirection){
-		super(spawnPos, startingHealth, facingDirection);
+	public Player(Node spawnPos, int startingHealth, Direction direction){
+		super(spawnPos, startingHealth, direction);
 		inventory = new ArrayList<>();
 	}
 
@@ -48,4 +48,9 @@ public class Player extends Mob {
 		//TODO
 	}
 
+	/**
+	 * Doesn't do anything, can't interact with itself
+	 * @param player
+	 */
+	public void interact(Player player){}
 }
