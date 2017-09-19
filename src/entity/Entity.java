@@ -3,7 +3,7 @@ package entity;
 import graph.Node;
 
 /**
- * Skeleton Interface for the various Entity subclasses
+ * Overarching interface that defines all entities found in the game world.
  *
  * Created by Mark on 19/09/17.
  */

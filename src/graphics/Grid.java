@@ -12,7 +12,7 @@ import java.awt.*;
  among other things.
  * Created by weirjosh on 19/09/17.
  */
-public class Grid {
+public class Grid extends Canvas{
 
     //The canvas location (top right corner) of the grid.
     private Point location;

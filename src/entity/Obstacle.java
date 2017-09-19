@@ -26,10 +26,10 @@ public class Obstacle implements Entity {
 	}
 
 	public void interact(Player player) {
-		policy.move(player,this);
+		policy.interact(player,this);
 	}
 
 	interface Policy {
-		void move(Player player, Obstacle obstacle);
+		void interact(Player player, Obstacle obstacle);
 	}
 }

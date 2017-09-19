@@ -19,7 +19,7 @@ public class GameModel {
 		/*define weather*/
 		Region.Weather weather = Region.Weather.SUNNY;
 		/*define default tile to be drawn if no other tiles are present*/
-		Sprite defaultTile = new Sprite(new Image("file:resources/grass.png"));
+		Sprite defaultTile = new Sprite(new Image("file:res/grass.png"));
 		/*create world objects*/
 		ArrayList<WorldObject> worldObjects = new ArrayList<WorldObject>();
 		

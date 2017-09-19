@@ -3,7 +3,10 @@ package entity;
 import graph.Node;
 
 /**
- * Created by metcalmark on 19/09/17.
+ * Item - can be picked up by the player and stored in their inventory,
+ * and then can be interacted with. Its actions are defined in an actions interface.
+ *
+ * Created by Mark on 19/09/17.
  */
 public class Item implements Entity {
 
