@@ -2,6 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.GameModel;
 import view.GUI;
 
 /**
@@ -14,7 +15,9 @@ public class Main extends Application{
 	private static GUI gui;
 	
 	public static void main(String[] args) {
-		gui = new GUI();
+		GameModel game = new GameModel();
+
+		gui = new GUI(game);
 		gui.launch(args);
 	}
 
