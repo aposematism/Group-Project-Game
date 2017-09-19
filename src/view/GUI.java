@@ -12,6 +12,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 import Exceptions.NotImplementedYetException;
@@ -32,7 +37,7 @@ import Exceptions.NotImplementedYetException;
  * -Make the menu pretty somehow
  * 
  */
-public class GUI extends Application implements Observer {
+public class GUI extends Application implements Observer, KeyListener, MouseListener{
 	//window field
 	private Stage window;
 
@@ -44,10 +49,10 @@ public class GUI extends Application implements Observer {
 	private GridPane newGameMenu;
 	private GridPane loadGameMenu;
 	private GridPane quitMenu;
-	private Group HUD;
+	private HUD hud;
 	
 	//main game UI fields
-	private Scene gameUI;
+	private WorldGraphics worldGraphics;
 	//TODO add in the game model
 	
 	
@@ -178,8 +183,8 @@ public class GUI extends Application implements Observer {
 		play.setPrefSize(100, 20);
 		play.setOnAction(e->{
 			//TODO initialize the game
-			gameUI = initGameGUI();
-			window.setScene(gameUI);
+			worldGraphics = initGameGUI();
+			window.setScene(worldGraphics);
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -208,7 +213,11 @@ public class GUI extends Application implements Observer {
 		layout.getChildren().add(titleLabel);
 		
 		/*add widgety stuff to change settings TODO*/
-		
+		//here should be Jordan's loading methods integrated to a GUI
+		Button loadGame = new Button("Load Game");
+		loadGame.setOnAction(e->{throw new Exceptions.NotImplementedYetException();});
+		GridPane.setConstraints(loadGame, 0, 1);
+		layout.getChildren().add(loadGame);
 		return layout;
 	}
 	
@@ -251,12 +260,12 @@ public class GUI extends Application implements Observer {
 	/**
 	 * Initializes the game GUI.
 	 */
-	private Scene initGameGUI() {
+	private WorldGraphics initGameGUI() {
 		/*TODO implement the graphics library here*/
 		BorderPane pane = new BorderPane();	//TODO we may want to switch this for prettier GUI
-		Scene s = new Scene(pane, 1000, 650, Color.BLACK);
+		WorldGraphics w = new WorldGraphics();
 		//create new scene
-		return s;
+		return w;
 	}
 	
 	/**
@@ -271,8 +280,70 @@ public class GUI extends Application implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		throw new NotImplementedYetException();
 		/*This should update all of the GUI components, namely the world graphics and HUD.*/
+		worldGraphics.update();
+		hud.update();
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		switch(arg0.getKeyCode()) {
+		case KeyEvent.VK_P:
+			/*if the game is running, add the pause menu to the main scene*/
+			throw new NotImplementedYetException();
+		}
+		
 	}
 
 }
