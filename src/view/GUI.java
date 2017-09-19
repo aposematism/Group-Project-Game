@@ -1,25 +1,26 @@
 package view;
 
 
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.stage.Stage;
-import javafx.scene.text.*;
-import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
+
 import Exceptions.NotImplementedYetException;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import model.GameModel;
 
 /**
  * This is the main, top-level, wrapper class for the GUI, and for now also the main
@@ -40,6 +41,7 @@ import Exceptions.NotImplementedYetException;
 public class GUI extends Application implements Observer, KeyListener, MouseListener{
 	//window field
 	private Stage window;
+	private GameModel game;
 
 	
 	//main menu fields
@@ -55,6 +57,9 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	private WorldGraphics worldGraphics;
 	//TODO add in the game model
 	
+	public GUI(GameModel game) {
+		this.game = game;
+	}
 	
 	public static void main (String[] args) {
 		launch(args);
