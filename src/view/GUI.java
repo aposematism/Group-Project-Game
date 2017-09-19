@@ -49,10 +49,10 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	private GridPane newGameMenu;
 	private GridPane loadGameMenu;
 	private GridPane quitMenu;
-	private Group HUD;
+	private HUD hud;
 	
 	//main game UI fields
-	private Scene gameUI;
+	private WorldGraphics worldGraphics;
 	//TODO add in the game model
 	
 	
@@ -183,8 +183,8 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		play.setPrefSize(100, 20);
 		play.setOnAction(e->{
 			//TODO initialize the game
-			gameUI = initGameGUI();
-			window.setScene(gameUI);
+			worldGraphics = initGameGUI();
+			window.setScene(worldGraphics);
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -213,8 +213,11 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		layout.getChildren().add(titleLabel);
 		
 		/*add widgety stuff to change settings TODO*/
-		
-		
+		//here should be Jordan's loading methods integrated to a GUI
+		Button loadGame = new Button("Load Game");
+		loadGame.setOnAction(e->{throw new Exceptions.NotImplementedYetException();});
+		GridPane.setConstraints(loadGame, 0, 1);
+		layout.getChildren().add(loadGame);
 		return layout;
 	}
 	
@@ -257,12 +260,12 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	/**
 	 * Initializes the game GUI.
 	 */
-	private Scene initGameGUI() {
+	private WorldGraphics initGameGUI() {
 		/*TODO implement the graphics library here*/
 		BorderPane pane = new BorderPane();	//TODO we may want to switch this for prettier GUI
-		Scene s = new Scene(pane, 1000, 650, Color.BLACK);
+		WorldGraphics w = new WorldGraphics();
 		//create new scene
-		return s;
+		return w;
 	}
 	
 	/**
@@ -277,8 +280,9 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		throw new NotImplementedYetException();
 		/*This should update all of the GUI components, namely the world graphics and HUD.*/
+		worldGraphics.update();
+		hud.update();
 	}
 
 
