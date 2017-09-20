@@ -46,8 +46,8 @@ public abstract class Mob implements Entity {
 		return location;
 	}
 
-	public void setLocation(GridLocation location){
-		this.location = location;
+	public void move(Direction direction){
+		//TODO
 	}
 
 	public int getHealth(){
