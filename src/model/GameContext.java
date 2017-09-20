@@ -25,13 +25,11 @@ public class GameContext {
 	public static Region CreateTestRegion() {
 		/*define weather*/
 		Region.Weather weather = Region.Weather.SUNNY;
-		/*define default tile to be drawn if no other tiles are present*/
-		Sprite defaultTile = new Sprite(new Image("file:res/grass.png"));
 		/*create world objects*/
 		ArrayList<Entity> worldObjects = new ArrayList<Entity>();
 		
 		/*create test region*/
-		return new Region(weather, defaultTile, worldObjects);
+		return new Region(weather, worldObjects);
 	}
 	
 	public Region getCurrentRegion() { return this.currentRegion; }
