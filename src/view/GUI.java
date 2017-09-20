@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import logic.GameLogic;
-import model.GameModel;
+import model.GameContext;
 
 /**
  * This is the main, top-level, wrapper class for the GUI, and for now also the main
@@ -43,7 +43,7 @@ import model.GameModel;
 public class GUI extends Application implements Observer, KeyListener, MouseListener{
 	//window field
 	private Stage window;
-	private GameModel game;
+	private GameContext game;
 	private GameLogic gameLogic;
 
 	
@@ -60,7 +60,7 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	private WorldGraphics worldGraphics;
 	//TODO add in the game model
 	
-	public GUI(GameModel game) {
+	public GUI(GameContext game) {
 		this.game = game;
 		this.gameLogic = new GameLogic(game);
 	}

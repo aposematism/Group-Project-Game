@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import entity.Entity;
 import entity.Player;
 import javafx.scene.image.Image;
 import util.Direction;
@@ -12,26 +13,26 @@ import util.GridLocation;
  * @author J Woods
  *
  */
-public class GameModel {
+public class GameContext {
 	public Region currentRegion;
 	public Player player;
 	
-	public GameModel() {
-		this.currentRegion = testRegion();
+	public GameContext() {
+		this.currentRegion = CreateTestRegion();
 		this.player = new Player(new GridLocation(0,0), Direction.Up);
 	}
 	
-	public Region testRegion() {
+	public static Region CreateTestRegion() {
 		/*define weather*/
 		Region.Weather weather = Region.Weather.SUNNY;
 		/*define default tile to be drawn if no other tiles are present*/
 		Sprite defaultTile = new Sprite(new Image("file:res/grass.png"));
 		/*create world objects*/
-		ArrayList<WorldObject> worldObjects = new ArrayList<WorldObject>();
-		Grid grid = new Grid(30, 30);
-		
+		ArrayList<Entity> worldObjects = new ArrayList<Entity>();
 		
 		/*create test region*/
-		return new Region(weather, defaultTile, worldObjects, grid);
+		return new Region(weather, defaultTile, worldObjects);
 	}
+	
+	public Region getCurrentRegion() { return this.currentRegion; }
 }

@@ -1,18 +1,18 @@
 package logic;
 
-import model.GameModel;
+import model.GameContext;
 
 /**
  * Provides updating and logic support to a game model.
  * @author dylan
  */
 public class GameLogic {
-	private GameModel game;
+	private GameContext game;
 	
 	/**
 	 * Creates a new game logic class.
 	 */
-	public GameLogic(GameModel game) {
+	public GameLogic(GameContext game) {
 		this.game = game;
 	}
 	
@@ -20,5 +20,5 @@ public class GameLogic {
 		// FIXME: implement
 	}
 	
-	public GameModel getGame() { return this.game; }
+	public GameContext getGame() { return this.game; }
 }

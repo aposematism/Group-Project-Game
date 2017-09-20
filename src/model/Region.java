@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import entity.Entity;
 
 /**
  * Representation of a game region, which could be inside or outside.
@@ -11,20 +14,20 @@ import java.util.ArrayList;
 public class Region {
 	private Weather weather;
 	private Sprite defaultTile;	//default tile
-	private ArrayList<WorldObject> worldObjects;
+	private List<Entity> entities;
 	
-	public Region(Weather w, Sprite d, ArrayList<WorldObject> o, Grid grid) {
-		setWeather(w);
-		setDefaultTile(d);
-		setWorldObjects(o);
+	public Region(Weather w, Sprite d, ArrayList<Entity> o) {
+		this.weather = w;
+		this.defaultTile = d;
+		this.entities = o;
 	}
 	
-	public ArrayList<WorldObject> getWorldObjects() {
-		return worldObjects;
+	public List<Entity> getEntities() {
+		return entities;
 	}
 
-	public void setWorldObjects(ArrayList<WorldObject> worldObjects) {
-		this.worldObjects = worldObjects;
+	public void setEntities(ArrayList<Entity> worldObjects) {
+		this.entities = worldObjects;
 	}
 
 	public Sprite getDefaultTile() {
