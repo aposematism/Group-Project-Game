@@ -21,10 +21,6 @@ public class NPC extends Mob {
 		this.actions = actions;
 	}
 
-	public void move(){
-		actions.move(this);
-	}
-
 	public void attack(){
 		actions.attack(this);
 	}
@@ -39,7 +35,6 @@ public class NPC extends Mob {
 	}
 
 	interface Actions {
-		void move(NPC npc);
 		void attack(NPC npc);
 		void receiveAttack(NPC npc);
 		void die(NPC npc);

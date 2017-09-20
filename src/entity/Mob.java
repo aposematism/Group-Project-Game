@@ -19,25 +19,19 @@ public abstract class Mob implements Entity {
 	 */
 	public static final int NO_HEALTH = 0;
 
-	private final int startingHealth;
 	private int health;
 
-	private GridLocation position;
+	private GridLocation location;
 	private Direction direction;
 
-	public Mob(GridLocation spawnPos, int startingHealth, Direction direction){
-		this.position = spawnPos;
-		this.startingHealth = startingHealth;
+	public Mob(GridLocation spawnLocation, int startingHealth, Direction direction){
+		this.location = spawnLocation;
 		this.health = startingHealth;
 		this.direction = direction;
 	}
 
 	public void interact(Player player) {
 		//TODO
-	}
-
-	public GridLocation getPosition(){
-		return position;
 	}
 
 	public Direction getDirection(){
@@ -48,15 +42,23 @@ public abstract class Mob implements Entity {
 		this.direction=direction;
 	}
 
+	public GridLocation getLocation(){
+		return location;
+	}
+
+	public void setLocation(GridLocation location){
+		this.location = location;
+	}
+
 	public int getHealth(){
 		return health;
 	}
 
 	public void damage(int amount){
-		health = health-amount<0 ? 0 : health-amount;
+		health = health-amount<NO_HEALTH ? NO_HEALTH : health-amount;
 	}
 
 	public void heal(int amount){
-		health = health+amount>startingHealth ? startingHealth : health+amount;
+		health = health+amount>FULL_HEALTH ? FULL_HEALTH : health+amount;
 	}
 }

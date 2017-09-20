@@ -9,5 +9,5 @@ import util.GridLocation;
  */
 public interface Entity {
 	void interact(Player player);
-	GridLocation getPosition();
+	GridLocation getLocation();
 }

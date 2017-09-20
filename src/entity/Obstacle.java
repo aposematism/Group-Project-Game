@@ -17,8 +17,8 @@ public class Obstacle implements Entity {
 		position = startingPos;
 	}
 
-	public void setActions(Policy actions){
-		this.policy=actions;
+	public void setPolicy(Policy policy){
+		this.policy=policy;
 	}
 
 	public GridLocation getPosition() {

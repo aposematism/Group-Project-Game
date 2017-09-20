@@ -49,14 +49,6 @@ public class Player extends Mob {
 		return inventory.iterator();
 	}
 
-	public void move(){
-		//TODO
-	}
-
-	public void die(){
-		//TODO
-	}
-
 	/**
 	 * Doesn't do anything, can't interact with itself
 	 * @param player

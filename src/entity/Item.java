@@ -11,13 +11,13 @@ import util.GridLocation;
 public class Item implements Entity {
 
 	private Player player;
-	private GridLocation position;
+	private GridLocation location;
 
 	private Actions actions;
 
-	public Item(Player player, GridLocation spawnPos){
+	public Item(Player player, GridLocation spawnLocation){
 		this.player = player;
-		this.position = spawnPos;
+		this.location = spawnLocation;
 	}
 
 	public void interact(Player player) {
@@ -41,8 +41,8 @@ public class Item implements Entity {
 		return false;
 	}
 
-	public GridLocation getPosition() {
-		return position;
+	public GridLocation getLocation() {
+		return location;
 	}
 
 	public Player getPlayer(){
