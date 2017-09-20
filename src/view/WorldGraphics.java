@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import graphics.GridManager;
 import javafx.scene.*;
 
 
@@ -13,7 +14,7 @@ import javafx.scene.*;
  */
 public class WorldGraphics extends Scene implements GUIcomponent{
 	
-	graphics.Grid worldGrid;
+	model.Region region;
 	graphics.GameCanvas canvas;
 	
 	/**
@@ -22,8 +23,7 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 	 */
 	public WorldGraphics() {
 		super(null);	//TODO change this in a sensible way
-		worldGrid = new graphics.Grid(new Point(0,0), new Dimension(480,640), 20, 20);
-		canvas = new graphics.GameCanvas(worldGrid, 480, 640);
+		canvas = new graphics.GameCanvas(region, 480, 640);
 		throw new Exceptions.NotImplementedYetException();
 	}
 	
@@ -31,5 +31,8 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 	public void update() {
 		throw new Exceptions.NotImplementedYetException();
 	}
+
+	//TODO Need a method to observe the game model and update GameCanvas if the region has changed
+	//TODO by calling canvas.switchRegion(new region)
 
 }

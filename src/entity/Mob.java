@@ -9,7 +9,7 @@ import util.GridLocation;
  *
  * Created by Mark on 19/09/17.
  */
-public abstract class Mob implements Entity {
+public abstract class    Mob implements Entity {
 	/**
 	 * A full health value.
 	 */
