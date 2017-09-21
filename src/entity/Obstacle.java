@@ -11,18 +11,18 @@ public class Obstacle implements Entity {
 
 	private Policy policy;
 
-	private GridLocation position;
+	private GridLocation location;
 
 	public Obstacle(GridLocation startingPos){
-		position = startingPos;
+		location = startingPos;
 	}
 
 	public void setPolicy(Policy policy){
 		this.policy=policy;
 	}
 
-	public GridLocation getPosition() {
-		return position;
+	public GridLocation getLocation() {
+		return location;
 	}
 
 	public void interact(Player player) {

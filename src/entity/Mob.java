@@ -30,10 +30,6 @@ public abstract class    Mob implements Entity {
 		this.direction = direction;
 	}
 
-	public void interact(Player player) {
-		//TODO
-	}
-
 	public Direction getDirection(){
 		return direction;
 	}
@@ -55,10 +51,12 @@ public abstract class    Mob implements Entity {
 	}
 
 	public void damage(int amount){
-		health = health-amount<NO_HEALTH ? NO_HEALTH : health-amount;
+		health -= amount;
+		if(health<NO_HEALTH) health = NO_HEALTH;
 	}
 
 	public void heal(int amount){
-		health = health+amount>FULL_HEALTH ? FULL_HEALTH : health+amount;
+		health += amount;
+		if(health>FULL_HEALTH) health = FULL_HEALTH;
 	}
 }
