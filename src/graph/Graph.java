@@ -3,6 +3,7 @@ package graph;
 import java.util.Collection;
 import java.util.Optional;
 
+import model.Region;
 import util.Direction;
 import util.GridLocation;
 
@@ -11,15 +12,13 @@ import util.GridLocation;
  * @author dylan
  */
 public class Graph {
+	private final Region region;
+	
 	/**
 	 * Creates a new graph.
 	 */
-	// FIXME: make this public and pass a map into it
-	//        we first need an in-memory class to represent the world.
-	//        with this, we can use that data from here; no point in duplicating
-	//        should be added once the class exists.
-	protected Graph() {
-		throw new IllegalStateException("unimplemented");
+	public Graph(Region region) {
+		this.region = region;
 	}
 
 	/**
@@ -89,6 +88,8 @@ public class Graph {
     	// FIXME: implement
     	return null;
     }
+    
+    public Region getRegion() { return this.region; }
 
     /**
      * Gets the width of the graph grid.
