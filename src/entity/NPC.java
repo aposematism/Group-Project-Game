@@ -1,5 +1,6 @@
 package entity;
 
+import javafx.scene.image.ImageView;
 import util.Direction;
 import util.GridLocation;
 
@@ -13,8 +14,8 @@ public class NPC extends Mob {
 
 	private Actions actions;
 
-	public NPC(GridLocation spawnPos, int startingHealth, Direction direction){
-		super(spawnPos, startingHealth, direction);
+	public NPC(GridLocation spawnPos, int startingHealth, Direction direction, ImageView sprite){
+		super(spawnPos, startingHealth, direction, sprite);
 	}
 
 	public void setActions(Actions actions){

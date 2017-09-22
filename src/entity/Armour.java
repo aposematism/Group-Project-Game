@@ -1,5 +1,6 @@
 package entity;
 
+import javafx.scene.image.ImageView;
 import util.GridLocation;
 
 /**
@@ -22,8 +23,8 @@ public class Armour extends Item {
 
 	private final double RATING;
 
-	public Armour(Player player, GridLocation spawnPos, TYPE type, double rating){
-		super(player, spawnPos);
+	public Armour(Player player, GridLocation spawnPos, ImageView sprite, TYPE type, double rating){
+		super(player, spawnPos, sprite);
 		SLOT = type;
 		RATING = rating;
 	}

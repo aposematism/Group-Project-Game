@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import entity.Entity;
 import entity.Player;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import util.Direction;
 import util.GridLocation;
 
@@ -19,7 +20,7 @@ public class GameContext {
 	
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
-		this.player = new Player(new GridLocation(0,0), Direction.Up);
+		this.player = new Player(new GridLocation(0,0), new ImageView(), Direction.Up);
 	}
 	
 	public static Region CreateTestRegion() {
