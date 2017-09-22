@@ -2,6 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import logic.GameLogic;
 import model.GameContext;
 import view.GUI;
 
@@ -10,19 +11,19 @@ import view.GUI;
  * @author J Woods
  *
  */
-public class Main extends Application{
+public class Main{
 	
 	private static GUI gui;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		GameContext game = new GameContext();
-
-		gui = new GUI(game);
-		gui.launch(args);
-	}
-
-	@Override
-	public void start(Stage arg0) throws Exception {
-		
+		GameLogic gameLogic = new GameLogic(game);
+		/*
+		 * the game and logic are both static in the GUI class.
+		 *this lets the application launch a new instance properly.
+		 */
+		GUI.setGame(game);
+		GUI.setLogic(gameLogic);
+		GUI.launch(GUI.class);
 	}
 }

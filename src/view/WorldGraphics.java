@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import graphics.GridManager;
 import javafx.scene.*;
+import model.GameContext;
 
 
 /**
@@ -21,10 +22,9 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 	 * This will have to be changed to take a size.
 	 * 
 	 */
-	public WorldGraphics() {
-		super(null);	//TODO change this in a sensible way
-		canvas = new graphics.GameCanvas(region, 480, 640);
-		throw new Exceptions.NotImplementedYetException();
+	public WorldGraphics(GameContext g, Parent p) {
+		super(p);
+		canvas = new graphics.GameCanvas(region);
 	}
 	
 	@Override

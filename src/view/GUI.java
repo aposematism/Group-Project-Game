@@ -43,9 +43,6 @@ import model.GameContext;
 public class GUI extends Application implements Observer, KeyListener, MouseListener{
 	//window field
 	private Stage window;
-	private GameContext game;
-	private GameLogic gameLogic;
-
 	
 	//main menu fields
 	private Scene mainMenu;
@@ -60,14 +57,28 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	private WorldGraphics worldGraphics;
 	//TODO add in the game model
 	
-	public GUI(GameContext game) {
+	//Game fields
+	private static GameContext game;
+	private static GameLogic logic;
+	
+	//TODO this should perhaps be removed
+	public GUI(GameContext game, GameLogic logic) {
+		this.launch();
 		this.game = game;
-		this.gameLogic = new GameLogic(game);
+		this.logic = logic;
 	}
 	
-	public static void main (String[] args) {
-		launch(args);
+	/**
+	 * Default constructor, needed for use with the Main class.
+	 */
+	public GUI() {
+		super();
 	}
+	
+	//TODO - maybe remove this? With the addition of our main class this might be unnecessary
+//	public static void main (String[] args) {
+//		launch(args);
+//	}
 	
 
 	@Override
@@ -88,6 +99,11 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		
 		/*show the stage*/
 		window.show();
+		
+
+		//FIXME remove this debug code
+		System.out.println("Game in GUI object: " + game.toString());
+		System.out.println("Logic in GUI object: " + logic.toString());
 	}
 	
 	/**
@@ -270,9 +286,8 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	 * Initializes the game GUI.
 	 */
 	private WorldGraphics initGameGUI() {
-		/*TODO implement the graphics library here*/
-		BorderPane pane = new BorderPane();	//TODO we may want to switch this for prettier GUI
-		WorldGraphics w = new WorldGraphics();
+		BorderPane pane = new BorderPane();
+		WorldGraphics w = new WorldGraphics(game, pane);
 		//create new scene
 		return w;
 	}
@@ -284,8 +299,15 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		//TODO implement this
 		throw new NotImplementedYetException();
 	}
-
-
+	
+	public static void setGame(GameContext g) {
+		game = g;
+	}	
+	public static void setLogic(GameLogic l) {
+		logic = l;
+	}
+	
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
