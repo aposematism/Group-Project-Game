@@ -3,10 +3,6 @@ package graphics;
 import java.awt.*;
 
 import javafx.scene.image.Image;
-import javafx.geometry.BoundingBox;
-import Exceptions.NotImplementedYetException;
-import util.Direction;
-import util.GridLocation;
 
 /**
  * This class will manage sprites of "non-entity" based origins, such as snowflakes, rainfall etc.

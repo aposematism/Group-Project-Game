@@ -1,8 +1,6 @@
 package graphics;
 
-import Exceptions.NotImplementedYetException;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Dimension2D;
+import exceptions.NotImplementedYetException;
 import util.GridLocation;
 
 import java.awt.*;

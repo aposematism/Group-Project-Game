@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import Exceptions.NotImplementedYetException;
+import exceptions.NotImplementedYetException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -240,7 +240,7 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		/*add widgety stuff to change settings TODO*/
 		//here should be Jordan's loading methods integrated to a GUI
 		Button loadGame = new Button("Load Game");
-		loadGame.setOnAction(e->{throw new Exceptions.NotImplementedYetException();});
+		loadGame.setOnAction(e->{throw new exceptions.NotImplementedYetException();});
 		GridPane.setConstraints(loadGame, 0, 1);
 		layout.getChildren().add(loadGame);
 		return layout;

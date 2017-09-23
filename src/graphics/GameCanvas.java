@@ -1,10 +1,9 @@
 package graphics;
 
-import Exceptions.NotImplementedYetException;
+import exceptions.NotImplementedYetException;
 import javafx.scene.canvas.Canvas;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import model.Region;

@@ -7,6 +7,6 @@ package view;
  */
 public class PauseMenu {
 	public PauseMenu() {
-		throw new Exceptions.NotImplementedYetException();
+		throw new exceptions.NotImplementedYetException();
 	}
 }

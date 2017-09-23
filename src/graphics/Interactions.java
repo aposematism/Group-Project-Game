@@ -1,6 +1,6 @@
 package graphics;
 
-import Exceptions.NotImplementedYetException;
+import exceptions.NotImplementedYetException;
 import entity.Entity;
 
 /**Contains a bunch of miscellaneous static methods for managing collision,

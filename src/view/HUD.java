@@ -8,12 +8,12 @@ package view;
  */
 public class HUD implements GUIcomponent{
 	public HUD() {
-		throw new Exceptions.NotImplementedYetException();
+		throw new exceptions.NotImplementedYetException();
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		throw new Exceptions.NotImplementedYetException();
+		throw new exceptions.NotImplementedYetException();
 	}
 }

@@ -1,9 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Point;
-
-import graphics.GridManager;
 import javafx.scene.*;
 import model.GameContext;
 
@@ -29,7 +25,7 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 	
 	@Override
 	public void update() {
-		throw new Exceptions.NotImplementedYetException();
+		throw new exceptions.NotImplementedYetException();
 	}
 
 	//TODO Need a method to observe the game model and update GameCanvas if the region has changed
