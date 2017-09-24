@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import entity.Entity;
 
 /** 
- * My implementation of foundation level node for the parser.
+ * Implementation of foundation level node for the parser.
+ * @author - Jordan
  * */
 
 public class JordanNode {
