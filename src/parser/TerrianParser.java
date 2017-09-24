@@ -1,5 +1,6 @@
 package parser;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class TerrianParser {
 	 * @author Jordan
 	 * */
 	
-	public void init_scanner(){
+	public void init_scanner(File region){
 		BufferedReader buffRoad = new BufferedReader(new FileReader(region));
 	}
 }
