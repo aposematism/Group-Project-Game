@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import entity.Entity;
 import graph.JordanNode;
 
 public class TerrianParser{
@@ -45,13 +46,14 @@ public class TerrianParser{
 	}
 	
 	/** 
-	 * 
+	 * parses the single character string array such that it generates a new Node and gives that node a mapEntity
 	 * */
-	public void parseCharArray(){
+	public void parseStringArray(){
 		regionArray = new JordanNode[stringArray.get(0).length][stringArray.size()];
 		for(int i = 0; i < stringArray.size(); i++){
 			for(int j = 0; j < stringArray.get(i).length; j++){
 				JordanNode z = new JordanNode(i, j);
+				z.setMapEntity(parseMapEntity(stringArray.get(i)[j]));
 				regionArray[i][j] = z;
 			} 
 		}
@@ -60,7 +62,8 @@ public class TerrianParser{
 	/** 
 	 * This method turns the string[] within the ArrayList into a region entity to be set for that region.
 	 * */
-	public void parseMapEntity(){
+	public Entity parseMapEntity(String p){
 		
+		return null;
 	}
 }

@@ -19,7 +19,7 @@ public class JordanNode {
 	private double csffs = 0; //Cost So Far From Start.
 	private boolean visited;
 	//Entities list
-	private Entity regionEntity;
+	private Entity mapEntity;
 	private ArrayList<Entity> interactives;
 	
 	public JordanNode(int x1, int y1){
@@ -28,5 +28,9 @@ public class JordanNode {
 		visited = false;
 		neighbours = new ArrayList<JordanNode>();
 		interactives = new ArrayList<Entity>();
+	}
+
+	public void setMapEntity(Entity mapEnt) {
+		mapEntity = mapEnt;
 	}
 }
