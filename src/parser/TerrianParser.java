@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import graph.JordanNode;
 
 public class TerrianParser{
 
@@ -15,20 +16,21 @@ public class TerrianParser{
 	 * @author Jordan
 	 * */
 	
-	ArrayList<char[]> charArray;
+	ArrayList<String[]> stringArray;
+	JordanNode[][] regionArray;
 	
 	/** 
 	 * This method is for the initialization of the region file.
 	 * */
 	public void init_scanner(File region)throws IOException{
 		BufferedReader regionBuff = null;
-		charArray = new ArrayList<char[]>();
+		stringArray = new ArrayList<String[]>();
 		try{
 			regionBuff = new BufferedReader(new FileReader(region));
 			String line = regionBuff.readLine();
 			while(line != null){
-				char[] split = line.toCharArray();
-				charArray.add(split);
+				String[] split = line.split("");
+				stringArray.add(split);
 				line = regionBuff.readLine();
 			}
 			
@@ -43,9 +45,22 @@ public class TerrianParser{
 	}
 	
 	/** 
-	 * This method turns the char[] within the ArrayList into the game graph. 
+	 * 
 	 * */
 	public void parseCharArray(){
+		regionArray = new JordanNode[stringArray.get(0).length][stringArray.size()];
+		for(int i = 0; i < stringArray.size(); i++){
+			for(int j = 0; j < stringArray.get(i).length; j++){
+				JordanNode z = new JordanNode(i, j);
+				regionArray[i][j] = z;
+			} 
+		}
+	}
+	
+	/** 
+	 * This method turns the string[] within the ArrayList into a region entity to be set for that region.
+	 * */
+	public void parseMapEntity(){
 		
 	}
 }
