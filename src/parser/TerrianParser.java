@@ -1,7 +1,8 @@
-package parser;
+package parser1;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class TerrianParser {
@@ -12,7 +13,19 @@ public class TerrianParser {
 	 * @author Jordan
 	 * */
 	
+	
+	/** 
+	 * This method is for the initialization of the region file.
+	 * */
 	public void init_scanner(File region){
-		BufferedReader buffRoad = new BufferedReader(new FileReader(region));
+		try{
+			BufferedReader buffRoad = new BufferedReader(new FileReader(region));
+		}
+		catch(IOException e){
+			
+		}
+		finally{
+			
+		}
 	}
 }
