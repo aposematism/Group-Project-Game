@@ -1,14 +1,15 @@
 package parser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class TerrianParser {
+public class TerrianParser{
 
 	/** 
-	 * This class is the terrian parser, for parsing any objects which do not interact with the player, NPCs or enemies.
+	 * This class is the terrain parser, for parsing any objects which do not interact with the player, NPCs or enemies.
 	 * I.E. Walls, floors, Trees, Cliffs etc.
 	 * @author Jordan
 	 * */
@@ -17,12 +18,13 @@ public class TerrianParser {
 	/** 
 	 * This method is for the initialization of the region file.
 	 * */
-	public void init_scanner(File region){
+	public void init_scanner(File region)throws IOException{
 		try{
-			BufferedReader buffRoad = new BufferedReader(new FileReader(region));
+			BufferedReader regionBuff = new BufferedReader(new FileReader(region));
+			
 		}
 		catch(IOException e){
-			
+			throw new IOException("File failed to initialise!");
 		}
 		finally{
 			
