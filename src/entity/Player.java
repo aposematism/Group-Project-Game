@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.Direction;
 import util.GridLocation;
 
@@ -21,17 +21,16 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(GridLocation spawnPos, ImageView sprite, int startingHealth, Direction direction){
+	public Player(GridLocation spawnPos, Image sprite, int startingHealth, Direction direction){
 		super(spawnPos, startingHealth, direction, sprite);
 		inventory = new ArrayList<>();
 	}
 
-	public Player(GridLocation spawnPos, ImageView sprite, Direction direction) {
+	public Player(GridLocation spawnPos, Image sprite, Direction direction) {
 		this(spawnPos, sprite, FULL_HEALTH, direction);
 	}
 
 	public void addItem(Item item){
-		item.setLocation(GridLocation.OFF_GRID);
 		inventory.add(item);
 	}
 

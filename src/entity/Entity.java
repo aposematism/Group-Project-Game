@@ -1,6 +1,6 @@
 package entity;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.GridLocation;
 
 /**
@@ -12,5 +12,5 @@ public interface Entity {
 	void interact(Player player);
 	GridLocation getLocation();
 	String toString();
-	ImageView getSprite();
+	Image getSprite();
 }

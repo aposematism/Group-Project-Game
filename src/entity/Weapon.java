@@ -1,6 +1,6 @@
 package entity;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.GridLocation;
 
 /**
@@ -12,7 +12,7 @@ public class Weapon extends Item {
 
 	private Actions actions;
 
-	public Weapon(Player player, GridLocation spawnPos, ImageView sprite, double strength){
+	public Weapon(Player player, GridLocation spawnPos, Image sprite, double strength){
 		super(player, spawnPos, sprite);
 		this.STRENGTH = strength;
 	}

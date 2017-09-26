@@ -2,7 +2,7 @@ package entity.tests;
 
 import entity.*;
 import util.*;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,9 +20,9 @@ public class PlayerTests {
 			}
 		}
 
-		Player p = new Player(grid[2][2], new ImageView(), Direction.Down);
+		Player p = new Player(grid[2][2], new Image(""), Direction.Down);
 
-		Armour a = new Armour(p, grid[2][3], new ImageView(), Armour.TYPE.HELMET, 3.5);
+		Armour a = new Armour(p, grid[2][3], new Image(""), Armour.TYPE.HELMET, 3.5);
 
 
 	}

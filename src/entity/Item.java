@@ -1,6 +1,6 @@
 package entity;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.GridLocation;
 
 /**
@@ -13,11 +13,11 @@ public class Item implements Entity {
 
 	private Player player;
 	private GridLocation location;
-	private ImageView sprite;
+	private Image sprite;
 
 	private Actions actions;
 
-	public Item(Player player, GridLocation spawnLocation, ImageView sprite){
+	public Item(Player player, GridLocation spawnLocation, Image sprite){
 		this.player = player;
 		this.location = spawnLocation;
 		this.sprite = sprite;
@@ -46,7 +46,7 @@ public class Item implements Entity {
 		return player;
 	}
 
-	public ImageView getSprite(){
+	public Image getSprite(){
 		return sprite;
 	}
 

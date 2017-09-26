@@ -1,6 +1,6 @@
 package entity;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.GridLocation;
 
 /**
@@ -13,9 +13,11 @@ public class Door extends Obstacle {
 	private final int KEY;
 	private STATE state;
 
-	public Door(GridLocation startingPos, ImageView sprite, int key){
+	public Door(GridLocation startingPos, Image sprite, int key){
 		super(startingPos, sprite);
 		KEY = key;
 		state = STATE.LOCKED;
 	}
+
+
 }

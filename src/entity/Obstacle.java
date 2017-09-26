@@ -1,6 +1,6 @@
 package entity;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.GridLocation;
 
 /**
@@ -14,9 +14,9 @@ public class Obstacle implements Entity {
 
 	private GridLocation location;
 
-	private ImageView sprite;
+	private Image sprite;
 
-	public Obstacle(GridLocation startingPos, ImageView sprite){
+	public Obstacle(GridLocation startingPos, Image sprite){
 		location = startingPos;
 		this.sprite = sprite;
 	}
@@ -29,7 +29,7 @@ public class Obstacle implements Entity {
 		return location;
 	}
 
-	public ImageView getSprite(){
+	public Image getSprite(){
 		return sprite;
 	}
 

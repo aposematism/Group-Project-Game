@@ -1,6 +1,6 @@
 package entity;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import util.Direction;
 import util.GridLocation;
 
@@ -24,9 +24,9 @@ public abstract class Mob implements Entity {
 
 	private GridLocation location;
 	private Direction direction;
-	private ImageView sprite;
+	private Image sprite;
 
-	public Mob(GridLocation spawnLocation, int startingHealth, Direction direction, ImageView sprite){
+	public Mob(GridLocation spawnLocation, int startingHealth, Direction direction, Image sprite){
 		this.location = spawnLocation;
 		this.health = startingHealth;
 		this.direction = direction;
@@ -45,7 +45,7 @@ public abstract class Mob implements Entity {
 		return location;
 	}
 
-	public ImageView getSprite(){
+	public Image getSprite(){
 		return sprite;
 	}
 
