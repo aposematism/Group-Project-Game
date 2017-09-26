@@ -56,9 +56,9 @@ public class TerrainParser{
 		regionArray = new Tile[stringArray.get(0).length][stringArray.size()];
 		for(int i = 0; i < stringArray.size(); i++){
 			for(int j = 0; j < stringArray.get(i).length; j++){
-				Tile z = new Tile(i, j);
-				z.setMapEntity(parseMapEntity(stringArray.get(i)[j]));
-				regionArray[i][j] = z;
+				Tile z = new Tile(i, j, stringArray.get(i)[j]);
+				//z.setMapEntity(parseMapEntity(stringArray.get(i)[j]));
+				regionArray[j][i] = z;
 			}
 		}
 		

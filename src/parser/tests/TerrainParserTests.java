@@ -27,4 +27,19 @@ public class TerrainParserTests {
 			fail("IOException during the Terrain Parser Initialization");
 		}			
 	}
+	
+	@Test
+	public void string_parser_test(){
+		TerrainParser tp = new TerrainParser();
+		try{
+			tp.init_scanner(testTerrain);
+			tp.parseStringArray();
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			
+		}
+	}
 }
