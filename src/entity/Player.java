@@ -50,6 +50,11 @@ public class Player extends Mob {
 	public Iterator<Item> getInventory(){
 		return inventory.iterator();
 	}
+	
+	@Override
+	public boolean isPenetrable() {
+	    return true;
+	}
 
 	/**
 	 * Doesn't do anything, can't interact with itself

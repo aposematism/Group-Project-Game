@@ -13,4 +13,9 @@ public interface Entity {
 	GridLocation getLocation();
 	String toString();
 	ImageView getSprite();
+	
+	/**
+	 * Checks if the entity can be walked through.
+	 */
+	boolean isPenetrable();
 }

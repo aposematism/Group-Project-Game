@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import entity.Entity;
+import util.GridLocation;
 
 /** 
  * Implementation of foundation level node for the parser.
@@ -11,8 +12,7 @@ import entity.Entity;
 
 public class Tile {
 	//Node Values
-	private int x;
-	private int y;
+	private GridLocation location;
 	private String character;
 	//Neighbours
 	private ArrayList<Tile> neighbours;
@@ -21,8 +21,7 @@ public class Tile {
 	private ArrayList<Entity> interactives;
 	
 	public Tile(int x1, int y1, String c){
-		x = x1;
-		y = y1;
+		this.location = new GridLocation(x1, y1);
 		character = c;
 		neighbours = new ArrayList<Tile>();
 		interactives = new ArrayList<Entity>();
@@ -35,8 +34,22 @@ public class Tile {
 	public ArrayList<Tile> getNeighbours(){
 		return neighbours;
 	}
-	
+
 	public String getCharacter(){
 		return character;
 	}
+	
+	/**
+	 * Checks if the tile can be walked through.
+	 */
+	public boolean isPenetrable() {
+	    // Check if there is a map entity that can't be passed through.
+	    if (mapEntity != null && !mapEntity.isPenetrable())
+	        return false;
+	    
+	    // If every interactive entity in the tile is penetrable, then the tile is too.
+	    return interactives.stream().allMatch(Entity::isPenetrable);
+	}
+
+	public GridLocation getLocation() { return this.location; }
 }

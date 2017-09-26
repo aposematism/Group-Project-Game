@@ -55,6 +55,12 @@ public class Item implements Entity {
 	public ImageView getSprite(){
 		return sprite;
 	}
+	
+	@Override
+	public boolean isPenetrable() {
+	    // FIXME: Is this right? can we walk through items?
+	    return true;
+	}
 
 	interface Actions {
 		void pickup(Item item);
