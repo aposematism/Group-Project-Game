@@ -57,12 +57,49 @@ public final class GridLocation {
 	}
 
 	/**
-	 * Self-explanatory
-	 * @param obj
-	 * @return
+	 * Adds one location to another.
 	 */
+	public GridLocation add(GridLocation rhs) {
+		return new GridLocation(this.x + rhs.x, this.y + rhs.y);
+	}
+
+	/**
+	 * Subtracts one location from another.
+	 */
+	public GridLocation sub(GridLocation rhs) {
+		return new GridLocation(this.x - rhs.x, this.y - rhs.y);
+	}
+
+	/**
+	 * Calculates the length of the location if it were a vector.
+	 */
+	public double length() {
+		return Math.sqrt(x*x + y*y);
+	}
+
+	/**
+	 * Gets the Euclidian distance between two locations.
+	 */
+	public double distanceBetween(GridLocation other) {
+		return this.sub(other).length();
+	}
+
+	@Override
+	public int hashCode() {
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + x;
+	    result = prime * result + y;
+	    return result;
+     }
+
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof GridLocation && ((GridLocation) obj).x == this.x && ((GridLocation) obj).y == this.y;
-	}
+	    return obj instanceof GridLocation && ((GridLocation) obj).x == this.x && ((GridLocation) obj).y == this.y;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%d,%d)", x, y);
+    }
 }
