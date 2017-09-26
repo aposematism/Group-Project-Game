@@ -110,6 +110,9 @@ public class TestGrid implements PathfindingGrid {
             .collect(Collectors.toList());
     }
     
+    /**
+     * Gets the location of a tile in the grid.
+     */
     private GridLocation getLocation(Tile tile) {
         for (int x=0; x<width; x++) {
             for (int y=0; y<height; y++) {

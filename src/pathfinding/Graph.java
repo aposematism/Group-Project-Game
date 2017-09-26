@@ -26,11 +26,11 @@ public class Graph {
     public interface Heuristic {
         /**
          * Evaluates the heuristic for two nodes.
-         * @param from The source node.
-         * @param to The destination node.
+         * @param node The source node.
+         * @param goal The destination node.
          * @param grid The grid which contains the nodes.
          */
-        double eval(Tile from, Tile to, PathfindingGrid grid);
+        double calculate(Tile node, Tile goal, PathfindingGrid grid);
     }
 
     /**
@@ -112,11 +112,6 @@ public class Graph {
      * 
      * The ordering of the parameters does not matter, as the path will always
      * be the same.
-     * 
-     * @param a
-     *            The first node.
-     * @param b
-     *            The second node.
      */
     public Optional<Path> findPath() {
         if (this.result.isPresent()) return this.result;
@@ -204,6 +199,10 @@ public class Graph {
         return Optional.empty();
     }
 
+    /**
+     * Builds a Path object from the final result of A*.
+     * @param cameFrom A map containing each parent and its predecessor in the path.
+     */
     private List<Tile> reconstructPath(Map<Tile, Tile> cameFrom) {
         Tile current = this.destination;
 
@@ -227,7 +226,7 @@ public class Graph {
      */
     protected double getCost(Tile from, Tile to) {
         double costFromStartToFrom = gScore.get(from);
-        return costFromStartToFrom + this.heuristic.eval(from, to, grid);
+        return costFromStartToFrom + this.heuristic.calculate(from, to, grid);
     }
     
     /**

@@ -15,12 +15,11 @@ public final class Heuristics {
     /**
      * Gets the Euclidian distance between two tiles.
      * 
-     * @param from
-     * @param to
-     * @param region
-     * @return
+     * @param node The node for which the heuristic is being calculated for.
+     * @param goal The ending node.
+     * @param grid The grid both tiles exist in.
      */
-    public static double EucledianDistance(Tile from, Tile to, PathfindingGrid region) {
-        return from.getLocation().distanceBetween(to.getLocation());
+    public static double EucledianDistance(Tile node, Tile goal, PathfindingGrid grid) {
+        return node.getLocation().distanceBetween(goal.getLocation());
     }
 }

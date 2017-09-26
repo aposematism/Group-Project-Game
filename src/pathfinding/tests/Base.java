@@ -26,12 +26,18 @@ public class Base {
         assertEquals(expectedPath, actualPath.get());
     }
     
+    /**
+     * Verifies that the pathfinder cannot find a path between two nodes.
+     */
     protected void verifyUnreachable(PathfindingGrid grid, Tile source, Tile dest) {
         Optional<Path> actualPath = getPath(grid, source, dest);
         if (actualPath.isPresent())
             fail("there should be no path between the source and destination");
     }
     
+    /**
+     * Gets the path between two nodes.
+     */
     private Optional<Path> getPath(PathfindingGrid grid, Tile source, Tile dest) {
         Graph graph = new Graph(grid, source, dest);
 
