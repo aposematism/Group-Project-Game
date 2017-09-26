@@ -30,17 +30,23 @@ public class Player extends Mob {
 		this(spawnPos, sprite, FULL_HEALTH, direction);
 	}
 
-
 	public void addItem(Item item){
-		//TODO
+		item.setLocation(GridLocation.OFF_GRID);
+		inventory.add(item);
 	}
 
-	public void addWeapon(Weapon weapon){
-		//TODO
+	private void addWeapon(Weapon weapon){
+		weapon.setLocation(GridLocation.OFF_GRID);
+		if(this.weapon==null || weapon.getStrength()>this.weapon.getStrength())
+			this.weapon = weapon;
 	}
 
-	public void addArmour(Armour armour){
-		//TODO
+	private void addArmour(Armour armour){
+		armour.setLocation(GridLocation.OFF_GRID);
+		if(this.armour[armour.getSlot().ordinal()]==null)
+			this.armour[armour.getSlot().ordinal()] = armour;
+		else if(armour.getRating() > this.armour[armour.getSlot().ordinal()].getRating())
+			this.armour[armour.getSlot().ordinal()] = armour;
 	}
 
 	public void clearInventory(){
@@ -49,6 +55,10 @@ public class Player extends Mob {
 
 	public Iterator<Item> getInventory(){
 		return inventory.iterator();
+	}
+
+	public boolean possesses(Item item){
+		return inventory.contains(item);
 	}
 
 	/**

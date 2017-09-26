@@ -12,7 +12,7 @@ import util.GridLocation;
  */
 public class Armour extends Item {
 
-	enum TYPE {
+	public enum TYPE {
 		HELMET,
 		TORSO,
 		LEGS,
@@ -35,5 +35,10 @@ public class Armour extends Item {
 
 	public double getRating() {
 		return RATING;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+" "+SLOT+" "+RATING;
 	}
 }

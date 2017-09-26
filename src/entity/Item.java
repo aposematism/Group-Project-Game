@@ -24,28 +24,22 @@ public class Item implements Entity {
 	}
 
 	public void interact(Player player) {
-		//TODO
+		if(player.possesses(this))
+			actions.use(this);
+		else if(player.getLocation().adjacent(this.getLocation()))
+			actions.pickup(this);
 	}
 
 	public void setActions(Actions actions){
 		this.actions = actions;
 	}
 
-	public void pickup(){
-		actions.pickup(this);
-	}
-
-	public void use(){
-		actions.use(this);
-	}
-
-	public boolean playerPossesses(){
-		//TODO
-		return false;
-	}
-
 	public GridLocation getLocation() {
 		return location;
+	}
+
+	public void setLocation(GridLocation location){
+		this.location = location;
 	}
 
 	public Player getPlayer(){
