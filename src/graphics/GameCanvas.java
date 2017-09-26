@@ -85,7 +85,7 @@ public class GameCanvas extends Canvas {
             Point location = currentGrid.getRealCoordinates(
                     e.getLocation(), calcOffset(player));
 
-            gc.drawImage(e.getSprite().getImage(),
+            gc.drawImage(e.getSprite(),
                     location.x, location.y, size, size);
         }
     }
