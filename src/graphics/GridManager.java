@@ -25,6 +25,16 @@ public class GridManager extends Canvas{
     private int vGap;
     private int hGap;
 
+    private static final int defaultCellSize = 64;
+
+    /**
+     *
+     * @return
+     */
+    public static GridManager createDefaultManager(){
+        return new GridManager(defaultCellSize, 0,0);
+    }
+
     /**
      * Create a new grid manager
      * @param cellSize size (width & height) of each cell in the grid
@@ -32,7 +42,9 @@ public class GridManager extends Canvas{
      * @param hGap horizontal gap between each cell in the grid.
      */
     public GridManager(int cellSize, int vGap, int hGap){
-
+        this.cellSize = cellSize;
+        this.vGap = vGap;
+        this.hGap = hGap;
     }
 
     /**
@@ -41,7 +53,10 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location){
-        throw new NotImplementedYetException();
+        int x = location.x * cellSize;
+        int y = location.y * cellSize;
+
+        return new Point(x,y);
     }
 
     /**
@@ -51,7 +66,10 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location, GridLocation offset){
-        throw new NotImplementedYetException();
+        int x = location.x + offset.x * cellSize;
+        int y = location.y + offset.y * cellSize;
+
+        return new Point(x,y);
     }
 
     /**
@@ -61,39 +79,42 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location, Point offset){
-        throw new NotImplementedYetException();
+        int x = (location.x * cellSize) + offset.x;
+        int y = (location.y * cellSize) + offset.y;
+
+        return new Point(x,y);
     }
 
 
     /**
      * @return Get the vertical gap of this GridManager.
      */
-    public int getvGap(){throw new NotImplementedYetException();}
+    public int getvGap(){ return vGap; }
 
     /**
      * @return Get the horizontal gap of this GridManager.
      */
-    public int gethGap(){throw new NotImplementedYetException();}
+    public int gethGap(){return hGap;}
 
     /**
      * set the vertical gap
      */
-    public void setvGap(){}
+    public void setvGap(int newVGap){vGap = newVGap;}
 
     /**
      * set the horizontal gap
      */
-    public void sethGap(){}
+    public void sethGap(int newHGap){hGap = newHGap;}
 
     /**
      * @return get the cell size of this GridManager
      */
-    public int getCellSize(){throw new NotImplementedYetException();}
+    public int getCellSize(){return cellSize;}
 
     /**
      * @param size The new cell size of this grid manager.
      */
-    public void setCellSize(int size){}
+    public void setCellSize(int size){cellSize = size;}
 
 
 
