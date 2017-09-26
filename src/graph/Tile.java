@@ -22,7 +22,6 @@ public class Tile {
 	public Tile(int x1, int y1){
 		x = x1;
 		y = y1;
-		visited = false;
 		neighbours = new ArrayList<Tile>();
 		interactives = new ArrayList<Entity>();
 	}
