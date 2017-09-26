@@ -50,6 +50,11 @@ public class Tile {
 	    // If every interactive entity in the tile is penetrable, then the tile is too.
 	    return interactives.stream().allMatch(Entity::isPenetrable);
 	}
+	
+	@Override
+	public int hashCode() {
+	    return location.hashCode();
+	}
 
 	public GridLocation getLocation() { return this.location; }
 }

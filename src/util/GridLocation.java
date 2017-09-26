@@ -57,9 +57,18 @@ public class GridLocation {
 	
 	@Override
 	public boolean equals(Object obj) {
-	    if (!(obj instanceof GridLocation)) return false;
-	    GridLocation rhs = (GridLocation)obj;
-	    
-	    return this.x == rhs.x && this.y == rhs.y;
+        if (!(obj instanceof GridLocation)) return false;
+        GridLocation rhs = (GridLocation)obj;
+
+        return this.x == rhs.x && this.y == rhs.y;
 	}
+
+	@Override
+	public int hashCode() {
+	    final int prime = 31;
+        int result = 1;
+        result = prime * result + x;
+        result = prime * result + y;
+        return result;
+    }
 }
