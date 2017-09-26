@@ -2,6 +2,7 @@ package parser;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,9 +14,13 @@ import model.Tile;
  * I.E. Walls, floors, Trees, Cliffs etc.
  * @author Jordan
  * */
-public class TerrianParser{	
+public class TerrainParser{	
 	ArrayList<String[]> stringArray;
 	Tile[][] regionArray;
+	
+	public TerrainParser(){
+		
+	}
 	
 	/** 
 	 * This method is for the initialization of the region file.
@@ -31,10 +36,11 @@ public class TerrianParser{
 				stringArray.add(split);
 				line = regionBuff.readLine();
 			}
-			
+
 		}
 		catch(IOException e){
-			throw new IOException("File failed to initialise!");
+			System.out.println("I/O exception: " + e.toString());
+			throw new FileNotFoundException("File failed to initialise!");
 		}
 		finally{
 			regionBuff.close();
@@ -73,20 +79,44 @@ public class TerrianParser{
 	}
 	
 	/** 
-	 * This method attempts to connect the various nodes together for the parser.
+	 * This method attempts to connect the various nodes together for the parser. Checks first if it should connect within the limits of the 2d array structure
 	 * @author - Jordan
 	 * */
 	public Tile[][] connectNetworks(Tile[][] toConnect){
-		for(int i = 0; i < toConnect.length; i++){
-			for(int j = 0; j < toConnect[i].length; j++){
-				for(int k = -1; k < 1; k++){
-					for(int l = -1; l < 1; l++){
-						toConnect[i][j].getNeighbours().add(toConnect[k][l]);
+		try{
+			for(int i = 0; i < toConnect.length; i++){
+				for(int j = 0; j < toConnect[i].length; j++){
+					for(int k = -1; k < 1; k++){
+						for(int l = -1; l < 1; l++){
+							if(!connectNode(toConnect.length, toConnect[i].length, i, j, k, l)){
+								break;
+							}
+							else{
+								toConnect[i][j].getNeighbours().add(toConnect[k][l]);
+							}
+						}
 					}
+					
 				}
-				
 			}
 		}
+		catch(IndexOutOfBoundsException e){
+			System.out.println("Index Out of Bounds in the connection of the node network!");
+		}
 		return toConnect;
+	}
+	
+	/**
+	 * Boundary checking method for ensuring only neighbours within acceptable ranges are added.
+	 *  */
+	
+	public boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
+		if(i+k < 0 || j+l < 0){//if less than zero
+			return false;
+		}
+		if(i+k < rowLength || j+l < columnLength){//if outside the boundary of the array.
+			return false;
+		}
+		return true;
 	}
 }
