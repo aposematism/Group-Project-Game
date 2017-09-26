@@ -72,9 +72,10 @@ public class ComplexTests extends Base {
         
         verifyPath(grid, source, dest,
                 new GridLocation(0, 0), new GridLocation(0, 1), new GridLocation(0, 2),
-                new GridLocation(0, 3), new GridLocation(1, 4), new GridLocation(2, 4),
-                new GridLocation(3, 4), new GridLocation(4, 3), new GridLocation(4, 2),
-                new GridLocation(4, 1), new GridLocation(3, 0), new GridLocation(2, 0));
+                new GridLocation(0, 3), new GridLocation(0, 4), new GridLocation(1, 4),
+                new GridLocation(2, 4), new GridLocation(3, 4), new GridLocation(4, 3),
+                new GridLocation(4, 2), new GridLocation(4, 1), new GridLocation(3, 0),
+                new GridLocation(2, 0));
         
     }
 }

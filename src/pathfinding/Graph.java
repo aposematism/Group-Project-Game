@@ -180,7 +180,7 @@ public class Graph {
                 // // The distance from start to a neighbor
                 // tentative_gScore := gScore[current] + dist_between(current,
                 // neighbor)
-                double tenative_gScore = getCost(current, neighbour);
+                double tenative_gScore = current.getLocation().distanceBetween(neighbour.getLocation());
 
                 // if neighbor not in openSet // Discover a new node
                 if (!openSet.contains(neighbour))
