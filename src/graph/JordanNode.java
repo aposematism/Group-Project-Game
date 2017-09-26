@@ -16,6 +16,8 @@ public class JordanNode {
 	//Neighbours
 	private ArrayList<JordanNode> neighbours;
 	//A* relevant 
+	public JordanNode currentNode = this;//
+	public JordanNode formerNode = null;//
 	private int ectg = 0;//estimated cost to goal.
 	private double csffs = 0; //Cost So Far From Start.
 	private boolean visited;

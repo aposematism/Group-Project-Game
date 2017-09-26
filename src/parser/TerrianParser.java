@@ -71,4 +71,17 @@ public class TerrianParser{
 		}
 		return null;
 	}
+	
+	/** 
+	 * This method attempts to connect the various nodes together for the parser.
+	 * @author - Jordan
+	 * */
+	public JordanNode[][] connectNetworks(JordanNode[][] toConnect){
+		for(int i = 0; i < toConnect.length; i++){
+			for(int j = 0; j < toConnect[i].length; j++){
+				connectNode(toConnect[i][j]);
+			}
+		}
+		return toConnect;
+	}
 }
