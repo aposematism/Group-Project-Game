@@ -1,4 +1,4 @@
-package graph.tests;
+package pathfinding.tests;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package graph;
+package pathfinding;
 
 import java.util.ArrayList;
 import java.util.Collection;

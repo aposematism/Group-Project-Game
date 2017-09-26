@@ -1,4 +1,4 @@
-package graph;
+package pathfinding;
 
 public interface Node {
 
