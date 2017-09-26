@@ -9,31 +9,29 @@ import entity.Entity;
  * @author - Jordan
  * */
 
-public class JordanNode {
+public class Tile {
 	//Node Values
 	private int x;
 	private int y;
 	//Neighbours
-	private ArrayList<JordanNode> neighbours;
-	//A* relevant 
-	public JordanNode currentNode = this;//
-	public JordanNode formerNode = null;//
-	private int ectg = 0;//estimated cost to goal.
-	private double csffs = 0; //Cost So Far From Start.
-	private boolean visited;
+	private ArrayList<Tile> neighbours;
 	//Entities list
 	private Entity mapEntity;
 	private ArrayList<Entity> interactives;
 	
-	public JordanNode(int x1, int y1){
+	public Tile(int x1, int y1){
 		x = x1;
 		y = y1;
 		visited = false;
-		neighbours = new ArrayList<JordanNode>();
+		neighbours = new ArrayList<Tile>();
 		interactives = new ArrayList<Entity>();
 	}
 
 	public void setMapEntity(Entity mapEnt) {
 		mapEntity = mapEnt;
+	}
+	
+	public ArrayList<Tile> getNeighbours(){
+		return neighbours;
 	}
 }

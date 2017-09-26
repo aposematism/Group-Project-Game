@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import entity.Entity;
-import graph.JordanNode;
+import graph.Tile;
 
 /** 
  * This class is the terrain parser, which is the first stage in the parsing process. for parsing any objects which do not interact with the player, NPCs or enemies.
@@ -15,7 +15,7 @@ import graph.JordanNode;
  * */
 public class TerrianParser{	
 	ArrayList<String[]> stringArray;
-	JordanNode[][] regionArray;
+	Tile[][] regionArray;
 	
 	/** 
 	 * This method is for the initialization of the region file.
@@ -47,10 +47,10 @@ public class TerrianParser{
 	 * @author - Jordan
 	 * */
 	public void parseStringArray(){
-		regionArray = new JordanNode[stringArray.get(0).length][stringArray.size()];
+		regionArray = new Tile[stringArray.get(0).length][stringArray.size()];
 		for(int i = 0; i < stringArray.size(); i++){
 			for(int j = 0; j < stringArray.get(i).length; j++){
-				JordanNode z = new JordanNode(i, j);
+				Tile z = new Tile(i, j);
 				z.setMapEntity(parseMapEntity(stringArray.get(i)[j]));
 				regionArray[i][j] = z;
 			}
@@ -76,10 +76,15 @@ public class TerrianParser{
 	 * This method attempts to connect the various nodes together for the parser.
 	 * @author - Jordan
 	 * */
-	public JordanNode[][] connectNetworks(JordanNode[][] toConnect){
+	public Tile[][] connectNetworks(Tile[][] toConnect){
 		for(int i = 0; i < toConnect.length; i++){
 			for(int j = 0; j < toConnect[i].length; j++){
-				connectNode(toConnect[i][j]);
+				for(int k = -1; k < 1; k++){
+					for(int l = -1; l < 1; l++){
+						toConnect[i][j].getNeighbours().add(toConnect[k][l]);
+					}
+				}
+				
 			}
 		}
 		return toConnect;
