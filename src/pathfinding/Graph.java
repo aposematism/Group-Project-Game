@@ -119,11 +119,19 @@ public class Graph {
      *            The second node.
      */
     public Optional<Path> findPath() {
-        List<Tile> tiles = solve();
-        // FIXME: check case where there is no path
-        Path path = new Path(tiles.stream().map(Tile::getLocation).collect(Collectors.toList()));
-        this.result = Optional.of(path);
-        return this.result;
+        if (this.result.isPresent()) return this.result;
+        
+        Optional<List<Tile>> tiles = solve();
+        
+        // Check if there is a valid path.
+        if (tiles.isPresent()) {
+            Path path = new Path(tiles.get().stream().map(Tile::getLocation).collect(Collectors.toList()));
+            this.result = Optional.of(path);
+            return this.result;
+        } else {
+            // Nodes are unreachable.
+            return Optional.empty();
+        }
     }
 
     /**
@@ -134,7 +142,7 @@ public class Graph {
      * Pseudocode taken from Wikipedia, licensed under CC BY-SA 3.0.
      * https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
      */
-    protected List<Tile> solve() {
+    protected Optional<List<Tile>> solve() {
         // The set of currently discovered nodes that are not evaluated yet.
         // Initially, only the start node is known.
         // openSet := {start}
@@ -155,7 +163,7 @@ public class Graph {
 
             // if current = goal
             if (current == this.destination)
-                return reconstructPath(cameFrom);
+                return Optional.of(reconstructPath(cameFrom));
 
             // openSet.Remove(current)
             openSet.remove(current);
@@ -192,8 +200,8 @@ public class Graph {
             }
         }
 
-        // return failure
-        throw new IllegalArgumentException();
+        // No path found, nodes are unreachable from eachother.
+        return Optional.empty();
     }
 
     private List<Tile> reconstructPath(Map<Tile, Tile> cameFrom) {
