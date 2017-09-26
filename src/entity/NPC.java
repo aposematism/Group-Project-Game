@@ -34,6 +34,11 @@ public class NPC extends Mob {
 	public void interact(Player player) {
 		actions.receiveAttack(this);
 	}
+	
+	@Override
+	public boolean isPenetrable() {
+	    return true;
+	}
 
 	interface Actions {
 		void attack(NPC npc);

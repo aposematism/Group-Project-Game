@@ -36,6 +36,11 @@ public class Obstacle implements Entity {
 	public void interact(Player player) {
 		policy.interact(player,this);
 	}
+	
+	@Override
+	public boolean isPenetrable() {
+	    return false;
+	}
 
 	interface Policy {
 		void interact(Player player, Obstacle obstacle);

@@ -55,6 +55,11 @@ public class Player extends Mob {
 	public Iterator<Item> getInventory(){
 		return inventory.iterator();
 	}
+	
+	@Override
+	public boolean isPenetrable() {
+	    return true;
+	}
 
 	public boolean possesses(Item item){
 		return inventory.contains(item);
