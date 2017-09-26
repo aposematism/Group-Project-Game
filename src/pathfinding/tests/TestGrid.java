@@ -14,7 +14,7 @@ import util.GridLocation;
  * An extremely basic tile grid used for testing.
  * @author dylan
  */
-public class BasicGrid implements PathfindingGrid {
+public class TestGrid implements PathfindingGrid {
     /**
      * The width of the grid.
      */
@@ -37,7 +37,7 @@ public class BasicGrid implements PathfindingGrid {
      * @param width
      * @param height
      */
-    public BasicGrid(int width, int height) {
+    public TestGrid(int width, int height) {
         this.width = width;
         this.height = height;
         
