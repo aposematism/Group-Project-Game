@@ -33,6 +33,11 @@ public class Obstacle extends Entity {
 	public String toString() {
 		return null;
 	}
+	
+	@Override
+	public boolean isPenetrable() {
+	    return false;
+	}
 
 	@Override
 	public boolean isPenetrable(){
