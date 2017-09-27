@@ -21,9 +21,9 @@ public class Item extends Entity {
 	}
 
 	public void interact(GameContext context) {
-		if(player.possesses(this))
+		if(player().possesses(this))
 			actions.use(this);
-		else if(player.getLocation().adjacent(this.getLocation()))
+		else if(player().getLocation().adjacent(this.getLocation()))
 			actions.pickup(this);
 	}
 

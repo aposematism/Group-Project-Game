@@ -9,10 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import javafx.scene.canvas.GraphicsContext;
 import model.Region;
@@ -77,11 +75,12 @@ public class GameCanvas extends Canvas {
      * Draw every entity held within the current region of this Canvas.
      */
     public void drawAll(){
-        List<Entity> entities = currentRegion.getEntities();
         int size = currentGrid.getCellSize();
 
         resetCanvas();
-        for(Entity e: entities){
+        while(currentRegion.getEntities().hasNext()){
+        	Entity e = currentRegion.getEntities().next();
+
             Point location = currentGrid.getRealCoordinates(
                     e.getLocation(), calcOffset(player));
 
@@ -90,21 +89,18 @@ public class GameCanvas extends Canvas {
         }
     }
 
-
-
-
     private void resetCanvas(){
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,this.getWidth(), this.getHeight());
     }
 
-    private Player getPlayer(List<Entity> entities){
-        for(Entity e: entities){
-            if(e.getClass().isInstance(entity.Player.class)){
-                return (Player)e;
-            }
-        }
-        throw new IllegalArgumentException("Player not found inside Region");
+    private Player getPlayer(Iterator<Entity> entities){
+    	while(entities.hasNext()){
+    		Entity e = entities.next();
+    		if(e instanceof Player)
+    			return (Player) e;
+	    }
+    	throw new IllegalArgumentException("Player not found inside Region");
     }
 
     private Point calcOffset(Player p){

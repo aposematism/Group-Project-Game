@@ -20,7 +20,7 @@ public class GameContext {
 	
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
-		this.player = new Player(new GridLocation(0,0), new Image(""), Direction.Up);
+		this.player = new Player(this, new GridLocation(0,0), new Image(""), Direction.Up);
 	}
 	
 	public static Region CreateTestRegion() {

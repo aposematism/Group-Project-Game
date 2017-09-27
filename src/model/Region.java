@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import entity.Entity;
@@ -29,6 +30,8 @@ public class Region {
 	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
 	}
+
+	public Iterator<Entity> getEntities() { return this.entities.iterator(); }
 
 	public Weather getWeather() {
 		return weather;
