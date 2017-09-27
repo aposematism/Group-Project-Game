@@ -95,8 +95,8 @@ public class GameCanvas extends Canvas {
      */
     public void drawAll(){
         int size = currentGrid.getCellSize();
-
         resetCanvas();
+
         while(currentRegion.getEntities().hasNext()){
         	Entity e = currentRegion.getEntities().next();
 
