@@ -26,8 +26,8 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(GameContext context, Tile spawnPos, Image sprite, Direction direction){
-		super(context, spawnPos, sprite, FULL_HEALTH, direction);
+	public Player(GameContext context, Image sprite, Direction direction){
+		super(context, sprite, FULL_HEALTH, direction);
 		inventory = new ArrayList<>();
 	}
 

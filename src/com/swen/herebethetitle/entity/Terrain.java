@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
  */
 public class Terrain extends Entity {
 
-    public Terrain(GameContext context, Tile tile, Image sprite){
-        super(context, tile, sprite);
+    public Terrain(GameContext context, Image sprite){
+        super(context, sprite);
     }
 
     @Override

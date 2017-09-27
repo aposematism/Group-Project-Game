@@ -14,8 +14,8 @@ public class Obstacle extends Entity {
 
 	private Policy policy;
 
-	public Obstacle(GameContext context, Tile startingPos, Image sprite){
-		super(context, startingPos, sprite);
+	public Obstacle(GameContext context, Image sprite){
+		super(context, sprite);
 	}
 
 	public void setPolicy(Policy policy){

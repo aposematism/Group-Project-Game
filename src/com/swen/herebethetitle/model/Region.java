@@ -2,10 +2,14 @@ package com.swen.herebethetitle.model;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.pathfinding.PathfindingGrid;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -15,7 +19,7 @@ import com.swen.herebethetitle.util.GridLocation;
  * @author J Woods
  * @author Dylan McKay
  */
-public class Region implements PathfindingGrid {
+public class Region implements PathfindingGrid, Iterable<Tile> {
     /**
      * The width of the grid.
      */
@@ -90,6 +94,68 @@ public class Region implements PathfindingGrid {
         cells[location.x][location.y] = tile.orElse(null);
     }
 
+    /**
+     * Removes an item from the region.
+     */
+    public void remove(Entity entity) {
+        Tile tile = getTile(entity);
+        tile.remove(entity);
+    }
+    
+    /**
+     * Gets the location of a tile in the region.
+     */
+    public GridLocation getLocation(Tile tile) {
+        for (int x=0; x<width; x++) {
+            for (int y=0; y<height; y++) {
+                GridLocation location = new GridLocation(x,y);
+                Tile currentTile = get(location);
+                
+                if (currentTile == tile)
+                    return location;
+            }
+        }
+        throw new IllegalArgumentException("tile is not present in the grid");
+    }
+    
+    /**
+     * Gets the location of an entity in the region.
+     */
+    public GridLocation getLocation(Entity entity) {
+        Optional<Tile> tile = stream()
+                .filter(t -> t.contains(entity))
+                .findAny();
+        
+        if (tile.isPresent())
+            return getLocation(tile.get());
+        else
+            throw new IllegalArgumentException("entity is not present in the region");
+    }
+    
+    /**
+     * Gets the tile that an entity is on.
+     */
+    public Tile getTile(Entity entity) {
+        GridLocation location = getLocation(entity);
+        return get(location);
+    }
+    
+    /**
+     * Attempts to get the tile a player is located on.
+     */
+    public Optional<Tile> maybeGetPlayerTile() {
+        return stream().filter(t -> t.getInteractives().stream().anyMatch(e -> e instanceof Player)).findAny();
+    }
+    
+    /**
+     * Gets the tile a player is located on.
+     * 
+     * Throws an error if the player is not in the region.
+     */
+    public Tile getPlayerTile() {
+        return maybeGetPlayerTile().get();
+    }
+
     @Override
     public Collection<Tile> getAdjacent(Tile tile) {
         GridLocation location = getLocation(tile);
@@ -111,16 +177,17 @@ public class Region implements PathfindingGrid {
             .collect(Collectors.toList());
     }
     
-    private GridLocation getLocation(Tile tile) {
-        for (int x=0; x<width; x++) {
-            for (int y=0; y<height; y++) {
-                GridLocation location = new GridLocation(x,y);
-                Tile currentTile = get(location);
-                
-                if (currentTile == tile)
-                    return location;
-            }
-        }
-        throw new IllegalArgumentException("tile is not present in the grid");
+    /**
+     * Gets a stream over all tiles in the region.
+     * There is a consistent, but unspecified ordering of the result.
+     */
+    public Stream<Tile> stream() {
+        return (Stream<Tile>)Arrays.asList(cells).stream().flatMap(row -> Arrays.asList(row).stream());
+    }
+
+    @Override
+    public Iterator<Tile> iterator() {
+        List<Tile> tiles = stream().collect(Collectors.toList());
+        return tiles.iterator();
     }
 }

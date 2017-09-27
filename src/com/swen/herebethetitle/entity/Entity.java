@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 
 import javafx.scene.image.Image;
 
@@ -13,20 +12,14 @@ import javafx.scene.image.Image;
 public abstract class Entity {
 
 	private GameContext context;
-	private Tile tile;
 	private Image sprite;
 
-	public Entity(GameContext context, Tile tile, Image sprite){
+	public Entity(GameContext context, Image sprite){
 		this.context  = context;
-		this.tile = tile;
 		this.sprite   = sprite;
 	}
 
 	public abstract void interact(GameContext context);
-
-	public Tile getTile() { return tile; }
-
-	public void setLocation(Tile tile) { this.tile = tile; }
 
 	public Image getSprite() { return sprite; }
 

@@ -2,7 +2,6 @@ package com.swen.herebethetitle.entity.npcs;
 
 import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 
 import javafx.scene.image.Image;
@@ -17,8 +16,8 @@ public class NPC extends Mob {
 
 	private Actions actions;
 
-	public NPC(GameContext context, Tile spawnPos, Image sprite, int startingHealth, Direction direction){
-		super(context, spawnPos, sprite, startingHealth, direction);
+	public NPC(GameContext context, Image sprite, int startingHealth, Direction direction){
+		super(context, sprite, startingHealth, direction);
 	}
 
 	public void ping() { actions.ping(); }

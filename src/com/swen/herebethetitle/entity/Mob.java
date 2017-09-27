@@ -26,8 +26,8 @@ public abstract class Mob extends Entity {
 
 	private Direction direction;
 
-	public Mob(GameContext context, Tile spawnTile, Image sprite, int startingHealth, Direction direction){
-		super(context, spawnTile, sprite);
+	public Mob(GameContext context, Image sprite, int startingHealth, Direction direction){
+		super(context, sprite);
 		this.health = startingHealth;
 		this.direction = direction;
 	}

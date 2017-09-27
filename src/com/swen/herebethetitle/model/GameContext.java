@@ -20,7 +20,7 @@ public class GameContext {
 		// a Tile.
 		// FIXME: fix this, add a player
 		Tile tile = this.currentRegion.get(0, 0);
-		this.player = new Player(this, tile, null, Direction.Up);
+		this.player = new Player(this, null, Direction.Up);
 		tile.add(player);
 	}
 	

@@ -31,8 +31,7 @@ public class ComplexTests extends Base {
         
         // Fill in a vertical wall right close to the left with only one empty space at the bottom.
         for (int y=0; y<grid.height - 1; y++) {
-            Tile tile = grid.get(1, y);
-            tile.setMapTerrain(new Terrain(dummyContext, tile, null));
+            grid.get(1, y).setMapTerrain(new Terrain(dummyContext, null));
         }
         
         verifyPath(grid, source, dest,
@@ -64,13 +63,11 @@ public class ComplexTests extends Base {
         // Fill in every cell except the outermost ring on the boundary.
         for (int x=1; x<grid.width - 1; x++) {
             for (int y=1; y<grid.height - 1; y++) {
-                Tile tile = grid.get(x, y);
-                tile.setMapTerrain(new Terrain(dummyContext, tile, null));
+                grid.get(x, y).setMapTerrain(new Terrain(dummyContext, null));
             }
         }
         // Set the obstacle that forces us to track over the whole boundary.
-        Tile tile = grid.get(1, 0);
-        tile.setMapTerrain(new Terrain(dummyContext, tile, null));
+        grid.get(1, 0).setMapTerrain(new Terrain(dummyContext, null));
         
         verifyPath(grid, source, dest,
                 new GridLocation(0, 0), new GridLocation(0, 1), new GridLocation(0, 2),

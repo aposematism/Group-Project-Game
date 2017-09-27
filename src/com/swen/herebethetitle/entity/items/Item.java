@@ -2,6 +2,7 @@ package com.swen.herebethetitle.entity.items;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 
 import javafx.scene.image.Image;
@@ -16,15 +17,19 @@ public class Item extends Entity {
 
 	private Actions actions;
 
-	public Item(GameContext context, Tile spawnTile, Image sprite){
-		super(context, spawnTile, sprite);
+	public Item(GameContext context, Image sprite){
+		super(context, sprite);
 	}
 
 	public void interact(GameContext context) {
-		if(player().possesses(this))
-			actions.use(this);
-		else if(player().getTile().equals(this.getTile()))
-			actions.pickup(this);
+		if(player().possesses(this)) {
+			actions.use(this, context.getCurrentRegion());
+		} else {
+		    Tile playerTile = context.getCurrentRegion().getTile(player());
+		    Tile itemTile = context.getCurrentRegion().getTile(this);
+		    if(playerTile == itemTile)
+                actions.pickup(this, context.getCurrentRegion());
+		}
 	}
 
 	public void setActions(Actions actions){
@@ -34,8 +39,8 @@ public class Item extends Entity {
 	public Actions getActions() { return this.actions; }
 
 	public interface Actions {
-		void pickup(Item item);
-		void use(Item item);
+		void pickup(Item item, Region region);
+		void use(Item item, Region region);
 		String toString();
 	}
 

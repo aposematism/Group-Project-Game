@@ -24,9 +24,9 @@ public class PlayerTests {
 			}
 		}
 
-		Player p = new Player(context, grid[2][2], null, Direction.Down);
+		Player p = new Player(context, null, Direction.Down);
 
-		Armour a = new Armour(context, grid[2][3], null, Armour.TYPE.HELMET, 3.5);
+		Armour a = new Armour(context, null, Armour.TYPE.HELMET, 3.5);
 
 
 	}

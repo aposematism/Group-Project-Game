@@ -17,8 +17,8 @@ public class Door extends Obstacle {
 
 	private final int KEY;
 
-	public Door(GameContext context, Tile startingPos, Image sprite, int key, STATE state){
-		super(context, startingPos, sprite);
+	public Door(GameContext context, Image sprite, int key, STATE state){
+		super(context, sprite);
 		KEY = key;
 		this.state = state;
 	}

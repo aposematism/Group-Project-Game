@@ -11,6 +11,7 @@ import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.util.GridLocation;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -95,10 +96,10 @@ public class GameCanvas extends Canvas {
         Point offset = calcOffset(player);
         resetCanvas();
 
-
         for(Entity back: backLayerSprites.get(currentRegion)){
+            GridLocation gridLocation = currentRegion.getLocation(back);
             Point location = currentGrid.getRealCoordinates(
-                    back.getTile().getLocation(), offset);
+                    gridLocation, offset);
 
             gc.drawImage(back.getSprite(),
                     location.x, location.y, size, size);
@@ -126,7 +127,8 @@ public class GameCanvas extends Canvas {
 
     private Point calcOffset(Player p){
         Point center = new Point((int)this.getWidth()/2, (int)this.getHeight()/2);
-        Point playerCoords = currentGrid.getRealCoordinates(p.getTile().getLocation());
+        GridLocation gridLocation = currentRegion.getLocation(p);
+        Point playerCoords = currentGrid.getRealCoordinates(gridLocation);
         return new Point(playerCoords.x-center.x, playerCoords.y-center.y);
     }
 

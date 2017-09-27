@@ -28,7 +28,7 @@ public class BasicTests extends Base {
         Tile source = grid.get(0, 0);
         Tile dest = grid.get(4, 4);
         Tile midpoint = grid.get(2, 2);
-        midpoint.setMapTerrain(new Terrain(dummyContext, midpoint, null));
+        midpoint.setMapTerrain(new Terrain(dummyContext, null));
         
         verifyPath(grid, source, dest,
                 new GridLocation(0, 0), new GridLocation(1, 1), new GridLocation(2, 1),
@@ -57,12 +57,10 @@ public class BasicTests extends Base {
         // Draw two lines right through the map to cut the dest off.
         {
             for (int y=0; y<grid.height; y++) {
-                Tile tile = grid.get(2, y);
-                tile.setMapTerrain(new Terrain(dummyContext, tile, null));
+                grid.get(2, y).setMapTerrain(new Terrain(dummyContext, null));
             }
             for (int x=0; x<grid.width; x++) {
-                Tile tile = grid.get(x, 2);
-                tile.setMapTerrain(new Terrain(dummyContext, tile, null));
+                grid.get(x, 2).setMapTerrain(new Terrain(dummyContext, null));
             }
         }
         
