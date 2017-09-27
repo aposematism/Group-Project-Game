@@ -29,7 +29,7 @@ public class GameCanvas extends Canvas {
     private Player player;
 
     private Map<Region, List<Entity>> backLayerSprites = new HashMap<>();
-    private Map<Region, List<Entity>> frontLayerSprites = new HashMap<>();
+    private Map<Entity, List<Entity>> frontLayerSprites = new HashMap<>();
 
     private GraphicsContext gc;
 
@@ -63,19 +63,16 @@ public class GameCanvas extends Canvas {
 
         if(backLayerSprites.containsKey(currentRegion)) return;
 
-        List<Entity> backEntities = new ArrayList<>();
-        List<Entity> frontEntities = new ArrayList<>();
+        backLayerSprites.put(currentRegion, new ArrayList<>());
 
         Tile[][] tiles = newRegion.getTiles();
         for(int i=0;i<tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                backEntities.add(tiles[i][j].getMapEntity());
-                frontEntities.addAll(tiles[i][j].getInteractives());
+                Tile t = tiles[i][j];
+                backLayerSprites.get(newRegion).add(t.getMapEntity());
+                frontLayerSprites.put(t.getMapEntity(), t.getInteractives());
             }
         }
-        backLayerSprites.put(newRegion, backEntities);
-        frontLayerSprites.put(newRegion, frontEntities);
-
         player = getPlayer();
     }
 
@@ -95,16 +92,21 @@ public class GameCanvas extends Canvas {
      */
     public void drawAll(){
         int size = currentGrid.getCellSize();
+        Point offset = calcOffset(player);
         resetCanvas();
 
-        while(currentRegion.getEntities().hasNext()){
-        	Entity e = currentRegion.getEntities().next();
 
+        for(Entity back: backLayerSprites.get(currentRegion)){
             Point location = currentGrid.getRealCoordinates(
-                    e.getLocation(), calcOffset(player));
+                    back.getTile().getLocation(), offset);
 
-            gc.drawImage(e.getSprite(),
+            gc.drawImage(back.getSprite(),
                     location.x, location.y, size, size);
+
+            for(Entity front: frontLayerSprites.get(back)){
+                gc.drawImage(front.getSprite(),
+                        location.x, location.y, size, size);
+            }
         }
     }
 
@@ -124,7 +126,7 @@ public class GameCanvas extends Canvas {
 
     private Point calcOffset(Player p){
         Point center = new Point((int)this.getWidth()/2, (int)this.getHeight()/2);
-        Point playerCoords = currentGrid.getRealCoordinates(p.getLocation());
+        Point playerCoords = currentGrid.getRealCoordinates(p.getTile().getLocation());
         return new Point(playerCoords.x-center.x, playerCoords.y-center.y);
     }
 
