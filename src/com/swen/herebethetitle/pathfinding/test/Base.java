@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.pathfinding.tests;
+package com.swen.herebethetitle.pathfinding.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

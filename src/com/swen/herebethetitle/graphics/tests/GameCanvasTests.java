@@ -1,4 +1,4 @@
 package com.swen.herebethetitle.graphics.tests;
 
-public class GameCanvastests {
+public class GameCanvasTests {
 }

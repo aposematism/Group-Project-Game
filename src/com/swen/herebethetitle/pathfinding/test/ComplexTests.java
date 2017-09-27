@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.pathfinding.tests;
+package com.swen.herebethetitle.pathfinding.test;
 
 import org.junit.Test;
 
