@@ -38,11 +38,6 @@ public abstract class Mob extends Entity {
 		this.direction=direction;
 	}
 
-	public void move(Direction direction){
-//		Tile loc = location.adjacent(direction)
-//		if(loc.x>=0 && loc.y>=0 )
-	}
-
 	public int getHealth(){
 		return health;
 	}
