@@ -37,6 +37,12 @@ mvn compile
 mvn verify
 ```
 
+## Layout
+
+All source code is located in the [`src/`](src/) folder.
+
+All third-party libraries can be found in JAR form inside the [`lib/`](lib/) folder.
+
 ## Libraries
 
 ### Pathfinding (Dylan McKay)
