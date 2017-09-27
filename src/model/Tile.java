@@ -19,10 +19,14 @@ public class Tile {
 	private Terrain mapTerrain;
 	private ArrayList<Entity> interactives;
 	
-	public Tile(int x1, int y1, String c){
-		this.location = new GridLocation(x1, y1);
-		neighbours = new ArrayList<Tile>();
-		interactives = new ArrayList<Entity>();
+	public Tile(int x, int y, String c){
+	    this(new GridLocation(x,y), c);
+	}
+
+	public Tile(GridLocation location, String c){
+		this.location = location;
+		this.neighbours = new ArrayList<Tile>();
+		this.interactives = new ArrayList<Entity>();
 	}
 
 	public void setMapTerrain(Terrain mapTerrain) {
