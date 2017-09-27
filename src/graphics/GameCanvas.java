@@ -14,6 +14,7 @@ import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
 import model.Region;
+import model.Tile;
 
 
 /**
@@ -27,7 +28,8 @@ public class GameCanvas extends Canvas {
     private Region currentRegion;
     private Player player;
 
-    private Map<Region, GridManager> usedRegions = new HashMap<>();
+    private Map<Region, List<Entity>> backLayerSprites = new HashMap<>();
+    private Map<Region, List<Entity>> frontLayerSprites = new HashMap<>();
 
     private GraphicsContext gc;
 
@@ -58,6 +60,23 @@ public class GameCanvas extends Canvas {
     public void switchRegions(Region newRegion){
         currentRegion = newRegion;
         resetCanvas();
+
+        if(backLayerSprites.containsKey(currentRegion)) return;
+
+        List<Entity> backEntities = new ArrayList<>();
+        List<Entity> frontEntities = new ArrayList<>();
+
+        Tile[][] tiles = newRegion.getTiles();
+        for(int i=0;i<tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                backEntities.add(tiles[i][j].getMapEntity());
+                frontEntities.addAll(tiles[i][j].getInteractives());
+            }
+        }
+        backLayerSprites.put(newRegion, backEntities);
+        frontLayerSprites.put(newRegion, frontEntities);
+
+        player = getPlayer();
     }
 
     /**
@@ -76,8 +95,8 @@ public class GameCanvas extends Canvas {
      */
     public void drawAll(){
         int size = currentGrid.getCellSize();
-
         resetCanvas();
+
         while(currentRegion.getEntities().hasNext()){
         	Entity e = currentRegion.getEntities().next();
 
@@ -94,12 +113,12 @@ public class GameCanvas extends Canvas {
         gc.fillRect(0,0,this.getWidth(), this.getHeight());
     }
 
-    private Player getPlayer(Iterator<Entity> entities){
-    	while(entities.hasNext()){
-    		Entity e = entities.next();
-    		if(e instanceof Player)
-    			return (Player) e;
-	    }
+    private Player getPlayer(){
+    	for(Entity e: frontLayerSprites.get(currentRegion)){
+    	    if(e.getClass().isInstance(Player.class)){
+    	        return (Player)e;
+            }
+        }
     	throw new IllegalArgumentException("Player not found inside Region");
     }
 
@@ -111,8 +130,7 @@ public class GameCanvas extends Canvas {
 
     private void construct(Region initialRegion){
         currentGrid = GridManager.createDefaultManager();
-        currentRegion = initialRegion;
-        player = getPlayer(currentRegion.getEntities());
+        switchRegions(initialRegion);
 
         gc = this.getGraphicsContext2D();
         gc.fillRect(0,0,this.getWidth(), this.getHeight());
