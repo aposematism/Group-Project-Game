@@ -38,9 +38,4 @@ public class Obstacle extends Entity {
 	public boolean isPenetrable() {
 	    return false;
 	}
-
-	@Override
-	public boolean isPenetrable(){
-		return false;
-	}
 }
