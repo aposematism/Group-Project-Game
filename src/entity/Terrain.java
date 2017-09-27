@@ -1,16 +1,17 @@
 package entity;
 
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.GridLocation;
 
 /**
  * Created by Mark on 27/09/17.
  */
 public class Terrain extends Entity {
 
-    public Terrain(GameContext context, GridLocation location, Image sprite){
-        super(context, location, sprite);
+    public Terrain(GameContext context, Tile tile, Image sprite){
+        super(context, tile, sprite);
     }
 
     @Override

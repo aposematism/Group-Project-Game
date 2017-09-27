@@ -1,10 +1,9 @@
 package entity.items;
 
-import entity.Entity;
-import entity.Player;
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.GridLocation;
 
 /**
  * Item - can be picked up by the player and stored in their inventory,
@@ -16,20 +15,22 @@ public class Item extends Entity {
 
 	private Actions actions;
 
-	public Item(GameContext context, GridLocation spawnLocation, Image sprite){
-		super(context, spawnLocation, sprite);
+	public Item(GameContext context, Tile spawnTile, Image sprite){
+		super(context, spawnTile, sprite);
 	}
 
 	public void interact(GameContext context) {
 		if(player().possesses(this))
 			actions.use(this);
-		else if(player().getLocation().adjacent(this.getLocation()))
+		else if(player().getTile().equals(this.getTile()))
 			actions.pickup(this);
 	}
 
 	public void setActions(Actions actions){
 		this.actions = actions;
 	}
+
+	public Actions getActions() { return this.actions; }
 
 	public interface Actions {
 		void pickup(Item item);

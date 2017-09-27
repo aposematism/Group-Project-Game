@@ -1,10 +1,9 @@
 package entity;
 
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.GridLocation;
-
-import java.util.Optional;
 
 /**
  * Overarching interface that defines all entities found in the game world.
@@ -14,20 +13,20 @@ import java.util.Optional;
 public abstract class Entity {
 
 	private GameContext context;
-	private GridLocation location;
+	private Tile tile;
 	private Image sprite;
 
-	public Entity(GameContext context, GridLocation location, Image sprite){
-		this.context = context;
-		this.location = location;
-		this.sprite = sprite;
+	public Entity(GameContext context, Tile tile, Image sprite){
+		this.context  = context;
+		this.tile = tile;
+		this.sprite   = sprite;
 	}
 
 	public abstract void interact(GameContext context);
 
-	public GridLocation getLocation() { return location; }
+	public Tile getTile() { return tile; }
 
-	public void setLocation(GridLocation location) { this.location = location; }
+	public void setLocation(Tile tile) { this.tile = tile; }
 
 	public Image getSprite() { return sprite; }
 

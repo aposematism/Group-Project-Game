@@ -1,10 +1,9 @@
 package entity.items;
 
-import entity.Player;
-import entity.items.Item;
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.GridLocation;
 
 /**
  * Special Item that is designed to fit in the armour slots in player
@@ -26,7 +25,7 @@ public class Armour extends Item {
 
 	private final double RATING;
 
-	public Armour(GameContext context, GridLocation spawnPos, Image sprite, TYPE type, double rating){
+	public Armour(GameContext context, Tile spawnPos, Image sprite, TYPE type, double rating){
 		super(context, spawnPos, sprite);
 		SLOT = type;
 		RATING = rating;

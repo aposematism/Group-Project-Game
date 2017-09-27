@@ -1,9 +1,11 @@
 package entity;
 
-import entity.Obstacle;
+
+import entity.*;
+import entity.items.Key;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.GridLocation;
 
 /**
  * Created by Mark on 19/09/2017.
@@ -16,7 +18,7 @@ public class Door extends Obstacle {
 
 	private final int KEY;
 
-	public Door(GameContext context, GridLocation startingPos, Image sprite, int key, STATE state){
+	public Door(GameContext context, Tile startingPos, Image sprite, int key, STATE state){
 		super(context, startingPos, sprite);
 		KEY = key;
 		this.state = state;
@@ -34,6 +36,8 @@ public class Door extends Obstacle {
 			//player.hasItem();
 		}
 	}
+
+
 
 	@Override
 	public boolean isPenetrable() {

@@ -1,8 +1,9 @@
 package entity;
 
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.GridLocation;
 
 /**
  * An object on the map that obstructs other entities from moving.
@@ -13,7 +14,7 @@ public class Obstacle extends Entity {
 
 	private Policy policy;
 
-	public Obstacle(GameContext context, GridLocation startingPos, Image sprite){
+	public Obstacle(GameContext context, Tile startingPos, Image sprite){
 		super(context, startingPos, sprite);
 	}
 

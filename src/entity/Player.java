@@ -1,16 +1,12 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import entity.items.Armour;
-import entity.items.Item;
-import entity.items.Weapon;
+import entity.*;
+import entity.items.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.Direction;
-import util.GridLocation;
 
 /**
  *
@@ -25,7 +21,7 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(GameContext context, GridLocation spawnPos, Image sprite, Direction direction){
+	public Player(GameContext context, Tile spawnPos, Image sprite, Direction direction){
 		super(context, spawnPos, sprite, FULL_HEALTH, direction);
 		inventory = new ArrayList<>();
 	}
@@ -35,16 +31,11 @@ public class Player extends Mob {
 	}
 
 	public boolean hasItem(Item item){
-		if(item instanceof Weapon){
-			if(item.equals(weapon))
+		if(item.equals(weapon))
+			return true;
+		for(Armour a: armour)
+			if(item.equals(a))
 				return true;
-		}
-		if(item instanceof Armour){
-			for(Armour a: armour){
-				if(item.equals(a))
-					return true;
-			}
-		}
 		return inventory.contains(item);
 	}
 

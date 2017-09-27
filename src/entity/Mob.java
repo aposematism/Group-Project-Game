@@ -1,9 +1,9 @@
 package entity;
 
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.Direction;
-import util.GridLocation;
 
 /**
  * Provides the basic implementation of functions that both Player and NPC would use,
@@ -25,8 +25,8 @@ public abstract class Mob extends Entity {
 
 	private Direction direction;
 
-	public Mob(GameContext context, GridLocation spawnLocation, Image sprite, int startingHealth, Direction direction){
-		super(context, spawnLocation, sprite);
+	public Mob(GameContext context, Tile spawnTile, Image sprite, int startingHealth, Direction direction){
+		super(context, spawnTile, sprite);
 		this.health = startingHealth;
 		this.direction = direction;
 	}
@@ -40,7 +40,7 @@ public abstract class Mob extends Entity {
 	}
 
 	public void move(Direction direction){
-//		GridLocation loc = location.adjacent(direction)
+//		Tile loc = location.adjacent(direction)
 //		if(loc.x>=0 && loc.y>=0 )
 	}
 

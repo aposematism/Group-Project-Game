@@ -1,11 +1,9 @@
 package entity.npcs;
 
-import entity.Mob;
-import entity.Player;
+import entity.*;
+import model.*;
+import util.*;
 import javafx.scene.image.Image;
-import model.GameContext;
-import util.Direction;
-import util.GridLocation;
 
 /**
  * NPC - Non Player Character - will be used for representing monsters and potentially other types of NPC
@@ -17,7 +15,7 @@ public class NPC extends Mob {
 
 	private Actions actions;
 
-	public NPC(GameContext context, GridLocation spawnPos, Image sprite, int startingHealth, Direction direction){
+	public NPC(GameContext context, Tile spawnPos, Image sprite, int startingHealth, Direction direction){
 		super(context, spawnPos, sprite, startingHealth, direction);
 	}
 

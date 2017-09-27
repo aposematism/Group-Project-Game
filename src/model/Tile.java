@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import entity.Entity;
+import entity.*;
 import util.GridLocation;
 
 /** 
@@ -16,7 +16,7 @@ public class Tile {
 	//Neighbours
 	private ArrayList<Tile> neighbours;
 	//Entities list
-	private Entity mapEntity;
+	private Terrain mapTerrain;
 	private ArrayList<Entity> interactives;
 	
 	public Tile(int x1, int y1, String c){
@@ -25,12 +25,30 @@ public class Tile {
 		interactives = new ArrayList<Entity>();
 	}
 
-	public void setMapEntity(Entity mapEnt) {
-		mapEntity = mapEnt;
+	public void setMapTerrain(Terrain mapTerrain) {
+		this.mapTerrain = mapTerrain;
 	}
 	
 	public ArrayList<Tile> getNeighbours(){
 		return neighbours;
+	}
+
+	public boolean contains(Entity entity) { return interactives.contains(entity); }
+
+	public boolean remove(Entity entity) { return interactives.remove(entity); }
+
+	public void add(Entity entity) { interactives.add(entity); }
+
+	/**
+	 * Checks if neighbouring tiles contain the specified entity
+	 * @param entity
+	 * @return
+	 */
+	public boolean neighboursContain(Entity entity){
+		for(Tile t: neighbours)
+			if(t.interactives.contains(entity))
+				return true;
+		return false;
 	}
 
 	@Override
@@ -43,7 +61,7 @@ public class Tile {
 	 */
 	public boolean isPenetrable() {
 	    // Check if there is a map entity that can't be passed through.
-	    if (mapEntity != null && !mapEntity.isPenetrable())
+	    if (mapTerrain != null && !mapTerrain.isPenetrable())
 	        return false;
 
 	    // If every interactive entity in the tile is penetrable, then the tile is too.
