@@ -20,17 +20,22 @@ public class GameContext {
 	
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
-		this.player = new Player(this, new GridLocation(0,0), new Image(""), Direction.Up);
+		this.player = new Player(this, currentRegion.getTiles()[0][0], new Image(""), Direction.Up);
 	}
 	
 	public static Region CreateTestRegion() {
 		/*define weather*/
 		Region.Weather weather = Region.Weather.SUNNY;
-		/*create world objects*/
-		ArrayList<Entity> worldObjects = new ArrayList<Entity>();
+
+		Tile[][] tiles = new Tile[10][10];
+		for(int col=0;col<tiles[0].length;col++){
+			for(int row=0;row<tiles.length;row++){
+				tiles[col][row] = new Tile(col, row, "");
+			}
+		}
 		
 		/*create test region*/
-		return new Region(weather, worldObjects);
+		return new Region(weather, tiles);
 	}
 	
 	public Region getCurrentRegion() { return this.currentRegion; }
