@@ -14,18 +14,20 @@ import entity.Entity;
 public class Region {
 	private Weather weather;
 	private List<Entity> entities;
+
+	private Tile[][] tiles;
 	
 	public Region(Weather w, ArrayList<Entity> o) {
 		this.weather = w;
 		this.entities = o;
 	}
 	
-	public List<Entity> getEntities() {
-		return entities;
+	public Tile[][] getTiles() {
+		return tiles;
 	}
 
-	public void setEntities(ArrayList<Entity> worldObjects) {
-		this.entities = worldObjects;
+	public void setTiles(Tile[][] tiles) {
+		this.tiles = tiles;
 	}
 
 	public Weather getWeather() {
