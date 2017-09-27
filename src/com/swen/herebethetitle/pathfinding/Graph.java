@@ -112,11 +112,6 @@ public class Graph {
      * 
      * The ordering of the parameters does not matter, as the path will always
      * be the same.
-     * 
-     * @param a
-     *            The first node.
-     * @param b
-     *            The second node.
      */
     public Optional<Path> findPath() {
         if (this.result.isPresent()) return this.result;
