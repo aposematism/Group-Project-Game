@@ -4,13 +4,23 @@
 
 ## Developers
 
-| Name           | Handle      | Maintains     | Code Reviews | Tests |
-|----------------|-------------|---------------|--------------|-------|
-| Dylan McKay    | @mckaydyla  | Pathfinding   |
-| Mark Metcalfe  | @metcalmark | Entity system |
-| Jacob Woods    | @mckiewjaco | Game model    |
-| Jordan Milburn | @milburjord | Map parser    |
-| Josh Weir      | @weirjosh   | JavaFX GUI    |
+| Name           | Handle      | Maintains     | Code Reviews | Tests | Git log
+|----------------|-------------|---------------|--------------|-------|--------
+| Dylan McKay    | @mckaydyla  | Pathfinding   |              |       | `git log --author="Dylan McKay"`
+| Mark Metcalfe  | @metcalmark | Entity system |              |       | `git log --author="Mark Metcalfe"`
+| Jacob Woods    | @mckiewjaco | Game model    |              |       | `git log --author="J Woods"`
+| Jordan Milburn | @milburjord | Map parser    |              |       | `git log --author="Aposematism"`
+| Josh Weir      | @weirjosh   | JavaFX GUI    |              |       | `git log --author="Josh"`
+
+## Statistics and information
+
+| Name                      | Link
+|---------------------------|-----
+| Commit log                | [GitLab](https://gitlab.ecs.vuw.ac.nz/metcalmark/swen-222-group-project/commits/master)
+| Branch list               | [GitLab](https://gitlab.ecs.vuw.ac.nz/metcalmark/swen-222-group-project/branches)
+| Commit versus time graphs | [GitLab](https://gitlab.ecs.vuw.ac.nz/metcalmark/swen-222-group-project/graphs/master)
+| History tree              | [GitLab](https://gitlab.ecs.vuw.ac.nz/metcalmark/swen-222-group-project/network/master)
+
 
 ## Usage
 
