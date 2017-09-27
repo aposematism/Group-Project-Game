@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import entity.Entity;
 import util.GridLocation;
@@ -32,6 +33,10 @@ public class Tile {
 	public void setMapEntity(Entity mapEnt) {
 		mapEntity = mapEnt;
 	}
+
+	public Entity getMapEntity(){return mapEntity;}
+
+	public List<Entity> getInteractives(){return interactives;}
 	
 	public ArrayList<Tile> getNeighbours(){
 		return neighbours;
