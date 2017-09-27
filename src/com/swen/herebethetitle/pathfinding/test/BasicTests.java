@@ -5,30 +5,31 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 import com.swen.herebethetitle.entity.Terrain;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
 
 public class BasicTests extends Base {
     @Test
     public void canFindOptimalPathWhenSimpleDiagonalLine() {
-        TestGrid grid = new TestGrid(5, 5);
-        Tile source = grid.get(0, 0);
-        Tile dest = grid.get(4, 4);
+        Region region = new Region(5, 5);
+        Tile source = region.get(0, 0);
+        Tile dest = region.get(4, 4);
         
-        verifyPath(grid, source, dest,
+        verifyPath(region, source, dest,
                 new GridLocation(0, 0), new GridLocation(1, 1), new GridLocation(2, 2),
                 new GridLocation(3, 3), new GridLocation(4, 4));
     }
     
     @Test
     public void canRouteAroundImpenetrableObstacles() {
-        TestGrid grid = new TestGrid(5, 5);
-        Tile source = grid.get(0, 0);
-        Tile dest = grid.get(4, 4);
-        Tile midpoint = grid.get(2, 2);
+        Region region = new Region(5, 5);
+        Tile source = region.get(0, 0);
+        Tile dest = region.get(4, 4);
+        Tile midpoint = region.get(2, 2);
         midpoint.setMapTerrain(new Terrain(null));
         
-        verifyPath(grid, source, dest,
+        verifyPath(region, source, dest,
                 new GridLocation(0, 0), new GridLocation(1, 1), new GridLocation(2, 1),
                 new GridLocation(3, 2), new GridLocation(4, 3), new GridLocation(4, 4));
     }
@@ -47,21 +48,21 @@ public class BasicTests extends Base {
      */
     @Test
     public void returnsNoPathWhenUnreachable() {
-        TestGrid grid = new TestGrid(5, 5);
-        Tile source = grid.get(0, 0);
-        Tile dest = grid.get(4, 4);
+        Region region = new Region(5, 5);
+        Tile source = region.get(0, 0);
+        Tile dest = region.get(4, 4);
 
         // Draw two lines right through the map to cut the dest off.
         {
-            for (int y=0; y<grid.height; y++) {
-                grid.get(2, y).setMapTerrain(new Terrain(null));
+            for (int y=0; y<region.height; y++) {
+                region.get(2, y).setMapTerrain(new Terrain(null));
             }
-            for (int x=0; x<grid.width; x++) {
-                grid.get(x, 2).setMapTerrain(new Terrain(null));
+            for (int x=0; x<region.width; x++) {
+                region.get(x, 2).setMapTerrain(new Terrain(null));
             }
         }
         
-        verifyUnreachable(grid, source, dest);
+        verifyUnreachable(region, source, dest);
     }
     
     // There was a point where routing was indeterministic because hashCode was not implemented

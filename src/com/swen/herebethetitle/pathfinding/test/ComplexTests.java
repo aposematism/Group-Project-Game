@@ -3,6 +3,7 @@ package com.swen.herebethetitle.pathfinding.test;
 import org.junit.Test;
 
 import com.swen.herebethetitle.entity.Terrain;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -23,16 +24,16 @@ public class ComplexTests extends Base {
      */
     @Test
     public void canRouteAroundObnoxiousWall() {
-        TestGrid grid = new TestGrid(5, 5);
-        Tile source = grid.get(0, 0);
-        Tile dest = grid.get(4, 4);
+        Region region = new Region(5, 5);
+        Tile source = region.get(0, 0);
+        Tile dest = region.get(4, 4);
         
         // Fill in a vertical wall right close to the left with only one empty space at the bottom.
-        for (int y=0; y<grid.height - 1; y++) {
-            grid.get(1, y).setMapTerrain(new Terrain(null));
+        for (int y=0; y<region.height - 1; y++) {
+            region.get(1, y).setMapTerrain(new Terrain(null));
         }
         
-        verifyPath(grid, source, dest,
+        verifyPath(region, source, dest,
                 new GridLocation(0, 0), new GridLocation(0, 1), new GridLocation(0, 2),
                 new GridLocation(0, 3), new GridLocation(1, 4), new GridLocation(2, 4),
                 new GridLocation(3, 4), new GridLocation(4, 4));
@@ -53,20 +54,20 @@ public class ComplexTests extends Base {
      */
     @Test
     public void canRouteAroundGridBoundaryWhenForced() {
-        TestGrid grid = new TestGrid(5, 5);
-        Tile source = grid.get(0, 0);
-        Tile dest = grid.get(2, 0);
+        Region region = new Region(5, 5);
+        Tile source = region.get(0, 0);
+        Tile dest = region.get(2, 0);
         
         // Fill in every cell except the outermost ring on the boundary.
-        for (int x=1; x<grid.width - 1; x++) {
-            for (int y=1; y<grid.height - 1; y++) {
-                grid.get(x, y).setMapTerrain(new Terrain(null));
+        for (int x=1; x<region.width - 1; x++) {
+            for (int y=1; y<region.height - 1; y++) {
+                region.get(x, y).setMapTerrain(new Terrain(null));
             }
         }
         // Set the obstacle that forces us to track over the whole boundary.
-        grid.get(1, 0).setMapTerrain(new Terrain(null));
+        region.get(1, 0).setMapTerrain(new Terrain(null));
         
-        verifyPath(grid, source, dest,
+        verifyPath(region, source, dest,
                 new GridLocation(0, 0), new GridLocation(0, 1), new GridLocation(0, 2),
                 new GridLocation(0, 3), new GridLocation(0, 4), new GridLocation(1, 4),
                 new GridLocation(2, 4), new GridLocation(3, 4), new GridLocation(4, 3),
