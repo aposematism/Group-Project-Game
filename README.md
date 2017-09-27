@@ -33,7 +33,14 @@ mvn verify
 
 [`com.swen.herebethetitle.pathfinding`](src/com/swen/herebethetitle/pathfinding)
 
-<information here>
+This library implements the [A*](https://en.wikipedia.org/wiki/A*_search_algorithm) search algorithm.
+
+This is used by the other libraries to perform tasks such as plotting a path for an enemy
+to take in order to attack the player.
+
+Tests are located inside the [`com.swen.herebethetitle.pathfinding.test`](src/com/swen/herebethetitle/pathfinding/test) package.
+
+Pathfinding is done via the [`Graph`](src/com/swen/herebethetitle/pathfinding/Graph.java) class with the `findPath` method in particular.
 
 ### Entity system (Mark Metcalfe)
 
