@@ -67,17 +67,12 @@ public class Player extends Mob {
 
 	/**
 	 * Doesn't do anything, can't interact with itself
-	 * @param player
+	 * @param
 	 */
 	public void interact(GameContext context){}
 
 	@Override
 	public String toString() {
 		return null;
-	}
-
-	@Override
-	public boolean isPenetrable(){
-		return false;
 	}
 }
