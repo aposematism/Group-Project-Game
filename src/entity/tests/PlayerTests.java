@@ -1,10 +1,10 @@
 package entity.tests;
 
 import entity.*;
+import entity.items.Armour;
 import util.*;
 import javafx.scene.image.Image;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 /**

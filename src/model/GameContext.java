@@ -34,4 +34,6 @@ public class GameContext {
 	}
 	
 	public Region getCurrentRegion() { return this.currentRegion; }
+
+	public Player getPlayer() { return this.player; }
 }

@@ -1,6 +1,7 @@
 package entity;
 
 import javafx.scene.image.Image;
+import model.GameContext;
 import util.GridLocation;
 
 /**
@@ -8,29 +9,16 @@ import util.GridLocation;
  *
  * Created by Mark on 19/09/2017.
  */
-public class Obstacle implements Entity {
+public class Obstacle extends Entity {
 
 	private Policy policy;
 
-	private GridLocation location;
-
-	private Image sprite;
-
-	public Obstacle(GridLocation startingPos, Image sprite){
-		location = startingPos;
-		this.sprite = sprite;
+	public Obstacle(GameContext context, GridLocation startingPos, Image sprite){
+		super(context, startingPos, sprite);
 	}
 
 	public void setPolicy(Policy policy){
 		this.policy=policy;
-	}
-
-	public GridLocation getLocation() {
-		return location;
-	}
-
-	public Image getSprite(){
-		return sprite;
 	}
 
 	public void interact(Player player) {
@@ -39,5 +27,15 @@ public class Obstacle implements Entity {
 
 	interface Policy {
 		void interact(Player player, Obstacle obstacle);
+	}
+
+	@Override
+	public String toString() {
+		return null;
+	}
+
+	@Override
+	public boolean isPenetrable(){
+		return false;
 	}
 }

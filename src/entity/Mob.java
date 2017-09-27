@@ -1,6 +1,7 @@
 package entity;
 
 import javafx.scene.image.Image;
+import model.GameContext;
 import util.Direction;
 import util.GridLocation;
 
@@ -10,7 +11,7 @@ import util.GridLocation;
  *
  * Created by Mark on 19/09/17.
  */
-public abstract class Mob implements Entity {
+public abstract class Mob extends Entity {
 	/**
 	 * A full health value.
 	 */
@@ -22,15 +23,12 @@ public abstract class Mob implements Entity {
 
 	private int health;
 
-	private GridLocation location;
 	private Direction direction;
-	private Image sprite;
 
-	public Mob(GridLocation spawnLocation, int startingHealth, Direction direction, Image sprite){
-		this.location = spawnLocation;
+	public Mob(GameContext context, GridLocation spawnLocation, Image sprite, int startingHealth, Direction direction){
+		super(context, spawnLocation, sprite);
 		this.health = startingHealth;
 		this.direction = direction;
-		this.sprite = sprite;
 	}
 
 	public Direction getDirection(){
@@ -39,14 +37,6 @@ public abstract class Mob implements Entity {
 
 	public void setDirection(Direction direction){
 		this.direction=direction;
-	}
-
-	public GridLocation getLocation(){
-		return location;
-	}
-
-	public Image getSprite(){
-		return sprite;
 	}
 
 	public void move(Direction direction){

@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import entity.items.Armour;
+import entity.items.Item;
+import entity.items.Weapon;
 import javafx.scene.image.Image;
+import model.GameContext;
 import util.Direction;
 import util.GridLocation;
 
@@ -21,31 +25,27 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(GridLocation spawnPos, Image sprite, int startingHealth, Direction direction){
-		super(spawnPos, startingHealth, direction, sprite);
+	public Player(GameContext context, GridLocation spawnPos, Image sprite, Direction direction){
+		super(context, spawnPos, sprite, FULL_HEALTH, direction);
 		inventory = new ArrayList<>();
-	}
-
-	public Player(GridLocation spawnPos, Image sprite, Direction direction) {
-		this(spawnPos, sprite, FULL_HEALTH, direction);
 	}
 
 	public void addItem(Item item){
 		inventory.add(item);
 	}
 
-	private void addWeapon(Weapon weapon){
-		weapon.setLocation(GridLocation.OFF_GRID);
-		if(this.weapon==null || weapon.getStrength()>this.weapon.getStrength())
-			this.weapon = weapon;
-	}
-
-	private void addArmour(Armour armour){
-		armour.setLocation(GridLocation.OFF_GRID);
-		if(this.armour[armour.getSlot().ordinal()]==null)
-			this.armour[armour.getSlot().ordinal()] = armour;
-		else if(armour.getRating() > this.armour[armour.getSlot().ordinal()].getRating())
-			this.armour[armour.getSlot().ordinal()] = armour;
+	public boolean hasItem(Item item){
+		if(item instanceof Weapon){
+			if(item.equals(weapon))
+				return true;
+		}
+		if(item instanceof Armour){
+			for(Armour a: armour){
+				if(item.equals(a))
+					return true;
+			}
+		}
+		return inventory.contains(item);
 	}
 
 	public void clearInventory(){
@@ -65,4 +65,14 @@ public class Player extends Mob {
 	 * @param player
 	 */
 	public void interact(Player player){}
+
+	@Override
+	public String toString() {
+		return null;
+	}
+
+	@Override
+	public boolean isPenetrable(){
+		return false;
+	}
 }
