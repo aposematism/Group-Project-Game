@@ -55,7 +55,8 @@ public class GameCanvas extends Canvas {
 
     /**
      * Will update the region that gets drawn to this canvas
-     * @param newRegion The new region to draw all the entities of
+     * @param newRegion The new region to draw all the entities of. This region MUST contain
+     *                  a Player Entity.
      */
     public void switchRegions(Region newRegion){
         currentRegion = newRegion;
