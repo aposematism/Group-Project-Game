@@ -1,7 +1,5 @@
 package com.swen.herebethetitle.util;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.InputMismatchException;
 
 /**
@@ -36,7 +34,6 @@ public final class GridLocation {
 	 * @param direction
 	 * @return
 	 */
-	@NotNull
 	public GridLocation adjacent(Direction direction){
 		switch(direction){
 			case Up:    return new GridLocation(x, y-1);
