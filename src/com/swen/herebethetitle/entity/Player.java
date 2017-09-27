@@ -1,12 +1,7 @@
 package com.swen.herebethetitle.entity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Weapon;
+import java.util.*;
+import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 
@@ -21,21 +16,17 @@ public class Player extends Mob {
 
 	private List<Item> inventory;
 
-	private Armour[] armour = new Armour[Armour.TYPE.values().length];
+	private ArmourSlots armour = new ArmourSlots();
 
-	private Weapon weapon;
+	private Optional<Weapon> weapon;
 
 	public Player(Image sprite, Direction direction){
 		super(sprite, FULL_HEALTH, direction);
 		inventory = new ArrayList<>();
 	}
 
-	public void addItem(Item item){
-		inventory.add(item);
-	}
-
-	public boolean hasItem(Item item){
-		if(item.equals(weapon))
+	public boolean possesses(Item item){
+		if(weapon.isPresent() && item.equals(weapon))
 			return true;
 		for(Armour a: armour)
 			if(item.equals(a))
@@ -43,21 +34,68 @@ public class Player extends Mob {
 		return inventory.contains(item);
 	}
 
-	public void clearInventory(){
-		inventory.clear();
+	public void addItem(Item item) {
+		if(item instanceof Weapon)
+			weapon = Optional.of((Weapon)item);
+		else if(item instanceof Armour)
+			armour.set((Armour)item);
+		else
+			inventory.add(item);
 	}
 
-	public Iterator<Item> getInventory(){
-		return inventory.iterator();
-	}
-	
 	@Override
-	public boolean isPenetrable() {
-	    return true;
+	public void damage(int amount) {
+		double armourTotal = 0;
+		for(Armour a: armour)
+			armourTotal += a.getRating();
+		health -= amount * ((100 - armourTotal)/100);
 	}
 
-	public boolean possesses(Item item){
-		return inventory.contains(item);
+	public Iterator<Item> getInventory() { return inventory.iterator(); }
+
+	public Optional<Weapon> getWeapon() { return this.weapon; }
+
+	public ArmourSlots getArmour() { return this.armour; }
+
+	public void clearInventory() { inventory.clear(); }
+
+	@Override
+	public boolean isPenetrable() { return true; }
+
+	@Override
+	public String toString() { return null; }
+
+	public class ArmourSlots implements Iterable<Armour> {
+		Armour[] slots = new Armour[Armour.TYPE.values().length];
+		public boolean has(Armour.TYPE type) { return slots[type.ordinal()] != null; }
+		public void set(Armour armour) { this.slots[armour.getSlot().ordinal()] = armour; }
+		public Armour get(Armour.TYPE type) { return this.slots[type.ordinal()]; }
+
+		@Override
+		public Iterator<Armour> iterator() {
+			return new Iterator<Armour>() {
+
+				private int currentIndex = 0;
+
+				@Override
+				public boolean hasNext() {
+					for(int i=currentIndex; i<slots.length; i++)
+						if(slots[i]!=null)
+							return true;
+					return false;
+				}
+
+				@Override
+				public Armour next() {
+					for(int i=currentIndex; i<slots.length; i++)
+						if(slots[i]!=null){
+							currentIndex++;
+							return slots[i];
+						}
+					return null;
+				}
+			};
+		}
 	}
 
 	/**
@@ -65,9 +103,4 @@ public class Player extends Mob {
 	 * @param
 	 */
 	public void interact(GameContext context){}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 }

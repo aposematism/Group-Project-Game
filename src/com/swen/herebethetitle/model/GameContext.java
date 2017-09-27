@@ -2,6 +2,7 @@ package com.swen.herebethetitle.model;
 
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.util.Direction;
+import javafx.scene.image.Image;
 
 /**
  * Top-level class for dealing with game model information.
@@ -15,7 +16,7 @@ public class GameContext {
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
 
-		this.player = new Player(null, Direction.Up);
+		this.player = new Player(new Image(""), Direction.Up);
 		this.currentRegion.get(0, 0).add(player);
 	}
 	
