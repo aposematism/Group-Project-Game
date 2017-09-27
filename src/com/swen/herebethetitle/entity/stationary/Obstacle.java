@@ -1,5 +1,6 @@
-package com.swen.herebethetitle.entity;
+package com.swen.herebethetitle.entity.stationary;
 
+import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.model.GameContext;
 
 import javafx.scene.image.Image;

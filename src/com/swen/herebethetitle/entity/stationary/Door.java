@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.entity;
+package com.swen.herebethetitle.entity.stationary;
 
 
 import com.swen.herebethetitle.model.GameContext;
@@ -34,8 +34,6 @@ public class Door extends Obstacle {
 			//player.hasItem();
 		}
 	}
-
-
 
 	@Override
 	public boolean isPenetrable() {
