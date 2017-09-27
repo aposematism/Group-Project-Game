@@ -1,18 +1,17 @@
 package graphics;
 
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import entity.Entity;
 import entity.Player;
-import exceptions.NotImplementedYetException;
-
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
-
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.Region;
 import model.Tile;
 
@@ -66,12 +65,11 @@ public class GameCanvas extends Canvas {
 
         backLayerSprites.put(currentRegion, new ArrayList<>());
 
-        Tile[][] tiles = newRegion.getTiles();
-        for(int i=0;i<tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                Tile t = tiles[i][j];
-                backLayerSprites.get(newRegion).add(t.getMapEntity());
-                frontLayerSprites.put(t.getMapEntity(), t.getInteractives());
+        for(int x=0;x<newRegion.width; x++) {
+            for (int y = 0; y < newRegion.height; y++) {
+                Tile t = newRegion.get(x, y);
+                backLayerSprites.get(newRegion).add(t.getMapTerrain());
+                frontLayerSprites.put(t.getMapTerrain(), t.getInteractives());
             }
         }
         player = getPlayer();

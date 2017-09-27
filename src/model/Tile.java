@@ -33,8 +33,10 @@ public class Tile {
 	public void setMapTerrain(Terrain mapTerrain) {
 		this.mapTerrain = mapTerrain;
 	}
-
-	public Entity getMapEntity(){return mapEntity;}
+	
+	public Terrain getMapTerrain() {
+	    return this.mapTerrain;
+	}
 
 	public List<Entity> getInteractives(){return interactives;}
 	

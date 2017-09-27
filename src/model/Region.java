@@ -1,55 +1,126 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import entity.Entity;
+import pathfinding.PathfindingGrid;
+import util.GridLocation;
 
 /**
  * Representation of a game region, which could be inside or outside.
  * For now, weather information is internal.
  * @author J Woods
- *
+ * @author Dylan McKay
  */
-public class Region {
-	private Weather weather;
-	private List<Entity> entities;
+public class Region implements PathfindingGrid {
+    /**
+     * The width of the grid.
+     */
+    public final int width;
+    
+    /**
+     * The height of the grid.
+     */
+    public final int height;
+    
+    /**
+     * The cells in the grid.
+     * 
+     * Index in terms of [x][y].
+     */
+    private Tile[][] cells;
+    
+    /**
+     * Creates a new basic grid.
+     * @param width
+     * @param height
+     */
+    public Region(int width, int height) {
+        this.width = width;
+        this.height = height;
+        
+        this.cells = new Tile[width][height];
+        for (int x=0; x<width; x++) {
+            for (int y=0; y<height; y++) {
+                String character = String.format("%d:%d", x, y);
+                set(new GridLocation(x,y), new Tile(x, y, character));
+            }
+        }
+    }
+    
+    /**
+     * Gets the tile at a location.
+     */
+    public Tile get(GridLocation location) {
+        return cells[location.x][location.y];
+    }
+    
+    /**
+     * Gets the tile at a location.
+     */
+    public Tile get(int x, int y) {
+        return get(new GridLocation(x, y));
+    }
+    
+    /**
+     * Gets a tile at a location if the location is in bounds.
+     */
+    public Optional<Tile> tryGet(GridLocation location) {
+        if (location.x < 0 || location.x >= width ||
+                location.y < 0 || location.y >= height)
+            return Optional.empty();
+        
+        return Optional.of(get(location));
+    }
+    
+    /**
+     * Places a tile at a location.
+     */
+    public void set(GridLocation location, Tile tile) {
+        set(location, Optional.of(tile));
+    }
+    
+    /**
+     * Places a tile at a location.
+     */
+    public void set(GridLocation location, Optional<Tile> tile) {
+        cells[location.x][location.y] = tile.orElse(null);
+    }
 
-	private Tile[][] tiles;
-	
-	public Region(Weather w, Tile[][] tiles) {
-		this.weather = w;
-		this.tiles = tiles;
-	}
-	
-	public Tile[][] getTiles() {
-		return tiles;
-	}
+    @Override
+    public Collection<Tile> getAdjacent(Tile tile) {
+        GridLocation location = getLocation(tile);
 
-	public void setTiles(Tile[][] tiles) {
-		this.tiles = tiles;
-	}
+        List<Optional<Tile>> tiles = Arrays.asList(
+            tryGet(location.add(new GridLocation(-1, +0))), // left
+            tryGet(location.add(new GridLocation(-1, -1))), // top-left
+            tryGet(location.add(new GridLocation(+0, -1))), // top
+            tryGet(location.add(new GridLocation(+1, -1))), // top-right
+            tryGet(location.add(new GridLocation(+1, +0))), // right
+            tryGet(location.add(new GridLocation(+1, +1))), // bottom-right
+            tryGet(location.add(new GridLocation(+0, +1))), // bottom
+            tryGet(location.add(new GridLocation(-1, +1)))  // bottom-left
+        );
 
-	public Iterator<Entity> getEntities() { return this.entities.iterator(); }
-
-	public Weather getWeather() {
-		return weather;
-	}
-
-	public void setWeather(Weather weather) {
-		this.weather = weather;
-	}
-
-	/**
-	 * Enumerations for weather in regions.
-	 * @author J Woods
-	 *
-	 */
-	static enum Weather{
-		SUNNY,
-		RAINY,
-		SNOWY,
-		FOGGY
-	}
+        return tiles.stream()
+            .filter(t -> t.isPresent())
+            .map(Optional::get)
+            .collect(Collectors.toList());
+    }
+    
+    private GridLocation getLocation(Tile tile) {
+        for (int x=0; x<width; x++) {
+            for (int y=0; y<height; y++) {
+                GridLocation location = new GridLocation(x,y);
+                Tile currentTile = get(location);
+                
+                if (currentTile == tile)
+                    return location;
+            }
+        }
+        throw new IllegalArgumentException("tile is not present in the grid");
+    }
 }
