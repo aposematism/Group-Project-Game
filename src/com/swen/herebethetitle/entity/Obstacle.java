@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 
 import javafx.scene.image.Image;
 
@@ -14,8 +13,8 @@ public class Obstacle extends Entity {
 
 	private Policy policy;
 
-	public Obstacle(GameContext context, Image sprite){
-		super(context, sprite);
+	public Obstacle(Image sprite){
+		super(sprite);
 	}
 
 	public void setPolicy(Policy policy){

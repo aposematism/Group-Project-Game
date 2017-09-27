@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 
 import javafx.scene.image.Image;
 
@@ -10,8 +9,8 @@ import javafx.scene.image.Image;
  */
 public class Terrain extends Entity {
 
-    public Terrain(GameContext context, Image sprite){
-        super(context, sprite);
+    public Terrain(Image sprite){
+        super(sprite);
     }
 
     @Override

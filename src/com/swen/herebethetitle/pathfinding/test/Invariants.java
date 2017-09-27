@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Terrain;
-import com.swen.herebethetitle.model.GameContext;
 
 /**
  * Tests invariants that must be true for pathfinding to work correctly.
@@ -15,9 +14,7 @@ import com.swen.herebethetitle.model.GameContext;
 public class Invariants {
     @Test
     public void obstacleEntityIsImpenetrable() {
-        GameContext dummyContext = new GameContext();
-
-        Entity terrain = new Terrain(dummyContext, null);
+        Entity terrain = new Terrain(null);
         assertFalse(terrain.isPenetrable());
     }
 }

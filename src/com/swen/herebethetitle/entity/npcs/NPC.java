@@ -16,8 +16,8 @@ public class NPC extends Mob {
 
 	private Actions actions;
 
-	public NPC(GameContext context, Image sprite, int startingHealth, Direction direction){
-		super(context, sprite, startingHealth, direction);
+	public NPC(Image sprite, int startingHealth, Direction direction){
+		super(sprite, startingHealth, direction);
 	}
 
 	public void ping() { actions.ping(); }

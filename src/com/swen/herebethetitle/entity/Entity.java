@@ -10,20 +10,15 @@ import javafx.scene.image.Image;
  * Created by Mark on 19/09/17.
  */
 public abstract class Entity {
-
-	private GameContext context;
 	private Image sprite;
 
-	public Entity(GameContext context, Image sprite){
-		this.context  = context;
-		this.sprite   = sprite;
+	public Entity(Image sprite){
+		this.sprite = sprite;
 	}
 
 	public abstract void interact(GameContext context);
 
 	public Image getSprite() { return sprite; }
-
-	public Player player() { return context.getPlayer(); }
 
 	public abstract String toString();
 

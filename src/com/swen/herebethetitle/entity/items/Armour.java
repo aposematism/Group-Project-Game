@@ -25,8 +25,8 @@ public class Armour extends Item {
 
 	private final double RATING;
 
-	public Armour(GameContext context, Image sprite, TYPE type, double rating){
-		super(context, sprite);
+	public Armour(Image sprite, TYPE type, double rating){
+		super(sprite);
 		SLOT = type;
 		RATING = rating;
 	}

@@ -15,13 +15,8 @@ public class GameContext {
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
 
-		// every time you make two objects own eachother a kitten dies
-		// somebody please, please make Entity store a GridLocation instead of
-		// a Tile.
-		// FIXME: fix this, add a player
-		Tile tile = this.currentRegion.get(0, 0);
-		this.player = new Player(this, null, Direction.Up);
-		tile.add(player);
+		this.player = new Player(null, Direction.Up);
+		this.currentRegion.get(0, 0).add(player);
 	}
 	
 	public static Region CreateTestRegion() {

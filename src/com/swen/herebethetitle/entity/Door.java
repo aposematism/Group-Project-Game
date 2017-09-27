@@ -2,7 +2,6 @@ package com.swen.herebethetitle.entity;
 
 
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 
 import javafx.scene.image.Image;
 
@@ -17,8 +16,8 @@ public class Door extends Obstacle {
 
 	private final int KEY;
 
-	public Door(GameContext context, Image sprite, int key, STATE state){
-		super(context, sprite);
+	public Door(Image sprite, int key, STATE state){
+		super(sprite);
 		KEY = key;
 		this.state = state;
 	}

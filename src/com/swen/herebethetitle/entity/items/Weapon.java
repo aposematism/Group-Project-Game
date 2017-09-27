@@ -1,7 +1,5 @@
 package com.swen.herebethetitle.entity.items;
 
-import com.swen.herebethetitle.model.GameContext;
-
 import javafx.scene.image.Image;
 
 /**
@@ -13,8 +11,8 @@ public class Weapon extends Item {
 
 	private Actions actions;
 
-	public Weapon(GameContext context, Image sprite, double strength){
-		super(context, sprite);
+	public Weapon(Image sprite, double strength){
+		super(sprite);
 		this.STRENGTH = strength;
 	}
 

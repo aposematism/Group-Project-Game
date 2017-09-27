@@ -8,7 +8,6 @@ import com.swen.herebethetitle.entity.items.Armour;
 import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.entity.items.Weapon;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 
 import javafx.scene.image.Image;
@@ -26,8 +25,8 @@ public class Player extends Mob {
 
 	private Weapon weapon;
 
-	public Player(GameContext context, Image sprite, Direction direction){
-		super(context, sprite, FULL_HEALTH, direction);
+	public Player(Image sprite, Direction direction){
+		super(sprite, FULL_HEALTH, direction);
 		inventory = new ArrayList<>();
 	}
 

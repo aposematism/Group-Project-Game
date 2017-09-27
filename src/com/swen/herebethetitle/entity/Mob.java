@@ -1,7 +1,5 @@
 package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 
 import javafx.scene.image.Image;
@@ -26,8 +24,8 @@ public abstract class Mob extends Entity {
 
 	private Direction direction;
 
-	public Mob(GameContext context, Image sprite, int startingHealth, Direction direction){
-		super(context, sprite);
+	public Mob(Image sprite, int startingHealth, Direction direction){
+		super(sprite);
 		this.health = startingHealth;
 		this.direction = direction;
 	}

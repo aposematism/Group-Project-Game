@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.entity.items;
 
+import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 
 /**
@@ -14,13 +15,13 @@ public class Key implements Item.Actions {
     }
 
     @Override
-    public void pickup(Item item, Region region) {
-        region.remove(item);
-        item.player().addItem(item);
+    public void pickup(Item item, GameContext context) {
+        context.getCurrentRegion().remove(item);
+        context.getPlayer().addItem(item);
     }
 
     @Override
-    public void use(Item item, Region region) {}
+    public void use(Item item, GameContext context) {}
 
 	@Override
 	public boolean equals(Object obj) {
