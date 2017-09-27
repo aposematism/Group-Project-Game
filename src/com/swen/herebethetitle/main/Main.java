@@ -4,9 +4,6 @@ import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.view.GUI;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-
 /**
  * Main class for the 2D RPG.
  * @author J Woods

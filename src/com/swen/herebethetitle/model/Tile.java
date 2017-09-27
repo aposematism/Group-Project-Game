@@ -3,7 +3,8 @@ package com.swen.herebethetitle.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Terrain;
 import com.swen.herebethetitle.util.GridLocation;
 
 /** 

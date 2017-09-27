@@ -1,8 +1,8 @@
 package com.swen.herebethetitle.graphics;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Point;
 
-import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.util.GridLocation;
 
 /**A grid object is a representation of an area of evenly spaced cells over a given area.

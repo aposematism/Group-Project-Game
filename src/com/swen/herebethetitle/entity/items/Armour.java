@@ -1,8 +1,7 @@
 package com.swen.herebethetitle.entity.items;
 
-import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.model.*;
-import com.swen.herebethetitle.util.*;
+import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Tile;
 
 import javafx.scene.image.Image;
 

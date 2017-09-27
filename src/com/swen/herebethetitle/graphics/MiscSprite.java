@@ -1,6 +1,6 @@
 package com.swen.herebethetitle.graphics;
 
-import java.awt.*;
+import java.awt.Point;
 
 import javafx.scene.image.Image;
 

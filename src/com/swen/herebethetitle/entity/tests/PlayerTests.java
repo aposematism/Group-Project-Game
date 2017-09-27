@@ -1,13 +1,12 @@
 package com.swen.herebethetitle.entity.tests;
 
-import javafx.scene.image.Image;
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Armour;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.util.*;
+import com.swen.herebethetitle.util.Direction;
 
 
 /**

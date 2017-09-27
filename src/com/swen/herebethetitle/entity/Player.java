@@ -1,11 +1,15 @@
 package com.swen.herebethetitle.entity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.model.*;
-import com.swen.herebethetitle.util.*;
+import com.swen.herebethetitle.entity.items.Armour;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.items.Weapon;
+import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.util.Direction;
 
 import javafx.scene.image.Image;
 
