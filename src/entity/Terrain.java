@@ -14,7 +14,7 @@ public class Terrain extends Entity {
     }
 
     @Override
-    public void interact(Player player){} //Not intractable
+    public void interact(GameContext context){} //Not intractable
 
     @Override
     boolean isPenetrable() {

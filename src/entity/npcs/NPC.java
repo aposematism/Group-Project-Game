@@ -24,7 +24,7 @@ public class NPC extends Mob {
 	public void ping() { actions.ping(); }
 
 	@Override
-	public void interact(Player player) { actions.interact(this); }
+	public void interact(GameContext context) { actions.interact(this); }
 
 	interface Actions {
 		void ping();

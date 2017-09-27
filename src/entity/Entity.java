@@ -23,7 +23,7 @@ public abstract class Entity {
 		this.sprite = sprite;
 	}
 
-	public abstract void interact(Player player);
+	public abstract void interact(GameContext context);
 
 	public GridLocation getLocation() { return location; }
 

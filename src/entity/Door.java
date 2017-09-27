@@ -28,7 +28,7 @@ public class Door extends Obstacle {
 	}
 
 	@Override
-	public void interact(Player player) {
+	public void interact(GameContext context) {
 		//TODO
 		if (state == STATE.LOCKED) {
 			//player.hasItem();

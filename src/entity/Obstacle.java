@@ -21,12 +21,12 @@ public class Obstacle extends Entity {
 		this.policy=policy;
 	}
 
-	public void interact(Player player) {
-		policy.interact(player,this);
+	public void interact(GameContext context) {
+		policy.interact(context,this);
 	}
 
 	interface Policy {
-		void interact(Player player, Obstacle obstacle);
+		void interact(GameContext context, Obstacle obstacle);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class Item extends Entity {
 		super(context, spawnLocation, sprite);
 	}
 
-	public void interact(Player player) {
+	public void interact(GameContext context) {
 		if(player.possesses(this))
 			actions.use(this);
 		else if(player.getLocation().adjacent(this.getLocation()))
