@@ -34,7 +34,7 @@ public class Tile {
 		this.mapTerrain = mapTerrain;
 	}
 
-	public Entity getMapEntity(){return mapEntity;}
+	public Entity getMapEntity(){return mapTerrain;}
 
 	public List<Entity> getInteractives(){return interactives;}
 	
