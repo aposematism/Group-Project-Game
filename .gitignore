@@ -18,9 +18,11 @@
 *.iws
 *.properties
 *.iml
-*.xml
 /out/
 /build/
 
 # Gradle
 /.gradle/
+
+# Maven
+target/
