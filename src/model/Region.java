@@ -18,9 +18,9 @@ public class Region {
 
 	private Tile[][] tiles;
 	
-	public Region(Weather w, ArrayList<Entity> o) {
+	public Region(Weather w, Tile[][] tiles) {
 		this.weather = w;
-		this.entities = o;
+		this.tiles = tiles;
 	}
 	
 	public Tile[][] getTiles() {
