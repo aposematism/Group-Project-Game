@@ -2,7 +2,8 @@ package pathfinding.tests;
 
 import org.junit.Test;
 
-import entity.Obstacle;
+import entity.Terrain;
+import model.GameContext;
 import model.Tile;
 import util.GridLocation;
 
@@ -23,6 +24,7 @@ public class ComplexTests extends Base {
      */
     @Test
     public void canRouteAroundObnoxiousWall() {
+        GameContext dummyContext = new GameContext();
         TestGrid grid = new TestGrid(5, 5);
         Tile source = grid.get(0, 0);
         Tile dest = grid.get(4, 4);
@@ -30,7 +32,7 @@ public class ComplexTests extends Base {
         // Fill in a vertical wall right close to the left with only one empty space at the bottom.
         for (int y=0; y<grid.height - 1; y++) {
             Tile tile = grid.get(1, y);
-            tile.setMapEntity(new Obstacle(tile.getLocation(), null));
+            tile.setMapTerrain(new Terrain(dummyContext, tile, null));
         }
         
         verifyPath(grid, source, dest,
@@ -54,6 +56,7 @@ public class ComplexTests extends Base {
      */
     @Test
     public void canRouteAroundGridBoundaryWhenForced() {
+        GameContext dummyContext = new GameContext();
         TestGrid grid = new TestGrid(5, 5);
         Tile source = grid.get(0, 0);
         Tile dest = grid.get(2, 0);
@@ -62,13 +65,12 @@ public class ComplexTests extends Base {
         for (int x=1; x<grid.width - 1; x++) {
             for (int y=1; y<grid.height - 1; y++) {
                 Tile tile = grid.get(x, y);
-                tile.setMapEntity(new Obstacle(tile.getLocation(), null));
+                tile.setMapTerrain(new Terrain(dummyContext, tile, null));
             }
         }
         // Set the obstacle that forces us to track over the whole boundary.
         Tile tile = grid.get(1, 0);
-        tile.setMapEntity(new Obstacle(tile.getLocation(), null));
-
+        tile.setMapTerrain(new Terrain(dummyContext, tile, null));
         
         verifyPath(grid, source, dest,
                 new GridLocation(0, 0), new GridLocation(0, 1), new GridLocation(0, 2),

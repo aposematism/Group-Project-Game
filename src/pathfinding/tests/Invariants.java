@@ -1,11 +1,13 @@
 package pathfinding.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
 import entity.Entity;
-import entity.Obstacle;
+import entity.Terrain;
+import model.GameContext;
+import model.Tile;
 import util.GridLocation;
 
 /**
@@ -15,7 +17,10 @@ import util.GridLocation;
 public class Invariants {
     @Test
     public void obstacleEntityIsImpenetrable() {
-        Entity obstacle = new Obstacle(new GridLocation(2, 3), null);
-        assertFalse(obstacle.isPenetrable());
+        GameContext dummyContext = new GameContext();
+        Tile tile = new Tile(new GridLocation(1, 1), "foo");
+
+        Entity terrain = new Terrain(dummyContext, tile, null);
+        assertFalse(terrain.isPenetrable());
     }
 }

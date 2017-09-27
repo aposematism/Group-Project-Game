@@ -19,7 +19,7 @@ public class Terrain extends Entity {
 
     @Override
     public boolean isPenetrable() {
-        return true;
+        return false;
     }
 
     @Override
