@@ -20,7 +20,7 @@ public abstract class Mob extends Entity {
 	 */
 	public static final int NO_HEALTH = 0;
 
-	protected int health;
+	private int health;
 
 	private Direction direction;
 
@@ -42,7 +42,10 @@ public abstract class Mob extends Entity {
 		return health;
 	}
 
-	abstract public void damage(int amount);
+	public void damage(int amount){
+		health -= amount;
+		if(health<NO_HEALTH) health = NO_HEALTH;
+	}
 
 	public void heal(int amount){
 		health += amount;

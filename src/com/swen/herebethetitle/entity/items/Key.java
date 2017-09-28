@@ -6,7 +6,7 @@ import com.swen.herebethetitle.model.Region;
 /**
  * Created by metcalmark on 27/09/17.
  */
-public class  Key implements Item.Actions {
+public class Key implements Item.Actions {
 
     private final int KEY;
 
