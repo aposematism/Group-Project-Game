@@ -1,6 +1,9 @@
 package com.swen.herebethetitle.entity.stationary;
 
 
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.model.GameContext;
 
 import javafx.scene.image.Image;
@@ -23,20 +26,28 @@ public class Door extends Obstacle {
 	}
 
 	@Override
-	public String toString() {
-		return null;
-	}
-
-	@Override
 	public void interact(GameContext context) {
-		//TODO
-		if (state == STATE.LOCKED) {
-			//player.hasItem();
+		if(state==STATE.LOCKED && hasKey(context.player))
+			state = STATE.OPEN;
+		else if(state==STATE.UNLOCKED)
+			state = STATE.OPEN;
+		else
+			state = STATE.UNLOCKED;
+	}
+
+	private boolean hasKey(Player player){
+		while(player.getInventory().hasNext()){
+			Item i = player.getInventory().next();
+			if(i.getActions() instanceof Key)
+				if(((Key)i.getActions()).equals(KEY))
+					return true;
 		}
+		return false;
 	}
 
 	@Override
-	public boolean isPenetrable() {
-		return state==STATE.OPEN;
-	}
+	public boolean isPenetrable() { return state==STATE.OPEN; }
+
+	@Override
+	public String toString() { return null; }
 }

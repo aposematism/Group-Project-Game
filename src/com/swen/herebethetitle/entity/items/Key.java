@@ -23,8 +23,5 @@ public class  Key implements Item.Actions {
     @Override
     public void use(Item item, GameContext context) {}
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof Key && ((Key)obj).KEY==this.KEY;
-	}
+	public boolean equals(int key) { return this.KEY == key; }
 }
