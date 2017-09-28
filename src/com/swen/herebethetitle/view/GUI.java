@@ -1,20 +1,15 @@
 package com.swen.herebethetitle.view;
 
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Observable;
-import java.util.Observer;
-
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * This is the main, top-level, wrapper class for the GUI, and for now also the main
@@ -40,8 +36,18 @@ import javafx.stage.Stage;
  * -Make the menu pretty somehow
  * -Setup a timer to call 'gameLogic.update()'
  * 
+ * TODO immediately
+ * -change HUD to be drawn on the game canvas, implemented in the WorldGraphics as a series of HUDComponents
+ * -build in inputs and test them
+ * 
  */
-public class GUI extends Application implements Observer, KeyListener, MouseListener{
+public class GUI extends Application{
+	//constants
+	public static final int DEFAULT_WIDTH = 1000;
+	public static final int DEFAULT_HEIGHT = 650;
+	public static final int FRAMES_PER_SECOND = 34;
+	
+	
 	//window field
 	private Stage window;
 	
@@ -52,22 +58,15 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	private GridPane newGameMenu;
 	private GridPane loadGameMenu;
 	private GridPane quitMenu;
-	private HUD hud;
 	
 	//main game UI fields
 	private WorldGraphics worldGraphics;
-	//TODO add in the game model
+	private Timeline updateTimeline;
 	
 	//Game fields
 	private static GameContext game;
 	private static GameLogic logic;
-	
-	//TODO this should perhaps be removed
-	public GUI(GameContext game, GameLogic logic) {
-		this.launch();
-		this.game = game;
-		this.logic = logic;
-	}
+
 	
 	/**
 	 * Default constructor, needed for use with the Main class.
@@ -75,11 +74,6 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	public GUI() {
 		super();
 	}
-	
-	//TODO - maybe remove this? With the addition of our main class this might be unnecessary
-//	public static void main (String[] args) {
-//		launch(args);
-//	}
 	
 
 	@Override
@@ -90,7 +84,7 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		
 		/*initialize the main menu*/
 		mainMenuLayout = initMainMenu();
-		mainMenu = new Scene(mainMenuLayout, 1000,650);
+		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		window.setScene(mainMenu);
 		/*initialize subordinate menus*/
 		settingsMenu = initSettingsMenu();
@@ -102,9 +96,9 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		window.show();
 		
 
-		//FIXME remove this debug code
-		System.out.println("Game in GUI object: " + game.toString());
-		System.out.println("Logic in GUI object: " + logic.toString());
+//		//FIXME remove this debug code
+//		System.out.println("Game in GUI object: " + game.toString());
+//		System.out.println("Logic in GUI object: " + logic.toString());
 	}
 	
 	/**
@@ -208,9 +202,16 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		Button play = new Button("Play");
 		play.setPrefSize(100, 20);
 		play.setOnAction(e->{
-			//TODO initialize the game
+			//TODO initialize the game?
 			worldGraphics = initGameGUI();
 			window.setScene(worldGraphics);
+			/*set the timer to regularly update*/
+			updateTimeline = new Timeline(new KeyFrame(
+			        Duration.millis(FRAMES_PER_SECOND),
+			        ae -> update()));
+			updateTimeline.setCycleCount(Animation.INDEFINITE);
+			updateTimeline.play();
+
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -293,14 +294,6 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		return w;
 	}
 	
-	/**
-	 * initializes the HUD.
-	 */
-	private Group initHUD() {
-		//TODO implement this
-		throw new NotImplementedYetException();
-	}
-	
 	public static void setGame(GameContext g) {
 		game = g;
 	}	
@@ -309,73 +302,8 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 	}
 	
 	
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		/*This should update all of the GUI components, namely the world graphics and HUD.*/
+	public void update() {
+		/*This should update the world canvas - everything handled there*/
 		worldGraphics.update();
-		hud.update();
 	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		switch(arg0.getKeyCode()) {
-		case KeyEvent.VK_P:
-			/*if the game is running, add the pause menu to the main scene*/
-			throw new NotImplementedYetException();
-		}
-		
-	}
-
 }
