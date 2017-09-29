@@ -94,11 +94,6 @@ public class GUI extends Application{
 		
 		/*show the stage*/
 		window.show();
-		
-
-//		//FIXME remove this debug code
-//		System.out.println("Game in GUI object: " + game.toString());
-//		System.out.println("Logic in GUI object: " + logic.toString());
 	}
 	
 	/**
