@@ -128,9 +128,9 @@ public class GameCanvas extends Canvas {
     }
 
     private void construct(Region initialRegion){
+        gc = this.getGraphicsContext2D();
         currentGrid = GridManager.createDefaultManager();
         switchRegions(initialRegion);
-        gc = this.getGraphicsContext2D();
 
         resetCanvas();
         player = getPlayer();
