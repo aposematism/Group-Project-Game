@@ -2,10 +2,7 @@ package com.swen.herebethetitle.graphics;
 
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
@@ -29,8 +26,8 @@ public class GameCanvas extends Canvas {
     private Region currentRegion;
     private Player player;
 
-    private Map<Region, List<Entity>> backLayerSprites = new HashMap<>();
-    private Map<Entity, List<Entity>> frontLayerSprites = new HashMap<>();
+//    private Map<Region, List<Entity>> backLayerSprites = new HashMap<>();
+//    private Map<Entity, List<Entity>> frontLayerSprites = new HashMap<>();
 
     private GraphicsContext gc;
 
@@ -63,27 +60,18 @@ public class GameCanvas extends Canvas {
         currentRegion = newRegion;
         resetCanvas();
 
-        if(backLayerSprites.containsKey(currentRegion)) return;
 
-        backLayerSprites.put(currentRegion, new ArrayList<>());
-
-        for(int x=0;x<newRegion.width; x++) {
-            for (int y = 0; y < newRegion.height; y++) {
-                Tile t = newRegion.get(x, y);
-                backLayerSprites.get(newRegion).add(t.getMapTerrain());
-                frontLayerSprites.put(t.getMapTerrain(), t.getInteractives());
-            }
-        }
-        player = getPlayer();
     }
 
     /**
-     * @return
+     * @return The Grid manager of this Canvas
      */
     public GridManager getGrid(){
         return currentGrid;
     }
 
+    /**@param newGrid Assign a new Grid manager to this canvas
+     */
     public void setGrid(GridManager newGrid){
         currentGrid = newGrid;
     }
@@ -93,21 +81,24 @@ public class GameCanvas extends Canvas {
      */
     public void drawAll(){
         int size = currentGrid.getCellSize();
+
         Point offset = calcOffset(player);
         resetCanvas();
 
-        for(Entity back: backLayerSprites.get(currentRegion)){
-            GridLocation gridLocation = currentRegion.getLocation(back);
-            Point location = currentGrid.getRealCoordinates(
-                    gridLocation, offset);
+        //For each tile in the region...
+        Iterator<Tile> tiles = currentRegion.iterator();
+        while(tiles.hasNext()){
+            Tile t = tiles.next();
+            Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
 
-            gc.drawImage(back.getSprite(),
-                    location.x, location.y, size, size);
+            //Draw the background terrain sprite first
+            gc.drawImage(t.getMapTerrain().getSprite(), size, size);
 
-            for(Entity front: frontLayerSprites.get(back)){
-                gc.drawImage(front.getSprite(),
-                        location.x, location.y, size, size);
+            //Draw each interactive entity that inhabits the current tile
+            for(Entity e: t.getInteractives()){
+                gc.drawImage(e.getSprite(), size, size);
             }
+
         }
     }
 
@@ -117,9 +108,13 @@ public class GameCanvas extends Canvas {
     }
 
     private Player getPlayer(){
-    	for(Entity e: frontLayerSprites.get(currentRegion)){
-    	    if(e.getClass().isInstance(Player.class)){
-    	        return (Player)e;
+        Iterator<Tile> tiles = currentRegion.iterator();
+    	while(tiles.hasNext()){
+            Tile t = tiles.next();
+            for(Entity e: t.getInteractives()) {
+                if (e.getClass().isInstance(Player.class)) {
+                    return (Player) e;
+                }
             }
         }
     	throw new IllegalArgumentException("Player not found inside Region");
@@ -135,8 +130,9 @@ public class GameCanvas extends Canvas {
     private void construct(Region initialRegion){
         currentGrid = GridManager.createDefaultManager();
         switchRegions(initialRegion);
-
         gc = this.getGraphicsContext2D();
-        gc.fillRect(0,0,this.getWidth(), this.getHeight());
+
+        resetCanvas();
+        player = getPlayer();
     }
 }
