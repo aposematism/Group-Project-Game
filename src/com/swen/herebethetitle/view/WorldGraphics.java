@@ -6,6 +6,7 @@ import com.swen.herebethetitle.model.Region;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -58,6 +59,9 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 			int x = GUI.DEFAULT_WIDTH/2-20*"Mouse exited".length()/2;
 			hud.drawTextToCanvas("Mouse exited",x,y);
 		});
+		r.addEventHandler(KeyEvent.KEY_PRESSED, e->{
+			handleKeyPress(e);
+		});
 	}
 	
 	@Override
@@ -95,7 +99,12 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 	 * Handles a mouse press event.
 	 * @param e the MouseEvent.
 	 */
-	private void handleKeyPress(MouseEvent e) {
-		//TODO
+	private void handleKeyPress(KeyEvent e) {
+		update();
+		/*derive coordinates to put the text in centre*/
+		int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
+		int x = GUI.DEFAULT_WIDTH/2-20*"you pressed the with text:   ".length()/2;
+		hud.drawTextToCanvas("You pressed the key with text: " + e.getText(),x,y);
+		hud.drawTextToCanvas("You pressed the key with code: " + e.getCode(),x,y+20);
 	}
 }
