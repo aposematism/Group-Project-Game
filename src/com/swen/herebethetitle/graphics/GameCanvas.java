@@ -59,9 +59,6 @@ public class GameCanvas extends Canvas {
      */
     public void switchRegions(Region newRegion){
         currentRegion = newRegion;
-        resetCanvas();
-
-
     }
 
     /**
@@ -82,10 +79,10 @@ public class GameCanvas extends Canvas {
      */
     public void drawAll(){
         GraphicsContext gc = this.getGraphicsContext2D();
+        resetCanvas(gc);
         int size = currentGrid.getCellSize();
 
         Point offset = calcOffset(player);
-        resetCanvas();
 
         //For each tile in the region...
         Iterator<Tile> tiles = currentRegion.iterator();
@@ -104,8 +101,7 @@ public class GameCanvas extends Canvas {
         }
     }
 
-    private void resetCanvas(){
-        GraphicsContext gc = this.getGraphicsContext2D();
+    private void resetCanvas(GraphicsContext gc){
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,this.getWidth(), this.getHeight());
     }
