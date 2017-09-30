@@ -3,6 +3,7 @@ package com.swen.herebethetitle.view;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.model.GameContext;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,11 +16,11 @@ import javafx.scene.text.Font;
  */
 public class HUD{
 	
-	private GameCanvas canvas;
+	private Canvas canvas;
 	private GameContext game;
 	private GraphicsContext g2d;
 	
-	public HUD(GameCanvas c, GameContext g) {
+	public HUD(Canvas c, GameContext g) {
 		canvas = c;
 		game = g;
 		g2d = canvas.getGraphicsContext2D();
@@ -31,21 +32,21 @@ public class HUD{
 	public void drawToCanvas() {
 		/*draw the HUD to the game canvas TODO*/
 		//FIXME below is debugging code
-		g2d.setFill(Color.BLUE);
+		g2d.setFill(Color.BLUE.darker());
 		g2d.fillRect(0, 0, GUI.DEFAULT_WIDTH, GUI.DEFAULT_HEIGHT);
-		g2d.setFill(Color.GREEN);
-		drawTextToCanvas("This is a GUI test.");
+		g2d.setFill(Color.GREEN.brighter());
+		/*derive coordinates to put the text in centre*/
+		int y = GUI.DEFAULT_HEIGHT/2-12/2;
+		int x = GUI.DEFAULT_WIDTH/2-12*"This is an HUD test".length()/2;
+		drawTextToCanvas("This is a HUD test.",x,y);
 	}
 	
 	/**
 	 * Draws a given text to the canvas at centre,
 	 * @param text the text to draw
 	 */
-	public void drawTextToCanvas(String text) {
-		canvas.getGraphicsContext2D().setFont(new Font(12));
-		/*derive coordinates to put the text in centre*/
-		int y = GUI.DEFAULT_HEIGHT/2-12/2;
-		int x = GUI.DEFAULT_WIDTH/2-12*text.length()/2;
+	public void drawTextToCanvas(String text, int x, int y) {
+		canvas.getGraphicsContext2D().setFont(new Font(20));
 		canvas.getGraphicsContext2D().fillText(text, x, y);
 	}
 }
