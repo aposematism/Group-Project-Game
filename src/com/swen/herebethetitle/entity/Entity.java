@@ -12,9 +12,7 @@ import javafx.scene.image.Image;
 public abstract class Entity {
 	private Image sprite;
 
-	public Entity(Image sprite){
-		this.sprite = sprite;
-	}
+	public Entity(Image sprite) { this.sprite = sprite; }
 
 	public abstract void interact(GameContext context);
 

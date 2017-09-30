@@ -20,7 +20,7 @@ public abstract class Mob extends Entity {
 	 */
 	public static final int NO_HEALTH = 0;
 
-	protected int health;
+	protected double health;
 
 	private Direction direction;
 
@@ -30,17 +30,11 @@ public abstract class Mob extends Entity {
 		this.direction = direction;
 	}
 
-	public Direction getDirection(){
-		return direction;
-	}
+	public Direction getDirection() { return direction; }
 
-	public void setDirection(Direction direction){
-		this.direction=direction;
-	}
+	public void setDirection(Direction direction) { this.direction=direction; }
 
-	public int getHealth(){
-		return health;
-	}
+	public double getHealth() { return health; }
 
 	abstract public void damage(int amount);
 

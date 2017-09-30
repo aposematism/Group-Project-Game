@@ -32,6 +32,11 @@ public class NPC extends Mob {
 	}
 
 	@Override
+	public void damage(int amount) {
+
+	}
+
+	@Override
 	public String toString() {
 		return null;
 	}

@@ -31,16 +31,10 @@ public class Armour extends Item {
 		RATING = rating;
 	}
 
-	public TYPE getSlot() {
-		return SLOT;
-	}
+	public TYPE getSlot() { return SLOT; }
 
-	public double getRating() {
-		return RATING;
-	}
+	public double getRating() { return RATING; }
 
 	@Override
-	public String toString() {
-		return super.toString()+" "+SLOT+" "+RATING;
-	}
+	public String toString() { return super.toString()+" "+SLOT+" "+RATING;	}
 }

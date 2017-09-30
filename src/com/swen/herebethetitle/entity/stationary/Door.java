@@ -36,12 +36,10 @@ public class Door extends Obstacle {
 	}
 
 	private boolean hasKey(Player player){
-		while(player.getInventory().hasNext()){
-			Item i = player.getInventory().next();
+		for(Item i: player.getInventory())
 			if(i.getActions() instanceof Key)
 				if(((Key)i.getActions()).equals(KEY))
 					return true;
-		}
 		return false;
 	}
 
