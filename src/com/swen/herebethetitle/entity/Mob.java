@@ -4,6 +4,8 @@ import com.swen.herebethetitle.util.Direction;
 
 import javafx.scene.image.Image;
 
+import java.util.InputMismatchException;
+
 /**
  * Provides the basic implementation of functions that both Player and NPC would use,
  * notably for changing their health values and changing where they are in the game world.
@@ -20,7 +22,7 @@ public abstract class Mob extends Entity {
 	 */
 	public static final int NO_HEALTH = 0;
 
-	private int health;
+	protected double health;
 
 	private Direction direction;
 
@@ -30,25 +32,25 @@ public abstract class Mob extends Entity {
 		this.direction = direction;
 	}
 
-	public Direction getDirection(){
-		return direction;
-	}
+	public Direction getDirection() { return direction; }
 
-	public void setDirection(Direction direction){
-		this.direction=direction;
-	}
+	public void setDirection(Direction direction) { this.direction=direction; }
 
-	public int getHealth(){
-		return health;
-	}
+	public double getHealth() { return health; }
 
-	public void damage(int amount){
+	public void damage(double amount){
+		if(amount<=0)
+			throw new InputMismatchException("Must Be Positive!");
 		health -= amount;
-		if(health<NO_HEALTH) health = NO_HEALTH;
+		if(health<NO_HEALTH)
+			health = NO_HEALTH;
 	}
 
-	public void heal(int amount){
+	public void heal(double amount){
+		if(amount<=0)
+			throw new InputMismatchException("Must Be Positive!");
 		health += amount;
-		if(health>FULL_HEALTH) health = FULL_HEALTH;
+		if(health>FULL_HEALTH)
+			health = FULL_HEALTH;
 	}
 }

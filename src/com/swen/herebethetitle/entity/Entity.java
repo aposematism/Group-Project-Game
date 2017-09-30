@@ -2,6 +2,7 @@ package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
 
+import com.swen.herebethetitle.model.Tile;
 import javafx.scene.image.Image;
 
 /**
@@ -12,9 +13,7 @@ import javafx.scene.image.Image;
 public abstract class Entity {
 	private Image sprite;
 
-	public Entity(Image sprite){
-		this.sprite = sprite;
-	}
+	public Entity(Image sprite) { this.sprite = sprite; }
 
 	public abstract void interact(GameContext context);
 
