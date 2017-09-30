@@ -89,6 +89,19 @@ public class GridManager extends Canvas{
         return p;
     }
 
+    /**
+     * Takes a real coordinate, and returns a GridLocation based on the offset.
+     * @param p The real world coordinate.
+     * @param offset The current Player location.
+     * @return
+     */
+    public GridLocation getGridLocation(Point p, Point offset){
+        int col = ((p.x - offset.x) /(cellSize+hGap));
+        int row = ((p.y - offset.y) /(cellSize+vGap));
+
+        return new GridLocation(col, row);
+    }
+
 
     /**
      * @return Get the vertical gap of this GridManager.
