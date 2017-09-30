@@ -26,3 +26,6 @@
 
 # Maven
 target/
+
+# Created by Eclipse Git importer
+.externalToolBuilders
