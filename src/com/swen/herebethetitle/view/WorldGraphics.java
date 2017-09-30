@@ -41,10 +41,10 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 		r.requestFocus();
 		
 		/*event handling*/
-		//TODO - delegate these to actual handling methods for easier modification
 		r.addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
 			handleMousePress(e);
 		});		
+		//TODO - do we care about mouse entering and exiting?
 		r.addEventHandler(MouseEvent.MOUSE_ENTERED, e->{
 			update();
 			/*derive coordinates to put the text in centre*/
