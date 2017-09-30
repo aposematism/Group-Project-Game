@@ -31,6 +31,15 @@ public class Inventory implements Iterable<Item> {
 			this.items.add(item);
 	}
 
+	public void remove(Item item) {
+		if(item instanceof Weapon)
+			this.weapon = null;
+		else if(item instanceof Armour)
+			this.armour[((Armour)item).getSlot().ordinal()] = null;
+		else
+			this.items.remove(item);
+	}
+
 	public boolean contains(Item item){
 		if(weapon!=null && item.equals(weapon))
 			return true;

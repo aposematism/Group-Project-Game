@@ -18,14 +18,14 @@ public class PlayerTests {
 	@Test
 	public void test_add(){
 		Player p = new Player(null, Direction.Down);
-		p.add(new Item(null), new Item(null));
+		p.add(new Key(null,0), new Key(null,0));
 		assertEquals(2, p.inventory().getItems().size());
 	}
 
 	@Test
 	public void test_posseses(){
 		Player p = new Player(null, Direction.Down);
-		Item i = new Item(null);
+		Item i = new Key(null,0);
 		p.add(i);
 		assertTrue(p.possesses(i));
 	}
@@ -63,11 +63,5 @@ public class PlayerTests {
 	public void test_isPenetrable(){
 		Player p = new Player(null, Direction.Down);
 		assertFalse(p.isPenetrable());
-	}
-
-	@Test
-	public void test_toString(){
-		Player p = new Player(null, Direction.Down);
-		assertNotNull(p.toString());
 	}
 }

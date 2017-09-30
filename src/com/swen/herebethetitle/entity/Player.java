@@ -26,6 +26,11 @@ public class Player extends Mob {
 			inventory.add(item);
 	}
 
+	public void remove(Item... items) {
+		for(Item item: items)
+			inventory.remove(item);
+	}
+
 	public boolean possesses(Item... items){
 		for(Item item: items){
 			if(inventory.contains(item))

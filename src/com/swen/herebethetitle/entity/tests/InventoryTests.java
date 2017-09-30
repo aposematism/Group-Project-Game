@@ -4,6 +4,7 @@ import com.swen.herebethetitle.entity.Inventory;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Armour;
 import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.entity.items.Weapon;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
@@ -36,6 +37,18 @@ public class InventoryTests {
 		assertEquals(b, i.getArmour(Armour.TYPE.HELMET));
 		assertEquals(c, i.getArmour(Armour.TYPE.TORSO));
 		assertNull(i.getArmour(Armour.TYPE.LEGS));
+
+		p.remove(a,b,c);
+
+		assertFalse(i.hasArmour(Armour.TYPE.BOOTS));
+		assertFalse(i.hasArmour(Armour.TYPE.HELMET));
+		assertFalse(i.hasArmour(Armour.TYPE.TORSO));
+		assertFalse(i.hasArmour(Armour.TYPE.LEGS));
+
+		assertNull(i.getArmour(Armour.TYPE.BOOTS));
+		assertNull(i.getArmour(Armour.TYPE.HELMET));
+		assertNull(i.getArmour(Armour.TYPE.TORSO));
+		assertNull(i.getArmour(Armour.TYPE.LEGS));
 	}
 
 	@Test
@@ -52,6 +65,14 @@ public class InventoryTests {
 		assertEquals(w, i.getWeapon());
 
 		assertTrue(i.contains(w));
+
+		p.remove(w);
+
+		assertFalse(i.hasWeapon());
+
+		assertNull(i.getWeapon());
+
+		assertFalse(i.contains(w));
 	}
 
 	@Test
@@ -59,10 +80,10 @@ public class InventoryTests {
 		Player p = new Player(null, Direction.Down);
 		Inventory i = p.inventory();
 
-		Item a = new Item(null);
-		Item b = new Item(null);
-		Item c = new Item(null);
-		Item d = new Item(null);
+		Item a = new Key(null,0);
+		Item b = new Key(null,0);
+		Item c = new Key(null,0);
+		Item d = new Key(null,0);
 
 		p.add(a,b,c,d);
 
@@ -77,15 +98,24 @@ public class InventoryTests {
 		assertTrue(i.contains(b));
 		assertTrue(i.contains(c));
 		assertTrue(i.contains(d));
+
+		p.remove(a,b,c,d);
+
+		assertEquals(0, i.getItems().size());
+
+		assertFalse(i.contains(a));
+		assertFalse(i.contains(b));
+		assertFalse(i.contains(c));
+		assertFalse(i.contains(d));
 	}
 
 	@Test
 	public void test_clearInventory(){
 		Player p = new Player(null, Direction.Down);
 
-		Item a = new Item(null);
-		Item b = new Item(null);
-		Item c = new Item(null);
+		Item a = new Key(null,0);
+		Item b = new Key(null,0);
+		Item c = new Key(null,0);
 
 		assertEquals(0, p.inventory().getItems().size());
 
