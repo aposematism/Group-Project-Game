@@ -37,7 +37,7 @@ public class GameCanvasTests extends Application {
 
         StackPane root = new StackPane();
         root.getChildren().add(canvas);
-        stage.setScene(new Scene(root, 300, 300));
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
@@ -48,8 +48,8 @@ public class GameCanvasTests extends Application {
 
 
     private Region emptyGrassField(){
-        int rows = 3, cols = 3;
-        Region r = new Region(rows, cols);
+        int rows = 5, cols = 7;
+        Region r = new Region(cols, rows);
 
         for(int row=0;row<rows;row++) {
             for (int col = 0; col < cols; col++) {
@@ -58,7 +58,7 @@ public class GameCanvasTests extends Application {
                 r.set(new GridLocation(col,row), t);
             }
         }
-        r.get(0,0).add(new Player(player, Direction.Right));
+        r.get(0,1).add(new Player(player, Direction.Right));
         return r;
     }
 }

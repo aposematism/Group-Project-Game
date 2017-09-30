@@ -53,8 +53,8 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location){
-        int x = location.x * cellSize;
-        int y = location.y * cellSize;
+        int x = (location.x * cellSize) - (cellSize/2);
+        int y = (location.y * cellSize) - (cellSize/2);
 
         return new Point(x,y);
     }
@@ -66,10 +66,12 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location, GridLocation offset){
-        int x = location.x + offset.x * cellSize;
-        int y = location.y + offset.y * cellSize;
+//        int x = location.x + offset.x * cellSize;
+//        int y = location.y + offset.y * cellSize;
+       return getRealCoordinates(new GridLocation(
+                location.x+offset.x, location.y+offset.y));
 
-        return new Point(x,y);
+        //return new Point(x,y);
     }
 
     /**
@@ -82,7 +84,10 @@ public class GridManager extends Canvas{
         int x = (location.x * cellSize) + offset.x;
         int y = (location.y * cellSize) + offset.y;
 
-        return new Point(x,y);
+        Point p = new Point(getRealCoordinates(location));
+        p.x += offset.x;
+        p.y += offset.y;
+        return p;
     }
 
 

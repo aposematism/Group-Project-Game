@@ -89,14 +89,14 @@ public class GameCanvas extends Canvas {
         while(tiles.hasNext()){
             Tile t = tiles.next();
             Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
-            System.out.println(pos);
 
             //Draw the background terrain sprite first
             gc.drawImage(t.getMapTerrain().getSprite(), pos.x,pos.y, size, size);
 
             //Draw each interactive entity that inhabits the current tile
             for(Entity e: t.getInteractives()){
-                gc.drawImage(e.getSprite(), size, size);
+                gc.drawImage(e.getSprite(), pos.x, pos.y, size, size);
+                System.out.println(pos);
             }
 
         }
@@ -124,7 +124,7 @@ public class GameCanvas extends Canvas {
         Point center = new Point((int)this.getWidth()/2, (int)this.getHeight()/2);
         GridLocation gridLocation = currentRegion.getLocation(p);
         Point playerCoords = currentGrid.getRealCoordinates(gridLocation);
-        return new Point(playerCoords.x-center.x, playerCoords.y-center.y);
+        return new Point(center.x-playerCoords.x, center.y-playerCoords.y);
     }
 
     private void construct(Region initialRegion){
