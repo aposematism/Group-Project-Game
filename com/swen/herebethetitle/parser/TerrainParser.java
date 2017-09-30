@@ -44,7 +44,6 @@ public class TerrainParser{
 		}
 		finally{
 			regionBuff.close();
-			System.out.println("File Loaded to StringArray in Terrain Parser");
 		}
 	}
 	
@@ -58,7 +57,7 @@ public class TerrainParser{
 			for(int j = 0; j < stringArray.get(i).length; j++){
 				Tile z = new Tile(i, j, stringArray.get(i)[j]);
 				//z.setMapEntity(parseMapEntity(stringArray.get(i)[j]));
-				regionArray[j][i] = z;
+				regionArray[i][j] = z;
 			}
 		}
 		
@@ -86,13 +85,14 @@ public class TerrainParser{
 		try{
 			for(int i = 0; i < toConnect.length; i++){
 				for(int j = 0; j < toConnect[i].length; j++){
-					for(int k = -1; k < 1; k++){
-						for(int l = -1; l < 1; l++){
+					for(int k = -1; k <= 1; k++){
+						for(int l = -1; l <= 1; l++){
 							if(!connectNode(toConnect.length, toConnect[i].length, i, j, k, l)){
-								break;
+								
 							}
 							else{
-								toConnect[i][j].getNeighbours().add(toConnect[k][l]);
+								toConnect[i][j].getNeighbours().add(toConnect[i+k][j+l]);
+								
 							}
 						}
 					}
@@ -114,9 +114,20 @@ public class TerrainParser{
 		if(i+k < 0 || j+l < 0){//if less than zero
 			return false;
 		}
-		if(i+k < rowLength || j+l < columnLength){//if outside the boundary of the array.
+		if(rowLength <= i+k || columnLength <= j+l){//if outside the boundary of the array.
+			return false;
+		}
+		if(k == 0 && l == 0){
 			return false;
 		}
 		return true;
+	}
+	
+	public ArrayList<String[]> getStringArray(){
+		return stringArray;
+	}
+	
+	public Tile[][] getRA(){
+		return regionArray;
 	}
 }
