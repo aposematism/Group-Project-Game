@@ -6,7 +6,7 @@ import com.swen.herebethetitle.model.Region;
 /**
  * Created by metcalmark on 27/09/17.
  */
-public class  Key implements Item.Actions {
+public class Key implements Item.Actions {
 
     private final int KEY;
 
@@ -17,7 +17,7 @@ public class  Key implements Item.Actions {
     @Override
     public void pickup(Item item, GameContext context) {
         context.getCurrentRegion().remove(item);
-        context.getPlayer().addItem(item);
+        context.getPlayer().add(item);
     }
 
     @Override

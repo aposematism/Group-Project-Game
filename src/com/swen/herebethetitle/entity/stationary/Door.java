@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
  */
 public class Door extends Obstacle {
 
-	private enum STATE { LOCKED, UNLOCKED, OPEN }
+	public enum STATE { LOCKED, UNLOCKED, OPEN }
 
 	private STATE state;
 
@@ -36,7 +36,7 @@ public class Door extends Obstacle {
 	}
 
 	private boolean hasKey(Player player){
-		for(Item i: player.getInventory())
+		for(Item i: player.inventory())
 			if(i.getActions() instanceof Key)
 				if(((Key)i.getActions()).equals(KEY))
 					return true;
