@@ -82,7 +82,7 @@ public class GameCanvas extends Canvas {
         resetCanvas(gc);
         int size = currentGrid.getCellSize();
 
-        Point offset = calcOffset(player);
+        Point offset = calcOffset();
 
         //For each tile in the region...
         Iterator<Tile> tiles = currentRegion.iterator();
@@ -120,9 +120,14 @@ public class GameCanvas extends Canvas {
     	throw new IllegalArgumentException("Player not found inside Region");
     }
 
-    private Point calcOffset(Player p){
+    private Point calcOffset(){
+        GridLocation gridLocation;
+        try {
+            gridLocation = currentRegion.getPlayerTile().getLocation();
+        }catch(NoSuchElementException E){throw new Error("No Player in Region");}
+
+
         Point center = new Point((int)this.getWidth()/2, (int)this.getHeight()/2);
-        GridLocation gridLocation = currentRegion.getLocation(p);
         Point playerCoords = currentGrid.getRealCoordinates(gridLocation);
         return new Point(center.x-playerCoords.x, center.y-playerCoords.y);
     }

@@ -103,8 +103,8 @@ public class GUI extends Application implements Observer, KeyListener, MouseList
 		
 
 		//FIXME remove this debug code
-		System.out.println("Game in GUI object: " + game.toString());
-		System.out.println("Logic in GUI object: " + logic.toString());
+		//System.out.println("Game in GUI object: " + game.toString());
+		//System.out.println("Logic in GUI object: " + logic.toString());
 	}
 	
 	/**
