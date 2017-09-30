@@ -16,15 +16,35 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.Assert.*;
 
 import static org.junit.Assert.fail;
 
 public class GameCanvasTests{
+    static Operation testMethod;
+    static TestStage ts;
 
-    Operation testMethod;
-    TestStage ts = new TestStage();
+    static boolean failTestMethod = false;
+
+    @BeforeClass
+    public static void runBeforeTest(){
+        ts = new TestStage();
+    }
+
+    @AfterClass
+    public static void runAfterTest() {
+        try {
+            ts.startWindow();
+        }catch(RuntimeException E){
+            if(!failTestMethod) {
+                failTestMethod = true;
+                fail(E.getMessage());
+            }
+        }
+    }
 
     @Test
     public void test01_initialize(){
@@ -46,6 +66,7 @@ public class GameCanvasTests{
 
     @Test
     public void test03_CanvasWithoutPlayer(){
+        failTestMethod = true;
         try {
             testMethod = new Operation() {
                 public void run(GameCanvas c) {
@@ -55,7 +76,7 @@ public class GameCanvasTests{
                 }
             };
             update(ts);
-            fail("shouldn't be able to switch to region without player");
+            //fail("shouldn't be able to switch to region without player");
         } catch(RuntimeException e){}
     }
 
@@ -83,6 +104,5 @@ public class GameCanvasTests{
 
     private void update(TestStage ts){
         ts.setTestMethod(testMethod);
-        ts.startWindow();
     }
 }
