@@ -89,9 +89,10 @@ public class GameCanvas extends Canvas {
         while(tiles.hasNext()){
             Tile t = tiles.next();
             Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
+            System.out.println(pos);
 
             //Draw the background terrain sprite first
-            gc.drawImage(t.getMapTerrain().getSprite(), size, size);
+            gc.drawImage(t.getMapTerrain().getSprite(), pos.x,pos.y, size, size);
 
             //Draw each interactive entity that inhabits the current tile
             for(Entity e: t.getInteractives()){
@@ -111,7 +112,7 @@ public class GameCanvas extends Canvas {
     	while(tiles.hasNext()){
             Tile t = tiles.next();
             for(Entity e: t.getInteractives()) {
-                if (e.getClass().isInstance(Player.class)) {
+                if (e instanceof Player) {
                     return (Player) e;
                 }
             }
