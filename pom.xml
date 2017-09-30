@@ -29,7 +29,7 @@
 	</dependencies>
 
 	<build>
-		<sourceDirectory>src/com/swen/herebethetitle</sourceDirectory>
+		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>src</testSourceDirectory>
 		<plugins>
 			<plugin>
