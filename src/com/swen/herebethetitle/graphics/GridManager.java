@@ -53,8 +53,8 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location){
-        int x = (location.x * cellSize);
-        int y = (location.y * cellSize);
+        int x = (location.x * cellSize) + location.x*hGap;
+        int y = (location.y * cellSize) + location.y*vGap;
 
         return new Point(x,y);
     }

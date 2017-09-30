@@ -96,7 +96,6 @@ public class GameCanvas extends Canvas {
             //Draw each interactive entity that inhabits the current tile
             for(Entity e: t.getInteractives()){
                 gc.drawImage(e.getSprite(), pos.x, pos.y, size, size);
-                System.out.println(pos);
             }
 
         }
