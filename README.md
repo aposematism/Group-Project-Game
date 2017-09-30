@@ -31,7 +31,7 @@ All generated class files and executables are placed into the `target/` folder.
 ```bash
 # Creates an executable JAR file
 # Will be placed at target/herebethetitle-0.0.1.jar
-mvn compile
+mvn package
 
 # Compiles and runs all JUnit tests
 mvn verify
