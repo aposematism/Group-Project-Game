@@ -7,6 +7,7 @@ import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Mark on 30/09/2017.

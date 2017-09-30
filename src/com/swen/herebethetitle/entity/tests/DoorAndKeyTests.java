@@ -21,11 +21,9 @@ public class DoorAndKeyTests {
 
 		Door d = new Door(null, 123, Door.STATE.LOCKED);
 
-		Item i = new Item(null);
-		Key k = new Key(123);
-		i.setActions(k);
+		Key k = new Key(null, 123);
 
-		p.add(i);
+		p.add(k);
 
 		assertFalse(d.isPenetrable());
 
@@ -41,15 +39,10 @@ public class DoorAndKeyTests {
 
 		Door d = new Door(null, 123, Door.STATE.LOCKED);
 
-		Item i = new Item(null);
-		Key k = new Key(234);
-		i.setActions(k);
+		Key k = new Key(null, 234);
+		Key k2 = new Key(null, 123);
 
-		Item i2 = new Item(null);
-		Key k2 = new Key(123);
-		i2.setActions(k2);
-
-		p.add(i, i2);
+		p.add(k,k2);
 
 		assertFalse(d.isPenetrable());
 
@@ -65,11 +58,9 @@ public class DoorAndKeyTests {
 
 		Door d = new Door(null, 123, Door.STATE.LOCKED);
 
-		Item i = new Item(null);
-		Key k = new Key(234);
-		i.setActions(k);
+		Key k = new Key(null, 234);
 
-		p.add(i);
+		p.add(k);
 
 		assertFalse(d.isPenetrable());
 
@@ -85,15 +76,10 @@ public class DoorAndKeyTests {
 
 		Door d = new Door(null, 123, Door.STATE.LOCKED);
 
-		Item i = new Item(null);
-		Key k = new Key(234);
-		i.setActions(k);
+		Key k = new Key(null, 234);
+		Key k2 = new Key(null, 345);
 
-		Item i2 = new Item(null);
-		Key k2 = new Key(345);
-		i2.setActions(k2);
-
-		p.add(i, i2);
+		p.add(k,k2);
 
 		assertFalse(d.isPenetrable());
 

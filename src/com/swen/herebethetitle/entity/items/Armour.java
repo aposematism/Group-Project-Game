@@ -36,5 +36,14 @@ public class Armour extends Item {
 	public double getRating() { return RATING; }
 
 	@Override
-	public String toString() { return super.toString()+" "+SLOT+" "+RATING;	}
+	public void pickup(GameContext context) {
+		if(this.RATING>context.player.inventory().getArmour(this.SLOT).getRating())
+			context.player.add(this);
+	}
+
+	@Override
+	public String toString() { return this.getClass().getName()+" "+SLOT+" "+RATING; }
+
+	@Override
+	public void use(GameContext context) {}
 }

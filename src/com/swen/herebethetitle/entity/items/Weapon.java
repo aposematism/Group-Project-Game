@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.entity.items;
 
+import com.swen.herebethetitle.model.GameContext;
 import javafx.scene.image.Image;
 
 /**
@@ -9,26 +10,20 @@ public class Weapon extends Item {
 
 	private final double STRENGTH;
 
-	private Actions actions;
-
 	public Weapon(Image sprite, double strength){
 		super(sprite);
 		this.STRENGTH = strength;
 	}
 
-	public double getStrength(){
-		return STRENGTH;
+	public double getStrength() { return STRENGTH; }
+
+	@Override
+	public void use(GameContext context) {
+		super.use(context);
 	}
 
-	public void attack(){
-		actions.attack(this);
-	}
-
-	interface Actions extends Item.Actions {
-		void attack(Weapon weapon);
-	}
-
-	public void setActions(Actions newActions){
-		this.actions=newActions;
+	@Override
+	public String toString() {
+		return null;
 	}
 }
