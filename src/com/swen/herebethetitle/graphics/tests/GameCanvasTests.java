@@ -58,7 +58,7 @@ public class GameCanvasTests extends Application {
                 r.set(new GridLocation(col,row), t);
             }
         }
-        r.get(0,1).add(new Player(player, Direction.Right));
+        r.get(0,4).add(new Player(player, Direction.Right));
         return r;
     }
 }
