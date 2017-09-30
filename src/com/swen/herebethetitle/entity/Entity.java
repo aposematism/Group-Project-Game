@@ -2,6 +2,7 @@ package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
 
+import com.swen.herebethetitle.model.Tile;
 import javafx.scene.image.Image;
 
 /**

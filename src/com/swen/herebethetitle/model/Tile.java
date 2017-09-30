@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Terrain;
+import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.util.GridLocation;
 
 /** 
@@ -18,7 +18,7 @@ public class Tile {
 	//Neighbours
 	private ArrayList<Tile> neighbours;
 	//Entities list
-	private Terrain mapTerrain;
+	private Floor mapFloor;
 	private ArrayList<Entity> interactives;
 	
 	public Tile(int x, int y, String c){
@@ -31,12 +31,12 @@ public class Tile {
 		this.interactives = new ArrayList<Entity>();
 	}
 
-	public void setMapTerrain(Terrain mapTerrain) {
-		this.mapTerrain = mapTerrain;
+	public void setMapFloor(Floor mapFloor) {
+		this.mapFloor = mapFloor;
 	}
 	
-	public Terrain getMapTerrain() {
-	    return this.mapTerrain;
+	public Floor getMapFloor() {
+	    return this.mapFloor;
 	}
 
 	public List<Entity> getInteractives(){return interactives;}
@@ -73,7 +73,7 @@ public class Tile {
 	 */
 	public boolean isPenetrable() {
 	    // Check if there is a map entity that can't be passed through.
-	    if (mapTerrain != null && !mapTerrain.isPenetrable())
+	    if (mapFloor != null && !mapFloor.isPenetrable())
 	        return false;
 
 	    // If every interactive entity in the tile is penetrable, then the tile is too.

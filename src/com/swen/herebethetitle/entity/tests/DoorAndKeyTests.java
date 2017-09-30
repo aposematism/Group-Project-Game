@@ -1,11 +1,9 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.entity.items.Key;
-import com.swen.herebethetitle.entity.stationary.Door;
+import com.swen.herebethetitle.entity.stationeries.Door;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

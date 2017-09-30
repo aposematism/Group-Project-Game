@@ -20,7 +20,5 @@ public final class Key extends Item {
 	public boolean equals(int key) { return this.KEY == key; }
 
 	@Override
-	public String toString() {
-		return getClass().getName()+" "+KEY;
-	}
+	public String toString() { return getClass().getName()+" "+KEY; }
 }

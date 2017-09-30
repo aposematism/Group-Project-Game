@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 /**
  * Created by Mark on 19/09/2017.
  */
-public class Weapon extends Item {
+public final class Weapon extends Item {
 
 	private final double STRENGTH;
 
@@ -18,9 +18,7 @@ public class Weapon extends Item {
 	public double getStrength() { return STRENGTH; }
 
 	@Override
-	public void use(GameContext context) {
-		super.use(context);
-	}
+	public void use(GameContext context) {}
 
 	@Override
 	public String toString() {

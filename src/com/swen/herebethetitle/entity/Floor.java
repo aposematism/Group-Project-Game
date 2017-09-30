@@ -7,9 +7,9 @@ import javafx.scene.image.Image;
 /**
  * Created by Mark on 27/09/17.
  */
-public class Terrain extends Entity {
+public class Floor extends Entity {
 
-    public Terrain(Image sprite){ super(sprite); }
+    public Floor(Image sprite){ super(sprite); }
 
     @Override
     public void interact(GameContext context){} //Not intractable

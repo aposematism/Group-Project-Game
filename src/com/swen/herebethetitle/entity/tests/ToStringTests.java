@@ -18,9 +18,9 @@ public class ToStringTests {
 		assertNotNull(i.toString());
 	}
 
-	@Test
-	public void test_Player_toString(){
-		Player p = new Player(null, Direction.Down);
-		assertNotNull(p.toString());
-	}
+//	@Test
+//	public void test_Player_toString(){
+//		Player p = new Player(null, Direction.Down);
+//		assertNotNull(p.toString());
+//	}
 }

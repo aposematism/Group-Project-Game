@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.entity.stationary;
+package com.swen.herebethetitle.entity.stationeries;
 
 
 import com.swen.herebethetitle.entity.Player;
@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 /**
  * Created by Mark on 19/09/2017.
  */
-public class Door extends Obstacle {
+public class Door extends Stationary {
 
 	public enum STATE { LOCKED, UNLOCKED, OPEN }
 

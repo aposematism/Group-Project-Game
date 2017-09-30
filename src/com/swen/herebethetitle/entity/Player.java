@@ -42,12 +42,12 @@ public class Player extends Mob {
 	public Inventory inventory() { return inventory; }
 
 	@Override
-	public void damage(int amount) {
+	public void damage(double amount) {
 		double armourTotal = 0;
 		for(Armour a: inventory.getArmour())
 			if(a!=null)
 				armourTotal += a.getRating();
-		health -= amount * ((100 - armourTotal)/100);
+		super.damage(amount * ((100 - armourTotal)/100));
 	}
 
 	@Override

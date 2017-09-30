@@ -70,8 +70,8 @@ public class GameCanvas extends Canvas {
         for(int x=0;x<newRegion.width; x++) {
             for (int y = 0; y < newRegion.height; y++) {
                 Tile t = newRegion.get(x, y);
-                backLayerSprites.get(newRegion).add(t.getMapTerrain());
-                frontLayerSprites.put(t.getMapTerrain(), t.getInteractives());
+                backLayerSprites.get(newRegion).add(t.getMapFloor());
+                frontLayerSprites.put(t.getMapFloor(), t.getInteractives());
             }
         }
         player = getPlayer();

@@ -1,8 +1,8 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.npcs.*;
-import com.swen.herebethetitle.entity.items.*;
+import com.swen.herebethetitle.entity.ai.Actions;
+import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
@@ -15,7 +15,18 @@ import static org.junit.Assert.assertNotNull;
 public class MobTests {
 	@Test
 	public void test_direction(){
-		Mob m = new NPC(null, 80, Direction.Down);
+		Actions a = new Actions() {
+			@Override
+			public void interact(GameContext context, NPC npc) {
+
+			}
+
+			@Override
+			public boolean isPenetrable() {
+				return false;
+			}
+		};
+		Mob m = new NPC(null, a, 80, Direction.Down);
 		assertEquals(Direction.Down, m.getDirection());
 
 		m.setDirection(Direction.Left);
@@ -24,7 +35,16 @@ public class MobTests {
 
 	@Test
 	public void test_health(){
-		Mob m = new NPC(null, 80, Direction.Down);
+		Actions a = new Actions() {
+			@Override
+			public void interact(GameContext context, NPC npc) {}
+
+			@Override
+			public boolean isPenetrable() {
+				return false;
+			}
+		};
+		Mob m = new NPC(null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
 		m.heal(10);
