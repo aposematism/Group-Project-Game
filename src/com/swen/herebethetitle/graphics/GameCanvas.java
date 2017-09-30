@@ -106,6 +106,16 @@ public class GameCanvas extends Canvas {
         }
     }
 
+    /**
+     * Get's the cell provided the given point on the canvas screen.
+     * @param x x-position of point
+     * @param y y-position of point
+     * @return GridLocation where x-y are.
+     */
+    public GridLocation getCell(int x, int y){
+        return currentGrid.getGridLocation(new Point(x,y), calcOffset());
+    }
+
     private void resetCanvas(GraphicsContext gc){
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,this.getWidth(), this.getHeight());
