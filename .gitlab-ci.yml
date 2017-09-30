@@ -1,2 +1,10 @@
-maven_build:
+verify_tests:
   script: mvn verify
+
+generate_jar:
+  script: mvn package
+  artifacts:
+    paths:
+    - target/herebethetitle-0.0.1.jar
+    expire_in: 1 week
+
