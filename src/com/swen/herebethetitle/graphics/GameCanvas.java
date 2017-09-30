@@ -75,6 +75,11 @@ public class GameCanvas extends Canvas {
     }
 
     /**
+     * @return The current region of this GameCanvas
+     */
+    public Region getRegion(){return currentRegion;}
+
+    /**
      * Draw every entity held within the current region of this Canvas.
      */
     public void drawAll(){

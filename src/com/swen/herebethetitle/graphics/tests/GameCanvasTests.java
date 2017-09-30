@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.graphics.tests;
 
+import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.graphics.GridManager;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.entity.Entity;
@@ -83,7 +84,7 @@ public class GameCanvasTests{
     @Test
     public void test04_translated(){
         testMethod = new Operation(){public void run(GameCanvas c){
-            //c.drawAll();
+            c.drawAll();
             c.switchRegions(TestStage.emptyGrassField(5,5, 4, 3));
             c.drawAll();
         }};
@@ -93,14 +94,43 @@ public class GameCanvasTests{
     @Test
     public void test05_changeGridManager(){
         testMethod = new Operation(){public void run(GameCanvas c){
-            //c.drawAll();
+            c.drawAll();
             c.setGrid(new GridManager(40, 2,2));
             c.drawAll();
         }};
         update(ts);
     }
 
+    @Test
+    public void test06_ModifyGridManager(){
+        testMethod = new Operation(){public void run(GameCanvas c){
+            c.drawAll();
+            c.getGrid().setCellSize(10);
+            c.getGrid().sethGap(5);
+            c.drawAll();
+        }};
+        update(ts);
+    }
 
+    @Test
+    public void test07_ModifyRegion(){
+        testMethod = new Operation(){public void run(GameCanvas c){
+            Tile tile = c.getRegion().get(0,1);
+            Entity extra = new Item(new Image("file:res/cobble snow.png"));
+            tile.add(extra);
+            c.drawAll();
+        }};
+        update(ts);
+    }
+
+    @Test
+    public void test08_StackedEntities(){
+        testMethod = new Operation(){public void run(GameCanvas c){
+            c.switchRegions(TestStage.grasslandWithExtras(2,2,0,0));
+            c.drawAll();
+        }};
+        update(ts);
+    }
 
     private void update(TestStage ts){
         ts.setTestMethod(testMethod);

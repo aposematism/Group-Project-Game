@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.graphics.tests;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.Terrain;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 public class TestStage extends Application {
     private static Image grass;
     private static Image player;
+    private static Image tudorwall;
 
     private GameCanvas currentCanvas;
     private static Operation testMethod;
@@ -39,6 +41,7 @@ public class TestStage extends Application {
     public void start(Stage stage){
         grass = new Image("file:res/grass.png");
         player = new Image("file:res/wizard.png");
+        tudorwall = new Image("file:res/tudorwall.png");
 
         currentCanvas = new GameCanvas(emptyGrassField(7,7, 0, 0), 350, 350);
 
@@ -64,6 +67,15 @@ public class TestStage extends Application {
             }
         }
         r.get(playerCol,playerRow).add(new Player(player, Direction.Right));
+        return r;
+    }
+
+    public static Region grasslandWithExtras(int cols, int rows, int playerCol, int playerRow){
+        Region r = emptyGrassField(cols, rows, 0,0);
+
+        r.get(0,1).add(new Item(tudorwall));
+        r.get(0, 1).add(new Item(player));
+
         return r;
     }
 
