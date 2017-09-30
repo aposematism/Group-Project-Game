@@ -299,8 +299,15 @@ public class GUI extends Application{
 	}
 	
 	
-	public void update() {
+	private void update() {
 		/*This should update the world canvas - everything handled there*/
 		worldGraphics.update();
+	}
+	
+	/**
+	 * gives a preconstructed WorldGraphics and HUD for testing.
+	 */
+	public void setHUD(WorldGraphics g) {
+		worldGraphics = g;
 	}
 }

@@ -1,6 +1,5 @@
 package com.swen.herebethetitle.view;
 
-import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 
@@ -18,11 +17,12 @@ import javafx.scene.paint.Color;
  */
 public class WorldGraphics extends Scene implements GUIcomponent{
 	
-	Region region;
-	Canvas canvas;
-	HUD hud;
-	GameContext game;
-	Group root;
+	private Region region;
+	private Canvas canvas;
+	private HUD hud;
+	private GameContext game;
+	private Group root;
+	private boolean isTesting;
 	
 	/**
 	 * This will have to be changed to take a size.
@@ -42,11 +42,7 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 		/*event handling*/
 		//TODO - delegate these to actual handling methods for easier modification
 		r.addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-			update();
-			/*derive coordinates to put the text in centre*/
-			int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
-			int x = GUI.DEFAULT_WIDTH/2-20*"you pressed the mouse at 0.0,1.1".length()/2;
-			hud.drawTextToCanvas("You pressed the mouse at " + e.getSceneX() + "," + e.getSceneY(),x,y);
+			handleMousePress(e);
 		});		
 		r.addEventHandler(MouseEvent.MOUSE_ENTERED, e->{
 			update();
@@ -75,9 +71,31 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 		/*now draw the world*/
 		//canvas.drawAll();
 		//FIXME as above, change this once the canvas is ready
-		canvas.getGraphicsContext2D().setFill(Color.BLUE);
-		canvas.getGraphicsContext2D().fillRect(0, 0, GUI.DEFAULT_WIDTH, GUI.DEFAULT_HEIGHT);
+		if(isTesting) {
+			canvas.getGraphicsContext2D().setFill(Color.BLUE);
+			canvas.getGraphicsContext2D().fillRect(0, 0, GUI.DEFAULT_WIDTH, GUI.DEFAULT_HEIGHT);
+		}
 		/*now draw the HUD*/
 		hud.drawToCanvas();
+	}
+	
+	/**
+	 * Handles a mouse press event.
+	 * @param e the MouseEvent.
+	 */
+	private void handleMousePress(MouseEvent e) {
+
+		update();
+		/*derive coordinates to put the text in centre*/
+		int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
+		int x = GUI.DEFAULT_WIDTH/2-20*"you pressed the mouse at 0.0,1.1".length()/2;
+		hud.drawTextToCanvas("You pressed the mouse at " + e.getSceneX() + "," + e.getSceneY(),x,y);
 	}	
+	/**
+	 * Handles a mouse press event.
+	 * @param e the MouseEvent.
+	 */
+	private void handleKeyPress(MouseEvent e) {
+		//TODO
+	}
 }
