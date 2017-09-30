@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -62,6 +63,7 @@ public class GUI extends Application{
 	//main game UI fields
 	private WorldGraphics worldGraphics;
 	private Timeline updateTimeline;
+	Group gameGUIRoot;
 	
 	//Game fields
 	private static GameContext game;
@@ -205,7 +207,7 @@ public class GUI extends Application{
 			        Duration.millis(FRAMES_PER_SECOND),
 			        ae -> update()));
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
-			updateTimeline.play();
+			//updateTimeline.play();
 
 		});
 		GridPane.setConstraints(play, 0, 1);
@@ -283,8 +285,8 @@ public class GUI extends Application{
 	 * Initializes the game GUI.
 	 */
 	private WorldGraphics initGameGUI() {
-		BorderPane pane = new BorderPane();
-		WorldGraphics w = new WorldGraphics(game, pane);
+		gameGUIRoot = new Group();
+		WorldGraphics w = new WorldGraphics(game, gameGUIRoot);
 		//create new scene
 		return w;
 	}
