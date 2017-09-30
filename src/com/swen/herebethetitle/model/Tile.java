@@ -13,6 +13,8 @@ import com.swen.herebethetitle.util.GridLocation;
  * */
 
 public class Tile {
+	//Parser specific checking string.
+	private String k;
 	//Node Values
 	private GridLocation location;
 	//Neighbours
@@ -26,6 +28,7 @@ public class Tile {
 	}
 
 	public Tile(GridLocation location, String c){
+		this.k = c;
 		this.location = location;
 		this.neighbours = new ArrayList<Tile>();
 		this.interactives = new ArrayList<Entity>();
@@ -81,4 +84,8 @@ public class Tile {
 	}
 
 	public GridLocation getLocation() { return this.location; }
+	
+	public String getCharacter(){
+		return k;
+	}
 }

@@ -2,7 +2,6 @@ package com.swen.herebethetitle.model;
 
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.util.Direction;
-import javafx.scene.image.Image;
 
 /**
  * Top-level class for dealing with game model information.
