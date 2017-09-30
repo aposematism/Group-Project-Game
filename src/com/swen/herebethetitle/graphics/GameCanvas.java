@@ -8,6 +8,7 @@ import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.util.GridLocation;
 
 import javafx.scene.canvas.Canvas;
@@ -29,7 +30,7 @@ public class GameCanvas extends Canvas {
 //    private Map<Region, List<Entity>> backLayerSprites = new HashMap<>();
 //    private Map<Entity, List<Entity>> frontLayerSprites = new HashMap<>();
 
-    private GraphicsContext gc;
+//    private GraphicsContext gc;
 
     /**
      * Create a new Game Canvas, initialized with the initialRegion it gets passed.
@@ -80,6 +81,7 @@ public class GameCanvas extends Canvas {
      * Draw every entity held within the current region of this Canvas.
      */
     public void drawAll(){
+        GraphicsContext gc = this.getGraphicsContext2D();
         int size = currentGrid.getCellSize();
 
         Point offset = calcOffset(player);
@@ -103,6 +105,7 @@ public class GameCanvas extends Canvas {
     }
 
     private void resetCanvas(){
+        GraphicsContext gc = this.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0,this.getWidth(), this.getHeight());
     }
@@ -128,11 +131,8 @@ public class GameCanvas extends Canvas {
     }
 
     private void construct(Region initialRegion){
-        gc = this.getGraphicsContext2D();
         currentGrid = GridManager.createDefaultManager();
         switchRegions(initialRegion);
-
-        resetCanvas();
         player = getPlayer();
     }
 }
