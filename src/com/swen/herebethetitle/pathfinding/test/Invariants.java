@@ -14,7 +14,7 @@ import com.swen.herebethetitle.entity.Floor;
 public class Invariants {
     @Test
     public void obstacleEntityIsImpenetrable() {
-        Entity terrain = new Floor(null);
-        assertFalse(terrain.isPenetrable());
+        Entity Floor = new Floor(null);
+        assertFalse(Floor.isPenetrable());
     }
 }
