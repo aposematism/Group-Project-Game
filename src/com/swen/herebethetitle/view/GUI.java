@@ -68,6 +68,9 @@ public class GUI extends Application{
 	//Game fields
 	private static GameContext game;
 	private static GameLogic logic;
+	
+	//Testing mode field
+	public static boolean isTesting;
 
 	
 	/**
@@ -207,8 +210,7 @@ public class GUI extends Application{
 			        Duration.millis(FRAMES_PER_SECOND),
 			        ae -> update()));
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
-			//updateTimeline.play();
-
+			if(!isTesting)updateTimeline.play();
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -286,7 +288,7 @@ public class GUI extends Application{
 	 */
 	private WorldGraphics initGameGUI() {
 		gameGUIRoot = new Group();
-		WorldGraphics w = new WorldGraphics(game, gameGUIRoot);
+		WorldGraphics w = new WorldGraphics(game, gameGUIRoot, isTesting);
 		//create new scene
 		return w;
 	}
