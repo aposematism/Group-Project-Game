@@ -1,9 +1,8 @@
 package com.swen.herebethetitle.graphics.tests;
 
-import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Key;
-import com.swen.herebethetitle.entity.stationeries.Stationary;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.graphics.GameCanvas;
@@ -74,8 +73,8 @@ public class TestStage extends Application {
     public static Region grasslandWithExtras(int cols, int rows, int playerCol, int playerRow){
         Region r = emptyGrassField(cols, rows, 0,0);
 
-        r.get(0,1).add(new Stationary(tudorwall));
-        r.get(0, 1).add(new Key(player, 0));
+        r.get(0,1).add(new GameCanvasTests.DummyEntity(tudorwall));
+        r.get(0, 1).add(new GameCanvasTests.DummyEntity(player));
 
         return r;
     }
