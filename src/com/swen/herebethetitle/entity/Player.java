@@ -1,12 +1,7 @@
 package com.swen.herebethetitle.entity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Weapon;
+import java.util.*;
+import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 
@@ -19,55 +14,51 @@ import javafx.scene.image.Image;
  */
 public class Player extends Mob {
 
-	private List<Item> inventory;
-
-	private Armour[] armour = new Armour[Armour.TYPE.values().length];
-
-	private Weapon weapon;
+	private Inventory inventory;
 
 	public Player(Image sprite, Direction direction){
 		super(sprite, FULL_HEALTH, direction);
-		inventory = new ArrayList<>();
+		inventory = new Inventory();
 	}
 
-	public void addItem(Item item){
-		inventory.add(item);
+	public void add(Item... items) {
+		for(Item item: items)
+			inventory.add(item);
 	}
 
-	public boolean hasItem(Item item){
-		if(item.equals(weapon))
-			return true;
-		for(Armour a: armour)
-			if(item.equals(a))
+	public void remove(Item... items) {
+		for(Item item: items)
+			inventory.remove(item);
+	}
+
+	public boolean possesses(Item... items){
+		for(Item item: items){
+			if(inventory.contains(item))
 				return true;
-		return inventory.contains(item);
+		}
+		return false;
 	}
 
-	public void clearInventory(){
-		inventory.clear();
-	}
+	public Inventory inventory() { return inventory; }
 
-	public Iterator<Item> getInventory(){
-		return inventory.iterator();
-	}
-	
 	@Override
-	public boolean isPenetrable() {
-	    return true;
+	public void damage(double amount) {
+		double armourTotal = 0;
+		for(Armour a: inventory.getArmour())
+			if(a!=null)
+				armourTotal += a.getRating();
+		super.damage(amount * ((100 - armourTotal)/100));
 	}
 
-	public boolean possesses(Item item){
-		return inventory.contains(item);
-	}
+	@Override
+	public boolean isPenetrable() { return false; }
+
+	@Override
+	public String toString() { return null; }
 
 	/**
-	 * Doesn't do anything, can't interact with itself
+	 * Doesn't do anything, Player can't interact with itself
 	 * @param
 	 */
 	public void interact(GameContext context){}
-
-	@Override
-	public String toString() {
-		return null;
-	}
 }

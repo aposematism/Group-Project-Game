@@ -13,45 +13,31 @@ import javafx.scene.image.Image;
  *
  * Created by Mark on 19/09/17.
  */
-public class Item extends Entity {
+public abstract class Item extends Entity {
 
-	private Actions actions;
-
-	public Item(Image sprite){
-		super(sprite);
-	}
+	public Item(Image sprite) { super(sprite); }
 
 	public void interact(GameContext context) {
 	    Player player = context.getPlayer();
 		if(player.possesses(this)) {
-			actions.use(this, context);
+			use(context);
 		} else {
 		    Tile playerTile = context.getCurrentRegion().getTile(player);
 		    Tile itemTile = context.getCurrentRegion().getTile(this);
 		    if(playerTile == itemTile)
-                actions.pickup(this, context);
+			    pickup(context);
 		}
 	}
 
-	public void setActions(Actions actions){
-		this.actions = actions;
+	public void pickup(GameContext context){
+		context.getCurrentRegion().remove(this);
+		context.getPlayer().add(this);
 	}
 
-	public Actions getActions() { return this.actions; }
-
-	public interface Actions {
-		void pickup(Item item, GameContext context);
-		void use(Item item, GameContext context);
-		String toString();
+	public void use(GameContext context){
+		context.getPlayer().inventory().remove(this);
 	}
 
 	@Override
-	public String toString() {
-		return null;
-	}
-
-	@Override
-	public boolean isPenetrable(){
-		return true;
-	}
+	public boolean isPenetrable() { return true; }
 }

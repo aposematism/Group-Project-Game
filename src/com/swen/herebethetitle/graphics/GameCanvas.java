@@ -96,7 +96,7 @@ public class GameCanvas extends Canvas {
             Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
 
             //Draw the background terrain sprite first
-            gc.drawImage(t.getMapTerrain().getSprite(), pos.x,pos.y, size, size);
+            gc.drawImage(t.getMapFloor().getSprite(), pos.x,pos.y, size, size);
 
             //Draw each interactive entity that inhabits the current tile
             for(Entity e: t.getInteractives()){
