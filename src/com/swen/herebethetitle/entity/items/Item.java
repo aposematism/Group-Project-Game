@@ -18,15 +18,10 @@ public abstract class Item extends Entity {
 	public Item(Image sprite) { super(sprite); }
 
 	public void interact(GameContext context) {
-	    Player player = context.getPlayer();
-		if(player.possesses(this)) {
+		if(context.currentRegion.getPlayerTile().contains(this))
+			pickup(context);
+		else if(context.player.possesses(this))
 			use(context);
-		} else {
-		    Tile playerTile = context.getCurrentRegion().getTile(player);
-		    Tile itemTile = context.getCurrentRegion().getTile(this);
-		    if(playerTile == itemTile)
-			    pickup(context);
-		}
 	}
 
 	public void pickup(GameContext context){

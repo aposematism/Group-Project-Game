@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 /**
  * Created by Mark on 19/09/2017.
  */
-public class Door extends Stationary {
+public class Door implements Stationary.Behavior {
 
 	public enum STATE { LOCKED, UNLOCKED, OPEN }
 
@@ -19,14 +19,13 @@ public class Door extends Stationary {
 
 	private final int KEY;
 
-	public Door(Image sprite, int key, STATE state){
-		super(sprite);
+	public Door(int key, STATE state){
 		KEY = key;
 		this.state = state;
 	}
 
 	@Override
-	public void interact(GameContext context) {
+	public void interact(GameContext context, Stationary door) {
 		if(state==STATE.LOCKED && hasKey(context.player))
 			state = STATE.OPEN;
 		else if(state==STATE.UNLOCKED)
@@ -47,5 +46,5 @@ public class Door extends Stationary {
 	public boolean isPenetrable() { return state==STATE.OPEN; }
 
 	@Override
-	public String toString() { return null; }
+	public String toString() { return super.toString()+" "+KEY+" "+state.toString(); }
 }

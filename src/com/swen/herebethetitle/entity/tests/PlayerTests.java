@@ -23,11 +23,18 @@ public class PlayerTests {
 	}
 
 	@Test
-	public void test_posseses(){
+	public void test_posseses_true(){
 		Player p = new Player(null, Direction.Down);
 		Item i = new Key(null,0);
 		p.add(i);
 		assertTrue(p.possesses(i));
+	}
+
+	@Test
+	public void test_posseses_false(){
+		Player p = new Player(null, Direction.Down);
+		Item i = new Key(null,0);
+		assertFalse(p.possesses(i));
 	}
 
 	@Test
@@ -57,6 +64,16 @@ public class PlayerTests {
 		p.damage(20);
 		assertTrue(p.getHealth()>Mob.FULL_HEALTH-20);
 		assertTrue(p.getHealth()<Mob.FULL_HEALTH);
+	}
+
+	@Test
+	public void test_wallet(){
+		Player p = new Player(null, 100, 100, Direction.Down);
+		assertEquals(100, p.getWallet());
+		p.removeFunds(50);
+		assertEquals(50, p.getWallet());
+		p.addFunds(50);
+		assertEquals(100, p.getWallet());
 	}
 
 	@Test

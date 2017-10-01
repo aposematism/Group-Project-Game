@@ -10,18 +10,18 @@ public final class Weapon extends Item {
 
 	private final double STRENGTH;
 
-	public Weapon(Image sprite, double strength){
+	private final boolean IS_MELEE;
+
+	public Weapon(Image sprite, boolean isMelee, double strength){
 		super(sprite);
+		this.IS_MELEE = isMelee;
 		this.STRENGTH = strength;
 	}
 
 	public double getStrength() { return STRENGTH; }
 
-	@Override
-	public void use(GameContext context) {}
+	public boolean isMelee() { return IS_MELEE; }
 
 	@Override
-	public String toString() {
-		return null;
-	}
+	public String toString() { return super.toString()+" "+IS_MELEE+" "+STRENGTH; }
 }

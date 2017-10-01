@@ -33,12 +33,16 @@ public class NPC extends Mob {
 		behavior.ifPresent(b -> b.interact(context,this));
 	}
 
+	public void ping(GameContext context){
+		behavior.ifPresent(b -> b.ping(context,this));
+	}
+
 	public void setBehavior(Behavior behavior) { this.behavior = Optional.of(behavior); }
 
 	public Optional<Behavior> getBehavior() { return this.behavior; }
 
 	@Override
-	public String toString() { return null; }
+	public String toString() { return super.toString()+" "+behavior.toString(); }
 
 	@Override
 	public boolean isPenetrable() { return behavior.isPresent() && behavior.get().isPenetrable(); }

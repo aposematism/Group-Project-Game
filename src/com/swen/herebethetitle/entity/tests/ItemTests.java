@@ -1,9 +1,7 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Key;
+import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
@@ -68,5 +66,62 @@ public class ItemTests {
 		worse.pickup(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
+	}
+
+	@Test
+	public void test_Item_use(){
+		GameContext context = new GameContext();
+		Item i = new Key(null, 0);
+		context.player.add(i);
+		assertTrue(context.player.possesses(i));
+		i.interact(context);
+		assertFalse(context.player.possesses(i));
+	}
+
+	@Test
+	public void test_Item_pickup(){
+		GameContext context = new GameContext();
+		Item i = new Key(null, 0);
+		context.getCurrentRegion().getPlayerTile().add(i);
+		assertFalse(context.player.possesses(i));
+		i.interact(context);
+		assertTrue(context.player.possesses(i));
+	}
+
+	@Test
+	public void test_Item_isPenetrable(){
+		Item i = new Key(null, 0);
+		assertTrue(i.isPenetrable());
+	}
+
+	@Test
+	public void test_Potion(){
+		GameContext context = new GameContext();
+
+		Item p1 = new Potion(null, 50);
+		Item p2 = new Potion(null, -50);
+
+		context.player.add(p1, p2);
+
+		assertEquals(100, context.player.getHealth(), 0);
+
+		p2.interact(context);
+
+		assertEquals(50, context.player.getHealth(), 0);
+
+		p1.interact(context);
+
+		assertEquals(100, context.player.getHealth(), 0);
+	}
+
+	@Test
+	public void test_Weapon(){
+		GameContext context = new GameContext();
+
+		Weapon w = new Weapon(null, true, 50);
+
+		assertTrue(w.isMelee());
+
+		assertEquals(50, w.getStrength(), 0);
 	}
 }

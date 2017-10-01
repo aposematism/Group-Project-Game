@@ -19,7 +19,9 @@ public abstract class Entity {
 
 	public Image getSprite() { return sprite; }
 
-	public abstract String toString();
+	public String toString(){
+		return getClass().getName();
+	}
 
 	/**
 	 * Checks if the entity can be walked through.

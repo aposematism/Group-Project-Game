@@ -20,13 +20,11 @@ public final class Potion extends Item {
 		if(HEALTH_CHANGE>0){
 			context.player.heal(HEALTH_CHANGE);
 		} else if(HEALTH_CHANGE<0){
-			context.player.damage(HEALTH_CHANGE);
+			context.player.damage(Math.abs(HEALTH_CHANGE));
 		}
 		super.use(context);
 	}
 
 	@Override
-	public String toString() {
-		return getClass().getName()+" "+HEALTH_CHANGE;
-	}
+	public String toString() { return super.toString()+" "+HEALTH_CHANGE; }
 }

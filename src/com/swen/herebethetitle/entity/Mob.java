@@ -26,7 +26,7 @@ public abstract class Mob extends Entity {
 
 	private Direction direction;
 
-	public Mob(Image sprite, int startingHealth, Direction direction){
+	public Mob(Image sprite, double startingHealth, Direction direction){
 		super(sprite);
 		this.health = startingHealth;
 		this.direction = direction;
@@ -52,5 +52,10 @@ public abstract class Mob extends Entity {
 		health += amount;
 		if(health>FULL_HEALTH)
 			health = FULL_HEALTH;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+" "+health+" "+direction.toString();
 	}
 }

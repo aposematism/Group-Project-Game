@@ -3,6 +3,7 @@ package com.swen.herebethetitle.entity.tests;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.entity.stationeries.Door;
+import com.swen.herebethetitle.entity.stationeries.Stationary;
 import com.swen.herebethetitle.model.GameContext;
 import org.junit.Test;
 
@@ -17,17 +18,29 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(null, 123, Door.STATE.LOCKED);
+		Door d = new Door(123, Door.STATE.LOCKED);
+		Stationary s = new Stationary(null);
+		s.setBehavior(d);
 
 		Key k = new Key(null, 123);
 
 		p.add(k);
 
-		assertFalse(d.isPenetrable());
+		assertFalse(s.isPenetrable());
 
-		d.interact(context);
+		s.interact(context);
 
-		assertTrue(d.isPenetrable());
+		assertTrue(s.isPenetrable());
+
+		s.interact(context);
+
+		assertFalse(s.isPenetrable());
+
+		p.remove(k);
+
+		s.interact(context);
+
+		assertTrue(s.isPenetrable());
 	}
 
 	@Test
@@ -35,18 +48,30 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(null, 123, Door.STATE.LOCKED);
+		Door d = new Door(123, Door.STATE.LOCKED);
+		Stationary s = new Stationary(null);
+		s.setBehavior(d);
 
 		Key k = new Key(null, 234);
 		Key k2 = new Key(null, 123);
 
 		p.add(k,k2);
 
-		assertFalse(d.isPenetrable());
+		assertFalse(s.isPenetrable());
 
-		d.interact(context);
+		s.interact(context);
 
-		assertTrue(d.isPenetrable());
+		assertTrue(s.isPenetrable());
+
+		s.interact(context);
+
+		assertFalse(s.isPenetrable());
+
+		p.remove(k,k2);
+
+		s.interact(context);
+
+		assertTrue(s.isPenetrable());
 	}
 
 	@Test
@@ -54,17 +79,19 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(null, 123, Door.STATE.LOCKED);
+		Door d = new Door(123, Door.STATE.LOCKED);
+		Stationary s = new Stationary(null);
+		s.setBehavior(d);
 
 		Key k = new Key(null, 234);
 
 		p.add(k);
 
-		assertFalse(d.isPenetrable());
+		assertFalse(s.isPenetrable());
 
-		d.interact(context);
+		s.interact(context);
 
-		assertFalse(d.isPenetrable());
+		assertFalse(s.isPenetrable());
 	}
 
 	@Test
@@ -72,17 +99,19 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(null, 123, Door.STATE.LOCKED);
+		Door d = new Door(123, Door.STATE.LOCKED);
+		Stationary s = new Stationary(null);
+		s.setBehavior(d);
 
 		Key k = new Key(null, 234);
 		Key k2 = new Key(null, 345);
 
 		p.add(k,k2);
 
-		assertFalse(d.isPenetrable());
+		assertFalse(s.isPenetrable());
 
-		d.interact(context);
+		s.interact(context);
 
-		assertFalse(d.isPenetrable());
+		assertFalse(s.isPenetrable());
 	}
 }

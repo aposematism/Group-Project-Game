@@ -16,9 +16,18 @@ public class Player extends Mob {
 
 	private Inventory inventory;
 
-	public Player(Image sprite, Direction direction){
-		super(sprite, FULL_HEALTH, direction);
+	private int wallet;
+
+	public static final double DEFAULT_DAMAGE = 5;
+
+	public Player(Image sprite, double health, int wallet, Direction direction){
+		super(sprite, health, direction);
+		this.wallet = wallet;
 		inventory = new Inventory();
+	}
+
+	public Player(Image sprite, Direction direction){
+		this(sprite, FULL_HEALTH, 0, direction);
 	}
 
 	public void add(Item... items) {
@@ -41,6 +50,12 @@ public class Player extends Mob {
 
 	public Inventory inventory() { return inventory; }
 
+	public int getWallet() { return this.wallet; }
+
+	public void addFunds(int amount) { this.wallet += amount; }
+
+	public void removeFunds(int amount) { this.wallet -= amount; }
+
 	@Override
 	public void damage(double amount) {
 		double armourTotal = 0;
@@ -54,7 +69,9 @@ public class Player extends Mob {
 	public boolean isPenetrable() { return false; }
 
 	@Override
-	public String toString() { return null; }
+	public String toString() {
+		return super.toString()+" "+wallet+" "+inventory.toString();
+	}
 
 	/**
 	 * Doesn't do anything, Player can't interact with itself

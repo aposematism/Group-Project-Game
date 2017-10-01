@@ -33,6 +33,10 @@ public class InventoryTests {
 		assertTrue(i.hasArmour(Armour.TYPE.TORSO));
 		assertFalse(i.hasArmour(Armour.TYPE.LEGS));
 
+		assertTrue(i.contains(a));
+		assertTrue(i.contains(b));
+		assertTrue(i.contains(c));
+
 		assertEquals(a, i.getArmour(Armour.TYPE.BOOTS));
 		assertEquals(b, i.getArmour(Armour.TYPE.HELMET));
 		assertEquals(c, i.getArmour(Armour.TYPE.TORSO));
@@ -56,21 +60,19 @@ public class InventoryTests {
 		Player p = new Player(null, Direction.Down);
 		Inventory i = p.inventory();
 
-		Weapon w = new Weapon(null, 3);
+		Weapon w = new Weapon(null, true, 3);
 
 		p.add(w);
 
-		assertTrue(i.hasWeapon());
+		assertTrue(i.getWeapon().isPresent());
 
-		assertEquals(w, i.getWeapon());
+		assertEquals(w, i.getWeapon().get());
 
 		assertTrue(i.contains(w));
 
 		p.remove(w);
 
-		assertFalse(i.hasWeapon());
-
-		assertNull(i.getWeapon());
+		assertFalse(i.getWeapon().isPresent());
 
 		assertFalse(i.contains(w));
 	}

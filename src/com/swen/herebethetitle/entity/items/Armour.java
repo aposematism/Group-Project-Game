@@ -57,7 +57,7 @@ public final class Armour extends Item {
 	}
 
 	@Override
-	public String toString() { return this.getClass().getName()+" "+SLOT+" "+RATING; }
+	public String toString() { return super.toString()+" "+SLOT+" "+RATING; }
 
 	/**
 	 * Overrides superclass method which deletes the item from inventory,

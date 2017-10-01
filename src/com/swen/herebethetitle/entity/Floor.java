@@ -11,12 +11,15 @@ public class Floor extends Entity {
 
     public Floor(Image sprite){ super(sprite); }
 
-    @Override
-    public void interact(GameContext context){} //Not intractable
+	/**
+	 * Deliberately Blank, Floor can't be interacted with by design
+	 */
+	@Override
+    public void interact(GameContext context){}
 
     @Override
-    public boolean isPenetrable() { return false; }
+    public boolean isPenetrable() { return true; }
 
     @Override
-    public String toString() { return null; }
+    public String toString() { return super.toString(); }
 }
