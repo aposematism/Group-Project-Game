@@ -8,13 +8,15 @@ import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.view.GUI;
 
+import javafx.application.Platform;
+
 public class GUITests {
 	/**
 	 * Tests mouse inputs work properly.
 	 */
 	@Test
 	public void test_inputs() {
-		/*start GUI in test mode*/
+		/*start GUI in test mode*/		
 		GameContext game = new GameContext();
 		GameLogic gameLogic = new GameLogic(game);
 		GUI.setGame(game);
