@@ -1,11 +1,11 @@
 package com.swen.herebethetitle.graphics.tests;
 
 import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.stationeries.Stationary;
 import com.swen.herebethetitle.graphics.GridManager;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Terrain;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -116,7 +116,7 @@ public class GameCanvasTests{
     public void test07_ModifyRegion(){
         testMethod = new Operation(){public void run(GameCanvas c){
             Tile tile = c.getRegion().get(0,1);
-            Entity extra = new Item(new Image("file:res/cobble snow.png"));
+            Entity extra = new Stationary(new Image("file:res/cobble snow.png"));
             tile.add(extra);
             c.drawAll();
         }};
