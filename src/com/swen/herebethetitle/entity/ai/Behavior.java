@@ -6,7 +6,7 @@ import com.swen.herebethetitle.model.GameContext;
 /**
  * Created by Mark on 30/09/2017.
  */
-public interface Actions {
+public interface Behavior {
 	void interact(GameContext context, NPC npc);
 	boolean isPenetrable();
 	String toString();

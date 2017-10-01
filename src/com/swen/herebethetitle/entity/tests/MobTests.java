@@ -1,7 +1,7 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.Actions;
+import com.swen.herebethetitle.entity.ai.Behavior;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 public class MobTests {
 	@Test
 	public void test_direction(){
-		Actions a = new Actions() {
+		Behavior a = new Behavior() {
 			@Override
 			public void interact(GameContext context, NPC npc) {
 
@@ -35,7 +35,7 @@ public class MobTests {
 
 	@Test
 	public void test_health(){
-		Actions a = new Actions() {
+		Behavior a = new Behavior() {
 			@Override
 			public void interact(GameContext context, NPC npc) {}
 
