@@ -3,6 +3,7 @@ package com.swen.herebethetitle.entity.ai;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Tile;
 
 /**
  * Created by Mark on 1/10/2017.
@@ -25,6 +26,8 @@ public class Monster extends Behavior {
 				npc.damage(w.getStrength())
 			);
 			npc.damage(Player.DEFAULT_DAMAGE);
+			if(npc.getHealth()==0)
+				context.getCurrentRegion().getTile(npc).remove(npc);
 		}
 	}
 

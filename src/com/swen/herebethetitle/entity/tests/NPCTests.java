@@ -80,6 +80,33 @@ public class NPCTests {
 	}
 
 	@Test
+	public void test_Monster_interact_death(){
+		Behavior a = new Monster(50);
+		NPC n = new NPC(null, a,80, Direction.Down);
+
+		GameContext context = new GameContext();
+
+		Weapon w = new Weapon(null, false, 80);
+		context.player.add(w);
+		assertTrue(context.player.inventory().getWeapon().isPresent());
+
+		assertEquals(80, n.getHealth(), 0);
+
+		context.getCurrentRegion().getPlayerTile().add(n);
+
+		assertNotNull(context.getCurrentRegion().getTile(n));
+
+		n.interact(context);
+
+		assertEquals(0, n.getHealth(), 0);
+
+		try {
+			assertNull(context.getCurrentRegion().getTile(n));
+			fail();
+		} catch (IllegalArgumentException e){}
+	}
+
+	@Test
 	public void test_Monster_isPenetrable(){
 		Behavior a = new Monster(50);
 		NPC n = new NPC(null, a,80, Direction.Down);
