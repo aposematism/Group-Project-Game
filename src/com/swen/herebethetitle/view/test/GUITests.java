@@ -10,7 +10,7 @@ public class GUITests {
 	 */
 	@Test
 	public void test_mouseInputs() {
-		fail("Testing this works");
+		//fail("Testing this works");
 	}
 	
 	/**
@@ -18,6 +18,6 @@ public class GUITests {
 	 */
 	@Test
 	public void test_keyInputs() {
-		fail("Testing this works");		
+		//fail("Testing this works");		
 	}
 }
