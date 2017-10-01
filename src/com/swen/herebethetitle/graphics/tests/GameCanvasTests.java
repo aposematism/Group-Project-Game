@@ -39,7 +39,7 @@ public class GameCanvasTests{
 	@AfterClass
 	public static void runAfterTest() {
 		try {
-			ts.startWindow();
+			//ts.startWindow();
 		}catch(RuntimeException E){
 			if(!failTestMethod) {
 				failTestMethod = true;
