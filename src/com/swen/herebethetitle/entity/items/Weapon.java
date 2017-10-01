@@ -24,4 +24,11 @@ public final class Weapon extends Item {
 
 	@Override
 	public String toString() { return super.toString()+" "+IS_MELEE+" "+STRENGTH; }
+
+	/**
+	 * Overrides superclass method which deletes the item from inventory,
+	 * Deliberately designed to do nothing when selected in the player's inventory
+	 */
+	@Override
+	public void use(GameContext context) {}
 }
