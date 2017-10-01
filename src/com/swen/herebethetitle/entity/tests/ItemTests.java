@@ -50,6 +50,10 @@ public class ItemTests {
 		better.pickup(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
+
+		better.use(context);
+
+		assertTrue(context.player.possesses(better));
 	}
 
 	@Test
@@ -66,6 +70,10 @@ public class ItemTests {
 		worse.pickup(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
+
+		better.use(context);
+
+		assertTrue(context.player.possesses(better));
 	}
 
 	@Test
@@ -112,6 +120,8 @@ public class ItemTests {
 		p1.interact(context);
 
 		assertEquals(100, context.player.getHealth(), 0);
+
+		assertFalse(context.player.possesses(p1, p2));
 	}
 
 	@Test
@@ -119,9 +129,15 @@ public class ItemTests {
 		GameContext context = new GameContext();
 
 		Weapon w = new Weapon(null, true, 50);
+		context.player.add(w);
 
 		assertTrue(w.isMelee());
+		assertTrue(context.player.possesses(w));
 
 		assertEquals(50, w.getStrength(), 0);
+
+		w.use(context);
+
+		assertTrue(context.player.possesses(w));
 	}
 }

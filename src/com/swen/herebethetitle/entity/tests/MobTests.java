@@ -55,7 +55,7 @@ public class MobTests {
 		try {
 			m.heal(-10);
 			fail();
-		} catch (InputMismatchException e){
+		} catch (IllegalArgumentException e){
 			assertEquals(80, m.getHealth(), 0);
 		}
 	}
@@ -89,7 +89,7 @@ public class MobTests {
 		try {
 			m.damage(-10);
 			fail();
-		} catch (InputMismatchException e){
+		} catch (IllegalArgumentException e){
 			assertEquals(80, m.getHealth(), 0);
 		}
 	}

@@ -81,4 +81,13 @@ public class PlayerTests {
 		Player p = new Player(null, Direction.Down);
 		assertFalse(p.isPenetrable());
 	}
+
+	@Test
+	public void test_interact(){
+		GameContext context = new GameContext();
+		String before = context.player.toString();
+		context.player.interact(context);
+		String after = context.player.toString();
+		assertEquals(before, after);
+	}
 }
