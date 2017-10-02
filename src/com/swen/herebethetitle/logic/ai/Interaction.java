@@ -3,7 +3,7 @@ package com.swen.herebethetitle.logic.ai;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 
-public interface Interaction {
+interface Interaction {
     /**
      * Thrown when an interaction is over.
      */
