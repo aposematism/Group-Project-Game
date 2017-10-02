@@ -3,6 +3,7 @@ package com.swen.herebethetitle.logic.test;
 import org.junit.Before;
 
 import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.ai.Monster;
 import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.entity.statics.Static;
@@ -22,6 +23,10 @@ public class BaseTest {
      */
     protected Region region;
     /**
+     * The active player.
+     */
+    protected Player player;
+    /**
      * The game logic object.
      */
     protected GameLogic logic;
@@ -34,6 +39,7 @@ public class BaseTest {
     public void setupGameLogic() {
         this.context = new GameContext();
         this.region = this.context.getCurrentRegion();
+        this.player = this.context.getPlayer();
         this.logic = new GameLogic(context);
 
         teleportPlayer(new GridLocation(0, 0));

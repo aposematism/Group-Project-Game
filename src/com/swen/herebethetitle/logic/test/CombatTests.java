@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -50,13 +52,34 @@ public class CombatTests extends BaseTest {
     public void canAttackNeighbouringEnemies() {
         teleportPlayer(new GridLocation(3, 2));
         NPC enemy = placeEnemy(new GridLocation(3, 3));
-        
+
+        assertEquals(Mob.FULL_HEALTH, player.getHealth(), 0.1);
+        assertEquals(Mob.FULL_HEALTH, enemy.getHealth(), 0.1);
         try {
             logic.attack(enemy);
         } catch (EntityOutOfRange e) {
             fail("should be able to attack enemy");
         }
+
+        assertEquals(Mob.FULL_HEALTH, player.getHealth(), 0.1);
+        assertEquals(Mob.FULL_HEALTH - Player.DEFAULT_DAMAGE,
+                enemy.getHealth(), 0.1);
+    }
+    
+    @Test
+    public void canKillEnemyWithBareHands() {
+        NPC enemy = placeEnemy(new GridLocation(1, 1));
+
+        try {
+            for (int i=0; i<30; i++) {
+                logic.attack(enemy);
+            }
+        } catch (EntityOutOfRange e) {
+            fail("should be able to attack enemy");
+        } catch (IllegalArgumentException e) {
+            assertEquals("cannot attack a dead entity", e.getMessage());
+        }
         
-        // FIXME: test attack side effects
+        assertTrue(enemy.isDead());
     }
 }

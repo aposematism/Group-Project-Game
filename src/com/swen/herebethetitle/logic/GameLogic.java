@@ -91,7 +91,13 @@ public class GameLogic {
      */
     public void attack(NPC victim) throws EntityOutOfRange {
         ensureCanInteractWith(victim);
-        // FIXME: unimplemented.
+        
+        if (victim.isDead())
+            throw new IllegalArgumentException("cannot attack a dead entity");
+        
+        // FIXME: Calculate this correctly, take weapons into account
+        double damage = Player.DEFAULT_DAMAGE;
+        victim.damage(damage);
         notifier.notify(listener -> listener.onNPCAttacked(victim));
     }
 

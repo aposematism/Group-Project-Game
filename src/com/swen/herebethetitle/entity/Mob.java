@@ -16,12 +16,12 @@ public abstract class Mob extends Entity {
 	/**
 	 * A full health value.
 	 */
-	public static final int FULL_HEALTH = 100;
+	public static final double FULL_HEALTH = 100;
 
 	/**
 	 * An empty health value.
 	 */
-	public static final int NO_HEALTH = 0;
+	public static final double NO_HEALTH = 0;
 
 	/**
 	 * The amount of damage the mob can take before it dies
@@ -81,6 +81,13 @@ public abstract class Mob extends Entity {
 		health += amount;
 		if(health>FULL_HEALTH)
 			health = FULL_HEALTH;
+	}
+	
+	/**
+	 * Checks if the mob has any health left.
+	 */
+	public boolean isDead() {
+	    return this.health <= 0.0;
 	}
 
 	@Override
