@@ -8,9 +8,9 @@
 |----------------|-------------|---------------|--------------|-------|--------
 | Dylan McKay    | @mckaydyla  | Pathfinding   |              |       | `git log --author="Dylan McKay"`
 | Mark Metcalfe  | @metcalmark | Entity system |              |       | `git log --author="Mark Metcalfe"`
-| Jacob Woods    | @mckiewjaco | Game model    |              |       | `git log --author="J Woods"`
+| Jacob Woods    | @mckiewjaco | GUI           |              |       | `git log --author="J Woods"`
 | Jordan Milburn | @milburjord | Map parser    |              |       | `git log --author="Aposematism"`
-| Josh Weir      | @weirjosh   | JavaFX GUI    |              |       | `git log --author="Josh"`
+| Josh Weir      | @weirjosh   | Game Graphics |              |       | `git log --author="Josh"`
 
 ## Statistics and information
 
