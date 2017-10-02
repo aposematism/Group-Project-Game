@@ -231,7 +231,7 @@ public class Graph {
     protected Collection<Tile> getReachableAdjacentTiles(Tile tile) {
         return grid.getAdjacent(tile)
                    .stream()
-                   .filter(t -> t.isPenetrable())
+                   .filter(t -> t == this.destination || t.isPenetrable())
                    .collect(Collectors.toList());
     }
 

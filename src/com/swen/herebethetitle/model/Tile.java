@@ -52,7 +52,9 @@ public class Tile implements Iterable<Entity> {
 
 	public boolean contains(Entity entity) { return interactives.contains(entity); }
 
-	public boolean remove(Entity entity) { return interactives.remove(entity); }
+	public boolean remove(Entity entity) {
+	    return interactives.remove(entity);
+    }
 
 	public void add(Entity entity) { interactives.add(entity); }
 
@@ -101,5 +103,10 @@ public class Tile implements Iterable<Entity> {
 	@Override
 	public Iterator<Entity> iterator() {
 		return this.interactives.iterator();
+	}
+	
+	@Override
+	public String toString() {
+	    return this.location.toString();
 	}
 }

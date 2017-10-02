@@ -114,7 +114,8 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      */
     public void remove(Entity entity) {
         Tile tile = getTile(entity);
-        tile.remove(entity);
+        if (!tile.remove(entity))
+            throw new IllegalArgumentException("could not delete entity");
     }
     
     /**
@@ -249,5 +250,22 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public Iterator<Tile> iterator() {
         List<Tile> tiles = stream().collect(Collectors.toList());
         return tiles.iterator();
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int y=0; y<width; y++) {
+            for (int x=0; x<height; x++) {
+                Tile tile = get(x,y);
+                
+                String letter = tile.getInteractives().isEmpty() ? "-" : "w";
+                //String letter = tile.getInteractives().stream().findFirst().map(a -> a.toString()).orElse(" ");
+                builder.append(letter);
+            }
+            builder.append('\n');
+        }
+        
+        return builder.toString();
     }
 }

@@ -37,7 +37,7 @@ class Fight implements Interaction {
         Optional<Path> optimalPath = optimalPathToPlayer(region);
         
         if (optimalPath.isPresent()) {
-            GridLocation nextLocation = optimalPath.get().head();
+            GridLocation nextLocation = optimalPath.get().next();
             
             // Do not move the enemy onto the player.
             if (!nextLocation.equals(region.getLocation(player)))
@@ -56,6 +56,8 @@ class Fight implements Interaction {
     }
     
     private void dispatchEvents(Notifier notifier) {
+        if (!getWinner().isPresent()) return;
+        
         if (getWinner().get() == player) {
             notifier.notify(l -> l.onNPCKilled(npc));
         } else {
