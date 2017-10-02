@@ -3,7 +3,7 @@ package com.swen.herebethetitle.entity.tests;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.stationeries.*;
+import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.util.*;
 
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class MiscTests {
 	@Test
 	public void test_Door_toString(){
 		Door d = new Door(123, Door.STATE.LOCKED);
-		Stationary s = new Stationary("", null);
+		Static s = new Static("", null);
 		s.setBehavior(d);
 		assertNotNull(d.toString());
 		assertNotNull(s.toString());
@@ -79,21 +79,21 @@ public class MiscTests {
 	}
 
 	/**
-	 * Asserts Stationary has a string representation
+	 * Asserts Static has a string representation
 	 */
 	@Test
 	public void test_Stationary_toString(){
-		Stationary s = new Stationary("Rock", null);
+		Static s = new Static("Rock", null);
 		assertNotNull(s.toString());
 		System.out.println(s.toString());
 	}
 
 	/**
-	 * Asserts Stationary has a string representation and includes its behavior
+	 * Asserts Static has a string representation and includes its behavior
 	 */
 	@Test
 	public void test_StationaryAndBehavior_toString(){
-		Stationary s = new Stationary("Front Door", null);
+		Static s = new Static("Front Door", null);
 		Door d = new Door(209, Door.STATE.LOCKED);
 		s.setBehavior(d);
 		assertNotNull(s.toString());

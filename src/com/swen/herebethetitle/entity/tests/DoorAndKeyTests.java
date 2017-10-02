@@ -2,7 +2,7 @@ package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.stationeries.*;
+import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.model.*;
 
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class DoorAndKeyTests {
 		Player p = context.getPlayer();
 
 		Door d = new Door(123, Door.STATE.LOCKED);
-		Stationary s = new Stationary("", null);
+		Static s = new Static("", null);
 		s.setBehavior(d);
 
 		Key k = new Key("", null, 123);
@@ -59,7 +59,7 @@ public class DoorAndKeyTests {
 		Player p = context.getPlayer();
 
 		Door d = new Door(123, Door.STATE.LOCKED);
-		Stationary s = new Stationary("", null);
+		Static s = new Static("", null);
 		s.setBehavior(d);
 
 		Key k = new Key("", null, 234);
@@ -94,7 +94,7 @@ public class DoorAndKeyTests {
 		Player p = context.getPlayer();
 
 		Door d = new Door(123, Door.STATE.LOCKED);
-		Stationary s = new Stationary("", null);
+		Static s = new Static("", null);
 		s.setBehavior(d);
 
 		Key k = new Key("", null, 234);
@@ -118,7 +118,7 @@ public class DoorAndKeyTests {
 		Player p = context.getPlayer();
 
 		Door d = new Door(123, Door.STATE.LOCKED);
-		Stationary s = new Stationary("", null);
+		Static s = new Static("", null);
 		s.setBehavior(d);
 
 		Key k = new Key("", null, 234);

@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.entity.stationeries;
+package com.swen.herebethetitle.entity.statics;
 
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Item;
@@ -12,7 +12,7 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public class Door implements Stationary.Behavior {
+public class Door implements Static.Behavior {
 
 	/**
 	 * A door can either be locked, unlocked (but shut), and open
@@ -36,7 +36,7 @@ public class Door implements Stationary.Behavior {
 	 * Attempt to unlock/open the door
 	 */
 	@Override
-	public void interact(GameContext context, Stationary door) {
+	public void interact(GameContext context, Static door) {
 		if(state==STATE.LOCKED && hasKey(context.player))
 			state = STATE.OPEN;
 		else if(state==STATE.UNLOCKED)
