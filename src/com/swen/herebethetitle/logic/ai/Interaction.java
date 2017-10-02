@@ -13,16 +13,19 @@ public interface Interaction {
 
 	/**
 	 * Updates the interaction after a single tick.
-	 * @param region the region the interaction is occurring in.
-	 * @throws InteractionOver when something interrupts the interaction.
+	 * 
+	 * @param region
+	 *            the region the interaction is occurring in.
+	 * @throws InteractionOver
+	 *             when something interrupts the interaction.
 	 */
 	public void tick(Region region, Notifier notifier) throws InteractionOver;
-	
+
 	/**
 	 * Checks if the interaction is the same as another.
 	 * 
-	 * We do not want to use equality here because two fights could
-	 * be with the same entities but at different health levels.
+	 * We do not want to use equality here because two fights could be with the same
+	 * entities but at different health levels.
 	 */
 	public boolean isSameAs(Interaction interaction);
 }
