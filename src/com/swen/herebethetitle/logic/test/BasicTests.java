@@ -1,12 +1,14 @@
 package com.swen.herebethetitle.logic.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.logic.GameLogic;
+import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
@@ -26,7 +28,7 @@ public class BasicTests {
 		try {
 			logic.movePlayer(Direction.Left);
 			fail("should not be able to move out of bounds");
-		} catch (GameLogic.InvalidMove e) {
+		} catch (InvalidDestination e) {
 			assertEquals("direction is out of bounds", e.getMessage());
 		}
 	}
@@ -37,7 +39,7 @@ public class BasicTests {
 		try {
 			logic.movePlayer(Direction.Right);
 			fail("should not be able to move onto impenetrable object");
-		} catch (GameLogic.InvalidMove e) {
+		} catch (InvalidDestination e) {
 			assertEquals("an obstacle is in the way", e.getMessage());
 		}
 	}
@@ -50,7 +52,7 @@ public class BasicTests {
 			logic.movePlayer(Direction.Right);
 			logic.movePlayer(Direction.Right);
 			logic.movePlayer(Direction.Up);
-		} catch (GameLogic.InvalidMove e) {
+		} catch (InvalidDestination e) {
 			fail("should have been able to move onto location");
 		}
 	}

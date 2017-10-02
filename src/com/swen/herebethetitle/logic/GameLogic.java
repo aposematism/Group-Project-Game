@@ -1,6 +1,15 @@
 package com.swen.herebethetitle.logic;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.function.Consumer;
+
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.ai.Monster;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
+import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
+import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.util.Direction;
@@ -12,26 +21,10 @@ import com.swen.herebethetitle.util.GridLocation;
  */
 public class GameLogic {
 	/**
-	 * Thrown when a move is attempted that is not possible.
-	 * @author Dylan McKay
+	 * The observers that listen to the game updates.
 	 */
-	public static class InvalidMove extends Exception {
-		private static final long serialVersionUID = -2751815198575618672L;
-
-		/**
-		 * The player that triggered the invalid move.
-		 */
-		public final Player player;
-
-		/**
-		 * Creates a new invalid move exception.
-		 */
-		public InvalidMove(Player player, String message) {
-			super(message);
-			this.player = player;
-		}
-	}
-
+	private Collection<GameListener> listeners;
+	
 	/**
 	 * The game that is being controlled.
 	 */
@@ -42,31 +35,75 @@ public class GameLogic {
 	 */
 	public GameLogic(GameContext game) {
 		this.game = game;
+		this.listeners = new ArrayList<GameListener>();
 	}
 	
+	/**
+	 * Updates the game logic after some time has passed.
+	 * 
+	 * Moves enemies.
+	 * @param delta The number of elapsed seconds.
+	 */
 	public void update(float delta) {
-		// FIXME: implement
+		// FIXME: Implement this
+		//     * Enemy pathfinding/updating
+	}
+	
+	/**
+	 * Get the player to attack an entity.
+	 * 
+	 * The victim 
+	 * @param victim The entity to be attacked.
+	 * @throws ImpossibleAction if the victim is out of range.
+	 */
+	public void attack(Monster victim) throws EntityOutOfRange {
+		// FIXME: unimplemented.
+		notify(listener -> listener.onEnemyAttacked(victim));
+	}
+	
+	/**
+	 * Picks up an item to the inventory.
+	 */
+	public void pickup(Item item) {
+		getPlayer().inventory().add(item);
+		notify(listener -> listener.onPlayerPickup(getPlayer(), item));
+	}
+	
+	/**
+	 * Drops an item from the inventory.
+	 */
+	public void drop(Item item) {
+		getGame().getPlayer().inventory().remove(item);
+		notify(listener -> listener.onPlayerDrop(getPlayer(), item));
 	}
 	
 	/**
 	 * Moves the player in a specific direction.
 	 * @param direction The direction to move in.
-	 * @throws InvalidMove If the move would leave the player out of bounds or
+	 * @throws InvalidDestination If the move would leave the player out of bounds or
 	 * there is an impenetrable obstacle in the way.
 	 */
-	public void movePlayer(Direction direction) throws InvalidMove  {
+	public void movePlayer(Direction direction) throws InvalidDestination  {
 		GridLocation currentLocation = getCurrentRegion().getLocation(game.getPlayer());
 		GridLocation newLocation = currentLocation.adjacent(direction);
 		
 		if (!getCurrentRegion().isWithin(newLocation))
-			throw new InvalidMove(game.getPlayer(),
+			throw new InvalidDestination(game.getPlayer(),
 					"direction is out of bounds");
 		
 		if (!getCurrentRegion().isPenetrable(newLocation))
-			throw new InvalidMove(game.getPlayer(),
+			throw new InvalidDestination(getPlayer(),
 					"an obstacle is in the way");
 		
 		game.getCurrentRegion().move(game.getPlayer(), newLocation);
+		notify(listener -> listener.onPlayerMoved(getPlayer()));
+	}
+	
+	/**
+	 * Adds a game listener.
+	 */
+	public void addGameListener(GameListener listener) {
+		this.listeners.add(listener);
 	}
 	
 	/**
@@ -79,5 +116,21 @@ public class GameLogic {
 	 */
 	private Region getCurrentRegion() {
 		return game.getCurrentRegion();
+	}
+	
+	/**
+	 * Gets the player object.
+	 */
+	private Player getPlayer() {
+		return game.getPlayer();
+	}
+	
+	/**
+	 * Calls a function for every game listener.
+	 */
+	protected void notify(Consumer<GameListener> notifier) {
+		for (GameListener listener : this.listeners) {
+			notifier.accept(listener);
+		}
 	}
 }
