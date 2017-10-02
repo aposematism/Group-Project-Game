@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.parsertests;
+package com.swen.herebethetitle.parser.parsertests;
 
 import static org.junit.Assert.fail;
 
