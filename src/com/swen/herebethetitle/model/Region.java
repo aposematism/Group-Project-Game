@@ -73,11 +73,18 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Gets a tile at a location if the location is in bounds.
      */
     public Optional<Tile> tryGet(GridLocation location) {
-        if (location.x < 0 || location.x >= width ||
-                location.y < 0 || location.y >= height)
+        if (!isWithin(location))
             return Optional.empty();
         
         return Optional.of(get(location));
+    }
+    
+    /**
+     * Checks if a location is within the region.
+     */
+    public boolean isWithin(GridLocation location) {
+        return location.x >= 0 && location.x <= width &&
+                location.y >= 0 && location.y <= height;
     }
     
     /**
@@ -93,6 +100,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public void set(GridLocation location, Optional<Tile> tile) {
         cells[location.x][location.y] = tile.orElse(null);
     }
+    
+    /**
+     * Checks if a location is penetrable.
+     */
+    public boolean isPenetrable(GridLocation location) {
+    	    return get(location).isPenetrable();
+    }
 
     /**
      * Removes an item from the region.
@@ -100,6 +114,14 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public void remove(Entity entity) {
         Tile tile = getTile(entity);
         tile.remove(entity);
+    }
+    
+    /**
+     * Moves an entity to a location.
+     */
+    public void move(Entity entity, GridLocation location) {
+    	    remove(entity);
+    	    get(location).add(entity);
     }
     
     /**
