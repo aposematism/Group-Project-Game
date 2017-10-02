@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.view.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.swen.herebethetitle.logic.GameLogic;
@@ -13,6 +12,7 @@ public class GUITests {
 	 * Tests mouse inputs work properly.
 	 */
 	@Test
+	@Ignore
 	public void test_inputs() {
 		/*start GUI in test mode*/
 		GameContext game = new GameContext();
