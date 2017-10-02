@@ -22,7 +22,7 @@ import com.swen.herebethetitle.util.GridLocation;
  * @author dylan
  */
 public class GameLogic {
-    public static final double VICINITY_RADIUS = 15.0;
+    public static final double VICINITY_RADIUS = 6.0;
 
     /**
      * The listener notifier.
