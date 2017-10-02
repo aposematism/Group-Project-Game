@@ -60,9 +60,16 @@ Pathfinding is done via the [`Graph`](src/com/swen/herebethetitle/pathfinding/Gr
 
 ### Entity system (Mark Metcalfe)
 
-[`com.swen.herebethetitle.entity`](src/com/swen/herebethetitle/entity)
+[`com.swen.herebethetitle.entity`](src/com/swen/herebethetitle/entity) (and its subpackages)
 
-<information here>
+This library implements both interative and static game objects such as
+items, NPCs, terrain elements and the like.
+
+This is used by other libraries to load, save, interact and draw the game objects.
+
+Interactions are handled by interact(), of which every entity has its own implementation.
+
+Tests are located inside the [`com.swen.herebethetitle.entity.tests`](src/com.swen.herebethetitle.entity.tests) package.
 
 ### Game model library (Jacon Woods)
 
