@@ -4,17 +4,29 @@ import com.swen.herebethetitle.model.GameContext;
 import javafx.scene.image.Image;
 
 /**
+ * Consumable that increases or decreases the player's health
+ *
  * Created by Mark on 30/09/2017.
+ *
+ * @author Mark Metcalfe
  */
 public final class Potion extends Item {
 
 	private final int HEALTH_CHANGE;
 
-	public Potion(Image sprite, int healthChange){
-		super(sprite);
+	/**
+	 * @param name The name of the potion
+	 * @param sprite What it looks like
+	 * @param healthChange How much it will increase the Player's health by
+	 */
+	public Potion(String name, Image sprite, int healthChange){
+		super(name, sprite);
 		this.HEALTH_CHANGE = healthChange;
 	}
 
+	/**
+	 * Heal or Damage the player depending on whether it is a positive or negative potion
+	 */
 	@Override
 	public void use(GameContext context) {
 		if(HEALTH_CHANGE>0){

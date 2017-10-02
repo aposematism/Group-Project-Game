@@ -141,6 +141,6 @@ public class GameCanvasTests{
 		public boolean isPenetrable(){ return false; }
 		public void interact(GameContext context){}
 		public String toString(){return null;}
-		public DummyEntity(Image image){super(image);}
+		public DummyEntity(Image image){super("",image);}
 	}
 }

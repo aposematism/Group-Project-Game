@@ -1,30 +1,30 @@
 package com.swen.herebethetitle.entity.tests;
 
-import com.swen.herebethetitle.entity.Inventory;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Key;
-import com.swen.herebethetitle.entity.items.Weapon;
-import com.swen.herebethetitle.util.Direction;
+import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.items.*;
+import com.swen.herebethetitle.util.*;
+
 import org.junit.Test;
-
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 /**
  * Created by Mark on 30/09/2017.
+ *
+ * @author Mark Metcalfe
  */
 public class InventoryTests {
+
+	/**
+	 * Asserts that armour is correctly added and removed from the inventory
+	 */
 	@Test
 	public void test_armour(){
 		Player p = new Player(null, Direction.Down);
 		Inventory i = p.inventory();
 
-		Armour a = new Armour(null, Armour.TYPE.BOOTS, 0);
-		Armour b = new Armour(null, Armour.TYPE.HELMET, 0);
-		Armour c = new Armour(null, Armour.TYPE.TORSO, 0);
+		Armour a = new Armour("", null, Armour.TYPE.BOOTS, 0);
+		Armour b = new Armour("", null, Armour.TYPE.HELMET, 0);
+		Armour c = new Armour("", null, Armour.TYPE.TORSO, 0);
 
 		p.add(a,b,c);
 
@@ -55,12 +55,15 @@ public class InventoryTests {
 		assertNull(i.getArmour(Armour.TYPE.LEGS));
 	}
 
+	/**
+	 * Asserts that weapons are correctly added and removed from the inventory
+	 */
 	@Test
 	public void test_weapon(){
 		Player p = new Player(null, Direction.Down);
 		Inventory i = p.inventory();
 
-		Weapon w = new Weapon(null, true, 3);
+		Weapon w = new Weapon("", null, true, 3);
 
 		p.add(w);
 
@@ -77,15 +80,18 @@ public class InventoryTests {
 		assertFalse(i.contains(w));
 	}
 
+	/**
+	 * Asserts that items are correctly added and removed from the inventory
+	 */
 	@Test
 	public void test_items(){
 		Player p = new Player(null, Direction.Down);
 		Inventory i = p.inventory();
 
-		Item a = new Key(null,0);
-		Item b = new Key(null,0);
-		Item c = new Key(null,0);
-		Item d = new Key(null,0);
+		Item a = new Key("", null,0);
+		Item b = new Key("", null,0);
+		Item c = new Key("", null,0);
+		Item d = new Key("", null,0);
 
 		p.add(a,b,c,d);
 
@@ -111,13 +117,16 @@ public class InventoryTests {
 		assertFalse(i.contains(d));
 	}
 
+	/**
+	 * Asserts that the inventory is cleared correctly
+	 */
 	@Test
 	public void test_clearInventory(){
 		Player p = new Player(null, Direction.Down);
 
-		Item a = new Key(null,0);
-		Item b = new Key(null,0);
-		Item c = new Key(null,0);
+		Item a = new Key("", null,0);
+		Item b = new Key("", null,0);
+		Item c = new Key("", null,0);
 
 		assertEquals(0, p.inventory().getItems().size());
 

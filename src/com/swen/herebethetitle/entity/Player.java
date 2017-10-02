@@ -1,45 +1,69 @@
 package com.swen.herebethetitle.entity;
 
-import java.util.*;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
-
 import javafx.scene.image.Image;
 
 /**
- *
+ * The Player
  *
  * Created by Mark on 19/09/2017.
+ *
+ * @author Mark Metcalfe
  */
 public class Player extends Mob {
 
+	/**
+	 * The Items, Weapon and Armours the player has
+	 */
 	private Inventory inventory;
 
+	/**
+	 * Represents how much currency the player possess.
+	 * Used for buying items
+	 */
 	private int wallet;
 
+	/**
+	 * The amount of damage the player can deal by default, without a weapon.
+	 */
 	public static final double DEFAULT_DAMAGE = 5;
 
+	/**
+	 * Create a player with existing health and wallet values.
+	 * Used for loading from a save file.
+	 */
 	public Player(Image sprite, double health, int wallet, Direction direction){
-		super(sprite, health, direction);
+		super("Player", sprite, health, direction);
 		this.wallet = wallet;
 		inventory = new Inventory();
 	}
 
-	public Player(Image sprite, Direction direction){
-		this(sprite, FULL_HEALTH, 0, direction);
-	}
+	/**
+	 * Create a starting, default instance of Player.
+	 */
+	public Player(Image sprite, Direction direction){ this(sprite, FULL_HEALTH, 0, direction); }
 
+	/**
+	 * Puts any amount of items into the inventory
+	 */
 	public void add(Item... items) {
 		for(Item item: items)
 			inventory.add(item);
 	}
 
+	/**
+	 * Removes any amount of items from the inventory
+	 */
 	public void remove(Item... items) {
 		for(Item item: items)
 			inventory.remove(item);
 	}
 
+	/**
+	 * Checks if the inventory contains any of the given items
+	 */
 	public boolean possesses(Item... items){
 		for(Item item: items){
 			if(inventory.contains(item))
@@ -48,14 +72,31 @@ public class Player extends Mob {
 		return false;
 	}
 
+	/**
+	 * Returns the inventory object
+	 */
 	public Inventory inventory() { return inventory; }
 
+	/**
+	 * Returns how much currency the player currently has
+	 */
 	public int getWallet() { return this.wallet; }
 
+	/**
+	 * Increases the player's currency
+	 */
 	public void addFunds(int amount) { this.wallet += amount; }
 
+	/**
+	 * Decreases the player's currency
+	 */
 	public void removeFunds(int amount) { this.wallet -= amount; }
 
+	/**
+	 * Decreases the player's health points by a specified value.
+	 * It takes into account the armour the player is wearing,
+	 * the better the armour, the less damage taken.
+	 */
 	@Override
 	public void damage(double amount) {
 		double armourTotal = 0;
@@ -65,6 +106,9 @@ public class Player extends Mob {
 		super.damage(amount * ((100 - armourTotal)/100));
 	}
 
+	/**
+	 * The Player is a solid entity, and cannot be moved through
+	 */
 	@Override
 	public boolean isPenetrable() { return false; }
 
@@ -75,7 +119,6 @@ public class Player extends Mob {
 
 	/**
 	 * Doesn't do anything, Player can't interact with itself
-	 * @param
 	 */
 	public void interact(GameContext context){}
 }

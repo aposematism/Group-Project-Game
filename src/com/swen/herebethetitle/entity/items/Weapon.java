@@ -4,7 +4,11 @@ import com.swen.herebethetitle.model.GameContext;
 import javafx.scene.image.Image;
 
 /**
+ * Item that increases the damage dealt by the player in attacks
+ *
  * Created by Mark on 19/09/2017.
+ *
+ * @author Mark Metcalfe
  */
 public final class Weapon extends Item {
 
@@ -12,14 +16,26 @@ public final class Weapon extends Item {
 
 	private final boolean IS_MELEE;
 
-	public Weapon(Image sprite, boolean isMelee, double strength){
-		super(sprite);
+	/**
+	 * @param name The name of the weapon
+	 * @param sprite What it looks like
+	 * @param isMelee Whether or not its a melee weapon
+	 * @param strength The amount of damage that it will deal
+	 */
+	public Weapon(String name, Image sprite, boolean isMelee, double strength){
+		super(name, sprite);
 		this.IS_MELEE = isMelee;
 		this.STRENGTH = strength;
 	}
 
+	/**
+	 * The amount of damage that can be dealt by the weapon
+	 */
 	public double getStrength() { return STRENGTH; }
 
+	/**
+	 * Whether or not the weapon is a melee weapon
+	 */
 	public boolean isMelee() { return IS_MELEE; }
 
 	@Override

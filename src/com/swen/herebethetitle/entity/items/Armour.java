@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
  * used to calculate how much damage it will absorb.
  *
  * Created by Mark on 19/09/2017.
+ *
+ * @author Mark Metcalfe
  */
 public final class Armour extends Item {
 
@@ -24,24 +26,30 @@ public final class Armour extends Item {
 		BOOTS
 	}
 
-	/**
-	 * What type of armour this one is
-	 */
 	private final TYPE SLOT;
 
-	/**
-	 * How good the armour is at protecting the player
-	 */
 	private final double RATING;
 
-	public Armour(Image sprite, TYPE type, double rating){
-		super(sprite);
+	/**
+	 * @param name The name of the armour
+	 * @param sprite What it looks like
+	 * @param type What part of the body the armour covers
+	 * @param rating How good it is at protecting the player
+	 */
+	public Armour(String name, Image sprite, TYPE type, double rating){
+		super(name, sprite);
 		SLOT = type;
 		RATING = rating;
 	}
 
+	/**
+	 * The slot type the armour is
+	 */
 	public TYPE getSlot() { return SLOT; }
 
+	/**
+	 * The protection rating of the armour
+	 */
 	public double getRating() { return RATING; }
 
 	/**
@@ -56,14 +64,13 @@ public final class Armour extends Item {
 			context.player.add(this);
 	}
 
-	@Override
-	public String toString() { return super.toString()+" "+SLOT+" "+RATING; }
-
 	/**
 	 * Overrides superclass method which deletes the item from inventory,
-	 * Deliberatley designed to do nothing when selected in the player's inventory
-	 * @param context
+	 * Deliberately designed to do nothing when selected in the player's inventory
 	 */
 	@Override
 	public void use(GameContext context) {}
+
+	@Override
+	public String toString() { return super.toString()+" "+SLOT+" "+RATING; }
 }

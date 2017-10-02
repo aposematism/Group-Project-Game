@@ -1,18 +1,20 @@
 package com.swen.herebethetitle.entity.ai;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.model.GameContext;
 
 /**
+ * Strategy Pattern of what it an NPC actually does when interacted with.
+ *
  * Created by Mark on 30/09/2017.
+ *
+ * @author Mark Metcalfe
  */
 public abstract class Behavior {
 
 	/**
-	 * Checks that the NPC can be interacted with by the Player.
-	 * Does this by checking if the
+	 * Checks that the NPC can be interacted with by the Player
+	 * Can be interacted with if the player is on or adjacent to the NPCs tile
 	 */
 	public boolean canInteract(GameContext context, NPC npc){
 		return context.currentRegion.getPlayerTile().neighboursContain(npc) ||
@@ -20,14 +22,20 @@ public abstract class Behavior {
 	}
 
 	/**
-	 * Checks if the Player possesses a melee weapon.
+	 * Checks if the Player possesses a melee weapon
 	 */
 	public boolean hasMeleeWeapon(GameContext context){
 		return context.player.inventory().getWeapon().isPresent() && context.player.inventory().getWeapon().get().isMelee();
 	}
 
+	/**
+	 * Called every game tick
+	 */
 	abstract public void ping(GameContext context, NPC npc);
 
+	/**
+	 * Called when the player interacts with the NPCs
+	 */
 	abstract public void interact(GameContext context, NPC npc);
 
 	/**
@@ -35,5 +43,5 @@ public abstract class Behavior {
 	 */
 	public boolean isPenetrable() { return false; }
 
-	public String toString() { return getClass().getName(); }
+	public String toString() { return getClass().getSimpleName(); }
 }
