@@ -39,9 +39,15 @@ public abstract class Behavior {
 	abstract public void interact(GameContext context, NPC npc);
 
 	/**
+	 * Checks if the behaviour can be aggressive.
+	 * @return true if the entity can start a fight, false otherwise.
+	 */
+	abstract public boolean isAggressive();
+
+	/**
 	 * Isn't penetrable by default, but can be overridden for special monsters
 	 */
 	public boolean isPenetrable() { return false; }
-
+	
 	public String toString() { return getClass().getSimpleName(); }
 }

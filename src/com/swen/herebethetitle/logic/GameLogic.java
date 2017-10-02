@@ -1,17 +1,18 @@
 package com.swen.herebethetitle.logic;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.function.Consumer;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.Monster;
 import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.logic.ai.NpcController;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
+import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -20,22 +21,30 @@ import com.swen.herebethetitle.util.GridLocation;
  * @author dylan
  */
 public class GameLogic {
+	public static final double VICINITY_RADIUS = 15.0;
+	
 	/**
-	 * The observers that listen to the game updates.
+	 * The listener notifier.
 	 */
-	private Collection<GameListener> listeners;
+	private Notifier notifier;
 	
 	/**
 	 * The game that is being controlled.
 	 */
-	private GameContext game;
+	private GameContext context;
+	
+	/**
+	 * The NPC controller.
+	 */
+	private NpcController npcController;
 	
 	/**
 	 * Creates a new game logic class.
 	 */
-	public GameLogic(GameContext game) {
-		this.game = game;
-		this.listeners = new ArrayList<GameListener>();
+	public GameLogic(GameContext context) {
+		this.context = context;
+		this.notifier = new Notifier();
+		this.npcController = new NpcController();
 	}
 	
 	/**
@@ -45,8 +54,28 @@ public class GameLogic {
 	 * @param delta The number of elapsed seconds.
 	 */
 	public void update(float delta) {
-		// FIXME: Implement this
-		//     * Enemy pathfinding/updating
+		triggerPossibleInteractions();
+
+		npcController.tick(context, notifier);
+	}
+	
+	/**
+	 * Triggers any possible interactions.
+	 */
+	private void triggerPossibleInteractions() {
+		GridLocation playerLocation = context.getCurrentRegion().getLocation(getPlayer());
+		List<Tile> vicinity = context.getCurrentRegion().vicinityList(playerLocation, VICINITY_RADIUS);
+
+		for (Tile tile : vicinity) {
+			List<NPC> aggressiveNpcs = tile.stream()
+					         .filter(entity -> entity instanceof NPC)
+		    		             .map(entity -> (NPC)entity)
+		    		             .filter(NPC::isAggressive)
+		    		             .collect(Collectors.toList());
+			for (NPC npc : aggressiveNpcs) {
+				npcController.startFight(getPlayer(), npc);
+			}
+		}
 	}
 	
 	/**
@@ -56,9 +85,9 @@ public class GameLogic {
 	 * @param victim The entity to be attacked.
 	 * @throws ImpossibleAction if the victim is out of range.
 	 */
-	public void attack(Monster victim) throws EntityOutOfRange {
+	public void attack(NPC victim) throws EntityOutOfRange {
 		// FIXME: unimplemented.
-		notify(listener -> listener.onEnemyAttacked(victim));
+		notifier.notify(listener -> listener.onNPCAttacked(victim));
 	}
 	
 	/**
@@ -66,7 +95,7 @@ public class GameLogic {
 	 */
 	public void pickup(Item item) {
 		getPlayer().inventory().add(item);
-		notify(listener -> listener.onPlayerPickup(getPlayer(), item));
+		notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
 	}
 	
 	/**
@@ -74,7 +103,7 @@ public class GameLogic {
 	 */
 	public void drop(Item item) {
 		getGame().getPlayer().inventory().remove(item);
-		notify(listener -> listener.onPlayerDrop(getPlayer(), item));
+		notifier.notify(listener -> listener.onPlayerDrop(getPlayer(), item));
 	}
 	
 	/**
@@ -84,53 +113,44 @@ public class GameLogic {
 	 * there is an impenetrable obstacle in the way.
 	 */
 	public void movePlayer(Direction direction) throws InvalidDestination  {
-		GridLocation currentLocation = getCurrentRegion().getLocation(game.getPlayer());
+		GridLocation currentLocation = getCurrentRegion().getLocation(context.getPlayer());
 		GridLocation newLocation = currentLocation.adjacent(direction);
 		
 		if (!getCurrentRegion().isWithin(newLocation))
-			throw new InvalidDestination(game.getPlayer(),
+			throw new InvalidDestination(context.getPlayer(),
 					"direction is out of bounds");
 		
 		if (!getCurrentRegion().isPenetrable(newLocation))
 			throw new InvalidDestination(getPlayer(),
 					"an obstacle is in the way");
 		
-		game.getCurrentRegion().move(game.getPlayer(), newLocation);
-		notify(listener -> listener.onPlayerMoved(getPlayer()));
+		context.getCurrentRegion().move(context.getPlayer(), newLocation);
+		notifier.notify(listener -> listener.onPlayerMoved(getPlayer()));
 	}
 	
 	/**
 	 * Adds a game listener.
 	 */
 	public void addGameListener(GameListener listener) {
-		this.listeners.add(listener);
+		this.notifier.addListener(listener);
 	}
 	
 	/**
 	 * Gets the game that is being controlled.
 	 */
-	public GameContext getGame() { return this.game; }
+	public GameContext getGame() { return this.context; }
 	
 	/**
 	 * Gets the current region of the player.
 	 */
 	private Region getCurrentRegion() {
-		return game.getCurrentRegion();
+		return context.getCurrentRegion();
 	}
 	
 	/**
 	 * Gets the player object.
 	 */
 	private Player getPlayer() {
-		return game.getPlayer();
-	}
-	
-	/**
-	 * Calls a function for every game listener.
-	 */
-	protected void notify(Consumer<GameListener> notifier) {
-		for (GameListener listener : this.listeners) {
-			notifier.accept(listener);
-		}
+		return context.getPlayer();
 	}
 }

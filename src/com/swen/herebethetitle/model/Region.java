@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -167,6 +168,43 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      */
     public Optional<Tile> maybeGetPlayerTile() {
         return stream().filter(t -> t.getInteractives().stream().anyMatch(e -> e instanceof Player)).findAny();
+    }
+    
+    /**
+     * Gets an iterator of tiles within a vicinity.
+     */
+    public Iterator<Tile> vicinity(GridLocation location, double radius) {
+		return vicinityList(location, radius).iterator();
+    }
+    
+    /**
+     * Gets a stream of tiles within a vicinity.
+     */
+    public Stream<Tile> vicinityStream(GridLocation location, double radius) {
+    	    return vicinityList(location, radius).stream();
+    }
+    
+    /**
+     * Gets a list of tiles within a vicinity.
+     */
+    public List<Tile> vicinityList(GridLocation location, double radius) {
+    	    List<Tile> vicinity = new ArrayList<Tile>();
+
+    	    int maxRadius = (int)Math.round(radius);
+    	    // Go through every tile in the general area.
+    	    for (int y = location.y - maxRadius; y < location.y + radius; y++) {
+			for (int x = location.x - maxRadius; x < location.x + maxRadius; x++) {
+				Optional<Tile> tile = tryGet(new GridLocation(x,y));
+				GridLocation tileLocation = new GridLocation(x,y);
+				
+				// Add any tiles within the radius.
+				if (tile.isPresent() &&
+						tileLocation.distanceBetween(location) <= radius) {
+					vicinity.add(tile.get());
+				}
+			}
+    	    }
+    	    return vicinity;
     }
     
     /**

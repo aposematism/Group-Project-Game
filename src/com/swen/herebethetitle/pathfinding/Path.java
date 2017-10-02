@@ -22,7 +22,23 @@ public class Path implements Iterable<GridLocation> {
      * Creates a new graph path.
      */
     public Path(Collection<GridLocation> parts) {
+    	    if (parts.isEmpty())
+    	    	    throw new IllegalArgumentException("path must not be empty");
         this.parts = new ArrayList<GridLocation>(parts);
+    }
+    
+    /**
+     * Gets the first part of the path.
+     */
+    public GridLocation head() {
+		return this.parts.get(0);
+    }
+    
+    /**
+     * Gets the last part of the path.
+     */
+    public GridLocation tail() {
+    	    return this.parts.get(this.parts.size()-1);
     }
 
     /**
