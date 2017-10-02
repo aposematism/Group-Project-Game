@@ -3,6 +3,7 @@ package com.swen.herebethetitle.logic;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Item;
@@ -89,16 +90,40 @@ public class GameLogic {
      *             if the victim is out of range.
      */
     public void attack(NPC victim) throws EntityOutOfRange {
+        ensureCanInteractWith(victim);
         // FIXME: unimplemented.
         notifier.notify(listener -> listener.onNPCAttacked(victim));
     }
 
     /**
      * Picks up an item to the inventory.
+     * @throws EntityOutOfRange if the item is not neighboured.
      */
-    public void pickup(Item item) {
+    public void pickup(Item item) throws EntityOutOfRange {
+        ensureCanInteractWith(item);
+        item.pickup(context);
         getPlayer().inventory().add(item);
         notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
+    }
+
+    /***
+     * Raises an error if the player cannot interact with an entity.
+     * @throws EntityOutOfRange if the entity is too far away from the player.
+     */
+    private void ensureCanInteractWith(Entity entity) throws EntityOutOfRange {
+        if (!canInteractWith(entity))
+            throw new EntityOutOfRange(entity, "entity out of range");
+    }
+    
+    /**
+     * Checks if an entity can interact with another entity.
+     * 
+     * This can only happen if the player is neighboring the entity.
+     */
+    private boolean canInteractWith(Entity entity) {
+        GridLocation entityLocation = getCurrentRegion().getLocation(entity);
+        GridLocation playerLocation = getCurrentRegion().getLocation(getPlayer());
+        return entityLocation.isNeighbouring(playerLocation);
     }
 
     /**

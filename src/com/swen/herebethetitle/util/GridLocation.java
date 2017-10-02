@@ -1,6 +1,10 @@
 package com.swen.herebethetitle.util;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.InputMismatchException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a point on a 2-dimensional grid.
@@ -42,6 +46,30 @@ public final class GridLocation {
 			case Left:  return new GridLocation(x-1, y);
 			default:    throw new InputMismatchException();
 		}
+	}
+
+	/**
+	 * Checks if two grid locations are neighboring each other.
+	 * 
+	 * Grid locations are considered neighbouring if any of the four
+	 * grid cells are touching any of the sides of the other cell.
+	 */
+	public boolean isNeighbouring(GridLocation b) {
+	    return neighbours().contains(b);
+	}
+	
+	/**
+	 * Gets a list of all neighbours around the location.
+	 */
+	public Collection<GridLocation> neighbours() {
+	    List<GridLocation> offsetTable = Arrays.asList( 
+            new GridLocation(-1,-1), new GridLocation(+0,-1), new GridLocation(+1,-1),
+            new GridLocation(+1,+0), new GridLocation(+1,+1), new GridLocation(+0,+1),
+            new GridLocation(-1,+1), new GridLocation(-1,+0)
+	    );
+	    return offsetTable.stream()
+	            .map(offset -> this.add(offset))
+	            .collect(Collectors.toList());
 	}
 
 	/**

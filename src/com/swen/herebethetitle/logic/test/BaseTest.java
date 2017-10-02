@@ -4,6 +4,7 @@ import org.junit.Before;
 
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.ai.Monster;
+import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
@@ -35,7 +36,14 @@ public class BaseTest {
         this.region = this.context.getCurrentRegion();
         this.logic = new GameLogic(context);
 
-        context.getCurrentRegion().move(context.getPlayer(), new GridLocation(0,0));
+        teleportPlayer(new GridLocation(0, 0));
+    }
+    
+    /**
+     * Teleports the player to a location.
+     */
+    protected void teleportPlayer(GridLocation location) {
+        context.getCurrentRegion().move(context.getPlayer(), location);
     }
     
     /**
@@ -53,5 +61,21 @@ public class BaseTest {
         npc.setBehavior(new Monster(1.5));
         context.getCurrentRegion().get(location).add(npc);
         return npc;
+    }
+    
+    /**
+     * Places a key at a location.
+     */
+    protected Key placeKey(GridLocation location) {
+        return placeKey(location, 123);
+    }
+    
+    /**
+     * Places a key at a location.
+     */
+    protected Key placeKey(GridLocation location, int password) {
+        Key key = new Key("back doork key", null, password);
+        context.getCurrentRegion().get(location).add(key);
+        return key;
     }
 }
