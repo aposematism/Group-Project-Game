@@ -71,11 +71,13 @@ Interactions are handled by interact(), of which every entity has its own implem
 
 Tests are located inside the [`com.swen.herebethetitle.entity.tests`](src/com.swen.herebethetitle.entity.tests) package.
 
-### Game model library (Jacon Woods)
+### GUI (Jacon Woods)
 
-[`com.swen.herebethetitle.model`](src/com/swen/herebethetitle/model)
+[`com.swen.herebethetitle.model`](src/com/swen/herebethetitle/view)
 
-<information here>
+This library wraps the game graphics in a JavaFX application and handles events from user input.
+The Graphics library is used to draw the world, with an HUD implemented in this libary being drawn on top of it.
+The menus and other GUI elements are also implemented here.
 
 ### Map parser (Jordan Milburn)
 
@@ -83,7 +85,7 @@ Tests are located inside the [`com.swen.herebethetitle.entity.tests`](src/com.sw
 
 <information here>
 
-### JavaFX GUI (Josh Weir)
+### Game Graphics (Josh Weir)
 
 [`com.swen.herebethetitle.graphics`](src/com/swen/herebethetitle/graphics)
 
