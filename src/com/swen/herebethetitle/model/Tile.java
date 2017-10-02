@@ -1,7 +1,9 @@
 package com.swen.herebethetitle.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
@@ -12,7 +14,7 @@ import com.swen.herebethetitle.util.GridLocation;
  * @author - Jordan
  * */
 
-public class Tile {
+public class Tile implements Iterable<Entity> {
 	//Parser specific checking string.
 	private String k;
 	//Node Values
@@ -87,5 +89,17 @@ public class Tile {
 	
 	public String getCharacter(){
 		return k;
+	}
+	
+	/**
+	 * Gets a stream over all entities in the tile.
+	 */
+	public Stream<Entity> stream() {
+		return this.interactives.stream();
+	}
+
+	@Override
+	public Iterator<Entity> iterator() {
+		return this.interactives.iterator();
 	}
 }

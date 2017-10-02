@@ -52,4 +52,9 @@ public class Monster extends Behavior {
 	}
 
 	public String toString() { return super.toString()+" "+ATTACK_STRENGTH; }
+
+	@Override
+	public boolean isAggressive() {
+		return true;
+	}
 }

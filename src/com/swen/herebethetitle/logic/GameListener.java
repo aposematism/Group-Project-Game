@@ -1,7 +1,9 @@
 package com.swen.herebethetitle.logic;
 
+import java.util.Optional;
+
+import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.Monster;
 import com.swen.herebethetitle.entity.items.Item;
 
 /**
@@ -15,14 +17,25 @@ public abstract class GameListener {
 	public void onPlayerMoved(Player player) { }
 	
 	/**
-	 * Called when a monster is attacked by the player.
+	 * Called when the player is attacked by a NPC.
 	 */
-	public void onEnemyAttacked(Monster victim) { }
+	public void onPlayerAttacked(Player player, NPC attacker) { }
+
+	/**
+	 * Called when the player is killed.
+	 * @param aggressor The entity that did the deed.
+	 */
+	public void onPlayerKilled(Player player, Optional<NPC> aggressor) { }
 	
 	/**
-	 * Called when the player is attacked by a monster.
+	 * Called when a NPC is attacked by the player.
 	 */
-	public void onPlayerAttacked(Player player, Monster attacker) { }
+	public void onNPCAttacked(NPC victim) { }
+	
+	/**
+	 * Called when an enemy is killed.
+	 */
+	public void onNPCKilled(NPC NPC) { }
 	
 	/**
 	 * Called when a player picks up an item.

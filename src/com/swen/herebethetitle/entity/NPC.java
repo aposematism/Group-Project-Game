@@ -1,10 +1,10 @@
 package com.swen.herebethetitle.entity;
 
+import java.util.Optional;
+
 import com.swen.herebethetitle.entity.ai.Behavior;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
-import javafx.scene.image.Image;
-import java.util.Optional;
 
 /**
  * NPC - Non Player Character - will be used for representing monsters and potentially other types of NPC
@@ -54,6 +54,13 @@ public class NPC extends Mob {
 	 */
 	@Override
 	public boolean isPenetrable() { return behavior.isPresent() && behavior.get().isPenetrable(); }
+	
+	/**
+	 * Checks if the NPC can start fights.
+	 */
+	public boolean isAggressive() {
+		return behavior.map(Behavior::isAggressive).orElse(false);
+	}
 
 	/**
 	 * Changes the behavior of the NPC
