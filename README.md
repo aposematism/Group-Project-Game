@@ -4,13 +4,13 @@
 
 ## Developers
 
-| Name           | Handle      | Maintains     | Code Reviews | Tests | Git log
-|----------------|-------------|---------------|--------------|-------|--------
-| Dylan McKay    | @mckaydyla  | Pathfinding   |              |       | `git log --author="Dylan McKay"`
-| Mark Metcalfe  | @metcalmark | Entity system |              |       | `git log --author="Mark Metcalfe"`
-| Jacob Woods    | @mckiewjaco | GUI           |              |       | `git log --author="J Woods"`
-| Jordan Milburn | @milburjord | Map parser    |              |       | `git log --author="Aposematism"`
-| Josh Weir      | @weirjosh   | Game Graphics |              |       | `git log --author="Josh"`
+| Name           | Handle      | Maintains                | Code Reviews | Tests | Git log
+|----------------|-------------|--------------------------|--------------|-------|--------
+| Dylan McKay    | @mckaydyla  | Pathfinding, Game logic  |              |       | `git log --author="Dylan McKay"`
+| Mark Metcalfe  | @metcalmark | Entity system            |              |       | `git log --author="Mark Metcalfe"`
+| Jacob Woods    | @mckiewjaco | GUI                      |              |       | `git log --author="J Woods"`
+| Jordan Milburn | @milburjord | Map parser               |              |       | `git log --author="Aposematism"`
+| Josh Weir      | @weirjosh   | Game Graphics            |              |       | `git log --author="Josh"`
 
 ## Statistics and information
 
@@ -57,6 +57,20 @@ to take in order to attack the player.
 Tests are located inside the [`com.swen.herebethetitle.pathfinding.test`](src/com/swen/herebethetitle/pathfinding/test) package.
 
 Pathfinding is done via the [`Graph`](src/com/swen/herebethetitle/pathfinding/Graph.java) class with the `findPath` method in particular.
+
+### Game logic (Dylan McKay)
+
+[`com.swen.herebethetitle.logic`](src/com/swen/herebethetitle/logic)
+
+This library is responsible for **all** updates to the game state.
+
+In order to move a player on the board, interact with objects, or even attack an enemy,
+the [`GameLogic`](src/com/swen/herebethetitle/logic/GameLogic.java) class is used.
+
+This library is also responsible for controlling the [non playable characters](src/com/swen/herebethetitle/entity/NPC.java)
+such as monsters.
+
+Tests are located inside the [`com.swen.herebethetitle.logic.test`](src/com/swen/herebethetitle/logic/test) package.
 
 ### Entity system (Mark Metcalfe)
 
