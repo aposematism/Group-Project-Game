@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.stationeries.Stationary;
+import com.swen.herebethetitle.entity.statics.*;
 
 /**
  * Tests invariants that must be true for pathfinding to work correctly.
@@ -14,7 +14,7 @@ import com.swen.herebethetitle.entity.stationeries.Stationary;
 public class Invariants {
     @Test
     public void stationaryEntityIsImpenetrable() {
-		Entity stationary = new Stationary("wall", null);
+		Entity stationary = new Static("wall", null);
         assertFalse(stationary.isPenetrable());
     }
 }

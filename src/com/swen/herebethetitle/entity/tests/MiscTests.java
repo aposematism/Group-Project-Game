@@ -82,7 +82,7 @@ public class MiscTests {
 	 * Asserts Static has a string representation
 	 */
 	@Test
-	public void test_Stationary_toString(){
+	public void test_Static_toString(){
 		Static s = new Static("Rock", null);
 		assertNotNull(s.toString());
 		System.out.println(s.toString());
@@ -92,7 +92,7 @@ public class MiscTests {
 	 * Asserts Static has a string representation and includes its behavior
 	 */
 	@Test
-	public void test_StationaryAndBehavior_toString(){
+	public void test_StaticAndBehavior_toString(){
 		Static s = new Static("Front Door", null);
 		Door d = new Door(209, Door.STATE.LOCKED);
 		s.setBehavior(d);
