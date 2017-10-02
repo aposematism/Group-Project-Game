@@ -13,6 +13,7 @@ import com.swen.herebethetitle.util.GridLocation;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 
@@ -96,11 +97,11 @@ public class GameCanvas extends Canvas {
             Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
 
             //Draw the background terrain sprite first
-            gc.drawImage(t.getMapFloor().getSprite(), pos.x,pos.y, size, size);
+            gc.drawImage(getImage(t.getMapFloor().getSpritePath()), pos.x,pos.y, size, size);
 
             //Draw each interactive entity that inhabits the current tile
             for(Entity e: t.getInteractives()){
-                gc.drawImage(e.getSprite(), pos.x, pos.y, size, size);
+                gc.drawImage(getImage(e.getSpritePath()), pos.x, pos.y, size, size);
             }
 
         }
@@ -141,4 +142,12 @@ public class GameCanvas extends Canvas {
         switchRegions(initialRegion);
         player = getPlayer();
     }
+
+	/**
+	 * Constructs JavaFX image from source url
+	 * @param url Sprite File URL
+	 * @return JavaFX Image
+	 * @author Mark Metcalfe
+	 */
+	public static Image getImage(String url){ return new Image(url); }
 }

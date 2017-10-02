@@ -16,11 +16,11 @@ public final class Potion extends Item {
 
 	/**
 	 * @param name The name of the potion
-	 * @param sprite What it looks like
+	 * @param spritePath What it looks like
 	 * @param healthChange How much it will increase the Player's health by
 	 */
-	public Potion(String name, Image sprite, int healthChange){
-		super(name, sprite);
+	public Potion(String name, String spritePath, int healthChange){
+		super(name, spritePath);
 		this.HEALTH_CHANGE = healthChange;
 	}
 

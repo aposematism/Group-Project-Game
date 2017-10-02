@@ -15,11 +15,11 @@ public final class Key extends Item {
 
 	/**
 	 * @param name The name of the key
-	 * @param sprite What it looks like
+	 * @param spritePath What it looks like
 	 * @param key The ID of the key that matches a door
 	 */
-	public Key(String name, Image sprite, int key){
-    	super(name, sprite);
+	public Key(String name, String spritePath, int key){
+    	super(name, spritePath);
         this.KEY = key;
     }
 

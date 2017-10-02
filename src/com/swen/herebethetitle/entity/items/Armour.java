@@ -32,12 +32,12 @@ public final class Armour extends Item {
 
 	/**
 	 * @param name The name of the armour
-	 * @param sprite What it looks like
+	 * @param spritePath What it looks like
 	 * @param type What part of the body the armour covers
 	 * @param rating How good it is at protecting the player
 	 */
-	public Armour(String name, Image sprite, TYPE type, double rating){
-		super(name, sprite);
+	public Armour(String name, String spritePath, TYPE type, double rating){
+		super(name, spritePath);
 		SLOT = type;
 		RATING = rating;
 	}

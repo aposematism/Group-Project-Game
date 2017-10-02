@@ -16,6 +16,10 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class TestStage extends Application {
+	private static String grassPath = "file:res/grass.png";
+	private static String playerPath = "file:res/wizard.png";
+	private static String tudorWallPath = "file:res/tudorwall.png";
+
 	private static Image grass;
 	private static Image player;
 	private static Image tudorwall;
@@ -39,9 +43,9 @@ public class TestStage extends Application {
 
 
 	public void start(Stage stage){
-		grass = new Image("file:res/grass.png");
-		player = new Image("file:res/wizard.png");
-		tudorwall = new Image("file:res/tudorwall.png");
+		grass = new Image(grassPath);
+		player = new Image(playerPath);
+		tudorwall = new Image(tudorWallPath);
 
 		currentCanvas = new GameCanvas(emptyGrassField(7,7, 0, 0), 350, 350);
 
@@ -62,11 +66,11 @@ public class TestStage extends Application {
 		for(int row=0;row<rows;row++) {
 			for (int col = 0; col < cols; col++) {
 				Tile t = new Tile(col, row, "");
-				t.setMapFloor(new Floor(grass));
+				t.setMapFloor(new Floor(grassPath));
 				r.set(new GridLocation(col,row), t);
 			}
 		}
-		r.get(playerCol,playerRow).add(new Player(player, Direction.Right));
+		r.get(playerCol,playerRow).add(new Player(playerPath, Direction.Right));
 		return r;
 	}
 

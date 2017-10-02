@@ -19,8 +19,8 @@ public class Static extends Entity {
 	 */
 	private Optional<Behavior> behavior;
 
-	public Static(String name, Image sprite) {
-		super(name, sprite);
+	public Static(String name, String spritePath) {
+		super(name, spritePath);
 		behavior = Optional.empty();
 	}
 

@@ -36,8 +36,8 @@ public abstract class Mob extends Entity {
 	/**
 	 * Mob itself is abstract, so must be constructed in a subclass
 	 */
-	public Mob(String name, Image sprite, double startingHealth, Direction direction){
-		super(name, sprite);
+	public Mob(String name, String spritePath, double startingHealth, Direction direction){
+		super(name, spritePath);
 		this.health = startingHealth;
 		this.direction = direction;
 	}

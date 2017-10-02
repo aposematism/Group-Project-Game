@@ -18,12 +18,12 @@ public final class Weapon extends Item {
 
 	/**
 	 * @param name The name of the weapon
-	 * @param sprite What it looks like
+	 * @param spritePath What it looks like
 	 * @param isMelee Whether or not its a melee weapon
 	 * @param strength The amount of damage that it will deal
 	 */
-	public Weapon(String name, Image sprite, boolean isMelee, double strength){
-		super(name, sprite);
+	public Weapon(String name, String spritePath, boolean isMelee, double strength){
+		super(name, spritePath);
 		this.IS_MELEE = isMelee;
 		this.STRENGTH = strength;
 	}

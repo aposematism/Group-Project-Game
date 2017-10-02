@@ -12,17 +12,17 @@ import javafx.scene.image.Image;
  */
 public abstract class Entity {
 
-	private Image sprite;
+	private String spritePath;
 
 	private String name;
 
 	/**
 	 * @param name The name of the entity instance
-	 * @param sprite The JavaFX Image that represents the entity
+	 * @param spritePath The JavaFX Image url that represents the entity
 	 */
-	public Entity(String name, Image sprite) {
+	public Entity(String name, String spritePath) {
 		this.name = name;
-		this.sprite = sprite;
+		this.spritePath = spritePath;
 	}
 
 	/**
@@ -32,9 +32,9 @@ public abstract class Entity {
 	public abstract void interact(GameContext context);
 
 	/**
-	 * Get the JavaFX Image sprite
+	 * Get the JavaFX Image path
 	 */
-	public Image getSprite() { return sprite; }
+	public String getSpritePath() { return spritePath; }
 
 	/**
 	 * Get the name of the entity instance
@@ -42,7 +42,7 @@ public abstract class Entity {
 	 */
 	public String getName() { return name; }
 
-	public String toString() { return getClass().getSimpleName()+" \""+name+"\""; }
+	public String toString() { return getClass().getSimpleName()+" \""+name+"\" \""+spritePath+"\""; }
 
 	/**
 	 * Checks if the entity can be walked through.

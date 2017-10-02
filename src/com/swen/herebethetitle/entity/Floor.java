@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
  */
 public class Floor extends Entity {
 
-    public Floor(Image sprite){ super("Floor", sprite); }
+    public Floor(String spritePath){ super("Floor", spritePath); }
 
 	/**
 	 * Deliberately Blank, Floor can't be interacted with by design

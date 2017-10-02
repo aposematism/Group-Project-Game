@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
  */
 public abstract class Item extends Entity {
 
-	public Item(String name, Image sprite) { super(name, sprite); }
+	public Item(String name, String spritePath) { super(name, spritePath); }
 
 	/**
 	 * Checks if the player is on the same tile as the item, and if so picks it up
