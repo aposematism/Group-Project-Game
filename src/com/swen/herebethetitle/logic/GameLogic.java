@@ -102,7 +102,6 @@ public class GameLogic {
     public void pickup(Item item) throws EntityOutOfRange {
         ensureCanInteractWith(item);
         item.pickup(context);
-        getPlayer().inventory().add(item);
         notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
     }
 
