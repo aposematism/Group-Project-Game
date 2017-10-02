@@ -1,11 +1,8 @@
 package com.swen.herebethetitle.entity.items;
 
 import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
-
-import javafx.scene.image.Image;
 
 /**
  * Item - can be picked up by the player and stored in their inventory,
@@ -23,7 +20,8 @@ public abstract class Item extends Entity {
 	 * Checks if the player is on the same tile as the item, and if so picks it up
 	 * If the player has the item in their inventory, it is used
 	 */
-	public void interact(GameContext context) {
+	@Override
+	public void interact(GameContext context, Notifier notifier) {
 		if(context.currentRegion.getPlayerTile().contains(this))
 			pickup(context);
 		else if(context.player.possesses(this))

@@ -71,7 +71,7 @@ public class CombatTests extends BaseTest {
         NPC enemy = placeEnemy(new GridLocation(1, 1));
 
         try {
-            for (int i=0; i<30; i++) {
+            for (int i=0; i<30 && !enemy.isDead(); i++) {
                 logic.attack(enemy);
             }
         } catch (EntityOutOfRange e) {

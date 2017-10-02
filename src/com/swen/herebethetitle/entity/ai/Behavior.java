@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.entity.ai;
 
 import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
 /**
@@ -17,8 +18,8 @@ public abstract class Behavior {
 	 * Can be interacted with if the player is on or adjacent to the NPCs tile
 	 */
 	public boolean canInteract(GameContext context, NPC npc){
-		return context.currentRegion.getPlayerTile().neighboursContain(npc) ||
-				context.currentRegion.getPlayerTile().contains(npc);
+        return context.getCurrentRegion().isNeighbouring(context.getPlayer(), npc) ||
+				context.getCurrentRegion().getPlayerTile().contains(npc);
 	}
 
 	/**
@@ -36,7 +37,7 @@ public abstract class Behavior {
 	/**
 	 * Called when the player interacts with the NPCs
 	 */
-	abstract public void interact(GameContext context, NPC npc);
+	abstract public void interact(GameContext context, NPC npc, Notifier notifier);
 
 	/**
 	 * Checks if the behaviour can be aggressive.

@@ -1,7 +1,7 @@
 package com.swen.herebethetitle.entity;
 
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
-import javafx.scene.image.Image;
 
 /**
  * Overarching interface that defines all entities found in the game world.
@@ -27,9 +27,17 @@ public abstract class Entity {
 
 	/**
 	 * Interactions are supported by all entities, has varying implementations
-	 * @param context
+	 * 
+	 * This will dispatch notifications to a notifier.
 	 */
-	public abstract void interact(GameContext context);
+	public abstract void interact(GameContext context, Notifier notifier);
+	
+	/**
+	 * Interacts with the entity.
+	 */
+	public void interact(GameContext context) {
+	    interact(context, new Notifier());
+	}
 
 	/**
 	 * Get the JavaFX Image path

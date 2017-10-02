@@ -239,6 +239,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
     
     /**
+     * Checks if two entities are neighbouring.
+     */
+    public boolean isNeighbouring(Entity a, Entity b) {
+	    return getTile(a).getLocation().isNeighbouring(getLocation(b));
+    }
+    
+    /**
      * Gets a stream over all tiles in the region.
      * There is a consistent, but unspecified ordering of the result.
      */

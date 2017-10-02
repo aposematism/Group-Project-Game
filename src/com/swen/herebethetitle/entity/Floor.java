@@ -1,7 +1,7 @@
 package com.swen.herebethetitle.entity;
 
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
-import javafx.scene.image.Image;
 
 /**
  * Represents the Floor of each tile, the ground that other entities sit on top of
@@ -18,7 +18,7 @@ public class Floor extends Entity {
 	 * Deliberately Blank, Floor can't be interacted with by design
 	 */
 	@Override
-    public void interact(GameContext context){}
+    public void interact(GameContext context, Notifier notifier){}
 
 	/**
 	 * The floor is designed to be underneath other entities, so other entities

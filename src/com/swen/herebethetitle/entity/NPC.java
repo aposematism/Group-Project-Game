@@ -3,6 +3,7 @@ package com.swen.herebethetitle.entity;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.ai.Behavior;
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 
@@ -41,8 +42,9 @@ public class NPC extends Mob {
 	/**
 	 * Calls interact() in the behavior
 	 */
-	@Override
-	public void interact(GameContext context) { behavior.ifPresent(b -> b.interact(context,this)); }
+	public void interact(GameContext context, Notifier notifier) {
+	    behavior.ifPresent(b -> b.interact(context, this, notifier));
+    }
 
 	/**
 	 * Calls ping() in the behavior
