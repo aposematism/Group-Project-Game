@@ -25,7 +25,7 @@ public class Floor extends Entity {
 	 * need to be able to sit on top of it
 	 */
 	@Override
-    public boolean isPenetrable() { return true; }
+    public boolean isPenetrable() { return false; }
 
     @Override
     public String toString() { return super.toString(); }
