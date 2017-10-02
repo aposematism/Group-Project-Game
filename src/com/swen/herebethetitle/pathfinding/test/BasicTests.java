@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.Floor;
+import com.swen.herebethetitle.entity.stationeries.Stationary;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
@@ -27,7 +27,7 @@ public class BasicTests extends Base {
         Tile source = region.get(0, 0);
         Tile dest = region.get(4, 4);
         Tile midpoint = region.get(2, 2);
-        midpoint.setMapFloor(new Floor(null));
+        midpoint.add(new Stationary("wall", null));
         
         verifyPath(region, source, dest,
                 new GridLocation(0, 0), new GridLocation(1, 1), new GridLocation(2, 1),
@@ -55,10 +55,10 @@ public class BasicTests extends Base {
         // Draw two lines right through the map to cut the dest off.
         {
             for (int y=0; y<region.height; y++) {
-                region.get(2, y).setMapFloor(new Floor(null));
+				region.get(2, y).add(new Stationary("wall", null));
             }
             for (int x=0; x<region.width; x++) {
-                region.get(x, 2).setMapFloor(new Floor(null));
+				region.get(x, 2).add(new Stationary("wall", null));
             }
         }
         
