@@ -6,7 +6,6 @@ import com.swen.herebethetitle.util.Direction;
 /**
  * Top-level class for dealing with game model information.
  * @author J Woods
- *
  */
 public class GameContext {
 	public Region currentRegion;
