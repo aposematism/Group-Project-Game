@@ -97,17 +97,49 @@ public class GameLogic {
         
         victim.interact(context, notifier);
     }
+    
+    /**
+     * Starts a discussion with an NPC if it is possible.
+     * 
+     * Does nothing if the NPC has no dialog.
+     */
+    protected void startDiscussion(NPC npc) {
+        npcController.startDiscussion(npc);
+    }
+
+    /**
+     * General-purpose entity interactions.
+     */
+    public void interact(Entity entity) throws EntityOutOfRange {
+        if (entity instanceof NPC) {
+            NPC npc = (NPC)entity;
+            if (npc.isAggressive())
+                attack(npc);
+            else if (npc.getDialog().isPresent())
+                startDiscussion(npc);
+            else
+                ; // no interactions possible.
+        } else if (entity instanceof Item) {
+            Item item = (Item)entity;
+            
+            if (getPlayer().inventory().contains(item))
+                drop(item);
+            else
+                pickup(item);
+        }
+    }
 
     /**
      * Picks up an item to the inventory.
      * @throws EntityOutOfRange if the item is not neighboured.
      */
-    public void pickup(Item item) throws EntityOutOfRange {
+    protected void pickup(Item item) throws EntityOutOfRange {
         ensureCanInteractWith(item);
+
         item.pickup(context);
         notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
     }
-
+    
     /***
      * Raises an error if the player cannot interact with an entity.
      * @throws EntityOutOfRange if the entity is too far away from the player.
