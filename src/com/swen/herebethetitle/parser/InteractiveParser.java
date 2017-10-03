@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.ai.Behavior;
 import com.swen.herebethetitle.entity.ai.Monster;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.NPC;
@@ -29,7 +32,10 @@ import javafx.scene.image.Image;
  * */
 public class InteractiveParser {
 
-	final static Pattern ITEM = Pattern.compile("(Weapon|Armour|Potion|Key)");
+	public final static Pattern ITEM = Pattern.compile("(Weapon|Armour|Potion|Key)");
+	public final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
+	public final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster)");
+	public final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
 
 	ArrayList<String> stringArray;
 
@@ -84,19 +90,16 @@ public class InteractiveParser {
 	public Entity parseInteractive(Scanner scanner, String className){
 		switch(className){
 			case "Static": return parseStatic(scanner);
-			case "Player":     return parsePlayer(scanner);
-			case "NPC":        return parseNPC(scanner);
-			default:           return parseItem(scanner, className);
+			case "Player": return parsePlayer(scanner);
+			case "NPC":    return parseNPC(scanner);
+			case "Floor":  return parseFloor(scanner);
+			default:       return parseItem(scanner, className);
 		}
 	}
 
 	public String parseString(Scanner s){
-		String string = "";
-		String next = s.next(".");
-		while(!next.equals("\"")){
-			string = string.concat(next);
-			next = s.next(".");
-		}
+		String string = s.findInLine(InteractiveParser.STRING);
+		string = string.replaceAll("\"","");
 		return string;
 	}
 
@@ -149,19 +152,34 @@ public class InteractiveParser {
 		return new Potion(name, sprite, value);
 	}
 
+	public Floor parseFloor(Scanner s){
+		String name = parseString(s);
+		String sprite = parseString(s);
+
+		Floor floor = new Floor(name, sprite);
+
+		return floor;
+	}
+
 	public Static parseStatic(Scanner s){
 		String name = parseString(s);
 		String sprite = parseString(s);
 
 		Static aStatic = new Static(name, sprite);
 
-		if(s.hasNext("Door")){
-			s.next(); //Consume "Door" token
-			Door door = parseDoor(s);
-			aStatic.setBehavior(door);
+		if(s.hasNext(STATIC_BEHAVIOR)){
+			Static.Behavior behavior = parseStaticBehavior(s);
+			aStatic.setBehavior(behavior);
 		}
 
 		return aStatic;
+	}
+
+	public Static.Behavior parseStaticBehavior(Scanner s){
+		switch(s.next()) { //Check Class Token
+			case "Door": return parseDoor(s);
+			default:     throw new InputMismatchException("Couldn't Parse Behavior");
+		}
 	}
 
 	public Door parseDoor(Scanner s){
@@ -178,13 +196,19 @@ public class InteractiveParser {
 
 		NPC npc = new NPC(name, sprite, health, direction);
 
-		if(s.hasNext("Monster")){
-			s.next(); //Consume "Monster" token
-			Monster monster = parseMonster(s);
-			npc.setBehavior(monster);
+		if(s.hasNext(NPC_BEHAVIOR)){
+			Behavior behavior = parseNPCBehavior(s);
+			npc.setBehavior(behavior);
 		}
 
 		return npc;
+	}
+
+	public Behavior parseNPCBehavior(Scanner s){
+		switch(s.next()){ //Check Class Token
+			case "Monster": return parseMonster(s);
+			default:        throw new InputMismatchException("Couldn't Parse Behavior");
+		}
 	}
 
 	public Monster parseMonster(Scanner s){
@@ -194,12 +218,13 @@ public class InteractiveParser {
 	}
 
 	public Player parsePlayer(Scanner s){
+		String name = parseString(s);
 		String sprite = parseString(s);
 		double health = Double.parseDouble(s.next());
 		Direction direction = Direction.valueOf(s.next());
 		int wallet = Integer.parseInt(s.next());
 
-		Player player = new Player(sprite, health, wallet, direction);
+		Player player = new Player(name, sprite, health, wallet, direction);
 
 		s.next(); //Consume "Inventory" token
 
