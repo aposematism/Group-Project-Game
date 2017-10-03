@@ -67,8 +67,10 @@ This library is responsible for **all** updates to the game state.
 In order to move a player on the board, interact with objects, or even attack an enemy,
 the [`GameLogic`](src/com/swen/herebethetitle/logic/GameLogic.java) class is used.
 
-This library is also responsible for controlling the [non playable characters](src/com/swen/herebethetitle/entity/NPC.java)
-such as monsters.
+This library is also responsible for
+
+* Controlling the [non playable characters](src/com/swen/herebethetitle/entity/NPC.java), such as monsters.
+* Timing and triggering of discussions with non-playable characters
 
 Tests are located inside the [`com.swen.herebethetitle.logic.test`](src/com/swen/herebethetitle/logic/test) package.
 
