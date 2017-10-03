@@ -3,6 +3,7 @@ package com.swen.herebethetitle.logic.test;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class InventoryTests extends BaseTest {
             logic.interact(farKey);
             fail("should not be abe to pick up far away key");
         } catch (EntityOutOfRange e) {
-            assertEquals(e.entity, farKey);
+            assertEquals(Optional.of(farKey), e.entity);
             assertEquals("entity out of range", e.getMessage());
         }
     }

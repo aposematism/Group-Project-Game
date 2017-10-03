@@ -1,6 +1,8 @@
 package com.swen.herebethetitle.logic;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.swen.herebethetitle.entity.Entity;
@@ -79,9 +81,30 @@ public class GameLogic {
             }
         }
     }
+    
+    /**
+     * Attempts to attack the closest NPC to the player.
+     * @throws EntityOutOfRange if there are no entities to attack.
+     */
+    public void attack() throws EntityOutOfRange {
+        Collection<Tile> neighbouringTiles = getCurrentRegion().getNeighbours(getCurrentRegion().getPlayerTile());
+        for (Tile tile : neighbouringTiles) {
+            Optional<NPC> aggressiveNpc = tile.stream()
+                    .filter(entity -> entity instanceof NPC)
+                    .map(entity -> (NPC)entity)
+                    .filter(NPC::isAggressive)
+                    .findFirst();
+            
+            if (aggressiveNpc.isPresent()) {
+                attack(aggressiveNpc.get());
+            } else {
+                throw new EntityOutOfRange("no monsters in range to attack");
+            }
+        }
+    }
 
     /**
-     * Get the player to attack an entity.
+     * Get the player to attack a specific entity.
      * 
      * The victim
      * 
@@ -131,6 +154,16 @@ public class GameLogic {
             
             s.interact(context, notifier);
         }
+    }
+    
+    /**
+     * Uses an item in the players inventory.
+     * @param item The item to use.
+     */
+    public void use(Item item) {
+        if (!getPlayer().possesses(item))
+            throw new IllegalArgumentException("cannot use an item that is not in the inventory");
+        item.use(context);
     }
 
     /**
