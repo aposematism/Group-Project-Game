@@ -7,6 +7,7 @@ import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.logic.ai.NpcController;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
@@ -125,6 +126,10 @@ public class GameLogic {
             Item item = (Item)entity;
             
             pickup(item);
+        } else if (entity instanceof Static) {
+            Static s = (Static)entity;
+            
+            s.interact(context, notifier);
         }
     }
 

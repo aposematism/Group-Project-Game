@@ -35,14 +35,14 @@ public class Static extends Entity {
 	 * Calls interact() in the behavior
 	 */
 	public void interact(GameContext context, Notifier notifier) {
-	    behavior.ifPresent(b->b.interact(context,this));
+	    behavior.ifPresent(b->b.interact(context,this, notifier));
 	}
 
 	/**
 	 * Strategy Pattern of what it actually does when interacted with.
 	 */
 	interface Behavior {
-		void interact(GameContext context, Static aStatic);
+		void interact(GameContext context, Static aStatic, Notifier notifier);
 		boolean isPenetrable();
 		String toString();
 	}
