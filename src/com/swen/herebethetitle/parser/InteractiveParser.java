@@ -34,8 +34,8 @@ public class InteractiveParser {
 
 	ArrayList<String> stringArray;
 	HashMap<String, String> spriteMap;
-	
-	/** 
+
+	/**
 	 * So this hardcodes the string for each item. It ensures the level designer only needs to give
 	 * an item name and co-ordinates to generate an item or a level.
 	 * */
@@ -46,9 +46,10 @@ public class InteractiveParser {
 		spriteMap.put("boots", "path/to/sprite.png BOOTS 5");
 		spriteMap.put("legs", "path/to/sprite.png LEGS 5");
 		spriteMap.put("torso", "path/to/sprite.png TORSO 5");
-		spriteMap.put("key", "path/to/sprite.png true 5");
-		spriteMap.put("potion", "path/to/sprite.png true 5");
+		spriteMap.put("key", "path/to/sprite.png 3");
+		spriteMap.put("potion", "path/to/sprite.png true 10");
 		spriteMap.put("static", "path/to/sprite.png true 5");
+		spriteMap.put("door", "path/to/sprite.png door 3 UNLOCKED");
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class InteractiveParser {
 			t.add(item);
 		}
 	}
-	/** 
+	/**
 	 * Same as above, but enables independent testing without a region.
 	 * @Author - Jordan Milburn
 	 * */
@@ -120,7 +121,7 @@ public class InteractiveParser {
 		}
 	}
 
-	/** 
+	/**
 	 * This handles strings and creates the appropriate string for the objects at hand.
 	 * @author - Mark Metcalfe
 	 * */
@@ -133,8 +134,8 @@ public class InteractiveParser {
 		}
 		return string;
 	}
-	
-	/** 
+
+	/**
 	 * Checking against spriteMap hashmap for the image. So it checks if that item is there and returns a matching path string.
 	 * */
 	public String parseString(String item_name) {
@@ -143,8 +144,8 @@ public class InteractiveParser {
 		}
 		return null;
 	}
-	
-	/** 
+
+	/**
 	 * This method handles the items.
 	 * @author - Mark Metcalfe
 	 * */
@@ -152,7 +153,7 @@ public class InteractiveParser {
 		String className = s.next();
 		return parseItem(s, className);
 	}
-	/** 
+	/**
 	 * This method parses onto the appropriate category.
 	 * @author - Mark Metcalfe
 	 * */
@@ -168,8 +169,8 @@ public class InteractiveParser {
 			default:       throw new InputMismatchException("Couldn't Interpret Entity");
 		}
 	}
-	
-	/** 
+
+	/**
 	 * This method parses weapons. Takes from the hardcoded spritemap which contains relevant info on the item.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
@@ -182,8 +183,8 @@ public class InteractiveParser {
 		double strength = Double.parseDouble(split[2]);
 		return new Weapon(name, sprite, isMelee, strength);
 	}
-	
-	/** 
+
+	/**
 	 * This method parses armour.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
@@ -196,8 +197,8 @@ public class InteractiveParser {
 		double strength = Double.parseDouble(split[0]);
 		return new Armour(name, sprite, type, strength);
 	}
-	
-	/** 
+
+	/**
 	 * This method parses keys.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
@@ -209,11 +210,11 @@ public class InteractiveParser {
 		int key = Integer.parseInt(split[1]);
 		return new Key(name, sprite, key);
 	}
-	
-	/** 
+
+	/**
 	 * This method parses potions.
 	 * @author - Mark Metcalfe and Jordan Milburn
-	 * */ 
+	 * */
 	public Potion parsePotion(Scanner s, String className){
 		String name = className;
 		String returned = parseString(name);
@@ -222,8 +223,8 @@ public class InteractiveParser {
 		int value = Integer.parseInt(split[1]);
 		return new Potion(name, sprite, value);
 	}
-	
-	/** 
+
+	/**
 	 * This method parses statics like Doors.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
@@ -241,8 +242,8 @@ public class InteractiveParser {
 
 		return aStatic;
 	}
-	
-	/** 
+
+	/**
 	 * This method parses doors explicitly for generating a key.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
@@ -251,8 +252,8 @@ public class InteractiveParser {
 		Door.STATE state = Door.STATE.valueOf(s[3]);
 		return new Door(key, state);
 	}
-	
-	/** 
+
+	/**
 	 * This method parses NPCs.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
@@ -272,8 +273,8 @@ public class InteractiveParser {
 
 		return npc;
 	}
-	
-	/** 
+
+	/**
 	 * This method parses monsters.
 	 * @author - Mark Metcalfe
 	 * */
@@ -282,8 +283,8 @@ public class InteractiveParser {
 
 		return new Monster(strength);
 	}
-	
-	/** 
+
+	/**
 	 * This method parses players.
 	 * @author - Mark Metcalfe
 	 * */
