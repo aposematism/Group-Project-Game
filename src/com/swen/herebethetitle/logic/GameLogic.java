@@ -109,6 +109,8 @@ public class GameLogic {
 
     /**
      * General-purpose entity interactions.
+     * 
+     * This should be called on entities that are in the map.
      */
     public void interact(Entity entity) throws EntityOutOfRange {
         if (entity instanceof NPC) {
@@ -122,24 +124,38 @@ public class GameLogic {
         } else if (entity instanceof Item) {
             Item item = (Item)entity;
             
-            if (getPlayer().inventory().contains(item))
-                drop(item);
-            else
-                pickup(item);
+            pickup(item);
         }
     }
 
     /**
      * Picks up an item to the inventory.
+     * 
+     * Prefer to use `interact` directly.
      * @throws EntityOutOfRange if the item is not neighboured.
      */
     protected void pickup(Item item) throws EntityOutOfRange {
         ensureCanInteractWith(item);
 
+        if (getPlayer().inventory().contains(item))
+            throw new IllegalArgumentException("item is already in inventory");
+
         item.pickup(context);
         notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
     }
-    
+
+    /**
+     * Drops an item from the inventory.
+     */
+    public void drop(Item item) {
+        if (getPlayer().inventory().contains(item))
+            throw new IllegalArgumentException("cannot drop an item that is not in inventory");
+
+        // FIXME: add the dropped entity to the map?
+        getGame().getPlayer().inventory().remove(item);
+        notifier.notify(listener -> listener.onPlayerDrop(getPlayer(), item));
+    }
+
     /***
      * Raises an error if the player cannot interact with an entity.
      * @throws EntityOutOfRange if the entity is too far away from the player.
@@ -158,14 +174,6 @@ public class GameLogic {
         GridLocation entityLocation = getCurrentRegion().getLocation(entity);
         GridLocation playerLocation = getCurrentRegion().getLocation(getPlayer());
         return entityLocation.isNeighbouring(playerLocation);
-    }
-
-    /**
-     * Drops an item from the inventory.
-     */
-    public void drop(Item item) {
-        getGame().getPlayer().inventory().remove(item);
-        notifier.notify(listener -> listener.onPlayerDrop(getPlayer(), item));
     }
 
     /**
