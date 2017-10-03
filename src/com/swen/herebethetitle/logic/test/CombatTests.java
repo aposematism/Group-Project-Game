@@ -18,13 +18,13 @@ public class CombatTests extends BaseTest {
         NPC enemy = placeEnemy(new GridLocation(3, 3));
         
         assertEquals(new GridLocation(3, 3), region.getLocation(enemy));
-        logic.update(100.0f);
+        logic.tick();
         assertEquals(new GridLocation(2, 2), region.getLocation(enemy));
-        logic.update(100.0f);
+        logic.tick();
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
-        logic.update(100.0f);
+        logic.tick();
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
-        logic.update(100.0f);
+        logic.tick();
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
     }
     
@@ -37,13 +37,13 @@ public class CombatTests extends BaseTest {
         assertEquals(new GridLocation(2, 2), region.getLocation(enemy));
         assertEquals(previousHealth, player.getHealth(), 0.1);
 
-        logic.update(100.0f);
+        logic.tick();
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
         if (!(player.getHealth() < previousHealth))
             fail("npc should have attacked enemy after update");
         previousHealth = player.getHealth();
 
-        logic.update(100.0f);
+        logic.tick();
         if (!(player.getHealth() < previousHealth))
             fail("npc should have attacked enemy after update");
         previousHealth = player.getHealth();
@@ -55,7 +55,7 @@ public class CombatTests extends BaseTest {
         NPC enemy = placeEnemy(new GridLocation(9, 9));
         
         assertEquals(new GridLocation(9, 9), region.getLocation(enemy));
-        logic.update(100.0f);
+        logic.tick();
         assertEquals(new GridLocation(9, 9), region.getLocation(enemy));
     }
     
