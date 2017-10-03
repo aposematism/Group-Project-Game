@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.main;
 
+import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.view.GUI;
@@ -23,5 +24,6 @@ public class Main{
 		GUI.setGame(game);
 		GUI.setLogic(gameLogic);
 		GUI.launch(GUI.class);
+		gameLogic.addGameListener(GUI.getWorldGraphics());
 	}
 }

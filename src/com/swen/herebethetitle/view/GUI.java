@@ -1,14 +1,6 @@
 package com.swen.herebethetitle.view;
 
-
-import java.util.Optional;
-
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
-import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 
@@ -45,7 +37,7 @@ import javafx.util.Duration;
  * -audio
  * 
  */
-public class GUI extends Application implements GameListener{
+public class GUI extends Application{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
@@ -64,9 +56,9 @@ public class GUI extends Application implements GameListener{
 	private GridPane quitMenu;
 	
 	//main game UI fields
-	private WorldGraphics worldGraphics;
+	private static WorldGraphics worldGraphics;
 	private Timeline updateTimeline;
-	Group gameGUIRoot;
+	private Group gameGUIRoot;
 	
 	//Game fields
 	private static GameContext game;
@@ -315,102 +307,11 @@ public class GUI extends Application implements GameListener{
 	public void setHUD(WorldGraphics g) {
 		worldGraphics = g;
 	}
-
-
-	@Override
-	public void onPlayerMoved(Player player) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onPlayerAttacked(Player player, NPC attacker) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onPlayerPickup(Player player, Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onPlayerDrop(Player player, Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onNPCAttacked(NPC victim) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onNPCKilled(NPC npc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onNPCDialogBegin(NPC npc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onNPCDialogMessage(NPC npc, String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onNPCDialogEnd(NPC npc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onDoorUnlocked(Static door) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onDoorUnlockFailed(Static door, String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onDoorOpened(Static door) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onDoorClosed(Static door) {
-		// TODO Auto-generated method stub
-		
+	
+	/**
+	 * Gets the static GUI worldgraphics.
+	 */
+	public static WorldGraphics getWorldGraphics() {
+		return worldGraphics;
 	}
 }

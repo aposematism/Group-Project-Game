@@ -1,6 +1,13 @@
 package com.swen.herebethetitle.view;
 
+import java.util.Optional;
+
+import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.graphics.GameCanvas;
+import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 
@@ -17,7 +24,7 @@ import javafx.scene.paint.Color;
  * @author J Woods
  *
  */
-public class WorldGraphics extends Scene implements GUIcomponent{
+public class WorldGraphics extends Scene implements GameListener{
 	
 	private Region region;
 	private Canvas canvas;
@@ -46,6 +53,7 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 		super(r);
 		isTesting = t;
 		game = g;
+		region = g.getCurrentRegion();
 		if(isTesting) {
 			canvas = new Canvas(GUI.DEFAULT_WIDTH,GUI.DEFAULT_HEIGHT);
 		}else {
@@ -79,7 +87,9 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 		});
 	}
 	
-	@Override
+	/**
+	 * Updates the GameCanvas if necessary, then draws the world and HUD.
+	 */
 	public void update() {
 		/*first check the region has not changed, and update it in the canvas if it has*/
 		if(game.getCurrentRegion()!=region && canvas instanceof GameCanvas) {
@@ -132,5 +142,89 @@ public class WorldGraphics extends Scene implements GUIcomponent{
 			/*standard mode*/
 			//TODO
 		}
+	}
+
+	@Override
+	public void onPlayerMoved(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerAttacked(Player player, NPC attacker) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerPickup(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerDrop(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCAttacked(NPC victim) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCKilled(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCDialogBegin(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCDialogMessage(NPC npc, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCDialogEnd(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorUnlocked(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorUnlockFailed(Static door, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorOpened(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorClosed(Static door) {
+		// TODO Auto-generated method stub
+		
 	}
 }
