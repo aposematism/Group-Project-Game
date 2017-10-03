@@ -2,7 +2,6 @@ package com.swen.herebethetitle.graphics.tests;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
-import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.graphics.GameCanvas;
@@ -11,9 +10,11 @@ import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestStage extends Application {
 	private static String grassPath = "file:res/grass.png";
@@ -21,20 +22,22 @@ public class TestStage extends Application {
 	private static String tudorWallPath = "file:res/tudorwall.png";
 
 	private GameCanvas currentCanvas;
-	private static Operation testMethod;
+	private static List<Operation> testMethods = new ArrayList<>();
 
 	public TestStage(){ }
 
 	public void setTestMethod(Operation o){
-		testMethod = o;
+		testMethods.add(o);
 	}
 
 	public void startWindow(){
 		launch();
 	}
 
-	public void runTestMethod(){
-		testMethod.run(currentCanvas);
+	public void runTestMethods(){
+		for(Operation o: testMethods) {
+			o.run(currentCanvas);
+		}
 	}
 
 
@@ -48,7 +51,7 @@ public class TestStage extends Application {
 		stage.setScene(new Scene(root));
 		stage.show();
 
-		testMethod.run(currentCanvas);
+		runTestMethods();
 	}
 
 
