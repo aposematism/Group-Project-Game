@@ -35,8 +35,8 @@ public class Player extends Mob {
 	 * Create a player with existing health and wallet values.
 	 * Used for loading from a save file.
 	 */
-	public Player(String spritePath, double health, int wallet, Direction direction){
-		super("Player", spritePath, health, direction);
+	public Player(String name, String spritePath, double health, int wallet, Direction direction){
+		super(name, spritePath, health, direction);
 		this.wallet = wallet;
 		inventory = new Inventory();
 	}
@@ -44,7 +44,7 @@ public class Player extends Mob {
 	/**
 	 * Create a starting, default instance of Player.
 	 */
-	public Player(String spritePath, Direction direction){ this(spritePath, FULL_HEALTH, 0, direction); }
+	public Player(String spritePath, Direction direction){ this("Player", spritePath, FULL_HEALTH, 0, direction); }
 
 	/**
 	 * Puts any amount of items into the inventory
