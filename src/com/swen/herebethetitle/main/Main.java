@@ -12,8 +12,6 @@ import com.swen.herebethetitle.view.GUI;
  */
 public class Main{
 	
-	private static GUI gui;
-	
 	public static void main(String[] args) throws Exception {
 		GameContext game = new GameContext();
 		GameLogic gameLogic = new GameLogic(game);
