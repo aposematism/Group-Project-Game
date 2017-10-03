@@ -47,8 +47,6 @@ class Fight implements Interaction {
             throw new InteractionOver();
         }
         
-        // FIXME: implement attacking
-        
         dispatchEvents(notifier);
         
         if (getWinner().isPresent())

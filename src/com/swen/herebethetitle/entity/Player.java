@@ -1,9 +1,10 @@
 package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.items.*;
+import com.swen.herebethetitle.entity.items.Armour;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
-import javafx.scene.image.Image;
 
 /**
  * The Player
@@ -120,5 +121,5 @@ public class Player extends Mob {
 	/**
 	 * Doesn't do anything, Player can't interact with itself
 	 */
-	public void interact(GameContext context){}
+	public void interact(GameContext context, Notifier notifier) {}
 }

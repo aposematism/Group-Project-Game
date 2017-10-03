@@ -2,8 +2,8 @@ package com.swen.herebethetitle.entity.ai;
 
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
 
 /**
  * An NPC AI that's aim is to attack and be attacked by the player
@@ -37,17 +37,21 @@ public class Monster extends Behavior {
 	/**
 	 * Receive an attack from the Player
 	 */
-	public void interact(GameContext context, NPC npc) {
-		if(canInteract(context,npc) || !hasMeleeWeapon(context)){
+	@Override
+	public void interact(GameContext context, NPC npc, Notifier notifier) {
+		if(canInteract(context,npc) || hasMeleeWeapon(context)){
 			//calculate damage
 			context.player.inventory().getWeapon().ifPresent(w ->
 				npc.damage(w.getStrength())
 			);
 			npc.damage(Player.DEFAULT_DAMAGE);
+            notifier.notify(l -> l.onNPCAttacked(npc));
 
 			//death
-			if(npc.getHealth()==0)
+			if(npc.getHealth() <= 0) {
 				context.getCurrentRegion().getTile(npc).remove(npc);
+				notifier.notify(l -> l.onNPCKilled(npc));
+			}
 		}
 	}
 

@@ -27,6 +27,28 @@ public class CombatTests extends BaseTest {
     }
     
     @Test
+    public void enemyApproachesAndAttacksPlayerOnceNeighbouring() {
+        NPC enemy = placeEnemy(new GridLocation(2, 2));
+
+        double previousHealth = Mob.FULL_HEALTH;
+
+        assertEquals(new GridLocation(2, 2), region.getLocation(enemy));
+        assertEquals(previousHealth, player.getHealth(), 0.1);
+
+        logic.update(100.0f);
+        assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
+        if (!(player.getHealth() < previousHealth))
+            fail("npc should have attacked enemy after update");
+        previousHealth = player.getHealth();
+
+        logic.update(100.0f);
+        if (!(player.getHealth() < previousHealth))
+            fail("npc should have attacked enemy after update");
+        previousHealth = player.getHealth();
+        
+    }
+    
+    @Test
     public void ignoresFarAwayEnemies() {
         NPC enemy = placeEnemy(new GridLocation(9, 9));
         
@@ -71,7 +93,7 @@ public class CombatTests extends BaseTest {
         NPC enemy = placeEnemy(new GridLocation(1, 1));
 
         try {
-            for (int i=0; i<30; i++) {
+            for (int i=0; i<30 && !enemy.isDead(); i++) {
                 logic.attack(enemy);
             }
         } catch (EntityOutOfRange e) {

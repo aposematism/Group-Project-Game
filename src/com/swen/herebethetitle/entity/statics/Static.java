@@ -1,9 +1,10 @@
 package com.swen.herebethetitle.entity.statics;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.model.GameContext;
-import javafx.scene.image.Image;
 import java.util.Optional;
+
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.logic.Notifier;
+import com.swen.herebethetitle.model.GameContext;
 
 /**
  * An object on the map that obstructs other entities from moving.
@@ -33,7 +34,9 @@ public class Static extends Entity {
 	/**
 	 * Calls interact() in the behavior
 	 */
-	public void interact(GameContext context) { behavior.ifPresent(b->b.interact(context,this)); }
+	public void interact(GameContext context, Notifier notifier) {
+	    behavior.ifPresent(b->b.interact(context,this));
+	}
 
 	/**
 	 * Strategy Pattern of what it actually does when interacted with.

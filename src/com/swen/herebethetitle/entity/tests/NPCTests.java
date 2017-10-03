@@ -68,6 +68,7 @@ public class NPCTests {
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		GameContext context = new GameContext();
+		context.getCurrentRegion().get(1, 0).add(n);
 
 		assertEquals(80, n.getHealth(), 0);
 		n.interact(context);
@@ -83,6 +84,7 @@ public class NPCTests {
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		GameContext context = new GameContext();
+		context.getCurrentRegion().get(1, 0).add(n);
 
 		Weapon w = new Weapon("", null, false, 10);
 		context.player.add(w);

@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Tile;
 
 /**
  * Controllers the enemies in the game.
@@ -30,6 +32,16 @@ public class NpcController {
      * Updates the game after a single tick.
      */
     public void tick(GameContext context, Notifier notifier) {
+        progressInteractions(context, notifier);
+        updateNpcs(context);
+    }
+    
+    /**
+     * Progress all active interactions in the game.
+     * 
+     * Removes all interactions that are over.
+     */
+    protected void progressInteractions(GameContext context, Notifier notifier) {
         Iterator<Interaction> interactions = activeInteractions.iterator();
 
         while (interactions.hasNext()) {
@@ -41,6 +53,21 @@ public class NpcController {
                 // If the enemy gives up, the interaction no longer exists.
                 interactions.remove();
                 continue;
+            }
+        }
+        
+    }
+    
+    /**
+     * Pings all NPCs in the region.
+     */
+    protected void updateNpcs(GameContext context) {
+        for (Tile tile : context.getCurrentRegion()) {
+            for (Entity entity : tile.getInteractives()) {
+                if (entity instanceof NPC) {
+                    NPC npc = (NPC)entity;
+                    npc.ping(context);
+                }
             }
         }
     }

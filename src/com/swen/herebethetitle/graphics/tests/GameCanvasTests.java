@@ -1,29 +1,19 @@
 package com.swen.herebethetitle.graphics.tests;
 
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Key;
-import com.swen.herebethetitle.graphics.GridManager;
-import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.util.Direction;
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.graphics.GameCanvas;
-import com.swen.herebethetitle.model.Region;
-import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.util.GridLocation;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import static org.junit.Assert.fail;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert.*;
 
-import static org.junit.Assert.fail;
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.graphics.GameCanvas;
+import com.swen.herebethetitle.graphics.GridManager;
+import com.swen.herebethetitle.logic.Notifier;
+import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Tile;
+
+import javafx.scene.image.Image;
 
 public class GameCanvasTests{
 	static Operation testMethod;
@@ -139,7 +129,7 @@ public class GameCanvasTests{
 
 	public static class DummyEntity extends Entity{
 		public boolean isPenetrable(){ return false; }
-		public void interact(GameContext context){}
+		public void interact(GameContext context, Notifier notifiier){}
 		public String toString(){return null;}
 		public DummyEntity(Image image){super("","");}
 	}
