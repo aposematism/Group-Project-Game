@@ -34,26 +34,30 @@ public class GridManagerTests {
         vGap = 0;
         hGap = 0;
 
-        m = new GridManager(cellSize, vGap, hGap);
+        m = new GridManager(0,0 ,cellSize, vGap, hGap);
 
     }
 
     @Test
     public void test01_initialize(){
-        GridManager m = new GridManager(cellSize, vGap, hGap);
+        GridManager m = new GridManager(0,0,cellSize, vGap, hGap);
         Assert.assertEquals(m.getCellSize(), 30);
         Assert.assertEquals(m.gethGap(), 0);
         Assert.assertEquals(m.getvGap(), 0);
     }
     @Test
     public void test02_getCoordinates(){
-
+        GridManager m = this.m;
         Assert.assertEquals(m.getRealCoordinates(gl1), new Point(0, 30));
         Assert.assertEquals(m.getRealCoordinates(gl2), new Point(0, 60));
         Assert.assertEquals(m.getRealCoordinates(gl3), new Point(0, 120));
         Assert.assertEquals(m.getRealCoordinates(gl4), new Point(30, 30));
         Assert.assertEquals(m.getRealCoordinates(gl5), new Point(60, 60));
         Assert.assertEquals(m.getRealCoordinates(gl6), new Point(120, 120));
+
+        m = new GridManager(45, 30, cellSize, vGap,hGap);
+        Assert.assertEquals(m.getRealCoordinates(gl1), new Point(45, 60));
+        Assert.assertEquals(m.getRealCoordinates(gl2), new Point(45, 90));
     }
     @Test
     public void test03_getCoordinatesWithOffset(){
@@ -79,18 +83,6 @@ public class GridManagerTests {
 
     @Test
     public void test05_getGridLocation(){
-        Point offset = new Point(0,0);
-        Assert.assertEquals(m.getGridLocation(new Point(14, 31),offset), gl1);
-        Assert.assertEquals(m.getGridLocation(new Point(0, 30),offset), gl1);
-        Assert.assertEquals(m.getGridLocation(new Point(29, 65),offset), gl2);
-
-        offset = new Point(0, 30);
-        Assert.assertEquals(m.getGridLocation(new Point(14, 31), offset), new GridLocation(0,0));
-        Assert.assertEquals(m.getGridLocation(new Point(14, 63), offset), new GridLocation(0,1));
-
-        offset = new Point(60, 30);
-        Assert.assertEquals(m.getGridLocation(new Point(61, 31), offset), new GridLocation(0,0));
-        Assert.assertEquals(m.getGridLocation(new Point(91, 63), offset), new GridLocation(1,1));
 
         GridLocation l = new GridLocation(4,5);
         offset = new Point(0,0);
@@ -101,6 +93,13 @@ public class GridManagerTests {
         //Since the position has been aligned to the center of the cell, change offset.
         Point adjustedOffset = new Point(offset.x+(cellSize/2), offset.y+(cellSize/2));
         Assert.assertEquals(l, m.getGridLocation(m.getRealCoordinates(l, adjustedOffset), offset));
+    }
+
+    @Test
+    public void test06_getCoordsFromDifferentOrigin(){
+        GridManager m = new GridManager(45, 30, cellSize, vGap,hGap);
+        Assert.assertEquals(m.getRealCoordinates(gl1), new Point(45, 60));
+        Assert.assertEquals(m.getRealCoordinates(gl2), new Point(45, 90));
     }
 
 

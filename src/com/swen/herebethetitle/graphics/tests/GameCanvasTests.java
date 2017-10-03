@@ -32,7 +32,7 @@ public class GameCanvasTests{
 			ts.startWindow();
 		}catch(RuntimeException E){
 			if(!failTestMethod) {
-				failTestMethod = true;
+				//failTestMethod = true;
 				fail(E.getMessage());
 			}
 		}
@@ -86,7 +86,7 @@ public class GameCanvasTests{
 	public void test05_changeGridManager(){
 		testMethod = new Operation(){public void run(GameCanvas c){
 			c.drawAll();
-			c.setGrid(new GridManager(40, 2,2));
+			c.setGrid(new GridManager(0,0,40, 2,2));
 			c.drawAll();
 		}};
 		update(ts);
@@ -107,7 +107,7 @@ public class GameCanvasTests{
 	public void test07_ModifyRegion(){
 		testMethod = new Operation(){public void run(GameCanvas c){
 			Tile tile = c.getRegion().get(0,1);
-			Entity extra = new DummyEntity(new Image("file:res/cobble snow.png"));
+			Entity extra = new DummyEntity("file:res/cobble snow.png");
 			tile.add(extra);
 			c.drawAll();
 		}};
@@ -131,6 +131,6 @@ public class GameCanvasTests{
 		public boolean isPenetrable(){ return false; }
 		public void interact(GameContext context, Notifier notifiier){}
 		public String toString(){return null;}
-		public DummyEntity(Image image){super("","");}
+		public DummyEntity(String fileName){super("",fileName);}
 	}
 }

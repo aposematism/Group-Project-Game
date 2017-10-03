@@ -25,14 +25,17 @@ public class GridManager extends Canvas{
     private int vGap;
     private int hGap;
 
+    private int x;
+    private int y;
+
     private static final int defaultCellSize = 64;
 
-    /**
+    /**The Grid manager that will be used to render the game world.
      *
      * @return
      */
     public static GridManager createDefaultManager(){
-        return new GridManager(defaultCellSize, 0,0);
+        return new GridManager(0,0,defaultCellSize, 0,0);
     }
 
     /**
@@ -41,10 +44,12 @@ public class GridManager extends Canvas{
      * @param vGap vertical gap between each cell in the grid.
      * @param hGap horizontal gap between each cell in the grid.
      */
-    public GridManager(int cellSize, int vGap, int hGap){
+    public GridManager(int x, int y, int cellSize, int vGap, int hGap){
         this.cellSize = cellSize;
         this.vGap = vGap;
         this.hGap = hGap;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -53,8 +58,8 @@ public class GridManager extends Canvas{
      * @return A pixel coordinate
      */
     public Point getRealCoordinates(GridLocation location){
-        int x = (location.x * cellSize) + location.x*hGap;
-        int y = (location.y * cellSize) + location.y*vGap;
+        int x = this.x +(location.x * cellSize) + location.x*hGap;
+        int y = this.y +(location.y * cellSize) + location.y*vGap;
 
         return new Point(x,y);
     }
@@ -96,8 +101,8 @@ public class GridManager extends Canvas{
      * @return
      */
     public GridLocation getGridLocation(Point p, Point offset){
-        int col = ((p.x - offset.x) /(cellSize+hGap));
-        int row = ((p.y - offset.y) /(cellSize+vGap));
+        int col = ((p.x - offset.x - this.x) /(cellSize+hGap)) ;
+        int row = ((p.y - offset.y - this.y) /(cellSize+vGap)) ;
 
         return new GridLocation(col, row);
     }
@@ -133,7 +138,20 @@ public class GridManager extends Canvas{
      */
     public void setCellSize(int size){cellSize = size;}
 
+    /**
+     * @param x x coordinate of this GridManager
+     * @param y y coordinate of this GridManager
+     */
+    public void setOrigin(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
 
+    /**@return The origin of the GridManager
+     */
+    public Point getOrigin(){
+        return new Point(this.x, this.y);
+    }
 
 
 }

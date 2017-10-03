@@ -20,10 +20,6 @@ public class TestStage extends Application {
 	private static String playerPath = "file:res/wizard.png";
 	private static String tudorWallPath = "file:res/tudorwall.png";
 
-	private static Image grass;
-	private static Image player;
-	private static Image tudorwall;
-
 	private GameCanvas currentCanvas;
 	private static Operation testMethod;
 
@@ -43,9 +39,6 @@ public class TestStage extends Application {
 
 
 	public void start(Stage stage){
-		grass = new Image(grassPath);
-		player = new Image(playerPath);
-		tudorwall = new Image(tudorWallPath);
 
 		currentCanvas = new GameCanvas(emptyGrassField(7,7, 0, 0), 350, 350);
 
@@ -77,8 +70,8 @@ public class TestStage extends Application {
 	public static Region grasslandWithExtras(int cols, int rows, int playerCol, int playerRow){
 		Region r = emptyGrassField(cols, rows, 0,0);
 
-		r.get(0,1).add(new GameCanvasTests.DummyEntity(tudorwall));
-		r.get(0, 1).add(new GameCanvasTests.DummyEntity(player));
+		r.get(0,1).add(new GameCanvasTests.DummyEntity(tudorWallPath));
+		r.get(0, 1).add(new GameCanvasTests.DummyEntity(playerPath));
 
 		return r;
 	}
