@@ -1,7 +1,14 @@
 package com.swen.herebethetitle.view;
 
 
+import java.util.Optional;
+
+import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
+import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 
@@ -35,14 +42,10 @@ import javafx.util.Duration;
  * 
  * -Add in subordinate menu functionality for new game, load game, and settings
  * -Make the menu pretty somehow
- * -Setup a timer to call 'gameLogic.update()'
- * 
- * TODO immediately
- * -change HUD to be drawn on the game canvas, implemented in the WorldGraphics as a series of HUDComponents
- * -build in inputs and test them
+ * -audio
  * 
  */
-public class GUI extends Application{
+public class GUI extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
@@ -311,5 +314,103 @@ public class GUI extends Application{
 	 */
 	public void setHUD(WorldGraphics g) {
 		worldGraphics = g;
+	}
+
+
+	@Override
+	public void onPlayerMoved(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerAttacked(Player player, NPC attacker) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerPickup(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerDrop(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCAttacked(NPC victim) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCKilled(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCDialogBegin(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCDialogMessage(NPC npc, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCDialogEnd(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorUnlocked(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorUnlockFailed(Static door, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorOpened(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorClosed(Static door) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -12,18 +12,16 @@ import com.swen.herebethetitle.entity.statics.Static;
  * 
  * @author dylan
  */
-public abstract class GameListener {
+public interface GameListener {
     /**
      * Called when the player is moved.
      */
-    public void onPlayerMoved(Player player) {
-    }
+    public void onPlayerMoved(Player player);
 
     /**
      * Called when the player is attacked by a NPC.
      */
-    public void onPlayerAttacked(Player player, NPC attacker) {
-    }
+    public void onPlayerAttacked(Player player, NPC attacker);
 
     /**
      * Called when the player is killed.
@@ -31,67 +29,57 @@ public abstract class GameListener {
      * @param aggressor
      *            The entity that did the deed.
      */
-    public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
-    }
+    public void onPlayerKilled(Player player, Optional<NPC> aggressor);
 
     /**
      * Called when a player picks up an item.
      */
-    public void onPlayerPickup(Player player, Item item) {
-    }
+    public void onPlayerPickup(Player player, Item item);
 
     /**
      * Called when a player drops an item.
      */
-    public void onPlayerDrop(Player player, Item item) {
-    }
+    public void onPlayerDrop(Player player, Item item);
 
     /**
      * Called when a NPC is attacked by the player.
      */
-    public void onNPCAttacked(NPC victim) {
-    }
+    public void onNPCAttacked(NPC victim);
 
     /**
      * Called when an enemy is killed.
      */
-    public void onNPCKilled(NPC npc) {
-    }
+    public void onNPCKilled(NPC npc);
     
     /**
      * Called when dialog between a player and an NPC begins.
      */
-    public void onNPCDialogBegin(NPC npc) { }
+    public void onNPCDialogBegin(NPC npc);
     
     /**
      * Called when an NPC speaks a message to the player.
      */
-    public void onNPCDialogMessage(NPC npc, String message) {
-    }
+    public void onNPCDialogMessage(NPC npc, String message);
     
     /**
      * Called when a discussion between the NPC and player is over.
      */
-    public void onNPCDialogEnd(NPC npc) {
-    }
+    public void onNPCDialogEnd(NPC npc);
     
     /**
      * Called when a door is unlocked by a key.
      */
-    public void onDoorUnlocked(Static door) {
-    }
+    public void onDoorUnlocked(Static door);
     
     /**
      * Called when we failed to unlock a door.
      */
-    public void onDoorUnlockFailed(Static door, String message) { 
-    }
+    public void onDoorUnlockFailed(Static door, String message);
     
     /**
      * Called when a door is successfully opened.
      */
-    public void onDoorOpened(Static door) {
-    }
+    public void onDoorOpened(Static door);
     
     /**
      * Called when a door is closed.
@@ -99,6 +87,5 @@ public abstract class GameListener {
      * Note that if the door has been previously unlocked,
      * it will stay unlocked.
      */
-    public void onDoorClosed(Static door) {
-    }
+    public void onDoorClosed(Static door);
 }
