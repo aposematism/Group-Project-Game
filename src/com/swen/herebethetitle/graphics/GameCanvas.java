@@ -26,12 +26,10 @@ import javafx.scene.paint.Color;
 public class GameCanvas extends Canvas {
     private GridManager currentGrid;
     private Region currentRegion;
-    private Player player;
 
-//    private Map<Region, List<Entity>> backLayerSprites = new HashMap<>();
-//    private Map<Entity, List<Entity>> frontLayerSprites = new HashMap<>();
+    private Map<Entity, Image> imageMap = new HashMap<>();
 
-//    private GraphicsContext gc;
+
 
     /**
      * Create a new Game Canvas, initialized with the initialRegion it gets passed.
@@ -97,11 +95,11 @@ public class GameCanvas extends Canvas {
             Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
 
             //Draw the background terrain sprite first
-            gc.drawImage(getImage(t.getMapFloor().getSpritePath()), pos.x,pos.y, size, size);
+            gc.drawImage(getImage(t.getMapFloor()), pos.x,pos.y, size, size);
 
             //Draw each interactive entity that inhabits the current tile
             for(Entity e: t.getInteractives()){
-                gc.drawImage(getImage(e.getSpritePath()), pos.x, pos.y, size, size);
+                gc.drawImage(getImage(e), pos.x, pos.y, size, size);
             }
 
         }
@@ -140,14 +138,13 @@ public class GameCanvas extends Canvas {
     private void construct(Region initialRegion){
         currentGrid = GridManager.createDefaultManager();
         switchRegions(initialRegion);
-        player = getPlayer();
+        //player = getPlayer();
     }
 
-	/**
-	 * Constructs JavaFX image from source url
-	 * @param url Sprite File URL
-	 * @return JavaFX Image
-	 * @author Mark Metcalfe
-	 */
-	public static Image getImage(String url){ return new Image(url); }
+	private Image getImage(Entity e) {
+        if (!imageMap.containsKey(e)) {
+            imageMap.put(e, new Image(e.getSpritePath()));
+        }
+        return imageMap.get(e);
+    }
 }
