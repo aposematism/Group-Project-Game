@@ -56,11 +56,8 @@ public class GameLogic {
      * Updates the game logic after some time has passed.
      * 
      * Moves enemies.
-     * 
-     * @param delta
-     *            The number of elapsed seconds.
      */
-    public void update(float delta) {
+    public void tick() {
         triggerPossibleInteractions();
 
         npcController.tick(context, notifier);
