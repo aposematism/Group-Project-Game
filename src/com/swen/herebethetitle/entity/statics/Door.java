@@ -3,6 +3,7 @@ package com.swen.herebethetitle.entity.statics;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.entity.items.Key;
+import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
 /**
@@ -36,13 +37,26 @@ public class Door implements Static.Behavior {
 	 * Attempt to unlock/open the door
 	 */
 	@Override
-	public void interact(GameContext context, Static door) {
-		if(state==STATE.LOCKED && hasKey(context.player))
+	public void interact(GameContext context, Static door, Notifier notifier) {
+	    switch(state) {
+	    case LOCKED:
+		    if (hasKey(context.player)) {
+                state = STATE.OPEN;
+                notifier.notify(l -> l.onDoorUnlocked(door));
+		    } else {
+		        notifier.notify(l -> l.onDoorUnlockFailed(door,
+		                "you do not have the key for this door"));
+		    }
+		    break;
+	    case UNLOCKED:
 			state = STATE.OPEN;
-		else if(state==STATE.UNLOCKED)
-			state = STATE.OPEN;
-		else
+			notifier.notify(l -> l.onDoorOpened(door));
+			break;
+	    case OPEN:
 			state = STATE.UNLOCKED;
+			notifier.notify(l -> l.onDoorClosed(door));
+			break;
+	    }
 	}
 
 	/**

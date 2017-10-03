@@ -3,6 +3,7 @@ package com.swen.herebethetitle.logic.test;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class InventoryTests extends BaseTest {
                 .collect(Collectors.toList());
         for (Key key : keys) {
             try {
-                logic.pickup(key);
+                logic.interact(key);
             } catch (EntityOutOfRange e) {
                 fail("all keys should be in range");
             }
@@ -38,16 +39,16 @@ public class InventoryTests extends BaseTest {
         Key farKey = placeKey(new GridLocation(5, 3));
 
         try {
-            logic.pickup(closeKey);
+            logic.interact(closeKey);
         } catch (EntityOutOfRange e) {
             fail("should be able to pick up close key");
         }
         
         try {
-            logic.pickup(farKey);
+            logic.interact(farKey);
             fail("should not be abe to pick up far away key");
         } catch (EntityOutOfRange e) {
-            assertEquals(e.entity, farKey);
+            assertEquals(Optional.of(farKey), e.entity);
             assertEquals("entity out of range", e.getMessage());
         }
     }

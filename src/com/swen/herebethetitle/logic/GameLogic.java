@@ -1,12 +1,15 @@
 package com.swen.herebethetitle.logic;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.logic.ai.NpcController;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
@@ -78,9 +81,30 @@ public class GameLogic {
             }
         }
     }
+    
+    /**
+     * Attempts to attack the closest NPC to the player.
+     * @throws EntityOutOfRange if there are no entities to attack.
+     */
+    public void attack() throws EntityOutOfRange {
+        Collection<Tile> neighbouringTiles = getCurrentRegion().getNeighbours(getCurrentRegion().getPlayerTile());
+        for (Tile tile : neighbouringTiles) {
+            Optional<NPC> aggressiveNpc = tile.stream()
+                    .filter(entity -> entity instanceof NPC)
+                    .map(entity -> (NPC)entity)
+                    .filter(NPC::isAggressive)
+                    .findFirst();
+            
+            if (aggressiveNpc.isPresent()) {
+                attack(aggressiveNpc.get());
+            } else {
+                throw new EntityOutOfRange("no monsters in range to attack");
+            }
+        }
+    }
 
     /**
-     * Get the player to attack an entity.
+     * Get the player to attack a specific entity.
      * 
      * The victim
      * 
@@ -97,15 +121,77 @@ public class GameLogic {
         
         victim.interact(context, notifier);
     }
+    
+    /**
+     * Starts a discussion with an NPC if it is possible.
+     * 
+     * Does nothing if the NPC has no dialog.
+     */
+    protected void startDiscussion(NPC npc) {
+        npcController.startDiscussion(npc);
+    }
+
+    /**
+     * General-purpose entity interactions.
+     * 
+     * This should be called on entities that are in the map.
+     */
+    public void interact(Entity entity) throws EntityOutOfRange {
+        if (entity instanceof NPC) {
+            NPC npc = (NPC)entity;
+            if (npc.isAggressive())
+                attack(npc);
+            else if (npc.getDialog().isPresent())
+                startDiscussion(npc);
+            else
+                ; // no interactions possible.
+        } else if (entity instanceof Item) {
+            Item item = (Item)entity;
+            
+            pickup(item);
+        } else if (entity instanceof Static) {
+            Static s = (Static)entity;
+            
+            s.interact(context, notifier);
+        }
+    }
+    
+    /**
+     * Uses an item in the players inventory.
+     * @param item The item to use.
+     */
+    public void use(Item item) {
+        if (!getPlayer().possesses(item))
+            throw new IllegalArgumentException("cannot use an item that is not in the inventory");
+        item.use(context);
+    }
 
     /**
      * Picks up an item to the inventory.
+     * 
+     * Prefer to use `interact` directly.
      * @throws EntityOutOfRange if the item is not neighboured.
      */
-    public void pickup(Item item) throws EntityOutOfRange {
+    protected void pickup(Item item) throws EntityOutOfRange {
         ensureCanInteractWith(item);
+
+        if (getPlayer().inventory().contains(item))
+            throw new IllegalArgumentException("item is already in inventory");
+
         item.pickup(context);
         notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
+    }
+
+    /**
+     * Drops an item from the inventory.
+     */
+    public void drop(Item item) {
+        if (getPlayer().inventory().contains(item))
+            throw new IllegalArgumentException("cannot drop an item that is not in inventory");
+
+        // FIXME: add the dropped entity to the map?
+        getGame().getPlayer().inventory().remove(item);
+        notifier.notify(listener -> listener.onPlayerDrop(getPlayer(), item));
     }
 
     /***
@@ -126,14 +212,6 @@ public class GameLogic {
         GridLocation entityLocation = getCurrentRegion().getLocation(entity);
         GridLocation playerLocation = getCurrentRegion().getLocation(getPlayer());
         return entityLocation.isNeighbouring(playerLocation);
-    }
-
-    /**
-     * Drops an item from the inventory.
-     */
-    public void drop(Item item) {
-        getGame().getPlayer().inventory().remove(item);
-        notifier.notify(listener -> listener.onPlayerDrop(getPlayer(), item));
     }
 
     /**

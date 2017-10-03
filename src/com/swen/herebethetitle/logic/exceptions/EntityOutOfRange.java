@@ -1,5 +1,7 @@
 package com.swen.herebethetitle.logic.exceptions;
 
+import java.util.Optional;
+
 import com.swen.herebethetitle.entity.Entity;
 
 /**
@@ -12,10 +14,15 @@ public class EntityOutOfRange extends ImpossibleAction {
     /**
      * The entity that was out of range.
      */
-    public final Entity entity;
+    public final Optional<Entity> entity;
     
     public EntityOutOfRange(Entity entity, String message) {
         super(message);
-        this.entity = entity;
+        this.entity = Optional.of(entity);
+    }
+
+    public EntityOutOfRange(String message) {
+        super(message);
+        this.entity = Optional.empty();
     }
 }

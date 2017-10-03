@@ -2,6 +2,8 @@ package com.swen.herebethetitle.logic.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Optional;
+
 import org.junit.Test;
 
 import com.swen.herebethetitle.entity.Mob;
@@ -65,7 +67,7 @@ public class CombatTests extends BaseTest {
             logic.attack(enemy);
             fail("should not be able to attack enemy");
         } catch (EntityOutOfRange e) {
-            assertEquals(e.entity, enemy);
+            assertEquals(Optional.of(enemy), e.entity);
             assertEquals("entity out of range", e.getMessage());
         }
     }

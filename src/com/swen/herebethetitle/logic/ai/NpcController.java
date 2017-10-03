@@ -76,7 +76,17 @@ public class NpcController {
      * Starts a interaction.
      */
     public void startFight(Player player, NPC npc) {
-        startInteraction(new Fight(player, npc));
+        if (npc.isAggressive())
+            startInteraction(new Fight(player, npc));
+    }
+    
+    /**
+     * Starts a discussion with an NPC
+     * @throws IllegalArgumentException if the npc has no dialog.
+     */
+    public void startDiscussion(NPC npc) {
+        if (npc.getDialog().isPresent())
+            startInteraction(new Discussion(npc, npc.getDialog().get()));
     }
     
     /**

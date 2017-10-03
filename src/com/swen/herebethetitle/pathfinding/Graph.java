@@ -229,7 +229,7 @@ public class Graph {
      * Gets neighbouring tiles that we can actually travel through.
      */
     protected Collection<Tile> getReachableAdjacentTiles(Tile tile) {
-        return grid.getAdjacent(tile)
+        return grid.getNeighbours(tile)
                    .stream()
                    .filter(t -> t == this.destination || t.isPenetrable())
                    .collect(Collectors.toList());

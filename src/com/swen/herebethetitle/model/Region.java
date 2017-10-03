@@ -218,7 +218,7 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
 
     @Override
-    public Collection<Tile> getAdjacent(Tile tile) {
+    public Collection<Tile> getNeighbours(Tile tile) {
         GridLocation location = getLocation(tile);
 
         List<Optional<Tile>> tiles = Arrays.asList(
