@@ -1,9 +1,6 @@
 package com.swen.herebethetitle.graphics.tests;
 
-import static org.junit.Assert.fail;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.swen.herebethetitle.entity.Entity;
@@ -11,7 +8,6 @@ import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -33,6 +29,7 @@ public class ExternalGraphicsTests extends Application{
 	int playerY=0;
 
 	@Test
+	@Ignore
 	public void test_initialization(){
 		launch();
 	}
