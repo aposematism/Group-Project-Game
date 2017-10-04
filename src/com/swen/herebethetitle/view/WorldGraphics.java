@@ -9,7 +9,6 @@ import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Region;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -25,8 +24,7 @@ import javafx.scene.paint.Color;
  *
  */
 public class WorldGraphics extends Scene implements GameListener{
-	
-	private Region region;
+
 	private Canvas canvas;
 	private HUD hud;
 	private GameContext game;
@@ -53,49 +51,47 @@ public class WorldGraphics extends Scene implements GameListener{
 		super(r);
 		isTesting = t;
 		game = g;
-		region = g.getCurrentRegion();
 		if(isTesting) {
 			canvas = new Canvas(GUI.DEFAULT_WIDTH,GUI.DEFAULT_HEIGHT);
 		}else {
-			canvas = new GameCanvas(region, GUI.DEFAULT_WIDTH, GUI.DEFAULT_HEIGHT);
-		}
-		hud = new HUD(canvas, game);
-		root = r;
-		r.getChildren().add(canvas);
-		r.requestFocus();
-		
+			canvas = new GameCanvas(game, GUI.DEFAULT_WIDTH, GUI.DEFAULT_HEIGHT);
+
+			//FIXME HUD is implemented in the GameCanvas class.
+
+			hud = new HUD(canvas, game);
+			root = r;
+			r.getChildren().add(canvas);
+			r.requestFocus();
+
 		/*event handling*/
-		r.addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-			handleMousePress(e);
-		});
-		r.addEventHandler(MouseEvent.MOUSE_ENTERED, e->{
-			update();
+			r.addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+				handleMousePress(e);
+			});
+			r.addEventHandler(MouseEvent.MOUSE_ENTERED, e->{
+				update();
 			/*derive coordinates to put the text in centre*/
-			int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
-			int x = GUI.DEFAULT_WIDTH/2-20*"Mouse entered".length()/2;
-			hud.drawTextToCanvas("Mouse entered",x,y);
-		});		
-		r.addEventHandler(MouseEvent.MOUSE_EXITED, e->{
-			update();
+				int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
+				int x = GUI.DEFAULT_WIDTH/2-20*"Mouse entered".length()/2;
+				hud.drawTextToCanvas("Mouse entered",x,y);
+			});
+			r.addEventHandler(MouseEvent.MOUSE_EXITED, e->{
+				update();
 			/*derive coordinates to put the text in centre*/
-			int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
-			int x = GUI.DEFAULT_WIDTH/2-20*"Mouse exited".length()/2;
-			hud.drawTextToCanvas("Mouse exited",x,y);
-		});
-		r.addEventHandler(KeyEvent.KEY_PRESSED, e->{
-			handleKeyPress(e);
-		});
+				int y = GUI.DEFAULT_HEIGHT/2-20/2+25;
+				int x = GUI.DEFAULT_WIDTH/2-20*"Mouse exited".length()/2;
+				hud.drawTextToCanvas("Mouse exited",x,y);
+			});
+			r.addEventHandler(KeyEvent.KEY_PRESSED, e->{
+				handleKeyPress(e);
+			});
+		}
+
 	}
 	
 	/**
 	 * Updates the GameCanvas if necessary, then draws the world and HUD.
 	 */
 	public void update() {
-		/*first check the region has not changed, and update it in the canvas if it has*/
-		if(game.getCurrentRegion()!=region && canvas instanceof GameCanvas) {
-			region = game.getCurrentRegion();
-			((GameCanvas)canvas).switchRegions(region);
-		}
 		/*now draw the world*/
 		if(isTesting) {
 			/*testing rendering mode*/
@@ -103,7 +99,7 @@ public class WorldGraphics extends Scene implements GameListener{
 			canvas.getGraphicsContext2D().fillRect(0, 0, GUI.DEFAULT_WIDTH, GUI.DEFAULT_HEIGHT);
 		}else {
 			/*standard rendering mode*/
-			((GameCanvas)canvas).drawAll();
+			((GameCanvas)canvas).update();
 		}
 		/*now draw the HUD*/
 		hud.drawToCanvas();

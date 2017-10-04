@@ -1,6 +1,5 @@
 package com.swen.herebethetitle.view;
 
-import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.model.GameContext;
 
 import javafx.scene.canvas.Canvas;

@@ -1,150 +1,135 @@
 package com.swen.herebethetitle.graphics;
 
-
-import java.awt.Point;
-import java.util.*;
-
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Inventory;
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.items.Armour;
+import com.swen.herebethetitle.entity.items.Weapon;
+import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.util.GridLocation;
-
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
- * The canvas for the game world, it will draw all entities in the given region,
- *NOTE: that the given region must have a player entity inside it in order for the
- * drawAll() function to work. This is so because it needs to translate everything
- * in the region according to the player location.
+ * This Canvas is responsible for drawing everything that is going on in the GameContext,
+ * Terrain, entities and HUD included.
+ * @author weirjosh
  */
 public class GameCanvas extends Canvas {
-    private GridManager currentGrid;
-    private Region currentRegion;
+    private GameContext context;
 
-    private Map<Entity, Image> imageMap = new HashMap<>();
+    private Map<String, Image> imageMap = new HashMap<>();
 
-
+    private HUD hud;
+    private WorldRenderer world;
 
     /**
-     * Create a new Game Canvas, initialized with the initialRegion it gets passed.
-     * @param initialRegion The Region the player supposedly starts the game in.
-     * @param width width of the canvas (NOTE: in PIXELS!!)
-     * @param height height of the canvas (NOTE: in PIXELS!!)
+     * Create a new GameCanvas
+     * @param context GameContext that will frequently be queried
+     * @param width width of the canvas
+     * @param height height of the canvas
+     * @author weirjosh
      */
-    public GameCanvas(Region initialRegion, int width, int height){
+    public GameCanvas(GameContext context, int width, int height){
         super(width, height);
-        construct(initialRegion);
+        world = new WorldRenderer();
+        hud = new HUD(this);
     }
 
     /**
-     * Create a new Game Canvas, initialized with the initialRegion it gets passed.
-     * @param initialRegion The Region the player supposedly starts the game in.
+     * Draw the world graphics, and the HUD.
+     * @author weirjosh
      */
-    public GameCanvas(Region initialRegion){
-        super();
-        construct(initialRegion);
+    public void update(){
+        updateWorld();
+        updateHUD();
+
     }
 
     /**
-     * Will update the region that gets drawn to this canvas
-     * @param newRegion The new region to draw all the entities of. This region MUST contain
-     *                  a Player Entity.
+     * Get a GridLocation from the given mouse coordinate
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return GridLocation of the cell that was clicked
+     * @author weirjosh
      */
-    public void switchRegions(Region newRegion){
-        currentRegion = newRegion;
+    public GridLocation getMousePos(int x, int y){
+        return world.getLocation(new Point(x,y));
     }
 
-    /**
-     * @return The Grid manager of this Canvas
-     */
-    public GridManager getGrid(){
-        return currentGrid;
-    }
 
-    /**@param newGrid Assign a new Grid manager to this canvas
-     */
-    public void setGrid(GridManager newGrid){
-        currentGrid = newGrid;
-    }
 
-    /**
-     * @return The current region of this GameCanvas
-     */
-    public Region getRegion(){return currentRegion;}
 
-    /**
-     * Draw every entity held within the current region of this Canvas.
-     */
-    public void drawAll(){
-        GraphicsContext gc = this.getGraphicsContext2D();
-        resetCanvas(gc);
-        int size = currentGrid.getCellSize();
+    private void updateWorld() {
+        //Maps the background sprite of each time to the list of
+        //front layer sprites of the tile.
+        Map<Sprite, List<Sprite>> worldSprites = new HashMap<>();
 
-        Point offset = calcOffset();
+        Region r = context.getCurrentRegion();
+        Iterator<Tile> tiles = r.iterator();
+        GridLocation playerLoc = new GridLocation(0,0);
 
-        //For each tile in the region...
-        Iterator<Tile> tiles = currentRegion.iterator();
-        while(tiles.hasNext()){
+        //For each tile in the region
+        while(tiles.hasNext()) {
+            //Get current tile and location
             Tile t = tiles.next();
-            Point pos = currentGrid.getRealCoordinates(t.getLocation(), offset);
+            GridLocation l = t.getLocation();
+            List<Sprite> frontLayer = new ArrayList<>();
 
-            //Draw the background terrain sprite first
-            gc.drawImage(getImage(t.getMapFloor()), pos.x,pos.y, size, size);
-
-            //Draw each interactive entity that inhabits the current tile
+            //Get all interactive entities on this tile
             for(Entity e: t.getInteractives()){
-                gc.drawImage(getImage(e), pos.x, pos.y, size, size);
-            }
-
-        }
-    }
-
-    private void resetCanvas(GraphicsContext gc){
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0,0,this.getWidth(), this.getHeight());
-    }
-
-    private Player getPlayer(){
-        Iterator<Tile> tiles = currentRegion.iterator();
-    	while(tiles.hasNext()){
-            Tile t = tiles.next();
-            for(Entity e: t.getInteractives()) {
-                if (e instanceof Player) {
-                    return (Player) e;
+                frontLayer.add(new Sprite(getImage(e), l));
+                //Record the player
+                if(e instanceof Player){
+                    playerLoc = l;
                 }
             }
+            worldSprites.put(new Sprite(getImage(t.getMapFloor()), l), frontLayer);
         }
-    	throw new IllegalArgumentException("Player not found inside Region");
+        world.drawAll(worldSprites, playerLoc, this);
     }
 
-    private Point calcOffset(){
-        GridLocation gridLocation;
-        try {
-            gridLocation = currentRegion.getPlayerTile().getLocation();
-        }catch(NoSuchElementException E){throw new Error("No Player in Region");}
+    private void updateHUD(){
+        //Query the Inventory of the player.
+        Inventory inv = context.getPlayer().inventory();
 
+        //List of inventory entities from player inventory
+        Entity[] armourEntities = inv.getArmour();
+        Optional<Weapon> weaponEntities = inv.getWeapon();
 
-        Point center = new Point((int)this.getWidth()/2, (int)this.getHeight()/2);
-        Point playerCoords = currentGrid.getRealCoordinates(gridLocation);
-        return new Point(center.x-playerCoords.x, center.y-playerCoords.y);
-    }
+        //List of armour sprites to render
+        Sprite[] armourSprites = new Sprite[inv.getArmour().length];
+        for(int i=0;i<armourEntities.length; i++) {
+            Entity e = armourEntities[i];
+            Image img = getImage(e);
 
-    private void construct(Region initialRegion){
-        currentGrid = GridManager.createDefaultManager();
-        switchRegions(initialRegion);
-        //player = getPlayer();
-    }
-
-	private Image getImage(Entity e) {
-        if (!imageMap.containsKey(e)) {
-            imageMap.put(e, new Image(e.getSpritePath()));
+            //Armour entities will be placed along the bottom row, so increase
+            //x value as going along.
+            armourSprites[i] = new Sprite(img, new GridLocation(i, 0));
         }
-        return imageMap.get(e);
+
+        Image weaponImage = null;
+        if(weaponEntities.isPresent()){
+            weaponImage = getImage(weaponEntities.get());
+        }
+        Sprite weaponSprite = new Sprite(weaponImage, new GridLocation(0,0));
+
+        hud.drawAll(weaponSprite, armourSprites, this);
+    }
+
+
+
+    private Image getImage(Entity e) {
+        if(e == null) return null;
+        if (!imageMap.containsKey(e.getSpritePath())) {
+            imageMap.put(e.getSpritePath(), new Image(e.getSpritePath()));
+        }
+        return imageMap.get(e.getSpritePath());
     }
 }
