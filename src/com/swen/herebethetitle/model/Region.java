@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.pathfinding.PathfindingGrid;
 import com.swen.herebethetitle.util.GridLocation;
@@ -52,6 +53,7 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
             for (int y=0; y<height; y++) {
                 String character = String.format("%d:%d", x, y);
                 set(new GridLocation(x,y), new Tile(x, y, character));
+                get(x,y).setMapFloor(new Floor("file:res/grass.png"));
             }
         }
     }

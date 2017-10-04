@@ -106,7 +106,7 @@ public class WorldGraphics extends Scene implements GameListener{
 			((GameCanvas)canvas).drawAll();
 		}
 		/*now draw the HUD*/
-		hud.drawToCanvas();
+		//hud.drawToCanvas();
 	}
 	
 	/**
