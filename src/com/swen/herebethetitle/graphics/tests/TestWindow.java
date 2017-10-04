@@ -29,7 +29,7 @@ public class TestWindow extends Application {
 
     @After
     public void launchWindow(){
-        launch();
+       // launch();
     }
 
     public void start(Stage window){
