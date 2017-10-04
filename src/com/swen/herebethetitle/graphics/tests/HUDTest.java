@@ -19,6 +19,7 @@ import java.awt.*;
 
 public class HUDTest extends TestWindow {
 
+
     @Test
     /**
      * Sets up a HUD with Sprites that contain no images. So all

@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.After;
+import org.junit.Before;
 
 /**
  * Canvas container for rendering the various components of the graphics library.
@@ -18,6 +19,13 @@ import org.junit.After;
  */
 public class TestWindow extends Application {
     protected static Operation testCode;
+
+    @Before
+    public void initOperation(){
+        testCode = new Operation() {
+            public void run(Canvas c) {
+            }};
+    }
 
     @After
     public void launchWindow(){
@@ -36,7 +44,8 @@ public class TestWindow extends Application {
         root.getChildren().add(c);
         window.setScene(new Scene(root));
         window.show();
-        testCode.run(c);
+
+        if(testCode != null) testCode.run(c);
     }
 
 }
