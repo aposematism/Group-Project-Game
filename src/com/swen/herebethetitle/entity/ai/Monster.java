@@ -12,7 +12,7 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public class Monster extends Behavior {
+public final class Monster extends Behavior {
 
 	private double ATTACK_STRENGTH;
 

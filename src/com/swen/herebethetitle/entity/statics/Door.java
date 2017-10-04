@@ -13,7 +13,7 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public class Door implements Static.Behavior {
+public final class Door implements Static.Behavior {
 
 	/**
 	 * A door can either be locked, unlocked (but shut), and open
