@@ -13,7 +13,7 @@ public final class Coord {
     /**
      * X and Y coordinate values
      */
-    public int x, y;
+    public final int x, y;
 
     private final static Pattern COORDS = Pattern.compile("\\(\\d,\\d\\)");
 
