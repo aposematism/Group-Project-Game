@@ -230,6 +230,7 @@ public class InteractiveParser {
 
 		while(s.hasNext(ITEM))
 			player.add(parseItem(s));
+		s.next();
 
 		return player;
 	}
