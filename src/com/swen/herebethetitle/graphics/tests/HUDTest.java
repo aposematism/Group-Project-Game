@@ -39,21 +39,21 @@ public class HUDTest extends TestWindow {
         }};
     }
 
-    @Test
-    /**
-     * Set up a HUD with sprites placed in the armour slots.
-     */
-    public void armourSlots(){
-        testCode = new Operation(){public void run(Canvas c){
-            Sprite [] armourSprites = new Sprite[4];
-            for(int i=0;i<armourSprites.length;i++){
-                armourSprites[i] = new Sprite(new Image("file:res/tudorwall.png"), new GridLocation(i,0));
-            }
-            Sprite weapon = new Sprite(null, new GridLocation(0,0));
-
-            HUD hud = new HUD(c);
-            hud.drawAll(weapon, armourSprites, c);
-        }};
-    }
+//    @Test
+//    /**
+//     * Set up a HUD with sprites placed in the armour slots.
+//     */
+//    public void armourSlots(){
+//        testCode = new Operation(){public void run(Canvas c){
+//            Sprite [] armourSprites = new Sprite[4];
+//            for(int i=0;i<armourSprites.length;i++){
+//                armourSprites[i] = new Sprite(new Image("file:res/tudorwall.png"), new GridLocation(i,0));
+//            }
+//            Sprite weapon = new Sprite(null, new GridLocation(0,0));
+//
+//            HUD hud = new HUD(c);
+//            hud.drawAll(weapon, armourSprites, c);
+//        }};
+//    }
 
 }
