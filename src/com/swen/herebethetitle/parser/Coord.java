@@ -15,7 +15,7 @@ public final class Coord {
      */
     public final int x, y;
 
-    private final static Pattern COORDS = Pattern.compile("\\(\\d,\\d\\)");
+    private final static Pattern COORDS = Pattern.compile("\\(\\d+,\\d+\\)");
 
     private Coord(int x, int y){this.x = x; this.y = y;}
 

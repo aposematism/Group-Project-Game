@@ -20,7 +20,7 @@ public class EntityParserTests {
 	public void test_Player_empty_inventory(){
 		Player in = new Player("/res/silly bopng", Direction.Down);
 
-		
+
 		Scanner s = new Scanner(in.toString());
 		Entity out = parseEntity(s);
 
@@ -38,7 +38,7 @@ public class EntityParserTests {
 		in.add(new Weapon("Iron Sword", "/res/swordasdasd.png", true, 8.8));
 		in.add(new Key("Church Key", "/res/basickey1.png", 101));
 
-		
+
 		Scanner s = new Scanner(in.toString());
 		Entity out = parseEntity(s);
 
@@ -51,7 +51,7 @@ public class EntityParserTests {
 	public void test_Static_no_Behavior(){
 		Static in = new Static("Large Rock","/res/gigantic ass rock.png");
 
-		
+
 		Scanner s = new Scanner(in.toString());
 		Entity out = parseEntity(s);
 
@@ -63,7 +63,7 @@ public class EntityParserTests {
 	@Test
 	public void test_Floor(){
 		Floor in = new Floor("Grass","/res/grass.png");
-		
+
 		Scanner s = new Scanner(in.toString());
 		Entity out = parseEntity(s);
 
@@ -77,7 +77,7 @@ public class EntityParserTests {
 		Behavior behavior = new Monster(50);
 		NPC in = new NPC("Zombie","/res/zombie.png", behavior, 50, Direction.Down);
 
-		
+
 		Scanner s = new Scanner(in.toString());
 		Entity out = parseEntity(s);
 
@@ -87,10 +87,23 @@ public class EntityParserTests {
 	}
 
 	@Test
-	public void test_Coord(){
+	public void test_Coord_single_digit(){
 		String line = "(0,1) ";
 		Behavior behavior = new Monster(50);
 		NPC in = new NPC("Zombie","/res/zombie.png", behavior, 50, Direction.Down);
+		line += in.toString();
+		Scanner s = new Scanner(line);
+
+		Coord c = parseCoordinate(s);
+
+		System.out.println(c.toString());
+	}
+
+	@Test
+	public void test_Coord_multi_digit(){
+		String line = "(04,11) ";
+		Behavior behavior = new Monster(50);
+		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
 		line += in.toString();
 		Scanner s = new Scanner(line);
 
