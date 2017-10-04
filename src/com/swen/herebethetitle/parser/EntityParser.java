@@ -1,54 +1,33 @@
 package com.swen.herebethetitle.parser;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Floor;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.Behavior;
-import com.swen.herebethetitle.entity.ai.Monster;
+import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.statics.Static;
-import com.swen.herebethetitle.model.Region;
-import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.util.Direction;
-import com.swen.herebethetitle.entity.statics.Door;
-
-import javafx.scene.image.Image;
 
 /**
- * This is the interactive entity parser, which is the second stage of the parsing process. It initialises in a similar way, but it is fundamentally different.
- * The file is to be read "item_enum x_position y_position"
- * @author - Jordan
- * */
-public class LineParser {
+ * Helper class with static methods for interpreting a single line in the save file
+ *
+ * @author Mark Metcalfe
+ */
+public class EntityParser {
 
 	private final static Pattern ITEM = Pattern.compile("(Weapon|Armour|Potion|Key)");
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
 	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
-	private final static Pattern COORDS = Pattern.compile("\\(\\d,\\d\\)");
 
-	public static Coord parseCoordinate(Scanner s){
-		String coordBraces = s.findInLine(COORDS);
-
-		coordBraces = coordBraces.replaceAll("\\(", "");
-		coordBraces = coordBraces.replaceAll("\\)", "");
-		coordBraces = coordBraces.replaceAll(",", " ");
-
-		Scanner coord = new Scanner(coordBraces);
-		return new Coord(coord.nextInt(), coord.nextInt());
-	}
-
+	/**
+	 * Takes the remainder of a line and constructs an entity object from it
+	 *
+	 * @param s Scanner with the next token being an entity class name
+	 * @return Constructed entity instance
+     */
 	public static Entity parseEntity(Scanner s){
 		String className = s.next();
 		switch(className){
@@ -60,7 +39,10 @@ public class LineParser {
 		}
 	}
 
-	private static String parseString(Scanner s){
+	/**
+	 * Interprets a string formatted as "Text Here"
+     */
+	public static String parseString(Scanner s){
 		String string = s.findInLine(STRING);
 		string = string.replaceAll("\"","");
 		return string;

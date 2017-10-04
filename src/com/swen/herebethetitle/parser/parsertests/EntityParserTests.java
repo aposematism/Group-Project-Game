@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.parser.parsertests;
 
-import static com.swen.herebethetitle.parser.LineParser.parseEntity;
+import static com.swen.herebethetitle.parser.Coord.parseCoordinate;
+import static com.swen.herebethetitle.parser.EntityParser.parseEntity;
 import static org.junit.Assert.*;
 
 import com.swen.herebethetitle.entity.*;
@@ -8,13 +9,13 @@ import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.parser.Coord;
-import com.swen.herebethetitle.parser.LineParser;
+import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
 import java.util.Scanner;
 
-public class LineParserTests {
+public class EntityParserTests {
 	@Test
 	public void test_Player_empty_inventory(){
 		Player in = new Player("/res/silly bopng", Direction.Down);
@@ -93,7 +94,7 @@ public class LineParserTests {
 		line += in.toString();
 		Scanner s = new Scanner(line);
 
-		Coord c = LineParser.parseCoordinate(s);
+		Coord c = parseCoordinate(s);
 
 		System.out.println(c.toString());
 	}
@@ -104,7 +105,7 @@ public class LineParserTests {
 
 		Scanner s = new Scanner(line);
 
-		Coord coord = LineParser.parseCoordinate(s);
+		Coord coord = parseCoordinate(s);
 		Entity entity = parseEntity(s);
 
 		System.out.println(coord.toString()+" "+entity.toString());
