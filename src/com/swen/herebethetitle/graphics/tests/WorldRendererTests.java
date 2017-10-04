@@ -26,6 +26,7 @@ public class WorldRendererTests extends TestWindow {
 
 
     @Test
+    @Ignore
     /**
      * Create a WorldRenderer preset with a grid of randomly assorted
      * sprites with no images, and one Player Sprite with the wizard

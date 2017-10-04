@@ -21,6 +21,7 @@ public class HUDTest extends TestWindow {
 
 
     @Test
+    @Ignore
     /**
      * Sets up a HUD with Sprites that contain no images. So all
      * we will see from this is where the slots will be positioned in
@@ -40,6 +41,7 @@ public class HUDTest extends TestWindow {
     }
 
     @Test
+    @Ignore
     /**
      * Set up a HUD with sprites placed in the armour slots.
      */

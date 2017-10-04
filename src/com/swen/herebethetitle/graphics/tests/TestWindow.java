@@ -31,7 +31,7 @@ public class TestWindow extends Application {
 
     @AfterClass
     public static void launchWindow(){
-       // launch();
+        launch();
     }
 
     public void start(Stage window){
