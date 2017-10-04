@@ -22,6 +22,6 @@ public class Actions {
      * @return JavaFX Image
      */
     public static Image createImage(String url){
-        return new Image(url);
+        return new Image("file:res/"+url);
     }
 }

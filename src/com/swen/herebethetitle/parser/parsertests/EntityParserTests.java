@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class EntityParserTests {
 	@Test
 	public void test_Player_empty_inventory(){
-		Player in = new Player("/res/silly bopng", Direction.Down);
+		Player in = new Player("silly bopng", Direction.Down);
 
 
 		Scanner s = new Scanner(in.toString());
@@ -31,12 +31,12 @@ public class EntityParserTests {
 
 	@Test
 	public void test_Player_with_inventory(){
-		Player in = new Player("/res/silly bo.png", Direction.Down);
+		Player in = new Player("silly bo.png", Direction.Down);
 
-		in.add(new Potion("Health Potion", "/res/health potion.png", 50));
-		in.add(new Armour("Bronze Chestplate", "/res/chestplate one.png", Armour.TYPE.TORSO, 5.6));
-		in.add(new Weapon("Iron Sword", "/res/swordasdasd.png", true, 8.8));
-		in.add(new Key("Church Key", "/res/basickey1.png", 101));
+		in.add(new Potion("Health Potion", "health potion.png", 50));
+		in.add(new Armour("Bronze Chestplate", "chestplate one.png", Armour.TYPE.TORSO, 5.6));
+		in.add(new Weapon("Iron Sword", "swordasdasd.png", true, 8.8));
+		in.add(new Key("Church Key", "basickey1.png", 101));
 
 
 		Scanner s = new Scanner(in.toString());
@@ -49,7 +49,7 @@ public class EntityParserTests {
 
 	@Test
 	public void test_Static_no_Behavior(){
-		Static in = new Static("Large Rock","/res/gigantic ass rock.png");
+		Static in = new Static("Large Rock","gigantic ass rock.png");
 
 
 		Scanner s = new Scanner(in.toString());
@@ -62,7 +62,7 @@ public class EntityParserTests {
 
 	@Test
 	public void test_Floor(){
-		Floor in = new Floor("Grass","/res/grass.png");
+		Floor in = new Floor("Grass","grass.png");
 
 		Scanner s = new Scanner(in.toString());
 		Entity out = parseEntity(s);
@@ -75,7 +75,7 @@ public class EntityParserTests {
 	@Test
 	public void test_NPC_with_Behavior(){
 		Behavior behavior = new Monster(50);
-		NPC in = new NPC("Zombie","/res/zombie.png", behavior, 50, Direction.Down);
+		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
 
 
 		Scanner s = new Scanner(in.toString());
@@ -90,7 +90,7 @@ public class EntityParserTests {
 	public void test_Coord_single_digit(){
 		String line = "(0,1) ";
 		Behavior behavior = new Monster(50);
-		NPC in = new NPC("Zombie","/res/zombie.png", behavior, 50, Direction.Down);
+		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
 		line += in.toString();
 		Scanner s = new Scanner(line);
 
@@ -114,7 +114,7 @@ public class EntityParserTests {
 
 	@Test
 	public void test_Line(){
-		String line = "(0,2) Player \"Player\" \"/res/silly bopng\" 100.0 Down 0 Inventory Weapon \"Iron Sword\" \"/res/swordasdasd.png\" true 8.8 Armour \"Bronze Chestplate\" \"/res/chestplate one.png\" TORSO 5.6 Potion \"Health Potion\" \"/res/health potion.png\" 50 Key \"Church Key\" \"/res/basickey1.png\" 101";
+		String line = "(0,2) Player \"Player\" \"silly boi.png\" 100.0 Down 0 Inventory Weapon \"Iron Sword\" \"swordasdasd.png\" true 8.8 Armour \"Bronze Chestplate\" \"chestplate one.png\" TORSO 5.6 Potion \"Health Potion\" \"health potion.png\" 50 Key \"Church Key\" \"basickey1.png\" 101";
 
 		Scanner s = new Scanner(line);
 
