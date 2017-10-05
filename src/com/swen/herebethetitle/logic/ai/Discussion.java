@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.ai.Conversational;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 
@@ -79,7 +80,7 @@ public class Discussion implements Interaction {
     /**
      * The messages said by the NPC.
      */
-    protected Iterator<String> messages;
+    protected final Iterator<String> messages;
     
     /**
      * When we should send the next message.
@@ -88,11 +89,10 @@ public class Discussion implements Interaction {
     
     /**
      * Creates a new discussion.
-     * @param messages The messages the NPC says.
      */
-    public Discussion(NPC speaker, Iterable<String> messages) {
+    public Discussion(NPC speaker) {
         this.speaker = speaker;
-        this.messages = messages.iterator();
+        this.messages = ((Conversational) speaker.getBehavior().get()).iterator();
         this.nextMessageAt = Optional.empty();
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.ai.Conversational;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Tile;
@@ -85,8 +86,8 @@ public class NpcController {
      * @throws IllegalArgumentException if the npc has no dialog.
      */
     public void startDiscussion(NPC npc) {
-        if (npc.getDialog().isPresent())
-            startInteraction(new Discussion(npc, npc.getDialog().get()));
+        if (npc.getBehavior().isPresent() & npc.getBehavior().get() instanceof Conversational)
+            startInteraction(new Discussion(npc));
     }
     
     /**

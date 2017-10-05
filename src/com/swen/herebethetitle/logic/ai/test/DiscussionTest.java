@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
+import com.swen.herebethetitle.entity.ai.Conversational;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,11 @@ public class DiscussionTest {
     
     @Test
     public void canSayASingleMessage() {
-        Discussion discussion = new Discussion(speaker, Arrays.asList("hello"));
+    	Conversational conversation = new Conversational();
+	    conversation.addDialog("Hello!");
+    	speaker.setBehavior(conversation);
+
+    	Discussion discussion = new Discussion(speaker);
 
         try {
             discussion.sayNext(new Notifier());

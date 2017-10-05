@@ -14,7 +14,7 @@ import com.swen.herebethetitle.model.GameContext;
  */
 public final class Monster extends Behavior {
 
-	private double ATTACK_STRENGTH;
+	private final double ATTACK_STRENGTH;
 
 	/**
 	 * @param attackStrength How much damage the monster will deal, must be positive
@@ -58,7 +58,5 @@ public final class Monster extends Behavior {
 	public String toString() { return super.toString()+" "+ATTACK_STRENGTH; }
 
 	@Override
-	public boolean isAggressive() {
-		return true;
-	}
+	public boolean isAggressive() { return true; }
 }
