@@ -26,7 +26,7 @@ public class NPC extends Mob {
 	/**
 	 * Construct an NPC with a behavior
 	 */
-	public NPC(String name, String spritePath, Behavior behavior, int startingHealth, Direction direction){
+	public NPC(String name, String spritePath, Behavior behavior, double startingHealth, Direction direction){
 		super(name, spritePath, startingHealth, direction);
 		this.behavior = Optional.of(behavior);
 	}
