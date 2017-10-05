@@ -27,6 +27,19 @@ public class NPCTests {
 		assertEquals(a, n.getBehavior().get());
 	}
 
+	@Test
+	public void test_hasMeleeWeapon(){
+		GameContext context = new GameContext();
+
+		Behavior a = new Monster(1);
+
+		assertFalse(a.hasMeleeWeapon(context));
+
+		context.player.add(new Weapon("","",true,1));
+
+		assertTrue(a.hasMeleeWeapon(context));
+	}
+
 	/**
 	 * Asserts that Behavior can be set
 	 */
@@ -137,6 +150,17 @@ public class NPCTests {
 	}
 
 	/**
+	 * Assert that a Monster is aggressive
+	 */
+	@Test
+	public void test_Monster_isAggressive(){
+		Behavior a = new Monster(1);
+		NPC n = new NPC("", null, a,80, Direction.Down);
+
+		assertTrue(n.isAggressive());
+	}
+
+	/**
 	 * Asserts that the Monster can't have a negative attack strength value
 	 */
 	@Test
@@ -145,5 +169,63 @@ public class NPCTests {
 			new Monster(-50);
 			fail();
 		} catch(IllegalArgumentException e){}
+	}
+
+	/**
+	 * Asserts that adding and getting dialog functions correctly
+	 */
+	@Test
+	public void test_Friendly_dialog(){
+		Friendly friendly = new Friendly();
+
+		String message = "Hit there!";
+		friendly.addDialog(message);
+
+		NPC npc = new NPC("Villager", "", friendly, NPC.FULL_HEALTH, Direction.Down);
+
+		assertTrue(friendly.canTalkTo());
+		assertEquals(message, friendly.nextMessage());
+		assertFalse(friendly.canTalkTo());
+
+		String[] message2 = new String[]{"Hi1","Hi2","Hi3"};
+		friendly.addDialog(message2);
+		assertTrue(friendly.canTalkTo());
+
+		for(String t: message2){
+			assertEquals(t, friendly.nextMessage());
+		}
+		assertFalse(friendly.canTalkTo());
+	}
+
+	@Test
+	public void test_Friendly_ping(){
+		Friendly friendly = new Friendly();
+
+		Direction starting = Direction.Down;
+
+		NPC npc = new NPC("Villager", "", friendly, NPC.FULL_HEALTH, starting);
+
+
+		GameContext g = new GameContext();
+
+		npc.ping(g);
+
+		//Direction shouldn't change as the friendly has nothing to say
+		assertEquals(starting, npc.getDirection());
+
+		friendly.addDialog("Hello!");
+
+		npc.ping(g);
+
+		//Direction should now be different as the the friendly now has dialog
+		assertNotEquals(starting, npc.getDirection());
+	}
+
+	@Test
+	public void test_Friendly_isAggressive(){
+		Behavior a = new Friendly();
+		NPC n = new NPC("", null, a,80, Direction.Down);
+
+		assertFalse(n.isAggressive());
 	}
 }

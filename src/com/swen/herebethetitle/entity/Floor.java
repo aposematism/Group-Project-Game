@@ -14,7 +14,7 @@ public class Floor extends Entity {
 
     public Floor(String name, String spritePath){ super(name, spritePath); }
 
-	public Floor(String spritePath){ super("Floor", spritePath); }
+	public Floor(String spritePath){ this("Floor", spritePath); }
 
 	/**
 	 * Deliberately Blank, Floor can't be interacted with by design

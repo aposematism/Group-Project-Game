@@ -132,4 +132,25 @@ public class MiscTests {
 		Entity e = new Potion("Health",null,1);
 		assertEquals(e.getName(),"Health");
 	}
+
+	/**
+	 * Asserts Friendly has a string representation
+	 */
+	@Test
+	public void test_Friendly_toString(){
+		Friendly friendly = new Friendly();
+		friendly.addDialog("Hello!","Good weather today!","Bye!");
+		assertNotNull(friendly.toString());
+		System.out.println(friendly.toString());
+	}
+
+	/**
+	 * Asserts Friendly has a string representation
+	 */
+	@Test
+	public void test_Entity_spritePath(){
+		String path = "poison.png";
+		Potion p = new Potion("",path, 1);
+		assertEquals(path,p.getSpritePath());
+	}
 }
