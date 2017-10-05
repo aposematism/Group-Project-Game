@@ -2,11 +2,10 @@ package com.swen.herebethetitle.logic.ai;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Iterator;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.ai.Conversation;
+import com.swen.herebethetitle.entity.ai.Friendly;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 
@@ -78,9 +77,9 @@ public class Discussion implements Interaction {
     protected final NPC speaker;
 
     /**
-     * The messages said by the NPC.
+     * The friendly said by the NPC.
      */
-    protected final Iterator<String> messages;
+    protected final Friendly friendly;
     
     /**
      * When we should send the next message.
@@ -92,7 +91,7 @@ public class Discussion implements Interaction {
      */
     public Discussion(NPC speaker) {
         this.speaker = speaker;
-        this.messages = ((Conversation) speaker.getBehavior().get()).iterator();
+        this.friendly = ((Friendly) speaker.getBehavior().get());
         this.nextMessageAt = Optional.empty();
     }
 
@@ -122,12 +121,12 @@ public class Discussion implements Interaction {
      * @throws InteractionOver when the discussion has finished.
      */
     public void sayNext(Notifier notifier) throws InteractionOver {
-        if (!this.messages.hasNext()) {
+        if (!this.friendly.canTalkTo()) {
             notifier.notify(l -> l.onNPCDialogEnd(speaker));
             throw new InteractionOver();
         }
 
-        String messageText = this.messages.next();
+        String messageText = this.friendly.nextMessage();
         Message message = new Message(messageText);
         
         // Tell the listeners about the message.
