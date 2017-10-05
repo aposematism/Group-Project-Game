@@ -14,11 +14,6 @@ import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class EntityParserTests {
@@ -94,42 +89,6 @@ public class EntityParserTests {
 			System.out.println(coord.toString()+" "+entity.toString());
 		} catch(SyntaxError e){
 			fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void test_File(){
-		File f = new File("res/test entity parser.txt");
-		try {
-			Scanner wholeFile = new Scanner(f);
-
-			HashMap<Coord, Entity> coords = new HashMap<>();
-
-			while(wholeFile.hasNextLine()) {
-				Scanner line = new Scanner(wholeFile.nextLine());
-
-				try {
-					Coord co = parseCoordinate(line);
-
-					try {
-						Entity e = parseEntity(line);
-
-						coords.put(co, e);
-
-						for(Map.Entry<Coord, Entity> c: coords.entrySet()){
-							System.out.println(c.getKey()+" "+c.getValue());
-						}
-
-						line.close();
-					} catch(SyntaxError s2){
-						fail("Couldn't parse entity");
-					}
-				} catch(SyntaxError s){
-					fail("Couldn't parse coordinate");
-				}
-			}
-		} catch(FileNotFoundException fe){
-			fail("Couldn't find file");
 		}
 	}
 }
