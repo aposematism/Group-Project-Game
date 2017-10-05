@@ -13,7 +13,7 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public class Door implements Static.Behavior {
+public final class Door implements Static.Behavior {
 
 	/**
 	 * A door can either be locked, unlocked (but shut), and open
@@ -45,7 +45,7 @@ public class Door implements Static.Behavior {
                 notifier.notify(l -> l.onDoorUnlocked(door));
 		    } else {
 		        notifier.notify(l -> l.onDoorUnlockFailed(door,
-		                "you do not have the key for this door"));
+		                "You don't have the key for this door!"));
 		    }
 		    break;
 	    case UNLOCKED:

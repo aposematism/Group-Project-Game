@@ -4,13 +4,13 @@
 
 ## Developers
 
-| Name           | Handle      | Maintains                | Code Reviews | Tests | Git log
-|----------------|-------------|--------------------------|--------------|-------|--------
-| Dylan McKay    | @mckaydyla  | Pathfinding, Game logic  |              |       | `git log --author="Dylan McKay"`
-| Mark Metcalfe  | @metcalmark | Entity system            |              |       | `git log --author="Mark Metcalfe"`
-| Jacob Woods    | @mckiewjaco | GUI                      |              |       | `git log --author="J Woods"`
-| Jordan Milburn | @milburjord | Map parser               |              |       | `git log --author="Aposematism"`
-| Josh Weir      | @weirjosh   | Game Graphics            |              |       | `git log --author="Josh"`
+| Name           | Handle      | Maintains                | Code Reviews | Tests                 | Git log
+|----------------|-------------|--------------------------|--------------|-----------------------|--------
+| Dylan McKay    | @mckaydyla  | Pathfinding, Game logic  |              | Entity, Parsing       | `git log --author="Dylan McKay"`
+| Mark Metcalfe  | @metcalmark | Entity system            |              | Parser                | `git log --author="Mark Metcalfe"`
+| Jacob Woods    | @mckiewjaco | GUI                      |              | Graphics              | `git log --author="J Woods"`
+| Jordan Milburn | @milburjord | Map parser               |              | Entity, Pathfinding   | `git log --author="Aposematism"`
+| Josh Weir      | @weirjosh   | Game Graphics            |              | GUI, Game logic       | `git log --author="Josh"`
 
 ## Statistics and information
 

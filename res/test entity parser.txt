@@ -1,0 +1,5 @@
+(0,1) Static "Big Scary Door" "/src/brown door.png" Door 101 LOCKED
+(0,2) Player "Player" "/res/silly boi.png" 100.0 Down 0 Inventory Weapon "Iron Sword" "/res/swordasdasd.png" true 8.8 Armour "Bronze Chestplate" "/res/chestplate one.png" TORSO 5.6 Potion "Health Potion" "/res/health potion.png" 50 Key "Church Key" "/res/basickey1.png" 101 
+(2,2) Static "Large Rock" "/src/gigantic ass rock.png"
+(4,4) Floor "Grass" "/res/grass.png"
+(3,2) NPC "Zombie" "/res/zombie.png" 50.0 Down Monster 50.0

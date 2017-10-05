@@ -102,7 +102,7 @@ public class WorldGraphics extends Scene implements GameListener{
 			((GameCanvas)canvas).update();
 		}
 		/*now draw the HUD*/
-		hud.drawToCanvas();
+		//hud.drawToCanvas();
 	}
 	
 	/**
