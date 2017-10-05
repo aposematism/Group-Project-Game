@@ -17,7 +17,6 @@ import com.swen.herebethetitle.util.Direction;
  */
 public class EntityParser {
 
-	private final static Pattern ITEM = Pattern.compile("(Weapon|Armour|Potion|Key)");
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
 	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|Friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
@@ -27,7 +26,7 @@ public class EntityParser {
 	 *
 	 * @param s Scanner with the next token being an entity class name
 	 * @return Constructed entity instance
-     */
+	 */
 	public static Entity parseEntity(Scanner s) throws SyntaxError {
 		try {
 			String className = s.next();
@@ -50,7 +49,7 @@ public class EntityParser {
 
 	/**
 	 * Interprets a string formatted as "Text Here"
-     */
+	 */
 	public static String parseString(Scanner s) throws InputMismatchException {
 		String string = s.findInLine(STRING);
 		string = string.replaceAll("\"","");
@@ -60,6 +59,14 @@ public class EntityParser {
 	private static Item parseItem(Scanner s) throws InputMismatchException {
 		String className = s.next();
 		return parseItem(s, className);
+	}
+
+	private static Item parseInventoryItem(Scanner s) throws InputMismatchException {
+		s.next(); //Consume opening brace
+		String className = s.next();
+		Item i = parseItem(s, className);
+		s.next(); //Consume closing brace
+		return i;
 	}
 
 	private static Item parseItem(Scanner s, String className) throws InputMismatchException {
@@ -196,8 +203,8 @@ public class EntityParser {
 
 		s.next(); //Consume "Inventory" token
 
-		while(s.hasNext(ITEM))
-			player.add(parseItem(s));
+		while(s.hasNext("\\{"))
+			player.add(parseInventoryItem(s));
 
 		return player;
 	}

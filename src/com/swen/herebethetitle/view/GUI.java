@@ -197,7 +197,8 @@ public class GUI extends Application{
 		Button play = new Button("Play");
 		play.setPrefSize(100, 20);
 		play.setOnAction(e->{
-			//TODO initialize the game?
+			/*initialize the game*/
+			initializeNewGame();
 			worldGraphics = initGameGUI();
 			window.setScene(worldGraphics);
 			/*set the timer to regularly update*/
@@ -295,9 +296,14 @@ public class GUI extends Application{
 		logic = l;
 	}
 	
-	
+	/**
+	 * Runs the "main loop" - i.e., first calls GameLogic to update, then
+	 * calls the WorldGraphics to update.
+	 */
 	private void update() {
-		/*This should update the world canvas - everything handled there*/
+		/*update game context via logic*/
+		logic.tick();
+		/*redraw graphics*/
 		worldGraphics.update();
 	}
 	
@@ -313,5 +319,13 @@ public class GUI extends Application{
 	 */
 	public static WorldGraphics getWorldGraphics() {
 		return worldGraphics;
+	}
+	
+	/**
+	 * Creates a new game in the default world.
+	 */
+	public void initializeNewGame() {
+		game = new GameContext();
+		logic = new GameLogic(game);
 	}
 }
