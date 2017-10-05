@@ -13,15 +13,18 @@ import com.swen.herebethetitle.view.GUI;
 public class Main{
 	
 	public static void main(String[] args) throws Exception {
-		GameContext game = new GameContext();
-		GameLogic gameLogic = new GameLogic(game);
-		/*
-		 * the game and logic are both static in the GUI class.
-		 *this lets the application launch a new instance properly.
-		 */
-		GUI.setGame(game);
-		GUI.setLogic(gameLogic);
+//		GameContext game = new GameContext();
+//		GameLogic gameLogic = new GameLogic(game);
+//		/*
+//		 * the game and logic are both static in the GUI class.
+//		 *this lets the application launch a new instance properly.
+//		 */
+//		GUI.setGame(game);
+//		GUI.setLogic(gameLogic);
+//		GUI.launch(GUI.class);
+//		gameLogic.addGameListener(GUI.getWorldGraphics());
+		
+		/*launch new controller - it will set up everything*/
 		GUI.launch(GUI.class);
-		gameLogic.addGameListener(GUI.getWorldGraphics());
 	}
 }
