@@ -21,45 +21,47 @@ import javafx.util.Duration;
  * @author J Woods
  *
  */
-public class ExternalGraphicsTests extends Application{
+public class ExternalGraphicsTests extends TestWindow{
 
-	private Stage window;
-	private GameCanvas canvas;
-	int playerX =0;
-	int playerY=0;
+	//TODO These need to be re-written
 
-	@Test
-	@Ignore
-	public void test_initialization(){
-		launch();
-	}
-
+//	private Stage window;
+//	private GameCanvas canvas;
+//	int playerX =0;
+//	int playerY=0;
+//
 //	@Test
-	public void test_drawing() {
-		Group root = new Group();
-		canvas = new GameCanvas(TestStage.grasslandWithExtras(10, 20, 0, 0),1000,600);
-		root.getChildren().add(canvas);
-		window.setScene(new Scene(root, 1000, 600));
-		canvas.drawAll();
-		Timeline updateTimeline = new Timeline(new KeyFrame(
-		        Duration.millis(500.0d),
-		        ae -> {	canvas.switchRegions(TestStage.grasslandWithExtras(10, 20, ++playerX, ++playerY));
-		        		canvas.drawAll();}));
-		updateTimeline.setCycleCount(10);	//10 update calls
-		updateTimeline.play();
-	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		window = primaryStage;
-		window.show();
-		test_drawing();
-	}
-
-	public static class DummyEntity extends Entity{
-		public boolean isPenetrable(){ return false; }
-		public void interact(GameContext context, Notifier notifiier){}
-		public String toString(){return null;}
-		public DummyEntity(String fileName){super("",fileName);}
-	}
+//	@Ignore
+//	public void test_initialization(){
+//		launch();
+//	}
+//
+////	@Test
+//	public void test_drawing() {
+//		Group root = new Group();
+//		canvas = new GameCanvas(TestStage.grasslandWithExtras(10, 20, 0, 0),1000,600);
+//		root.getChildren().add(canvas);
+//		window.setScene(new Scene(root, 1000, 600));
+//		canvas.drawAll();
+//		Timeline updateTimeline = new Timeline(new KeyFrame(
+//		        Duration.millis(500.0d),
+//		        ae -> {	canvas.switchRegions(TestStage.grasslandWithExtras(10, 20, ++playerX, ++playerY));
+//		        		canvas.drawAll();}));
+//		updateTimeline.setCycleCount(10);	//10 update calls
+//		updateTimeline.play();
+//	}
+//
+//	@Override
+//	public void start(Stage primaryStage) throws Exception {
+//		window = primaryStage;
+//		window.show();
+//		test_drawing();
+//	}
+//
+//	public static class DummyEntity extends Entity{
+//		public boolean isPenetrable(){ return false; }
+//		public void interact(GameContext context, Notifier notifiier){}
+//		public String toString(){return null;}
+//		public DummyEntity(String fileName){super("",fileName);}
+//	}
 }

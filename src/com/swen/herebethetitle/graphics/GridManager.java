@@ -12,13 +12,6 @@ import com.swen.herebethetitle.util.GridLocation;
  */
 public class GridManager extends Canvas{
 
-    //The canvas location (top right corner) of the grid. TODO may not need this either
-    //private Point location;
-
-    //TODO May not need these
-//    private int rows;
-//    private int cols;
-
     private int cellSize;
 
     //The horizontal and vertical gaps of this grid
@@ -33,6 +26,7 @@ public class GridManager extends Canvas{
     /**The Grid manager that will be used to render the game world.
      *
      * @return
+     * @author weirjosh
      */
     public static GridManager createDefaultManager(){
         return new GridManager(0,0,defaultCellSize, 0,0);
@@ -43,6 +37,7 @@ public class GridManager extends Canvas{
      * @param cellSize size (width & height) of each cell in the grid
      * @param vGap vertical gap between each cell in the grid.
      * @param hGap horizontal gap between each cell in the grid.
+     * @author weirjosh
      */
     public GridManager(int x, int y, int cellSize, int vGap, int hGap){
         this.cellSize = cellSize;
@@ -56,6 +51,7 @@ public class GridManager extends Canvas{
      * Takes a GridLocation and returns real world coordinates
      * @param location The grid location
      * @return A pixel coordinate
+     * @author weirjosh
      */
     public Point getRealCoordinates(GridLocation location){
         int x = this.x +(location.x * cellSize) + location.x*hGap;
@@ -70,6 +66,7 @@ public class GridManager extends Canvas{
      * @param location The grid location.
      * @param offset The offset from the given location.
      * @return A pixel coordinate
+     * @author weirjosh
      */
 /*    public Point getRealCoordinates(GridLocation location, GridLocation offset){
 //        int x = location.x + offset.x * cellSize;
@@ -86,6 +83,7 @@ public class GridManager extends Canvas{
      * @param location The grid location.
      * @param offset The offset (pixel vector) from the given location.
      * @return A pixel coordinate
+     * @author weirjosh
      */
     public Point getRealCoordinates(GridLocation location, Point offset){
         Point p = new Point(getRealCoordinates(location));
@@ -99,6 +97,7 @@ public class GridManager extends Canvas{
      * @param p The real world coordinate.
      * @param offset The current Player location.
      * @return
+     * @author weirjosh
      */
     public GridLocation getGridLocation(Point p, Point offset){
         int col = ((p.x - offset.x - this.x) /(cellSize+hGap)) ;
@@ -110,37 +109,44 @@ public class GridManager extends Canvas{
 
     /**
      * @return Get the vertical gap of this GridManager.
+     * @author weirjosh
      */
     public int getvGap(){ return vGap; }
 
     /**
      * @return Get the horizontal gap of this GridManager.
+     * @author weirjosh
      */
     public int gethGap(){return hGap;}
 
     /**
      * set the vertical gap
+     * @author weirjosh
      */
     public void setvGap(int newVGap){vGap = newVGap;}
 
     /**
      * set the horizontal gap
+     * @author weirjosh
      */
     public void sethGap(int newHGap){hGap = newHGap;}
 
     /**
      * @return get the cell size of this GridManager
+     * @author weirjosh
      */
     public int getCellSize(){return cellSize;}
 
     /**
      * @param size The new cell size of this grid manager.
+     * @author weirjosh
      */
     public void setCellSize(int size){cellSize = size;}
 
     /**
      * @param x x coordinate of this GridManager
      * @param y y coordinate of this GridManager
+     * @author weirjosh
      */
     public void setOrigin(int x, int y){
         this.x=x;
@@ -148,6 +154,7 @@ public class GridManager extends Canvas{
     }
 
     /**@return The origin of the GridManager
+     * @author weirjosh
      */
     public Point getOrigin(){
         return new Point(this.x, this.y);
