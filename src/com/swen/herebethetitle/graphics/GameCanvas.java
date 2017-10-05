@@ -40,6 +40,7 @@ public class GameCanvas extends Canvas {
         super(width, height);
         world = new WorldRenderer();
         hud = new HUD(this);
+        this.context = context;
     }
 
     /**
