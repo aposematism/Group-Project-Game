@@ -1,5 +1,7 @@
-(0,1) Static "Big Scary Door" "/src/brown door.png" Door 101 LOCKED
-(0,2) Player "Player" "/res/silly boi.png" 100.0 Down 0 Inventory Weapon "Iron Sword" "/res/swordasdasd.png" true 8.8 Armour "Bronze Chestplate" "/res/chestplate one.png" TORSO 5.6 Potion "Health Potion" "/res/health potion.png" 50 Key "Church Key" "/res/basickey1.png" 101 
-(2,2) Static "Large Rock" "/src/gigantic ass rock.png"
-(4,4) Floor "Grass" "/res/grass.png"
-(3,2) NPC "Zombie" "/res/zombie.png" 50.0 Down Monster 50.0
+(0,2) Player "Player" "silly boi.png" 100.0 Down 0 Inventory
+(4,2) Player "Player" "silly bo.png" 100.0 Down 0 Inventory { Weapon "Iron Sword" "swordasdasd.png" true 8.8 } { Armour "Bronze Chestplate" "chestplate one.png" TORSO 5.6 } { Potion "Health Potion" "health potion.png" 50 } { Key "Church Key" "basickey1.png" 101 }
+(0,5) NPC "Fred" "man1.png" 50.0 Down Friendly { "Great weather today!" "Did you hear about the beast?" "It's called THE BEAST" }
+(5,2) Static "Large Rock" "gigantic ass rock.png"
+(11,6) Player "Player" "silly boi.png" 100.0 Down 0 Inventory
+(9,2) NPC "Zombie" "zombie.png" 50.0 Down Monster 50.0
+(1,4) Floor "Grass" "grass.png"
