@@ -86,9 +86,7 @@ public abstract class Mob extends Entity {
 	/**
 	 * Checks if the mob has any health left.
 	 */
-	public boolean isDead() {
-	    return this.health <= 0.0;
-	}
+	public boolean isDead() { return health == NO_HEALTH; }
 
 	@Override
 	public String toString() {
