@@ -110,24 +110,23 @@ public class Inventory implements Iterable<Item> {
 		StringBuilder s = new StringBuilder();
 		s.append(getClass().getSimpleName());
 
+		s.append(" ");
+
 		weapon.ifPresent(weapon->{
-			s.append(" { ");
 			s.append(weapon.toString());
-			s.append(" }");
+			s.append(" ");
 		});
 
 		for(Armour a: armour){
 			if(a!=null){
-				s.append(" { ");
 				s.append(a.toString());
-				s.append(" }");
+				s.append(" ");
 			}
 		}
 
 		for(Item i: this){
-			s.append(" { ");
 			s.append(i.toString());
-			s.append(" }");
+			s.append(" ");
 		}
 
 		return s.toString();
