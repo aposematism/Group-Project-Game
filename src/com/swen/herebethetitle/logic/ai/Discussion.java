@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.ai.Conversational;
+import com.swen.herebethetitle.entity.ai.Conversation;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 
@@ -92,7 +92,7 @@ public class Discussion implements Interaction {
      */
     public Discussion(NPC speaker) {
         this.speaker = speaker;
-        this.messages = ((Conversational) speaker.getBehavior().get()).iterator();
+        this.messages = ((Conversation) speaker.getBehavior().get()).iterator();
         this.nextMessageAt = Optional.empty();
     }
 

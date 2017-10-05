@@ -2,9 +2,7 @@ package com.swen.herebethetitle.logic.ai.test;
 
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
-
-import com.swen.herebethetitle.entity.ai.Conversational;
+import com.swen.herebethetitle.entity.ai.Conversation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +20,7 @@ public class DiscussionTest {
     
     @Test
     public void canSayASingleMessage() {
-    	Conversational conversation = new Conversational();
+    	Conversation conversation = new Conversation();
 	    conversation.addDialog("Hello!");
     	speaker.setBehavior(conversation);
 

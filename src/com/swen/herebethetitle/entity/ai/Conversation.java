@@ -9,11 +9,11 @@ import java.util.*;
 /**
  * Created by Mark on 5/10/2017.
  */
-public final class Conversational extends Behavior implements Iterable<String> {
+public final class Conversation extends Behavior implements Iterable<String> {
 
 	private Queue<String> dialog;
 
-	public Conversational() { this.dialog = new PriorityQueue<>(); }
+	public Conversation() { this.dialog = new PriorityQueue<>(); }
 
 	public void addDialog(String... text) { dialog.addAll(Arrays.asList(text)); }
 
