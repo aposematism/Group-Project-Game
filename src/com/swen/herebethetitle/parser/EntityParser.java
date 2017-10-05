@@ -19,7 +19,7 @@ public class EntityParser {
 
 	private final static Pattern ITEM = Pattern.compile("(Weapon|Armour|Potion|Key)");
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
-	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster)");
+	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|Friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
 
 	/**
@@ -28,32 +28,41 @@ public class EntityParser {
 	 * @param s Scanner with the next token being an entity class name
 	 * @return Constructed entity instance
      */
-	public static Entity parseEntity(Scanner s){
-		String className = s.next();
-		switch(className){
-			case "Static": return parseStatic(s);
-			case "Player": return parsePlayer(s);
-			case "NPC":    return parseNPC(s);
-			case "Floor":  return parseFloor(s);
-			default:       return parseItem(s, className);
+	public static Entity parseEntity(Scanner s) throws SyntaxError {
+		try {
+			String className = s.next();
+			switch (className) {
+				case "Static":
+					return parseStatic(s);
+				case "Player":
+					return parsePlayer(s);
+				case "NPC":
+					return parseNPC(s);
+				case "Floor":
+					return parseFloor(s);
+				default:
+					return parseItem(s, className);
+			}
+		} catch(InputMismatchException e){
+			throw new SyntaxError(e.getMessage());
 		}
 	}
 
 	/**
 	 * Interprets a string formatted as "Text Here"
      */
-	public static String parseString(Scanner s){
+	public static String parseString(Scanner s) throws InputMismatchException {
 		String string = s.findInLine(STRING);
 		string = string.replaceAll("\"","");
 		return string;
 	}
 
-	private static Item parseItem(Scanner s){
+	private static Item parseItem(Scanner s) throws InputMismatchException {
 		String className = s.next();
 		return parseItem(s, className);
 	}
 
-	private static Item parseItem(Scanner s, String className){
+	private static Item parseItem(Scanner s, String className) throws InputMismatchException {
 		switch (className){
 			case "Weapon": return parseWeapon(s);
 			case "Armour": return parseArmour(s);
@@ -63,7 +72,7 @@ public class EntityParser {
 		}
 	}
 
-	private static Weapon parseWeapon(Scanner s){
+	private static Weapon parseWeapon(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		boolean isMelee = s.nextBoolean();
@@ -72,7 +81,7 @@ public class EntityParser {
 		return new Weapon(name, sprite, isMelee, strength);
 	}
 
-	private static Armour parseArmour(Scanner s){
+	private static Armour parseArmour(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		Armour.TYPE type = Armour.TYPE.valueOf(s.next());
@@ -81,7 +90,7 @@ public class EntityParser {
 		return new Armour(name, sprite, type, strength);
 	}
 
-	private static Key parseKey(Scanner s){
+	private static Key parseKey(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		int key = s.nextInt();
@@ -89,7 +98,7 @@ public class EntityParser {
 		return new Key(name, sprite, key);
 	}
 
-	private static Potion parsePotion(Scanner s){
+	private static Potion parsePotion(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		int value = s.nextInt();
@@ -97,7 +106,7 @@ public class EntityParser {
 		return new Potion(name, sprite, value);
 	}
 
-	private static Floor parseFloor(Scanner s){
+	private static Floor parseFloor(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 
@@ -106,7 +115,7 @@ public class EntityParser {
 		return floor;
 	}
 
-	private static Static parseStatic(Scanner s){
+	private static Static parseStatic(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 
@@ -120,20 +129,20 @@ public class EntityParser {
 		return aStatic;
 	}
 
-	private static Static.Behavior parseStaticBehavior(Scanner s){
+	private static Static.Behavior parseStaticBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()) { //Check Class Token
 			case "Door": return parseDoor(s);
 			default:     throw new InputMismatchException("Couldn't Parse Behavior");
 		}
 	}
 
-	private static Door parseDoor(Scanner s){
+	private static Door parseDoor(Scanner s) throws InputMismatchException {
 		int key = s.nextInt();
 		Door.STATE state = Door.STATE.valueOf(s.next());
 		return new Door(key, state);
 	}
 
-	private static NPC parseNPC(Scanner s){
+	private static NPC parseNPC(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		double health = s.nextDouble();
@@ -149,20 +158,34 @@ public class EntityParser {
 		return npc;
 	}
 
-	private static Behavior parseNPCBehavior(Scanner s){
+	private static Behavior parseNPCBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()){ //Check Class Token
-			case "Monster": return parseMonster(s);
-			default:        throw new InputMismatchException("Couldn't Parse Behavior");
+			case "Monster":  return parseMonster(s);
+			case "Friendly": return parseFriendly(s);
+			default:         throw new InputMismatchException();
 		}
 	}
 
-	private static Monster parseMonster(Scanner s){
+	private static Monster parseMonster(Scanner s) throws InputMismatchException {
 		double strength = s.nextDouble();
 
 		return new Monster(strength);
 	}
 
-	private static Player parsePlayer(Scanner s){
+	private static Friendly parseFriendly(Scanner s) throws InputMismatchException {
+		s.next(); //Consume opening brace
+
+		Friendly f = new Friendly();
+
+		while(!s.hasNext("}"))
+			f.addDialog(parseString(s));
+
+		s.next(); //Consume closing brace
+
+		return f;
+	}
+
+	private static Player parsePlayer(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		double health = s.nextDouble();

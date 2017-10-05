@@ -25,16 +25,20 @@ public final class Coord {
      * @param s A scanner with a (x,y) token next
      * @return an instance of Coord with the intepreted x and y values
      */
-    public static Coord parseCoordinate(Scanner s){
-        String coordBraces = s.findInLine(COORDS);
+    public static Coord parseCoordinate(Scanner s) throws SyntaxError {
+    	try {
+		    String coordBraces = s.findInLine(COORDS);
 
-        coordBraces = coordBraces.replaceAll("\\(", "");
-        coordBraces = coordBraces.replaceAll("\\)", "");
-        coordBraces = coordBraces.replaceAll(",", " ");
+		    coordBraces = coordBraces.replaceAll("\\(", "");
+		    coordBraces = coordBraces.replaceAll("\\)", "");
+		    coordBraces = coordBraces.replaceAll(",", " ");
 
-        Scanner coord = new Scanner(coordBraces);
-        return new Coord(coord.nextInt(), coord.nextInt());
-    }
+		    Scanner coord = new Scanner(coordBraces);
+		    return new Coord(coord.nextInt(), coord.nextInt());
+	    } catch(Exception e) {
+		    throw new SyntaxError();
+	    }
+	}
 
     @Override
     public String toString() { return "("+x+","+y+")";}

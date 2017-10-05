@@ -10,23 +10,31 @@ import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.parser.Coord;
 import com.swen.herebethetitle.parser.EntityParser;
+import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
 import java.util.Scanner;
 
 public class EntityParserTests {
+
+	public void parse(Entity in){
+		try {
+			Scanner s = new Scanner(in.toString());
+
+			Entity out = parseEntity(s);
+
+			assertEquals(in.toString(), out.toString());
+
+			System.out.println(in.toString());
+		} catch(SyntaxError error){
+			fail("Syntax Error");
+		}
+	}
+
 	@Test
 	public void test_Player_empty_inventory(){
-		Player in = new Player("silly bopng", Direction.Down);
-
-
-		Scanner s = new Scanner(in.toString());
-		Entity out = parseEntity(s);
-
-		assertEquals(in.toString(), out.toString());
-
-		System.out.println(in.toString());
+		parse(new Player("silly bopng", Direction.Down));
 	}
 
 	@Test
@@ -38,78 +46,35 @@ public class EntityParserTests {
 		in.add(new Weapon("Iron Sword", "swordasdasd.png", true, 8.8));
 		in.add(new Key("Church Key", "basickey1.png", 101));
 
-
-		Scanner s = new Scanner(in.toString());
-		Entity out = parseEntity(s);
-
-		assertEquals(in.toString(), out.toString());
-
-		System.out.println(in.toString());
+		parse(in);
 	}
 
 	@Test
 	public void test_Static_no_Behavior(){
-		Static in = new Static("Large Rock","gigantic ass rock.png");
-
-
-		Scanner s = new Scanner(in.toString());
-		Entity out = parseEntity(s);
-
-		assertEquals(in.toString(), out.toString());
-
-		System.out.println(in.toString());
+		parse(new Static("Large Rock","gigantic ass rock.png"));
 	}
 
 	@Test
 	public void test_Floor(){
-		Floor in = new Floor("Grass","grass.png");
-
-		Scanner s = new Scanner(in.toString());
-		Entity out = parseEntity(s);
-
-		assertEquals(in.toString(), out.toString());
-
-		System.out.println(in.toString());
+		parse(new Floor("Grass","grass.png"));
 	}
 
 	@Test
-	public void test_NPC_with_Behavior(){
+	public void test_Monster(){
 		Behavior behavior = new Monster(50);
 		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
-
-
-		Scanner s = new Scanner(in.toString());
-		Entity out = parseEntity(s);
-
-		assertEquals(in.toString(), out.toString());
-
-		System.out.println(in.toString());
+		parse(in);
 	}
 
 	@Test
-	public void test_Coord_single_digit(){
-		String line = "(0,1) ";
-		Behavior behavior = new Monster(50);
-		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
-		line += in.toString();
-		Scanner s = new Scanner(line);
+	public void test_Friendly_Dialog(){
+		Friendly friendly = new Friendly();
 
-		Coord c = parseCoordinate(s);
+		friendly.addDialog("Great weather today!", "Did you hear about the beast?", "It's called THE BEAST");
 
-		System.out.println(c.toString());
-	}
+		NPC in = new NPC("Fred","man1.png", friendly, 50, Direction.Down);
 
-	@Test
-	public void test_Coord_multi_digit(){
-		String line = "(04,11) ";
-		Behavior behavior = new Monster(50);
-		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
-		line += in.toString();
-		Scanner s = new Scanner(line);
-
-		Coord c = parseCoordinate(s);
-
-		System.out.println(c.toString());
+		parse(in);
 	}
 
 	@Test
@@ -118,9 +83,12 @@ public class EntityParserTests {
 
 		Scanner s = new Scanner(line);
 
-		Coord coord = parseCoordinate(s);
-		Entity entity = parseEntity(s);
-
-		System.out.println(coord.toString()+" "+entity.toString());
+		try {
+			Coord coord = parseCoordinate(s);
+			Entity entity = parseEntity(s);
+			System.out.println(coord.toString()+" "+entity.toString());
+		} catch(SyntaxError e){
+			fail(e.getMessage());
+		}
 	}
 }
