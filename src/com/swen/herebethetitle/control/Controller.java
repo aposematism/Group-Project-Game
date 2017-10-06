@@ -354,6 +354,11 @@ public class Controller extends Application implements GameListener{
 			}
 		}
 		
+		/*If paused, don't handle events*/
+		if(!isPlaying) {
+			return;
+		}
+		
 		/*movement - may want to implement pathfinding mouse-based movement instead*/
 		if(e.getCode()==KeyCode.W) {
 			//move north
