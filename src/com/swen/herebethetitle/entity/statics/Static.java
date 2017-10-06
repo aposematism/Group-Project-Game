@@ -41,7 +41,7 @@ public class Static extends Entity {
 	/**
 	 * Strategy Pattern of what it actually does when interacted with.
 	 */
-	interface Behavior {
+	public interface Behavior {
 		void interact(GameContext context, Static aStatic, Notifier notifier);
 		boolean isPenetrable();
 		String toString();

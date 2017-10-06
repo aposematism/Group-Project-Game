@@ -22,19 +22,13 @@ public class NPC extends Mob {
 	 * Optional as the NPC doesn't necessarily have to do anything.
 	 */
 	private Optional<Behavior> behavior;
-	
-	/**
-	 * Dialog that the NPC can speak.
-	 */
-	private Optional<List<String>> dialog;
 
 	/**
 	 * Construct an NPC with a behavior
 	 */
-	public NPC(String name, String spritePath, Behavior behavior, int startingHealth, Direction direction){
+	public NPC(String name, String spritePath, Behavior behavior, double startingHealth, Direction direction){
 		super(name, spritePath, startingHealth, direction);
 		this.behavior = Optional.of(behavior);
-		this.dialog = Optional.empty();
 	}
 
 	/**
@@ -77,20 +71,6 @@ public class NPC extends Mob {
 	public void setBehavior(Behavior behavior) { this.behavior = Optional.of(behavior); }
 
 	public Optional<Behavior> getBehavior() { return this.behavior; }
-	
-	/**
-	 * Gets the messages spoken by the NPC.
-	 */
-	public Optional<List<String>> getDialog() {
-	    return this.dialog;
-	}
-	
-	/**
-	 * Sets the messages spoken by the NPC.
-	 */
-	public void setDialog(List<String> dialog) {
-	    this.dialog = Optional.of(dialog);
-	}
 
 	@Override
 	public String toString() {

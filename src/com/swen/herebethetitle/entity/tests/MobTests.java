@@ -112,4 +112,13 @@ public class MobTests {
 			assertEquals(80, m.getHealth(), 0);
 		}
 	}
+
+	@Test
+	public void test_isDead(){
+		Mob m = new NPC("","",Mob.FULL_HEALTH,Direction.Right);
+		m.damage(Mob.FULL_HEALTH/2);
+		assertFalse(m.isDead());
+		m.damage(Mob.FULL_HEALTH);
+		assertTrue(m.isDead());
+	}
 }

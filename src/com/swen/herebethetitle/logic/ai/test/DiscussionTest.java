@@ -2,8 +2,7 @@ package com.swen.herebethetitle.logic.ai.test;
 
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
-
+import com.swen.herebethetitle.entity.ai.Friendly;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +20,11 @@ public class DiscussionTest {
     
     @Test
     public void canSayASingleMessage() {
-        Discussion discussion = new Discussion(speaker, Arrays.asList("hello"));
+    	Friendly friendly = new Friendly();
+	    friendly.addDialog("Hello!");
+    	speaker.setBehavior(friendly);
+
+    	Discussion discussion = new Discussion(speaker);
 
         try {
             discussion.sayNext(new Notifier());

@@ -1,4 +1,0 @@
-helmet 3 3
-boots 3 4
-torso 2 4
-legs 2 3

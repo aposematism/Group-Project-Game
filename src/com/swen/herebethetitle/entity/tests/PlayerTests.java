@@ -90,7 +90,7 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_wallet(){
-		Player p = new Player(null, 100, 100, Direction.Down);
+		Player p = new Player("", null, 100, 100, Direction.Down);
 		assertEquals(100, p.getWallet());
 		p.removeFunds(50);
 		assertEquals(50, p.getWallet());

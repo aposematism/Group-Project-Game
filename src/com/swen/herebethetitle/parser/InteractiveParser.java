@@ -289,12 +289,13 @@ public class InteractiveParser {
 	 * @author - Mark Metcalfe
 	 * */
 	public Player parsePlayer(Scanner s){
+		String name = parseString(s);
 		String sprite = parseString(s);
 		double health = Double.parseDouble(s.next());
 		Direction direction = Direction.valueOf(s.next());
 		int wallet = Integer.parseInt(s.next());
 
-		Player player = new Player(sprite, health, wallet, direction);
+		Player player = new Player(name, sprite, health, wallet, direction);
 
 		s.next(); //Consume "Inventory" token
 

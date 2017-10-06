@@ -1,6 +1,14 @@
 package com.swen.herebethetitle.view;
 
+import java.util.Optional;
+
+import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.items.Item;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
+import com.swen.herebethetitle.graphics.GameCanvas;
+import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 
@@ -13,6 +21,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -36,12 +46,15 @@ import javafx.util.Duration;
  * -Make the menu pretty somehow
  * -audio
  * 
+ * Immediately:
+ * -input event handling implementation
+ * 
  */
-public class GUI extends Application{
+public class GUI extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 34;
+	public static final int FRAMES_PER_SECOND = 30;
 	
 	
 	//window field
@@ -56,13 +69,14 @@ public class GUI extends Application{
 	private GridPane quitMenu;
 	
 	//main game UI fields
-	private static WorldGraphics worldGraphics;
+	private Scene worldGraphics;
 	private Timeline updateTimeline;
 	private Group gameGUIRoot;
+	private GameCanvas gameCanvas;
 	
 	//Game fields
-	private static GameContext game;
-	private static GameLogic logic;
+	private GameContext game;
+	private GameLogic logic;
 	
 	//Testing mode field
 	public static boolean isTesting;
@@ -197,15 +211,17 @@ public class GUI extends Application{
 		Button play = new Button("Play");
 		play.setPrefSize(100, 20);
 		play.setOnAction(e->{
-			//TODO initialize the game?
+			/*initialize the game*/
+			initializeNewGame();
 			worldGraphics = initGameGUI();
 			window.setScene(worldGraphics);
 			/*set the timer to regularly update*/
 			updateTimeline = new Timeline(new KeyFrame(
-			        Duration.millis(FRAMES_PER_SECOND),
+			        Duration.millis(6000.0/FRAMES_PER_SECOND),
 			        ae -> update()));
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
 			if(!isTesting)updateTimeline.play();
+			gameGUIRoot.requestFocus();
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -280,38 +296,154 @@ public class GUI extends Application{
 	
 	/**
 	 * Initializes the game GUI.
+	 * @return A scene holding the GameCanvas and root with event handling.
 	 */
-	private WorldGraphics initGameGUI() {
+	private Scene initGameGUI() {
 		gameGUIRoot = new Group();
-		WorldGraphics w = new WorldGraphics(game, gameGUIRoot, isTesting);
+		/*set up event handling*/
+		gameGUIRoot.setOnKeyPressed(e->handleKeyPress(e));
+		gameGUIRoot.setOnMousePressed(e->handleMousePress(e));
+		gameCanvas = new GameCanvas(game, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		gameGUIRoot.getChildren().add(gameCanvas);
 		//create new scene
-		return w;
-	}
-	
-	public static void setGame(GameContext g) {
-		game = g;
-	}	
-	public static void setLogic(GameLogic l) {
-		logic = l;
+		Scene s = new Scene(gameGUIRoot);
+		return s;
 	}
 	
 	
+	/**
+	 * Handles a key press.
+	 * @param e the key event
+	 */
+private void handleKeyPress(KeyEvent e) {
+		//TODO remove test code; implement final handling
+		System.out.println("Key pressed: " + e.getText());
+	}
+
+	/**
+	 * Handles a mouse press.
+	 * @param e the mouse event
+	 */
+private void handleMousePress(MouseEvent e) {
+		// TODO remove test code; implement final handling
+		System.out.println("Key pressed: " + e.getX() + "," + e.getY());
+	}
+
+	/**
+	 * Runs the "main loop" - i.e., first calls GameLogic to update, then
+	 * calls the WorldGraphics to update.
+	 */
 	private void update() {
-		/*This should update the world canvas - everything handled there*/
-		worldGraphics.update();
+		/*update game context via logic*/
+		logic.tick();
+		/*redraw graphics*/
+		gameCanvas.update();
 	}
 	
-	/**
-	 * gives a preconstructed WorldGraphics and HUD for testing.
-	 */
-	public void setHUD(WorldGraphics g) {
-		worldGraphics = g;
-	}
 	
 	/**
-	 * Gets the static GUI worldgraphics.
+	 * Creates a new game in the default world.
 	 */
-	public static WorldGraphics getWorldGraphics() {
-		return worldGraphics;
+	public void initializeNewGame() {
+		game = new GameContext();
+		logic = new GameLogic(game);
+	}
+
+
+	@Override
+	public void onPlayerMoved(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerAttacked(Player player, NPC attacker) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerPickup(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onPlayerDrop(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCAttacked(NPC victim) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCKilled(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCDialogBegin(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCDialogMessage(NPC npc, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onNPCDialogEnd(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorUnlocked(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorUnlockFailed(Static door, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorOpened(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDoorClosed(Static door) {
+		// TODO Auto-generated method stub
+		
 	}
 }
