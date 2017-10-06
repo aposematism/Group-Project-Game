@@ -53,7 +53,7 @@ public class ReverseParser {
 		}
 	}
 	
-	public void parseRegion(Region r) {
+	public static void parseRegion(Region r) {
 		interactives = new ArrayList<Entity>();
 		pullInteractives(r);
 		String fileName = r.getRegionName()+"currentstate.text";
@@ -90,9 +90,10 @@ public class ReverseParser {
 		}
 	}
 	
-	public static boolean writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
+	public static File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
+		File outputFile = new File(fileName);
 		try {
-			File outputFile = new File(fileName);
+			
 			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
 			for(String s : output) {
 				pw.write(s);
@@ -103,24 +104,21 @@ public class ReverseParser {
 		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
-			return false;
 		}
 		catch(UnsupportedEncodingException q) {
 			q.printStackTrace();
-			return false;
 		}
 		catch(IOException z) {
 			z.printStackTrace();
-			return false;
 		}
-		return true;
+		return outputFile;
+	}
+	
+	public static ArrayList<Entity> getInteractiveList() {
+		return interactives;
 	}
 	
 	public static ArrayList<String> getOutputList(){
 		return output;
-	}
-
-	public static ArrayList<Entity> getInteractiveList() {
-		return interactives;
 	}
 }

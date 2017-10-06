@@ -309,4 +309,19 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public int getYSize() {
     	return cells[0].length;
     }
+    
+    public int getInteractiveTotal() {
+    	int total = 0;
+    	for(Entity e : this.getPlayerTile().getInteractives()) {
+    		if(e instanceof Player) {
+    			total = ((Player) e).inventory().getInventorySize();
+    		}
+    	}
+    	for(int i = 0; i < width; i++) {
+    		for(int j = 0; j < height; j++) {
+    			total = total + cells[i][j].getInteractiveSize();
+    		}
+    	}
+    	return total;
+    }
 }

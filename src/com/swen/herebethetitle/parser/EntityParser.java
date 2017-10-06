@@ -15,6 +15,7 @@ import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.model.Region;
+import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -58,11 +59,12 @@ public class EntityParser {
 		}
 	}
 	
-	public Region parseEntitytoRegion(Region reg) {
+	public static Region parseEntitytoRegion(Region reg) {
 		for(int i = 0; i < entityList.size(); i++) {
-			coordinates.get(i).convert();
+			Tile t = reg.get(coordinates.get(i).convert());
+			t.add(entityList.get(i));
 		}
-		return null;
+		return reg;
 	}
 	
 	/**

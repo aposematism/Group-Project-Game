@@ -8,9 +8,11 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.parser.Coord;
 import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.SyntaxError;
+import com.swen.herebethetitle.parser.TerrainParser;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
@@ -23,6 +25,28 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EntityParserTests {
+	
+	private boolean compareFiles(File f1, File f2) {
+		try {
+			BufferedReader in1 = new BufferedReader(new FileReader(f1));
+			BufferedReader in2 = new BufferedReader(new FileReader(f2));
+			String line1 = in1.readLine();
+			String line2 = in2.readLine();
+			while(line1 != null) {
+				if(!line1.equals(line2)) {
+					return false;
+				}
+				line1 = in1.readLine();
+				line2 = in2.readLine();
+			}
+		}catch(FileNotFoundException e) {
+			fail("File not Found!");
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 	
 	/**
 	 * Takes a generated item and compares it to itself. 
@@ -247,8 +271,19 @@ public class EntityParserTests {
 		}
 	}
 	
+	/** 
+	 * Tests the integration of Terrain Parser with this class.
+	 * */
 	@Test
-	public void test_line() {
-		
+	public void test_integration() throws IOException, SyntaxError {
+		TerrainParser.init_scanner(new File("res/test_terrain_file.txt"));
+		TerrainParser.parseStringArray();
+		TerrainParser.connectNetworks(TerrainParser.getRA());
+		Region r = new Region(TerrainParser.getRA());
+		File inputFile = new File("res/test_entity_parser.txt");
+		EntityParser.interactive_scanner(inputFile);
+		EntityParser.parseEntitytoRegion(r);
+		System.out.println("total items is " + r.getInteractiveTotal());
+		assertTrue(r.getInteractiveTotal() == 10);
 	}
 }
