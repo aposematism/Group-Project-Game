@@ -39,6 +39,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      */
     private Tile[][] cells;
     
+    /** 
+     * 
+     * Region Name. "Church
+     * 
+     * */
+    private String regionName;
+    
     /**
      * Creates a new basic grid.
      * @param width
@@ -276,5 +283,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
         }
         
         return builder.toString();
+    }
+    
+    public void setRegionName(String rn) {
+    	this.regionName = rn;
+    }
+    
+    public String getRegionName() {
+    	return regionName;
     }
 }
