@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.view;
+package com.swen.herebethetitle.control;
 
 import java.util.Optional;
 
@@ -42,15 +42,14 @@ import javafx.util.Duration;
 /*
  * TODO
  * 
- * -Add in subordinate menu functionality for new game, load game, and settings
- * -Make the menu pretty somehow
- * -audio
+ * -Add in subordinate menu functionality for load game & settings
+ * -audio functionality
  * 
  * Immediately:
  * -input event handling implementation
  * 
  */
-public class GUI extends Application implements GameListener{
+public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
@@ -85,7 +84,7 @@ public class GUI extends Application implements GameListener{
 	/**
 	 * Default constructor, needed for use with the Main class.
 	 */
-	public GUI() {
+	public Controller() {
 		super();
 	}
 	
@@ -326,7 +325,9 @@ private void handleKeyPress(KeyEvent e) {
 	 */
 private void handleMousePress(MouseEvent e) {
 		// TODO remove test code; implement final handling
-		System.out.println("Key pressed: " + e.getX() + "," + e.getY());
+		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
+		/*get the cell the player clicked on*/
+		gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
 	}
 
 	/**

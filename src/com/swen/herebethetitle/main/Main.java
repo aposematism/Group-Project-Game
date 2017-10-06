@@ -1,9 +1,9 @@
 package com.swen.herebethetitle.main;
 
+import com.swen.herebethetitle.control.Controller;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.view.GUI;
 
 /**
  * Main class for the 2D RPG.
@@ -25,6 +25,6 @@ public class Main{
 //		gameLogic.addGameListener(GUI.getWorldGraphics());
 		
 		/*launch new controller - it will set up everything*/
-		GUI.launch(GUI.class);
+		Controller.launch(Controller.class);
 	}
 }

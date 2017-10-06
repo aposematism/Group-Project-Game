@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.ai.Friendly;
+import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 
@@ -79,7 +79,7 @@ public class Discussion implements Interaction {
     /**
      * The friendly said by the NPC.
      */
-    protected final Friendly friendly;
+    protected final FriendlyStrategy friendly;
     
     /**
      * When we should send the next message.
@@ -91,7 +91,7 @@ public class Discussion implements Interaction {
      */
     public Discussion(NPC speaker) {
         this.speaker = speaker;
-        this.friendly = ((Friendly) speaker.getBehavior().get());
+        this.friendly = ((FriendlyStrategy) speaker.getBehavior().get());
         this.nextMessageAt = Optional.empty();
     }
 

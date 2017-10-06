@@ -1,8 +1,8 @@
 package com.swen.herebethetitle.parser.parsertests;
 
 import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.ai.Behavior;
-import com.swen.herebethetitle.entity.ai.Monster;
+import com.swen.herebethetitle.entity.ai.NPCBehavior;
+import com.swen.herebethetitle.entity.ai.MonsterStrategy;
 import com.swen.herebethetitle.parser.Coord;
 import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.util.Direction;
@@ -20,7 +20,7 @@ public class CoordTests {
 	@Test
 	public void test_Coord_single_digit(){
 		String line = "(0,1) ";
-		Behavior behavior = new Monster(50);
+		NPCBehavior behavior = new MonsterStrategy(50);
 		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
 		line += in.toString();
 		Scanner s = new Scanner(line);
@@ -36,7 +36,7 @@ public class CoordTests {
 	@Test
 	public void test_Coord_multi_digit(){
 		String line = "(04,11) ";
-		Behavior behavior = new Monster(50);
+		NPCBehavior behavior = new MonsterStrategy(50);
 		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
 		line += in.toString();
 		Scanner s = new Scanner(line);

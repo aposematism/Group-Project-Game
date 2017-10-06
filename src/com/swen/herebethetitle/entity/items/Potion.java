@@ -12,14 +12,14 @@ import javafx.scene.image.Image;
  */
 public final class Potion extends Item {
 
-	private final int HEALTH_CHANGE;
+	private final double HEALTH_CHANGE;
 
 	/**
 	 * @param name The name of the potion
 	 * @param spritePath What it looks like
 	 * @param healthChange How much it will increase the Player's health by
 	 */
-	public Potion(String name, String spritePath, int healthChange){
+	public Potion(String name, String spritePath, double healthChange){
 		super(name, spritePath);
 		this.HEALTH_CHANGE = healthChange;
 	}

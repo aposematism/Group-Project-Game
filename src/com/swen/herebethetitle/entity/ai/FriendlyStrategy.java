@@ -15,14 +15,14 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Mark Metcalfe
  */
-public final class Friendly extends Behavior {
+public final class FriendlyStrategy extends NPCBehavior {
 
 	/**
 	 * Uses a queue to manage the next piece of dialog to be spoken
 	 */
 	private Queue<String> dialog;
 
-	public Friendly() { this.dialog = new ArrayDeque<>(); }
+	public FriendlyStrategy() { this.dialog = new ArrayDeque<>(); }
 
 	/**
 	 * Add dialog to be spoken
@@ -40,7 +40,7 @@ public final class Friendly extends Behavior {
 	public boolean canTalkTo() { return dialog.size() != 0; }
 
 	/**
-	 * Friendly NPCs don't attack the player, instead they just turn
+	 * FriendlyStrategy NPCs don't attack the player, instead they just turn
 	 * from side to side until they have nothing left to say
 	 */
 	public void ping(GameContext context, NPC npc) {
@@ -63,7 +63,7 @@ public final class Friendly extends Behavior {
 	public void interact(GameContext context, NPC npc, Notifier notifier) { }
 
 	/**
-	 * Friendly NPCs, so isn't aggressive
+	 * FriendlyStrategy NPCs, so isn't aggressive
 	 */
 	@Override
 	public boolean isAggressive() { return false; }

@@ -18,7 +18,7 @@ import com.swen.herebethetitle.util.Direction;
 public class EntityParser {
 
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
-	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|Friendly)");
+	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|monster|Friendly|friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
 
 	/**
@@ -55,12 +55,18 @@ public class EntityParser {
 		string = string.replaceAll("\"","");
 		return string;
 	}
-
+	
+	/** 
+	 * parses item from scanner. Never used currently
+	 * */
 	private static Item parseItem(Scanner s) throws InputMismatchException {
 		String className = s.next();
 		return parseItem(s, className);
 	}
 
+	/** 
+	 * parses each item in the inventory
+	 * */
 	private static Item parseInventoryItem(Scanner s) throws InputMismatchException {
 		s.next(); //Consume opening brace
 		String className = s.next();
@@ -68,7 +74,10 @@ public class EntityParser {
 		s.next(); //Consume closing brace
 		return i;
 	}
-
+	
+	/** 
+	 * parses each type of item
+	 * */
 	private static Item parseItem(Scanner s, String className) throws InputMismatchException {
 		switch (className){
 			case "Weapon": return parseWeapon(s);
@@ -79,6 +88,9 @@ public class EntityParser {
 		}
 	}
 
+	/** 
+	 * parses weapons
+	 * */
 	private static Weapon parseWeapon(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
@@ -88,6 +100,9 @@ public class EntityParser {
 		return new Weapon(name, sprite, isMelee, strength);
 	}
 
+	/** 
+	 * parses armour types.
+	 * */
 	private static Armour parseArmour(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
@@ -97,6 +112,9 @@ public class EntityParser {
 		return new Armour(name, sprite, type, strength);
 	}
 
+	/** 
+	 * parses keys.
+	 * */
 	private static Key parseKey(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
@@ -105,14 +123,20 @@ public class EntityParser {
 		return new Key(name, sprite, key);
 	}
 
+	/** 
+	 * parses potions.
+	 * */
 	private static Potion parsePotion(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
-		int value = s.nextInt();
+		double value = s.nextDouble();
 
 		return new Potion(name, sprite, value);
 	}
 
+	/** 
+	 * parses floors.
+	 * */
 	private static Floor parseFloor(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
@@ -122,6 +146,9 @@ public class EntityParser {
 		return floor;
 	}
 
+	/** 
+	 * parses statics
+	 * */
 	private static Static parseStatic(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
@@ -136,19 +163,28 @@ public class EntityParser {
 		return aStatic;
 	}
 
+	/** 
+	 * 
+	 * */
 	private static Static.Behavior parseStaticBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()) { //Check Class Token
 			case "Door": return parseDoor(s);
-			default:     throw new InputMismatchException("Couldn't Parse Behavior");
+			default:     throw new InputMismatchException("Couldn't Parse NPCBehavior");
 		}
 	}
 
-	private static Door parseDoor(Scanner s) throws InputMismatchException {
+	/** 
+	 * 
+	 * */
+	private static DoorStrategy parseDoor(Scanner s) throws InputMismatchException {
 		int key = s.nextInt();
-		Door.STATE state = Door.STATE.valueOf(s.next());
-		return new Door(key, state);
+		DoorStrategy.STATE state = DoorStrategy.STATE.valueOf(s.next());
+		return new DoorStrategy(key, state);
 	}
 
+	/** 
+	 * 
+	 * */
 	private static NPC parseNPC(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
@@ -158,14 +194,17 @@ public class EntityParser {
 		NPC npc = new NPC(name, sprite, health, direction);
 
 		if(s.hasNext(NPC_BEHAVIOR)){
-			Behavior behavior = parseNPCBehavior(s);
+			NPCBehavior behavior = parseNPCBehavior(s);
 			npc.setBehavior(behavior);
 		}
 
 		return npc;
 	}
 
-	private static Behavior parseNPCBehavior(Scanner s) throws InputMismatchException {
+	/** 
+	 * 
+	 * */
+	private static NPCBehavior parseNPCBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()){ //Check Class Token
 			case "Monster":  return parseMonster(s);
 			case "Friendly": return parseFriendly(s);
@@ -173,16 +212,22 @@ public class EntityParser {
 		}
 	}
 
-	private static Monster parseMonster(Scanner s) throws InputMismatchException {
+	/** 
+	 * 
+	 * */
+	private static MonsterStrategy parseMonster(Scanner s) throws InputMismatchException {
 		double strength = s.nextDouble();
 
-		return new Monster(strength);
+		return new MonsterStrategy(strength);
 	}
 
-	private static Friendly parseFriendly(Scanner s) throws InputMismatchException {
+	/** 
+	 * 
+	 * */
+	private static FriendlyStrategy parseFriendly(Scanner s) throws InputMismatchException {
 		s.next(); //Consume opening brace
 
-		Friendly f = new Friendly();
+		FriendlyStrategy f = new FriendlyStrategy();
 
 		while(!s.hasNext("}"))
 			f.addDialog(parseString(s));
@@ -192,6 +237,9 @@ public class EntityParser {
 		return f;
 	}
 
+	/** 
+	 * 
+	 * */
 	private static Player parsePlayer(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);

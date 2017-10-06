@@ -28,11 +28,11 @@ public class MiscTests {
 	}
 
 	/**
-	 * Asserts Door has a string representation
+	 * Asserts DoorStrategy has a string representation
 	 */
 	@Test
 	public void test_Door_toString(){
-		Door d = new Door(123, Door.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED);
 		Static s = new Static("", null);
 		s.setBehavior(d);
 		assertNotNull(d.toString());
@@ -93,8 +93,8 @@ public class MiscTests {
 	 */
 	@Test
 	public void test_StaticAndBehavior_toString(){
-		Static s = new Static("Front Door", null);
-		Door d = new Door(209, Door.STATE.LOCKED);
+		Static s = new Static("Front DoorStrategy", null);
+		DoorStrategy d = new DoorStrategy(209, DoorStrategy.STATE.LOCKED);
 		s.setBehavior(d);
 		assertNotNull(s.toString());
 		System.out.println(s.toString());
@@ -105,7 +105,7 @@ public class MiscTests {
 	 */
 	@Test
 	public void test_NPCs_toString(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("Zombie", null, a,80, Direction.Down);
 
 		assertNotNull(n.toString());
@@ -134,18 +134,18 @@ public class MiscTests {
 	}
 
 	/**
-	 * Asserts Friendly has a string representation
+	 * Asserts FriendlyStrategy has a string representation
 	 */
 	@Test
 	public void test_Friendly_toString(){
-		Friendly friendly = new Friendly();
+		FriendlyStrategy friendly = new FriendlyStrategy();
 		friendly.addDialog("Hello!","Good weather today!","Bye!");
 		assertNotNull(friendly.toString());
 		System.out.println(friendly.toString());
 	}
 
 	/**
-	 * Asserts Friendly has a string representation
+	 * Asserts FriendlyStrategy has a string representation
 	 */
 	@Test
 	public void test_Entity_spritePath(){
