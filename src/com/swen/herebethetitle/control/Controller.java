@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.view;
+package com.swen.herebethetitle.control;
 
 import java.util.Optional;
 
@@ -42,9 +42,8 @@ import javafx.util.Duration;
 /*
  * TODO
  * 
- * -Add in subordinate menu functionality for new game, load game, and settings
- * -Make the menu pretty somehow
- * -audio
+ * -Add in subordinate menu functionality for load game & settings
+ * -audio functionality
  * 
  * Immediately:
  * -input event handling implementation
@@ -326,7 +325,9 @@ private void handleKeyPress(KeyEvent e) {
 	 */
 private void handleMousePress(MouseEvent e) {
 		// TODO remove test code; implement final handling
-		System.out.println("Key pressed: " + e.getX() + "," + e.getY());
+		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
+		/*get the cell the player clicked on*/
+		gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
 	}
 
 	/**
