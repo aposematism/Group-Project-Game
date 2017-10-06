@@ -12,14 +12,14 @@ import java.util.regex.Pattern;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.Monster;
+import com.swen.herebethetitle.entity.ai.MonsterStrategy;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
-import com.swen.herebethetitle.entity.statics.Door;
+import com.swen.herebethetitle.entity.statics.DoorStrategy;
 
 import javafx.scene.image.Image;
 
@@ -236,7 +236,7 @@ public class InteractiveParser {
 		Static aStatic = new Static(name, sprite);
 		if(split[1].equals("Door")){
 			s.next(); //Consume "Door" token
-			Door door = parseDoor(split);
+			DoorStrategy door = parseDoor(split);
 			aStatic.setBehavior(door);
 		}
 
@@ -247,10 +247,10 @@ public class InteractiveParser {
 	 * This method parses doors explicitly for generating a key.
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
-	public Door parseDoor(String[] s){
+	public DoorStrategy parseDoor(String[] s){
 		int key = Integer.parseInt(s[2]);
-		Door.STATE state = Door.STATE.valueOf(s[3]);
-		return new Door(key, state);
+		DoorStrategy.STATE state = DoorStrategy.STATE.valueOf(s[3]);
+		return new DoorStrategy(key, state);
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class InteractiveParser {
 
 		if(s.hasNext("Monster")){
 			s.next(); //Consume "Monster" token
-			Monster monster = parseMonster(s);
+			MonsterStrategy monster = parseMonster(s);
 			npc.setBehavior(monster);
 		}
 
@@ -278,10 +278,10 @@ public class InteractiveParser {
 	 * This method parses monsters.
 	 * @author - Mark Metcalfe
 	 * */
-	public Monster parseMonster(Scanner s){
+	public MonsterStrategy parseMonster(Scanner s){
 		double strength = Double.parseDouble(s.next());
 
-		return new Monster(strength);
+		return new MonsterStrategy(strength);
 	}
 
 	/**
