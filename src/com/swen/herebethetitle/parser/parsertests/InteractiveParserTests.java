@@ -60,12 +60,12 @@ public class InteractiveParserTests {
 				assertTrue(e instanceof Armour);
 			}
 
-			@Test
-			public void test_door_generation() {
-				InteractiveParser ip = new InteractiveParser();
-				Entity e = ip.parseStringArray("0 0 door");
-				assertTrue(e instanceof Door);
-			}
+			//@Test
+			//public void test_door_generation() {
+			//	InteractiveParser ip = new InteractiveParser();
+			//	Entity e = ip.parseStringArray("0 0 door");
+			//	assertTrue(e instanceof Door);
+			//}
 
 			@Test
 			public void test_key_generation() {
