@@ -24,7 +24,7 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(123, Door.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED);
 		Static s = new Static("", null);
 		s.setBehavior(d);
 
@@ -58,7 +58,7 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(123, Door.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED);
 		Static s = new Static("", null);
 		s.setBehavior(d);
 
@@ -93,7 +93,7 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(123, Door.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED);
 		Static s = new Static("", null);
 		s.setBehavior(d);
 
@@ -117,7 +117,7 @@ public class DoorAndKeyTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Door d = new Door(123, Door.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED);
 		Static s = new Static("", null);
 		s.setBehavior(d);
 

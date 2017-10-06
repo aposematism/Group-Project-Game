@@ -4,7 +4,7 @@ import org.junit.Before;
 
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.Monster;
+import com.swen.herebethetitle.entity.ai.MonsterStrategy;
 import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.logic.GameLogic;
@@ -64,7 +64,7 @@ public class BaseTest {
      */
     protected NPC placeEnemy(GridLocation location) {
         NPC npc = new NPC("baddy", null, 100.0, Direction.Right);
-        npc.setBehavior(new Monster(1.5));
+        npc.setBehavior(new MonsterStrategy(1.5));
         context.getCurrentRegion().get(location).add(npc);
         return npc;
     }

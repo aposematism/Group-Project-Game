@@ -12,14 +12,14 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public final class Monster extends Behavior {
+public final class MonsterStrategy extends NPCBehavior {
 
 	private final double ATTACK_STRENGTH;
 
 	/**
 	 * @param attackStrength How much damage the monster will deal, must be positive
 	 */
-	public Monster(double attackStrength) {
+	public MonsterStrategy(double attackStrength) {
 		if(attackStrength<0)
 			throw new IllegalArgumentException("attackStrength must be positive!");
 		ATTACK_STRENGTH=attackStrength;

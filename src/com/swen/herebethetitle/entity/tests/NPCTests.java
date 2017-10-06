@@ -17,11 +17,11 @@ import static org.junit.Assert.*;
 public class NPCTests {
 
 	/**
-	 * Asserts that Behavior is constructed correctly
+	 * Asserts that NPCBehavior is constructed correctly
 	 */
 	@Test
 	public void test_construct(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null, a, 80, Direction.Down);
 		assertTrue(n.getBehavior().isPresent());
 		assertEquals(a, n.getBehavior().get());
@@ -31,7 +31,7 @@ public class NPCTests {
 	public void test_hasMeleeWeapon(){
 		GameContext context = new GameContext();
 
-		Behavior a = new Monster(1);
+		NPCBehavior a = new MonsterStrategy(1);
 
 		assertFalse(a.hasMeleeWeapon(context));
 
@@ -41,11 +41,11 @@ public class NPCTests {
 	}
 
 	/**
-	 * Asserts that Behavior can be set
+	 * Asserts that NPCBehavior can be set
 	 */
 	@Test
 	public void test_setBehavior(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null,80, Direction.Down);
 		assertFalse(n.getBehavior().isPresent());
 		n.setBehavior(a);
@@ -54,11 +54,11 @@ public class NPCTests {
 	}
 
 	/**
-	 * Asserts that a Monster can attack the player correctly
+	 * Asserts that a MonsterStrategy can attack the player correctly
 	 */
 	@Test
 	public void test_Monster_ping(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		GameContext context = new GameContext();
@@ -73,11 +73,11 @@ public class NPCTests {
 	}
 
 	/**
-	 * Asserts that the Monster can be attacked and the correct amount of damage is applied
+	 * Asserts that the MonsterStrategy can be attacked and the correct amount of damage is applied
 	 */
 	@Test
 	public void test_Monster_interact_noWeapon(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		GameContext context = new GameContext();
@@ -89,11 +89,11 @@ public class NPCTests {
 	}
 
 	/**
-	 * Asserts that the Monster can be attacked and the correct amount of damage is applied
+	 * Asserts that the MonsterStrategy can be attacked and the correct amount of damage is applied
 	 */
 	@Test
 	public void test_Monster_interact_weapon(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		GameContext context = new GameContext();
@@ -113,7 +113,7 @@ public class NPCTests {
 	 */
 	@Test
 	public void test_Monster_interact_death(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		GameContext context = new GameContext();
@@ -139,34 +139,34 @@ public class NPCTests {
 	}
 
 	/**
-	 * Asserts that the Monster isn't penetrable
+	 * Asserts that the MonsterStrategy isn't penetrable
 	 */
 	@Test
 	public void test_Monster_isPenetrable(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		assertFalse(n.isPenetrable());
 	}
 
 	/**
-	 * Assert that a Monster is aggressive
+	 * Assert that a MonsterStrategy is aggressive
 	 */
 	@Test
 	public void test_Monster_isAggressive(){
-		Behavior a = new Monster(1);
+		NPCBehavior a = new MonsterStrategy(1);
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		assertTrue(n.isAggressive());
 	}
 
 	/**
-	 * Asserts that the Monster can't have a negative attack strength value
+	 * Asserts that the MonsterStrategy can't have a negative attack strength value
 	 */
 	@Test
 	public void test_Monster_invalidStrength(){
 		try {
-			new Monster(-50);
+			new MonsterStrategy(-50);
 			fail();
 		} catch(IllegalArgumentException e){}
 	}
@@ -176,7 +176,7 @@ public class NPCTests {
 	 */
 	@Test
 	public void test_Friendly_dialog(){
-		Friendly friendly = new Friendly();
+		FriendlyStrategy friendly = new FriendlyStrategy();
 
 		String message = "Hit there!";
 		friendly.addDialog(message);
@@ -199,7 +199,7 @@ public class NPCTests {
 
 	@Test
 	public void test_Friendly_ping(){
-		Friendly friendly = new Friendly();
+		FriendlyStrategy friendly = new FriendlyStrategy();
 
 		Direction starting = Direction.Down;
 
@@ -223,7 +223,7 @@ public class NPCTests {
 
 	@Test
 	public void test_Friendly_isAggressive(){
-		Behavior a = new Friendly();
+		NPCBehavior a = new FriendlyStrategy();
 		NPC n = new NPC("", null, a,80, Direction.Down);
 
 		assertFalse(n.isAggressive());
