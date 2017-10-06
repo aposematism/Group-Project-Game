@@ -39,6 +39,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      */
     private Tile[][] cells;
     
+    /** 
+     * 
+     * Region Name. "Church
+     * 
+     * */
+    private String regionName;
+    
     /**
      * Creates a new basic grid.
      * @param width
@@ -56,6 +63,15 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
                 get(x,y).setMapFloor(new Floor("file:res/grass.png"));
             }
         }
+    }
+    
+    /**
+     * Creates a custom grid from tile 2d array. Used for Terrain Parser.
+     */
+    public Region(Tile[][] tiles) {
+    	this.width = tiles.length;
+    	this.height = tiles[0].length;
+    	this.cells = tiles;
     }
     
     /**
@@ -276,5 +292,36 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
         }
         
         return builder.toString();
+    }
+    
+    public void setRegionName(String rn) {
+    	this.regionName = rn;
+    }
+    
+    public String getRegionName() {
+    	return regionName;
+    }
+    
+    public int getXSize() {
+    	return cells.length;
+    }
+    
+    public int getYSize() {
+    	return cells[0].length;
+    }
+    
+    public int getInteractiveTotal() {
+    	int total = 0;
+    	for(Entity e : this.getPlayerTile().getInteractives()) {
+    		if(e instanceof Player) {
+    			total = ((Player) e).inventory().getInventorySize();
+    		}
+    	}
+    	for(int i = 0; i < width; i++) {
+    		for(int j = 0; j < height; j++) {
+    			total = total + cells[i][j].getInteractiveSize();
+    		}
+    	}
+    	return total;
     }
 }

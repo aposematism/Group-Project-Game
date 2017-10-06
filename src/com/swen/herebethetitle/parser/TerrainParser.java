@@ -25,6 +25,7 @@ public class TerrainParser{
 	 * */
 	public static void init_scanner(File region)throws IOException{
 		BufferedReader regionBuff = null;
+		stringArray = new ArrayList<String[]>();
 		try{
 			regionBuff = new BufferedReader(new FileReader(region));
 			String line = regionBuff.readLine();
@@ -67,7 +68,7 @@ public class TerrainParser{
 	 * @author - Jordan
 	 * @return Entity implementing object.
 	 * */
-	public static Entity parseMapEntity(String p){
+	private static Entity parseMapEntity(String p){
 		//TODO: Implement the parsing of map entities as they are created. 
 		if(p.equals(".")){//
 			Floor f = new Floor("Grass","grass.png");
@@ -109,9 +110,10 @@ public class TerrainParser{
 	
 	/**
 	 * Boundary checking method for ensuring only neighbours within acceptable ranges are added.
+	 * @author - Jordan Milburn
 	 *  */
 	
-	public static boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
+	private static boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
 		if(i+k < 0 || j+l < 0){//if less than zero
 			return false;
 		}
