@@ -11,6 +11,7 @@ import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.util.GridLocation;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -31,10 +32,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * This is the main, top-level, wrapper class for the GUI, and for now also the main
- * class for the entire game.
- * Everything GUI-related goes through relationships with this and the controller,
- * and this and the model.
+ * This is the main, top-level class for the conceptual controller.
+ * This will handle initializing all the other classes on start().
  * @author J Woods
  *
  */
@@ -53,7 +52,7 @@ public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 30;
+	public static final int FRAMES_PER_SECOND = 1;
 	
 	
 	//window field
@@ -327,7 +326,8 @@ private void handleMousePress(MouseEvent e) {
 		// TODO remove test code; implement final handling
 		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
 		/*get the cell the player clicked on*/
-		gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
+		GridLocation mouseLocation = gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
+		System.out.println("Grid location clicked: " + mouseLocation.x + "," + mouseLocation.y);
 	}
 
 	/**
