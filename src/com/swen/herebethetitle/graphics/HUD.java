@@ -92,7 +92,7 @@ public class HUD {
         Point p = grid.getRealCoordinates(loc);
         System.out.println(loc);
 
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.GRAY);
         gc.setFill(new Color(0,0,0,0.5));
         gc.setLineWidth(4);
         gc.fillRect(p.x, p.y, slotSize, slotSize);

@@ -62,4 +62,26 @@ public class HUDTest extends TestWindow {
         };
     }
 
+    @Test
+    @Ignore
+    /**
+     * Set up a HUD with sprites placed in the armour slots.
+     */
+    public void weaponSpot() {
+        testCode = new Operation() {
+            public void run(Canvas c) {
+                Sprite[] armourSprites = new Sprite[4];
+                for (int i = 0; i < armourSprites.length; i++) {
+                    armourSprites[i] = new Sprite(null, new GridLocation(i, 0));
+                }
+                Sprite weapon = new Sprite(new Image("file:res/wizard.png"), new GridLocation(0, 0));
+
+                HUD hud = new HUD(c);
+                hud.drawAll(weapon, armourSprites, c);
+            }
+
+            ;
+        };
+    }
+
 }

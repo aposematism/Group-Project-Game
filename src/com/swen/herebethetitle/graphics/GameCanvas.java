@@ -10,6 +10,7 @@ import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
@@ -41,6 +42,8 @@ public class GameCanvas extends Canvas {
         world = new WorldRenderer();
         hud = new HUD(this);
         this.context = context;
+
+        update();
     }
 
     /**
@@ -48,9 +51,10 @@ public class GameCanvas extends Canvas {
      * @author weirjosh
      */
     public void update(){
+        GraphicsContext gc = this.getGraphicsContext2D();
+        gc.clearRect(0,0,getWidth(),getHeight());
         updateWorld();
         updateHUD();
-
     }
 
     /**
