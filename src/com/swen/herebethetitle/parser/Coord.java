@@ -3,17 +3,19 @@ package com.swen.herebethetitle.parser;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import com.swen.herebethetitle.util.GridLocation;
+
 /**
  * Data class that stores the x and y coordinates representing the tile position of an entity
  *
- * @author Mark Metcalfe
+ * @author Mark Metcalfe and Jordan Milburn
  */
 public final class Coord {
 
     /**
      * X and Y coordinate values
      */
-    public final int x, y;
+    private final int x, y;
 
     private final static Pattern COORDS = Pattern.compile("\\(\\d+,\\d+\\)");
 
@@ -42,4 +44,19 @@ public final class Coord {
 
     @Override
     public String toString() { return "("+x+","+y+")";}
+    
+    /** 
+     * Converts to Dylan's gridlocation class. 
+     * */
+    public GridLocation convert() {
+    	return new GridLocation(this.x, this.y);
+    }
+    
+    public int getX() {
+    	return this.x;
+    }
+    
+    public int getY() {
+    	return this.y;
+    }    
 }

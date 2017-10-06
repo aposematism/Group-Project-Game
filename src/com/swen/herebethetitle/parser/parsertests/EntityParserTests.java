@@ -9,10 +9,16 @@ import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.parser.Coord;
+import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -197,6 +203,11 @@ public class EntityParserTests {
 		}
 	}
 	
+	
+	/** 
+	 * Tests static generation
+	 * @author - Jordan Milburn
+	 * */
 	@Test
 	public void test_static_generation() {
 		ArrayList<String> staticArray = new ArrayList<String>();

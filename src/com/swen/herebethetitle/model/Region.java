@@ -66,6 +66,15 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
     
     /**
+     * Creates a custom grid from tile 2d array. Used for Terrain Parser.
+     */
+    public Region(Tile[][] tiles) {
+    	this.width = tiles.length;
+    	this.height = tiles[0].length;
+    	this.cells = tiles;
+    }
+    
+    /**
      * Gets the tile at a location.
      */
     public Tile get(GridLocation location) {
@@ -291,5 +300,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     
     public String getRegionName() {
     	return regionName;
+    }
+    
+    public int getXSize() {
+    	return cells.length;
+    }
+    
+    public int getYSize() {
+    	return cells[0].length;
     }
 }

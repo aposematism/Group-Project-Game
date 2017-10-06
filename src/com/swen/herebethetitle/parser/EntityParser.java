@@ -1,5 +1,11 @@
 package com.swen.herebethetitle.parser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -8,10 +14,12 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.entity.statics.*;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.util.Direction;
+import com.swen.herebethetitle.util.GridLocation;
 
 /**
- * Helper class with static methods for interpreting a single line in the save file
+ * Helper class with static methods for interpreting a single line in the save file.
  *
  * @author Mark Metcalfe
  */
@@ -20,7 +28,43 @@ public class EntityParser {
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
 	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|monster|Friendly|friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
-
+	
+	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
+	static ArrayList<Entity> entityList = new ArrayList<Entity>();
+	
+	/** 
+	 * Interactive scanner which takes input from a file and produces all entites from it.
+	 * */
+	public static void interactive_scanner(File interactives)throws IOException, SyntaxError{
+		BufferedReader interactivesBuff = null;
+		coordinates = new ArrayList<Coord>();
+		entityList = new ArrayList<Entity>();
+		try{
+			interactivesBuff = new BufferedReader(new FileReader(interactives));
+			String line = interactivesBuff.readLine();
+			while(line != null){
+				Scanner s = new Scanner(line);
+				Coord c = Coord.parseCoordinate(s);
+				coordinates.add(c);
+				Entity e = parseEntity(s);
+				entityList.add(e);
+				line = interactivesBuff.readLine();
+			}
+			interactivesBuff.close();
+		}
+		catch(IOException e){
+			System.out.println("I/O exception: " + e.toString());
+			throw new FileNotFoundException("File failed to initialise!");
+		}
+	}
+	
+	public Region parseEntitytoRegion(Region reg) {
+		for(int i = 0; i < entityList.size(); i++) {
+			coordinates.get(i).convert();
+		}
+		return null;
+	}
+	
 	/**
 	 * Takes the remainder of a line and constructs an entity object from it
 	 *
