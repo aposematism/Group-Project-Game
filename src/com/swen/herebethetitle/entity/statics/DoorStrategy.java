@@ -7,13 +7,13 @@ import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
 /**
- * Behavior for Doors
+ * NPCBehavior for Doors
  *
  * Created by Mark on 19/09/2017.
  *
  * @author Mark Metcalfe
  */
-public final class Door implements Static.Behavior {
+public final class DoorStrategy implements Static.Behavior {
 
 	/**
 	 * A door can either be locked, unlocked (but shut), and open
@@ -28,7 +28,7 @@ public final class Door implements Static.Behavior {
 	 * @param key The Key code ID of the door
 	 * @param state Whether the door is locked, unlocked or open
 	 */
-	public Door(int key, STATE state){
+	public DoorStrategy(int key, STATE state){
 		KEY = key;
 		this.state = state;
 	}
@@ -77,5 +77,7 @@ public final class Door implements Static.Behavior {
 	public boolean isPenetrable() { return state==STATE.OPEN; }
 
 	@Override
-	public String toString() { return getClass().getSimpleName()+" "+KEY+" "+state.toString(); }
+	public String toString() {
+		return getClass().getSimpleName().replace("Strategy","")+" "+KEY+" "+state.toString();
+	}
 }

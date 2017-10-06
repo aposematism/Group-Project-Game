@@ -7,9 +7,8 @@ import static org.junit.Assert.*;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.ai.*;
 import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.statics.*;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.parser.Coord;
-import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class EntityParserTests {
 	 * */
 	@Test
 	public void test_Player_empty_inventory(){
-		parse(new Player("silly bopng", Direction.Down));
+		parse(new Player("silly boi.png", Direction.Down));
 	}
 	
 	/** 
@@ -87,7 +86,7 @@ public class EntityParserTests {
 	 * */
 	@Test
 	public void test_Monster(){
-		Behavior behavior = new Monster(50);
+		NPCBehavior behavior = new MonsterStrategy(50);
 		NPC in = new NPC("Zombie","zombie.png", behavior, 50, Direction.Down);
 		parse(in);
 	}
@@ -98,7 +97,7 @@ public class EntityParserTests {
 	 * */
 	@Test
 	public void test_Friendly_Dialog(){
-		Friendly friendly = new Friendly();
+		FriendlyStrategy friendly = new FriendlyStrategy();
 
 		friendly.addDialog("Great weather today!", "Did you hear about the beast?", "It's called THE BEAST");
 

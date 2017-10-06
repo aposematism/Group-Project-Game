@@ -11,7 +11,7 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public abstract class Behavior {
+public abstract class NPCBehavior {
 
 	/**
 	 * Checks that the NPC can be interacted with by the Player
@@ -50,5 +50,5 @@ public abstract class Behavior {
 	 */
 	public boolean isPenetrable() { return false; }
 	
-	public String toString() { return getClass().getSimpleName(); }
+	public String toString() { return getClass().getSimpleName().replace("Strategy",""); }
 }

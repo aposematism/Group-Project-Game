@@ -169,17 +169,17 @@ public class EntityParser {
 	private static Static.Behavior parseStaticBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()) { //Check Class Token
 			case "Door": return parseDoor(s);
-			default:     throw new InputMismatchException("Couldn't Parse Behavior");
+			default:     throw new InputMismatchException("Couldn't Parse NPCBehavior");
 		}
 	}
 
 	/** 
 	 * 
 	 * */
-	private static Door parseDoor(Scanner s) throws InputMismatchException {
+	private static DoorStrategy parseDoor(Scanner s) throws InputMismatchException {
 		int key = s.nextInt();
-		Door.STATE state = Door.STATE.valueOf(s.next());
-		return new Door(key, state);
+		DoorStrategy.STATE state = DoorStrategy.STATE.valueOf(s.next());
+		return new DoorStrategy(key, state);
 	}
 
 	/** 
@@ -194,7 +194,7 @@ public class EntityParser {
 		NPC npc = new NPC(name, sprite, health, direction);
 
 		if(s.hasNext(NPC_BEHAVIOR)){
-			Behavior behavior = parseNPCBehavior(s);
+			NPCBehavior behavior = parseNPCBehavior(s);
 			npc.setBehavior(behavior);
 		}
 
@@ -204,7 +204,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static Behavior parseNPCBehavior(Scanner s) throws InputMismatchException {
+	private static NPCBehavior parseNPCBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()){ //Check Class Token
 			case "Monster":  return parseMonster(s);
 			case "Friendly": return parseFriendly(s);
@@ -215,19 +215,19 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static Monster parseMonster(Scanner s) throws InputMismatchException {
+	private static MonsterStrategy parseMonster(Scanner s) throws InputMismatchException {
 		double strength = s.nextDouble();
 
-		return new Monster(strength);
+		return new MonsterStrategy(strength);
 	}
 
 	/** 
 	 * 
 	 * */
-	private static Friendly parseFriendly(Scanner s) throws InputMismatchException {
+	private static FriendlyStrategy parseFriendly(Scanner s) throws InputMismatchException {
 		s.next(); //Consume opening brace
 
-		Friendly f = new Friendly();
+		FriendlyStrategy f = new FriendlyStrategy();
 
 		while(!s.hasNext("}"))
 			f.addDialog(parseString(s));

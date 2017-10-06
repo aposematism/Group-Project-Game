@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.Friendly;
+import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
 import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.logic.ai.NpcController;
@@ -139,7 +139,7 @@ public class GameLogic {
             NPC npc = (NPC)entity;
             if (npc.isAggressive())
                 attack(npc);
-            else if (npc.getBehavior().isPresent() && npc.getBehavior().get() instanceof Friendly)
+            else if (npc.getBehavior().isPresent() && npc.getBehavior().get() instanceof FriendlyStrategy)
                 startDiscussion(npc);
             else
                 ; // no interactions possible.

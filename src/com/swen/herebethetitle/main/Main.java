@@ -1,9 +1,9 @@
 package com.swen.herebethetitle.main;
 
+import com.swen.herebethetitle.control.GUI;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.view.GUI;
 
 /**
  * Main class for the 2D RPG.

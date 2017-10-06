@@ -2,7 +2,7 @@ package com.swen.herebethetitle.logic.ai.test;
 
 import static org.junit.Assert.fail;
 
-import com.swen.herebethetitle.entity.ai.Friendly;
+import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class DiscussionTest {
     
     @Test
     public void canSayASingleMessage() {
-    	Friendly friendly = new Friendly();
+    	FriendlyStrategy friendly = new FriendlyStrategy();
 	    friendly.addDialog("Hello!");
     	speaker.setBehavior(friendly);
 
