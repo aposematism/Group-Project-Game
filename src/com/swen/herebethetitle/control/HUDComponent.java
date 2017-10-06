@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.view;
+package com.swen.herebethetitle.control;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

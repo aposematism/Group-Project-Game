@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.view;
+package com.swen.herebethetitle.control;
 
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 

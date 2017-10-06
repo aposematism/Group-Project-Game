@@ -19,7 +19,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_direction(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(Direction.Down, m.getDirection());
 
@@ -32,7 +32,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_health(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
@@ -45,7 +45,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_health_overflow(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
@@ -58,7 +58,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_health_invalid(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
@@ -75,7 +75,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_damage(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
@@ -88,7 +88,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_damage_underflow(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
@@ -101,7 +101,7 @@ public class MobTests {
 	 */
 	@Test
 	public void test_damage_invalid(){
-		Behavior a = new Monster(50);
+		NPCBehavior a = new MonsterStrategy(50);
 		Mob m = new NPC("", null, a, 80, Direction.Down);
 		assertEquals(80, m.getHealth(), 0);
 
