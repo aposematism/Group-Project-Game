@@ -4,7 +4,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class ReserveParserTests {
+public class ReverseParserTests {
 	public class TerrainParserTests {
 		public class PlayerTests {
 			@Test

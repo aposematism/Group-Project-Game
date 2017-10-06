@@ -49,7 +49,7 @@ import javafx.util.Duration;
  * -input event handling implementation
  * 
  */
-public class GUI extends Application implements GameListener{
+public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
@@ -84,7 +84,7 @@ public class GUI extends Application implements GameListener{
 	/**
 	 * Default constructor, needed for use with the Main class.
 	 */
-	public GUI() {
+	public Controller() {
 		super();
 	}
 	
