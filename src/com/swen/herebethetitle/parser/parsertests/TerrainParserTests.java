@@ -94,4 +94,27 @@ public class TerrainParserTests {
 			fail("Index fell out of bounds during the parsing process or in examining the classes themselves.");
 		}
 	}
+	
+	@Test
+	public void connecting_nodes_fail_test() {
+		try{
+			System.out.println("Testing String Parser to see if it connects the right number of nodes");
+			TerrainParser.init_scanner(testTerrain);
+			TerrainParser.parseStringArray();
+			Tile[][] rA = TerrainParser.getRA();
+			TerrainParser.connectNetworks(rA);
+			for(int i = 0; i < rA.length; i++){
+				for(int j = 0; j < rA[i].length; j++){
+					System.out.print(rA[i][j].getNeighbours().size());
+				}
+				System.out.println("");
+			}
+		}
+		catch(IOException e){
+			fail("IOException during the Terrain Parser connecting nodes test");
+		}
+		catch(IndexOutOfBoundsException e){
+			fail("Index fell out of bounds during the parsing process or in examining the classes themselves.");
+		}
+	}
 }
