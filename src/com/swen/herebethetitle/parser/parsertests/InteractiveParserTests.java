@@ -80,4 +80,6 @@ public class InteractiveParserTests {
 				Entity e = ip.parseStringArray("0 0 potion");
 				assertTrue(e instanceof Potion);
 			}
+			
+			
 }

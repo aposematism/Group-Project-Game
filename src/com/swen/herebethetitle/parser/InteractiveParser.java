@@ -47,7 +47,7 @@ public class InteractiveParser {
 		spriteMap.put("legs", "path/to/sprite.png LEGS 5");
 		spriteMap.put("torso", "path/to/sprite.png TORSO 5");
 		spriteMap.put("key", "path/to/sprite.png 3");
-		spriteMap.put("potion", "path/to/sprite.png true 10");
+		spriteMap.put("potion", "path/to/sprite.png 10");
 		spriteMap.put("static", "path/to/sprite.png true 5");
 		spriteMap.put("door", "path/to/sprite.png door 3 UNLOCKED");
 	}
@@ -194,7 +194,7 @@ public class InteractiveParser {
 		String[] split = returned.split(" ");
 		String sprite = split[0];
 		Armour.TYPE type = Armour.TYPE.valueOf(split[1]);
-		double strength = Double.parseDouble(split[0]);
+		double strength = Double.parseDouble(split[2]);
 		return new Armour(name, sprite, type, strength);
 	}
 

@@ -23,9 +23,8 @@ public class TerrainParserTests {
 	@Test
 	public void init_scanner_load() throws IOException{
 		System.out.println("Testing scanner initialization for the txt file");
-		TerrainParser tp = new TerrainParser();
 		try{
-			tp.init_scanner(testTerrain);
+			TerrainParser.init_scanner(testTerrain);
 		}
 		catch(IOException e){
 			fail("IOException during the Terrain Parser Initialization");
@@ -41,9 +40,9 @@ public class TerrainParserTests {
 		TerrainParser tp = new TerrainParser();
 		try{
 			System.out.println("Testing String Parser to see Tile matches the txt file");
-			tp.init_scanner(testTerrain);
-			tp.parseStringArray();
-			Tile[][] rA = tp.getRA();
+			TerrainParser.init_scanner(testTerrain);
+			TerrainParser.parseStringArray();
+			Tile[][] rA = TerrainParser.getRA();
 			ArrayList<String[]> sA = tp.getStringArray();
 			for(int i = 0; i < sA.size(); i++){
 				for(int j = 0; j < sA.get(i).length; j++){
@@ -60,6 +59,7 @@ public class TerrainParserTests {
 			fail("IOException during the Terrain Parser string parser test");
 		}
 		catch(IndexOutOfBoundsException e){
+			e.printStackTrace();
 			fail("Index fell out of bounds during the parsing process or in examining the classes themselves.");
 		}
 		finally{
@@ -74,13 +74,12 @@ public class TerrainParserTests {
 	 * */
 	@Test
 	public void connecting_nodes_test(){
-		TerrainParser tp = new TerrainParser();
 		try{
 			System.out.println("Testing String Parser to see if it connects the right number of nodes");
-			tp.init_scanner(testTerrain);
-			tp.parseStringArray();
-			Tile[][] rA = tp.getRA();
-			tp.connectNetworks(rA);
+			TerrainParser.init_scanner(testTerrain);
+			TerrainParser.parseStringArray();
+			Tile[][] rA = TerrainParser.getRA();
+			TerrainParser.connectNetworks(rA);
 			for(int i = 0; i < rA.length; i++){
 				for(int j = 0; j < rA[i].length; j++){
 					System.out.print(rA[i][j].getNeighbours().size());

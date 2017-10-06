@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Floor;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.model.Tile;
 
 /** 
@@ -15,19 +17,14 @@ import com.swen.herebethetitle.model.Tile;
  * @author Jordan
  * */
 public class TerrainParser{	
-	ArrayList<String[]> stringArray;
-	Tile[][] regionArray;
-	
-	public TerrainParser(){
-		
-	}
+	static ArrayList<String[]> stringArray = new ArrayList<String[]>();
+	static Tile[][] regionArray;
 	
 	/** 
 	 * This method is for the initialization of the region file.
 	 * */
-	public void init_scanner(File region)throws IOException{
+	public static void init_scanner(File region)throws IOException{
 		BufferedReader regionBuff = null;
-		stringArray = new ArrayList<String[]>();
 		try{
 			regionBuff = new BufferedReader(new FileReader(region));
 			String line = regionBuff.readLine();
@@ -51,12 +48,13 @@ public class TerrainParser{
 	 * parses the single character string array such that it generates a new Node and gives that node a mapEntity
 	 * @author - Jordan
 	 * */
-	public void parseStringArray(){
-		regionArray = new Tile[stringArray.get(0).length][stringArray.size()];
+	public static void parseStringArray(){
+		regionArray = new Tile[stringArray.size()][stringArray.get(0).length];
+		System.out.print(stringArray.get(0).length + " " + stringArray.size());
 		for(int i = 0; i < stringArray.size(); i++){
 			for(int j = 0; j < stringArray.get(i).length; j++){
 				Tile z = new Tile(i, j, stringArray.get(i)[j]);
-				//z.setMapEntity(parseMapEntity(stringArray.get(i)[j]));
+				z.setMapFloor(parseMapEntity(stringArray.get(i)[j]));
 				regionArray[i][j] = z;
 			}
 		}
@@ -69,10 +67,14 @@ public class TerrainParser{
 	 * @author - Jordan
 	 * @return Entity implementing object.
 	 * */
-	public Entity parseMapEntity(String p){
+	public static Entity parseMapEntity(String p){
 		//TODO: Implement the parsing of map entities as they are created. 
-		if(p.equals("")){//
-			
+		if(p.equals(".")){//
+			Floor f = new Floor("Grass","grass.png");
+			return f;
+		}
+		else if(p.equals("w")) {
+			Static w = new Static("TudorWall", "tudorwall.png");
 		}
 		return null;
 	}
@@ -81,7 +83,7 @@ public class TerrainParser{
 	 * This method attempts to connect the various nodes together for the parser. Checks first if it should connect within the limits of the 2d array structure
 	 * @author - Jordan
 	 * */
-	public Tile[][] connectNetworks(Tile[][] toConnect){
+	public static Tile[][] connectNetworks(Tile[][] toConnect){
 		try{
 			for(int i = 0; i < toConnect.length; i++){
 				for(int j = 0; j < toConnect[i].length; j++){
@@ -110,7 +112,7 @@ public class TerrainParser{
 	 * Boundary checking method for ensuring only neighbours within acceptable ranges are added.
 	 *  */
 	
-	public boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
+	public static boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
 		if(i+k < 0 || j+l < 0){//if less than zero
 			return false;
 		}
@@ -127,7 +129,7 @@ public class TerrainParser{
 		return stringArray;
 	}
 	
-	public Tile[][] getRA(){
+	public static Tile[][] getRA(){
 		return regionArray;
 	}
 }
