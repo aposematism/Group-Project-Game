@@ -10,7 +10,9 @@ import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
+import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 
 import javafx.animation.Animation;
@@ -54,7 +56,7 @@ public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 20;
+	public static final int FRAMES_PER_SECOND = 60;
 	
 	
 	//window field
@@ -349,6 +351,40 @@ public class Controller extends Application implements GameListener{
 				pauseGame();
 			}else {
 				unpauseGame();
+			}
+		}
+		
+		/*movement - may want to implement pathfinding mouse-based movement instead*/
+		if(e.getCode()==KeyCode.W) {
+			//move north
+			try {
+				logic.movePlayer(Direction.Up);
+			} catch (InvalidDestination e1) {
+				e1.printStackTrace();
+			}
+		}
+		if(e.getCode()==KeyCode.A) {
+			//move west
+			try {
+				logic.movePlayer(Direction.Left);
+			} catch (InvalidDestination e1) {
+				e1.printStackTrace();
+			}
+		}
+		if(e.getCode()==KeyCode.S) {
+			//move south
+			try {
+				logic.movePlayer(Direction.Down);
+			} catch (InvalidDestination e1) {
+				e1.printStackTrace();
+			}
+		}
+		if(e.getCode()==KeyCode.D) {
+			//move east
+			try {
+				logic.movePlayer(Direction.Right);
+			} catch (InvalidDestination e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
