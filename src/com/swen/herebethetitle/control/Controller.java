@@ -22,11 +22,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -52,7 +54,7 @@ public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 1;
+	public static final int FRAMES_PER_SECOND = 20;
 	
 	
 	//window field
@@ -75,6 +77,7 @@ public class Controller extends Application implements GameListener{
 	//Game fields
 	private GameContext game;
 	private GameLogic logic;
+	private boolean isPlaying;
 	
 	//Testing mode field
 	public static boolean isTesting;
@@ -93,6 +96,7 @@ public class Controller extends Application implements GameListener{
 		/*initialize the stage*/
 		window = s;
 		window.setTitle("2D RPG");
+		window.setResizable(false);
 		
 		/*initialize the main menu*/
 		mainMenuLayout = initMainMenu();
@@ -220,6 +224,7 @@ public class Controller extends Application implements GameListener{
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
 			if(!isTesting)updateTimeline.play();
 			gameGUIRoot.requestFocus();
+			isPlaying = true;
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -308,21 +313,51 @@ public class Controller extends Application implements GameListener{
 		return s;
 	}
 	
+	/**
+	 * Pauses the game.
+	 */
+	private void pauseGame() {
+		updateTimeline.pause();
+		//grey out the canvas
+		gameCanvas.getGraphicsContext2D().setFill(new Color(0.5,0.5,0.5,0.5));
+		gameCanvas.getGraphicsContext2D().fillRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		isPlaying = false;
+		
+		/*TODO draw the pause menu*/
+	}
+	/**
+	 * Unpauses the game.
+	 */
+	private void unpauseGame() {
+		updateTimeline.play();
+		isPlaying = true;
+	}
+	
 	
 	/**
 	 * Handles a key press.
 	 * @param e the key event
 	 */
-private void handleKeyPress(KeyEvent e) {
+	private void handleKeyPress(KeyEvent e) {
 		//TODO remove test code; implement final handling
 		System.out.println("Key pressed: " + e.getText());
+		System.out.println("Key pressed: " + e.getCode());
+		
+		if(e.getCode()==KeyCode.ESCAPE) {
+			System.out.println("Escape pressed");	//debug code
+			if(isPlaying) {
+				pauseGame();
+			}else {
+				unpauseGame();
+			}
+		}
 	}
 
 	/**
 	 * Handles a mouse press.
 	 * @param e the mouse event
 	 */
-private void handleMousePress(MouseEvent e) {
+	private void handleMousePress(MouseEvent e) {
 		// TODO remove test code; implement final handling
 		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
 		/*get the cell the player clicked on*/
