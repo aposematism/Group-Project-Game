@@ -22,7 +22,7 @@ public class Tile implements Iterable<Entity> {
 	//Neighbours
 	private ArrayList<Tile> neighbours;
 	//Entities list
-	private Floor mapFloor;
+	private Entity mapFloor;
 	private ArrayList<Entity> interactives;
 	
 	public Tile(int x, int y, String c){
@@ -36,11 +36,11 @@ public class Tile implements Iterable<Entity> {
 		this.interactives = new ArrayList<Entity>();
 	}
 
-	public void setMapFloor(Floor mapFloor) {
+	public void setMapFloor(Entity mapFloor) {
 		this.mapFloor = mapFloor;
 	}
 	
-	public Floor getMapFloor() {
+	public Entity getMapFloor() {
 	    return this.mapFloor;
 	}
 

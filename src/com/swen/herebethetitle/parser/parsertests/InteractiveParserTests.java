@@ -6,7 +6,7 @@ import com.swen.herebethetitle.entity.items.Armour;
 import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.entity.items.Potion;
 import com.swen.herebethetitle.entity.items.Weapon;
-import com.swen.herebethetitle.entity.statics.Door;
+import com.swen.herebethetitle.entity.statics.DoorStrategy;
 import com.swen.herebethetitle.parser.InteractiveParser;
 import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
@@ -80,4 +80,6 @@ public class InteractiveParserTests {
 				Entity e = ip.parseStringArray("0 0 potion");
 				assertTrue(e instanceof Potion);
 			}
+			
+			
 }
