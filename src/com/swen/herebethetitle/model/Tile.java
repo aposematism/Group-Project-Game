@@ -109,4 +109,8 @@ public class Tile implements Iterable<Entity> {
 	public String toString() {
 	    return this.location.toString();
 	}
+	
+	public int getInteractiveSize() {
+		return interactives.size();
+	}
 }
