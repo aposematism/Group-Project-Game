@@ -30,19 +30,26 @@ public class PlayerMove implements Interaction {
         
         if(!optimalPath.isPresent()) {
         	//no optimal path exists, do nothing
-        	return;
+        	throw new InteractionOver();
         }
         
         /*Move the player*/
         if(!(region.getPlayerTile()==dest)) {	//don't move if we're already there
         	region.move(player, optimalPath.get().next());
+        }else {
+        	throw new InteractionOver();
         }
 	}
 
 	@Override
 	public boolean isSameAs(Interaction interaction) {
-        //There should only be one player move active at any one time... I hope
-		return false;
+        if(!(interaction instanceof PlayerMove)) {
+        	return false;
+        }
+        if(((PlayerMove)interaction).dest==this.dest) {
+        	return true;
+        }
+        return false;
 	}
 
 }
