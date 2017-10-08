@@ -40,7 +40,7 @@ public class EntityParser {
 	/** 
 	 * Interactive scanner which takes input from a file and produces all entites from it.
 	 * */
-	private void interactiveScanner(File interactives)throws IOException, SyntaxError{
+	private void interactiveScanner(File interactives){
 		BufferedReader interactivesBuff = null;
 		coordinates = new ArrayList<Coord>();
 		entityList = new ArrayList<Entity>();
@@ -58,8 +58,10 @@ public class EntityParser {
 			interactivesBuff.close();
 		}
 		catch(IOException e){
-			System.out.println("I/O exception: " + e.toString());
-			throw new FileNotFoundException("File failed to initialise!");
+			e.printStackTrace();
+		}
+		catch(SyntaxError z) {
+			z.printStackTrace();
 		}
 	}
 	
