@@ -90,7 +90,6 @@ public class HUD {
     private void renderSlot(Sprite sprite, GridManager grid, GraphicsContext gc){
         GridLocation loc = sprite.getLocation();
         Point p = grid.getRealCoordinates(loc);
-        System.out.println(loc);
 
         gc.setStroke(Color.GRAY);
         gc.setFill(new Color(0,0,0,0.5));
