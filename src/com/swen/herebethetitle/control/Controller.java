@@ -10,8 +10,10 @@ import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
+import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -80,6 +82,7 @@ public class Controller extends Application implements GameListener{
 	private GameContext game;
 	private GameLogic logic;
 	private boolean isPlaying;
+	private PlayerMove playerMove;
 	
 	//Testing mode field
 	public static boolean isTesting;
@@ -404,6 +407,16 @@ public class Controller extends Application implements GameListener{
 		/*get the cell the player clicked on*/
 		GridLocation mouseLocation = gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
 		System.out.println("Grid location clicked: " + mouseLocation.x + "," + mouseLocation.y);
+		
+		/*build the interaction for the player movement*/
+		try {
+			Tile dest = game.getCurrentRegion().get(mouseLocation);
+			playerMove = new PlayerMove();
+			//TODO this
+		}catch(Exception exc) {
+			//do nothing, means we've clicked somewhere we shouldn't have
+			return;
+		}		
 	}
 
 	/**
@@ -411,6 +424,9 @@ public class Controller extends Application implements GameListener{
 	 * calls the WorldGraphics to update.
 	 */
 	private void update() {
+		/*handle moving the player*/
+		//TODO - this when I wake up
+		
 		/*update game context via logic*/
 		logic.tick();
 		/*redraw graphics*/
