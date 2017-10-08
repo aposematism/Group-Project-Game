@@ -5,11 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
-
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
+import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.model.Tile;
 
 /** 
@@ -23,17 +22,17 @@ public class TerrainParser{
 	
 	
 	public TerrainParser(File region) throws IOException{
-		initScanner(new FileReader(region));
+		initScanner(region);
 		parseStringArray();
 	}
 	/** 
 	 * This method is for the initialization of the region file.
 	 * */
-	private void initScanner(Reader reader)throws IOException{
+	private void initScanner(File region)throws IOException{
 		BufferedReader regionBuff = null;
 		stringArray = new ArrayList<String[]>();
 		try{
-			regionBuff = new BufferedReader(reader);
+			regionBuff = new BufferedReader(new FileReader(region));
 			String line = regionBuff.readLine();
 			while(line != null){
 				String[] split = line.split("");
@@ -61,14 +60,7 @@ public class TerrainParser{
 		for(int i = 0; i < stringArray.size(); i++){
 			for(int j = 0; j < stringArray.get(i).length; j++){
 				Tile z = new Tile(i, j, stringArray.get(i)[j]);
-				
-				Entity possiblyFloor = parseMapEntity(stringArray.get(i)[j]);
-				
-				if (possiblyFloor instanceof Floor) {
-                    z.setMapFloor((Floor)possiblyFloor);
-				} else {
-				    throw new IllegalArgumentException("malformed terrain, floor must be Floor");
-				}
+				z.setMapFloor(parseMapEntity(stringArray.get(i)[j]));
 				regionArray[i][j] = z;
 			}
 		}
@@ -88,8 +80,7 @@ public class TerrainParser{
 			return f;
 		}
 		else if(p.equals("w")) {
-			Floor w = new Floor("TudorWall", "tudorwall.png");
-			return w;
+			Static w = new Static("TudorWall", "tudorwall.png");
 		}
 		return null;
 	}
@@ -121,15 +112,6 @@ public class TerrainParser{
 			System.out.println("Index Out of Bounds in the connection of the node network!");
 		}
 		return toConnect;
-	}
-	
-	/**
-	 * Parses a tile array.
-	 */
-	public Tile[][] parseTiles() {
-	    parseStringArray();
-	    connectNetworks(getRA());
-	    return getRA();
 	}
 	
 	/**
