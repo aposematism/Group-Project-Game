@@ -21,10 +21,10 @@ public class TerrainParserTests {
 	 * Testing the first method for initializing properly
 	 * */
 	@Test
-	public void init_scanner_load() throws IOException{
+	public void initscanner_load() throws IOException{
 		System.out.println("Testing scanner initialization for the txt file");
 		try{
-			TerrainParser.init_scanner(testTerrain);
+			TerrainParser tp = new TerrainParser(testTerrain);
 		}
 		catch(IOException e){
 			fail("IOException during the Terrain Parser Initialization");
@@ -34,15 +34,15 @@ public class TerrainParserTests {
 	 * Checking if the string stored in character matches that of the terrain map provided.
 	 * 
 	 * @author - Jordan
+	 * @throws IOException 
 	 * */
 	@Test
 	public void string_parser_test(){
-		TerrainParser tp = new TerrainParser();
+		
 		try{
 			System.out.println("Testing String Parser to see Tile matches the txt file");
-			TerrainParser.init_scanner(testTerrain);
-			TerrainParser.parseStringArray();
-			Tile[][] rA = TerrainParser.getRA();
+			TerrainParser tp = new TerrainParser(testTerrain);
+			Tile[][] rA = tp.getRA();
 			ArrayList<String[]> sA = tp.getStringArray();
 			for(int i = 0; i < sA.size(); i++){
 				for(int j = 0; j < sA.get(i).length; j++){
@@ -76,10 +76,9 @@ public class TerrainParserTests {
 	public void connecting_nodes_test(){
 		try{
 			System.out.println("Testing String Parser to see if it connects the right number of nodes");
-			TerrainParser.init_scanner(testTerrain);
-			TerrainParser.parseStringArray();
-			Tile[][] rA = TerrainParser.getRA();
-			TerrainParser.connectNetworks(rA);
+			TerrainParser tp = new TerrainParser(testTerrain);
+			Tile[][] rA = tp.getRA();
+			tp.connectNetworks(rA);
 			for(int i = 0; i < rA.length; i++){
 				for(int j = 0; j < rA[i].length; j++){
 					System.out.print(rA[i][j].getNeighbours().size());
@@ -99,10 +98,9 @@ public class TerrainParserTests {
 	public void connecting_nodes_fail_test() {
 		try{
 			System.out.println("Testing String Parser to see if it connects the right number of nodes");
-			TerrainParser.init_scanner(testTerrain);
-			TerrainParser.parseStringArray();
-			Tile[][] rA = TerrainParser.getRA();
-			TerrainParser.connectNetworks(rA);
+			TerrainParser tp = new TerrainParser(testTerrain);
+			Tile[][] rA = tp.getRA();
+			tp.connectNetworks(rA);
 			for(int i = 0; i < rA.length; i++){
 				for(int j = 0; j < rA[i].length; j++){
 					System.out.print(rA[i][j].getNeighbours().size());

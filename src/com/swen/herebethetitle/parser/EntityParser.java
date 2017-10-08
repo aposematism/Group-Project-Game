@@ -22,7 +22,7 @@ import com.swen.herebethetitle.util.GridLocation;
 /**
  * Helper class with static methods for interpreting a single line in the save file.
  *
- * @author Mark Metcalfe
+ * @author Mark Metcalfe and Jordan Milburn
  */
 public class EntityParser {
 
@@ -33,10 +33,14 @@ public class EntityParser {
 	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<Entity> entityList = new ArrayList<Entity>();
 	
+	public EntityParser(File interactives) throws IOException, SyntaxError {
+		interactiveScanner(interactives);
+	}
+	
 	/** 
 	 * Interactive scanner which takes input from a file and produces all entites from it.
 	 * */
-	public static void interactive_scanner(File interactives)throws IOException, SyntaxError{
+	private void interactiveScanner(File interactives)throws IOException, SyntaxError{
 		BufferedReader interactivesBuff = null;
 		coordinates = new ArrayList<Coord>();
 		entityList = new ArrayList<Entity>();
@@ -59,7 +63,7 @@ public class EntityParser {
 		}
 	}
 	
-	public static Region parseEntitytoRegion(Region reg) {
+	public Region parseEntitytoRegion(Region reg) {
 		for(int i = 0; i < entityList.size(); i++) {
 			Tile t = reg.get(coordinates.get(i).convert());
 			t.add(entityList.get(i));
