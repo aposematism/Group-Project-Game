@@ -132,4 +132,20 @@ public class Inventory implements Iterable<Item> {
 
 		return s.toString();
 	}
+	
+	/** 
+	 * Inserted to check inventory size. (used in some parser tests)
+	 * */
+	public int getInventorySize() {
+		int total = items.size();
+		if(weapon != null) {
+			total++;
+		}
+		for(int k = 0; k < armour.length; k++) {
+			if(armour[k] != null) {
+				total++;
+			}
+		}
+		return total;
+	}
 }
