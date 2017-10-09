@@ -1,22 +1,12 @@
 package com.swen.herebethetitle.parser;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.parser.EntityParser;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ReverseParser {
 	

@@ -1,9 +1,9 @@
 package com.swen.herebethetitle.entity.tests;
 
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.model.*;
-
+import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.model.GameContext;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +12,18 @@ import static org.junit.Assert.*;
  * @author Mark Metcalfe
  */
 public class ItemTests {
+
+	public static void addtoFloor(GameContext context, Entity... entites){
+		for(Entity e: entites)
+			context.getCurrentRegion().getPlayerTile().add(e);
+	}
+
+	public static void addItem(GameContext context, Item... items) {
+		for (Item i : items) {
+			addtoFloor(context, i);
+			i.interact(context);
+		}
+	}
 
 	/**
 	 * Assert that Armour with a higher rating replaces the current armour when picked up
@@ -23,12 +35,13 @@ public class ItemTests {
 
 		Armour worse = new Armour("", null, Armour.TYPE.TORSO, 5);
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
+		addtoFloor(context,worse,better);
 
-		worse.pickup(context);
+		worse.interact(context);
 
 		assertEquals(worse, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
-		better.pickup(context);
+		better.interact(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
@@ -47,12 +60,34 @@ public class ItemTests {
 
 		Armour worse = new Armour("", null, Armour.TYPE.TORSO, 5);
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
+		addtoFloor(context,worse,better);
 
-		better.pickup(context);
+		better.interact(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
-		worse.pickup(context);
+		worse.interact(context);
+
+		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
+
+		better.use(context);
+
+		assertTrue(context.player.possesses(better));
+	}
+
+	@Test
+	public void test_armourPickup_3(){
+		GameContext context = new GameContext();
+
+		Armour worse = new Armour("", null, Armour.TYPE.TORSO, 5);
+		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
+		addtoFloor(context,worse,better);
+
+		better.interact(context);
+
+		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
+
+		worse.interact(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
@@ -68,9 +103,14 @@ public class ItemTests {
 	public void test_Key_use(){
 		GameContext context = new GameContext();
 		Item i = new Key("", null, 0);
-		context.player.add(i);
-		assertTrue(context.player.possesses(i));
+		addtoFloor(context,i);
+
 		i.interact(context);
+
+		assertTrue(context.player.possesses(i));
+
+		i.interact(context);
+
 		assertFalse(context.player.possesses(i));
 	}
 
@@ -81,7 +121,7 @@ public class ItemTests {
 	public void test_Item_pickup(){
 		GameContext context = new GameContext();
 		Item i = new Key("", null, 0);
-		context.getCurrentRegion().getPlayerTile().add(i);
+		addtoFloor(context,i);
 		assertFalse(context.player.possesses(i));
 		i.interact(context);
 		assertTrue(context.player.possesses(i));
@@ -105,8 +145,10 @@ public class ItemTests {
 
 		Item p1 = new Potion("", null, 50);
 		Item p2 = new Potion("", null, -50);
+		addtoFloor(context,p1,p2);
 
-		context.player.add(p1, p2);
+		p1.interact(context);
+		p2.interact(context);
 
 		assertEquals(100, context.player.getHealth(), 0);
 
@@ -129,14 +171,16 @@ public class ItemTests {
 		GameContext context = new GameContext();
 
 		Weapon w = new Weapon("", null, true, 50);
-		context.player.add(w);
+		addtoFloor(context,w);
+
+		w.interact(context);
 
 		assertTrue(w.isMelee());
 		assertTrue(context.player.possesses(w));
 
 		assertEquals(50, w.getStrength(), 0);
 
-		w.use(context);
+		w.interact(context);
 
 		assertTrue(context.player.possesses(w));
 	}

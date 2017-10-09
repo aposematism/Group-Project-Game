@@ -10,7 +10,7 @@ import com.swen.herebethetitle.model.GameContext;
  *
  * @author Mark Metcalfe
  */
-public class Floor extends Entity {
+public class Floor extends Static {
 
     public Floor(String name, String spritePath){ super(name, spritePath); }
 

@@ -3,13 +3,13 @@ package com.swen.herebethetitle.graphics;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Inventory;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Weapon;
+import com.swen.herebethetitle.entity.Weapon;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
@@ -41,6 +41,8 @@ public class GameCanvas extends Canvas {
         world = new WorldRenderer();
         hud = new HUD(this);
         this.context = context;
+
+        update();
     }
 
     /**
@@ -48,9 +50,10 @@ public class GameCanvas extends Canvas {
      * @author weirjosh
      */
     public void update(){
+        GraphicsContext gc = this.getGraphicsContext2D();
+        gc.clearRect(0,0,getWidth(),getHeight());
         updateWorld();
         updateHUD();
-
     }
 
     /**

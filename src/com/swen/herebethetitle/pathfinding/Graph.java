@@ -213,6 +213,11 @@ public class Graph {
             // total_path.append(current)
             total_path.add(current);
         }
+        
+        // special case for when the source and destination are neighbours.
+        if (total_path.size() == 1)
+            total_path.add(source);
+
         Collections.reverse(total_path);
         return total_path;
     }

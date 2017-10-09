@@ -6,7 +6,7 @@ import java.awt.Point;
 import com.swen.herebethetitle.util.GridLocation;
 
 /**A grid object is a representation of an area of evenly spaced cells over a given area.
- It will have static methods for turning its own grid coordinates into real world pixel coordinates
+ It provides methods for turning its own grid coordinates into real world pixel coordinates
  among other things.
  * Created by weirjosh on 19/09/17.
  */
@@ -29,7 +29,7 @@ public class GridManager extends Canvas{
      * @author weirjosh
      */
     public static GridManager createDefaultManager(){
-        return new GridManager(0,0,defaultCellSize, 0,0);
+        return new GridManager(0,0,defaultCellSize, 2,2);
     }
 
     /**
@@ -100,8 +100,8 @@ public class GridManager extends Canvas{
      * @author weirjosh
      */
     public GridLocation getGridLocation(Point p, Point offset){
-        int col = ((p.x - offset.x - this.x) /(cellSize+hGap)) ;
-        int row = ((p.y - offset.y - this.y) /(cellSize+vGap)) ;
+        int col = ((p.x - (offset.x-(cellSize/2)) - this.x) /(cellSize+hGap)) ;
+        int row = ((p.y - (offset.y-(cellSize/2)) - this.y) /(cellSize+vGap));
 
         return new GridLocation(col, row);
     }
