@@ -31,11 +31,11 @@ public class PlayerMove implements Interaction {
         }
 
         // Move the player
-        if(!(region.getPlayerTile()==dest)) { //don't move if we're already there
-            region.move(player, optimalPath.get().next());
-        }else {
+        if(region.getPlayerTile() == dest) { //don't move if we're already there
             throw new InteractionOver();
         }
+
+        region.move(player, optimalPath.get().next());
     }
 
     @Override
