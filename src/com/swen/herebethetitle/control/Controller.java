@@ -11,9 +11,12 @@ import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.ai.PlayerMove;
+import com.swen.herebethetitle.logic.ai.Interaction.InteractionOver;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.pathfinding.Graph;
+import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 
@@ -47,11 +50,12 @@ import javafx.util.Duration;
 /*
  * TODO
  * 
- * -Add in subordinate menu functionality for load game & settings
  * -audio functionality
  * 
  * Immediately:
- * -input event handling implementation
+ * -input events for interactions and attacking
+ * -Add in subordinate menu functionality for load game & settings
+ * -player pathfinding
  * 
  */
 public class Controller extends Application implements GameListener{
@@ -83,6 +87,7 @@ public class Controller extends Application implements GameListener{
 	private GameLogic logic;
 	private boolean isPlaying;
 	private PlayerMove playerMove;
+	private Tile playerDestination;
 	
 	//Testing mode field
 	public static boolean isTesting;
@@ -408,10 +413,9 @@ public class Controller extends Application implements GameListener{
 		GridLocation mouseLocation = gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
 		System.out.println("Grid location clicked: " + mouseLocation.x + "," + mouseLocation.y);
 		
-		/*build the interaction for the player movement*/
+		/*build the new interaction for the player movement*/
 		try {
-			Tile dest = game.getCurrentRegion().get(mouseLocation);
-			playerMove = new PlayerMove();
+			playerDestination = game.getCurrentRegion().get(mouseLocation);
 			//TODO this
 		}catch(Exception exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
@@ -429,6 +433,17 @@ public class Controller extends Application implements GameListener{
 		
 		/*update game context via logic*/
 		logic.tick();
+		/*move the player*/
+        /* find optimal path */
+        Graph graph = new Graph(game.getCurrentRegion(), game.getCurrentRegion().getPlayerTile(), playerDestination);
+        Optional<Path> optimalPath = graph.findPath();
+
+        if(optimalPath.isPresent()) {
+            // Move the player
+            if(!(game.getCurrentRegion().getPlayerTile()==playerDestination)) { //don't move if we're already there
+                game.getCurrentRegion().move(game.getPlayer(), optimalPath.get().next());
+            }
+        }
 		/*redraw graphics*/
 		gameCanvas.update();
 	}
