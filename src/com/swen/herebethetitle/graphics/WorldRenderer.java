@@ -1,21 +1,14 @@
 package com.swen.herebethetitle.graphics;
 
 
-import java.awt.Point;
-import java.util.*;
-
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Region;
-import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.util.GridLocation;
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+
+import java.awt.*;
+import java.util.List;
+import java.util.Map;
 
 
 /**

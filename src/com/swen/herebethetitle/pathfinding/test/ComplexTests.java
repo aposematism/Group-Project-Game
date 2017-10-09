@@ -2,7 +2,7 @@ package com.swen.herebethetitle.pathfinding.test;
 
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;

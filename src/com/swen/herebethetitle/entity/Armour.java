@@ -1,9 +1,6 @@
-package com.swen.herebethetitle.entity.items;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
-
-import javafx.scene.image.Image;
 
 /**
  * Special Item that is designed to fit in the armour slots in Inventory
@@ -16,18 +13,7 @@ import javafx.scene.image.Image;
  */
 public final class Armour extends Item {
 
-	/**
-	 * The four different types of armour there are that covers a body part
-	 */
-	public enum TYPE {
-		HELMET,
-		TORSO,
-		LEGS,
-		BOOTS
-	}
-
 	private final TYPE SLOT;
-
 	private final double RATING;
 
 	/**
@@ -57,11 +43,11 @@ public final class Armour extends Item {
 	 * @param context
 	 */
 	@Override
-	public void pickup(GameContext context) {
+	protected void pickup(GameContext context) {
 		if(context.player.inventory().getArmour(this.SLOT)==null)
-			context.player.add(this);
+			context.player.inventory().add(this);
 		else if(this.RATING>context.player.inventory().getArmour(this.SLOT).getRating())
-			context.player.add(this);
+			context.player.inventory().add(this);
 	}
 
 	/**
@@ -73,4 +59,14 @@ public final class Armour extends Item {
 
 	@Override
 	public String toString() { return super.toString()+" "+SLOT+" "+RATING; }
+
+	/**
+	 * The four different types of armour there are that covers a body part
+	 */
+	public enum TYPE {
+		HELMET,
+		TORSO,
+		LEGS,
+		BOOTS
+	}
 }

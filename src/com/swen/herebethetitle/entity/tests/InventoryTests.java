@@ -1,8 +1,10 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.items.*;
+import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.*;
+
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,39 +21,31 @@ public class InventoryTests {
 	 */
 	@Test
 	public void test_armour(){
-		Player p = new Player(null, Direction.Down);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
 		Inventory i = p.inventory();
 
 		Armour a = new Armour("", null, Armour.TYPE.BOOTS, 0);
 		Armour b = new Armour("", null, Armour.TYPE.HELMET, 0);
 		Armour c = new Armour("", null, Armour.TYPE.TORSO, 0);
+		addtoFloor(context,a,b,c);
 
-		p.add(a,b,c);
+		a.interact(context);
+		b.interact(context);
+		c.interact(context);
 
 		assertTrue(i.hasArmour(Armour.TYPE.BOOTS));
 		assertTrue(i.hasArmour(Armour.TYPE.HELMET));
 		assertTrue(i.hasArmour(Armour.TYPE.TORSO));
 		assertFalse(i.hasArmour(Armour.TYPE.LEGS));
 
-		assertTrue(i.contains(a));
-		assertTrue(i.contains(b));
-		assertTrue(i.contains(c));
+		assertTrue(p.possesses(a));
+		assertTrue(p.possesses(b));
+		assertTrue(p.possesses(c));
 
 		assertEquals(a, i.getArmour(Armour.TYPE.BOOTS));
 		assertEquals(b, i.getArmour(Armour.TYPE.HELMET));
 		assertEquals(c, i.getArmour(Armour.TYPE.TORSO));
-		assertNull(i.getArmour(Armour.TYPE.LEGS));
-
-		p.remove(a,b,c);
-
-		assertFalse(i.hasArmour(Armour.TYPE.BOOTS));
-		assertFalse(i.hasArmour(Armour.TYPE.HELMET));
-		assertFalse(i.hasArmour(Armour.TYPE.TORSO));
-		assertFalse(i.hasArmour(Armour.TYPE.LEGS));
-
-		assertNull(i.getArmour(Armour.TYPE.BOOTS));
-		assertNull(i.getArmour(Armour.TYPE.HELMET));
-		assertNull(i.getArmour(Armour.TYPE.TORSO));
 		assertNull(i.getArmour(Armour.TYPE.LEGS));
 	}
 
@@ -60,24 +54,20 @@ public class InventoryTests {
 	 */
 	@Test
 	public void test_weapon(){
-		Player p = new Player(null, Direction.Down);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
 		Inventory i = p.inventory();
 
 		Weapon w = new Weapon("", null, true, 3);
+		addtoFloor(context,w);
 
-		p.add(w);
+		w.interact(context);
 
 		assertTrue(i.getWeapon().isPresent());
 
 		assertEquals(w, i.getWeapon().get());
 
-		assertTrue(i.contains(w));
-
-		p.remove(w);
-
-		assertFalse(i.getWeapon().isPresent());
-
-		assertFalse(i.contains(w));
+		assertTrue(p.possesses(w));
 	}
 
 	/**
@@ -85,36 +75,32 @@ public class InventoryTests {
 	 */
 	@Test
 	public void test_items(){
-		Player p = new Player(null, Direction.Down);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
 		Inventory i = p.inventory();
 
 		Item a = new Key("", null,0);
 		Item b = new Key("", null,0);
 		Item c = new Key("", null,0);
 		Item d = new Key("", null,0);
+		addtoFloor(context,a,b,c,d);
 
-		p.add(a,b,c,d);
+		a.interact(context);
+		b.interact(context);
+		c.interact(context);
+		d.interact(context);
 
-		assertEquals(4, i.getItems().size());
+		assertEquals(4, i.size());
 
 		assertEquals(a, i.getItems().get(0));
 		assertEquals(b, i.getItems().get(1));
 		assertEquals(c, i.getItems().get(2));
 		assertEquals(d, i.getItems().get(3));
 
-		assertTrue(i.contains(a));
-		assertTrue(i.contains(b));
-		assertTrue(i.contains(c));
-		assertTrue(i.contains(d));
-
-		p.remove(a,b,c,d);
-
-		assertEquals(0, i.getItems().size());
-
-		assertFalse(i.contains(a));
-		assertFalse(i.contains(b));
-		assertFalse(i.contains(c));
-		assertFalse(i.contains(d));
+		assertTrue(p.possesses(a));
+		assertTrue(p.possesses(b));
+		assertTrue(p.possesses(c));
+		assertTrue(p.possesses(d));
 	}
 
 	/**
@@ -122,20 +108,44 @@ public class InventoryTests {
 	 */
 	@Test
 	public void test_clearInventory(){
-		Player p = new Player(null, Direction.Down);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+		Inventory i = p.inventory();
 
 		Item a = new Key("", null,0);
 		Item b = new Key("", null,0);
 		Item c = new Key("", null,0);
+		addtoFloor(context,a,b,c);
 
 		assertEquals(0, p.inventory().getItems().size());
 
-		p.add(a,b,c);
+		a.interact(context);
+		b.interact(context);
+		c.interact(context);
 
 		assertEquals(3, p.inventory().getItems().size());
+	}
 
-		p.inventory().clear();
+	/**
+	 * Asserts that the inventory is cleared correctly
+	 */
+	@Test
+	public void test_size(){
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+		Inventory i = p.inventory();
 
-		assertEquals(0, p.inventory().getItems().size());
+		Item a = new Key("", null,0);
+		Item b = new Armour("", null, Armour.TYPE.BOOTS, 0);
+		Item c = new Weapon("", null, true, 0);
+		addtoFloor(context,a,b,c);
+
+		assertEquals(0, i.size());
+
+		a.interact(context);
+		b.interact(context);
+		c.interact(context);
+
+		assertEquals(3, i.size());
 	}
 }

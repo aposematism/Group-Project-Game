@@ -1,6 +1,5 @@
-package com.swen.herebethetitle.entity.ai;
+package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
@@ -17,15 +16,15 @@ public abstract class NPCBehavior {
 	 * Checks that the NPC can be interacted with by the Player
 	 * Can be interacted with if the player is on or adjacent to the NPCs tile
 	 */
-	public boolean canInteract(GameContext context, NPC npc){
-        return context.getCurrentRegion().isNeighbouring(context.getPlayer(), npc) ||
+	protected boolean canInteract(GameContext context, NPC npc) {
+		return context.getCurrentRegion().isNeighbouring(context.getPlayer(), npc) ||
 				context.getCurrentRegion().getPlayerTile().contains(npc);
 	}
 
 	/**
 	 * Checks if the Player possesses a melee weapon
 	 */
-	public boolean hasMeleeWeapon(GameContext context){
+	protected boolean hasMeleeWeapon(GameContext context) {
 		return context.player.inventory().getWeapon().isPresent() && context.player.inventory().getWeapon().get().isMelee();
 	}
 

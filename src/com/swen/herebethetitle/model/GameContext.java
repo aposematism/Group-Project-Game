@@ -17,6 +17,17 @@ public class GameContext {
 		this.player = new Player("file:res/Wizard.png", Direction.Up);
 		this.currentRegion.get(0, 0).add(player);
 	}
+
+	/**
+	 * Create context with preloaded player character
+	 * @param player
+	 */
+	public GameContext(Player player) {
+		this.currentRegion = CreateTestRegion();
+
+		this.player = player;
+		this.currentRegion.get(0, 0).add(player);
+	}
 	
 	public static Region CreateTestRegion() {
 	    Region region = new Region(10, 10);

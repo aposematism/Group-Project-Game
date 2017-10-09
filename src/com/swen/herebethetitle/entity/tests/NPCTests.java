@@ -1,12 +1,11 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.util.*;
-import com.swen.herebethetitle.model.*;
-
+import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
+
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
 import static org.junit.Assert.*;
 
 /**
@@ -15,6 +14,14 @@ import static org.junit.Assert.*;
  * @author Mark Metcalfe
  */
 public class NPCTests {
+
+	public static void changeHealth(GameContext context, NPC npc, double amount) {
+		Weapon weapon = new Weapon("", "", false, amount);
+		addtoFloor(context, weapon);
+		weapon.interact(context);
+		context.getCurrentRegion().getPlayerTile().add(npc);
+		npc.interact(context);
+	}
 
 	/**
 	 * Asserts that NPCBehavior is constructed correctly
@@ -25,19 +32,6 @@ public class NPCTests {
 		NPC n = new NPC("", null, a, 80, Direction.Down);
 		assertTrue(n.getBehavior().isPresent());
 		assertEquals(a, n.getBehavior().get());
-	}
-
-	@Test
-	public void test_hasMeleeWeapon(){
-		GameContext context = new GameContext();
-
-		NPCBehavior a = new MonsterStrategy(1);
-
-		assertFalse(a.hasMeleeWeapon(context));
-
-		context.player.add(new Weapon("","",true,1));
-
-		assertTrue(a.hasMeleeWeapon(context));
 	}
 
 	/**
@@ -100,7 +94,9 @@ public class NPCTests {
 		context.getCurrentRegion().get(1, 0).add(n);
 
 		Weapon w = new Weapon("", null, false, 10);
-		context.player.add(w);
+		addtoFloor(context,w);
+		w.interact(context);
+
 		assertTrue(context.player.inventory().getWeapon().isPresent());
 
 		assertEquals(80, n.getHealth(), 0);
@@ -119,7 +115,9 @@ public class NPCTests {
 		GameContext context = new GameContext();
 
 		Weapon w = new Weapon("", null, false, 80);
-		context.player.add(w);
+		addtoFloor(context,w);
+		w.interact(context);
+
 		assertTrue(context.player.inventory().getWeapon().isPresent());
 
 		assertEquals(80, n.getHealth(), 0);
