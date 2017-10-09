@@ -1,7 +1,9 @@
 package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.items.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Stores the Player's inventory
@@ -32,7 +34,7 @@ public class Inventory implements Iterable<Item> {
 	/**
 	 * Adds the given item to the appropriate collection/field
 	 */
-	public void add(Item item) {
+	protected void add(Item item) {
 		if(item instanceof Weapon)
 			this.weapon = Optional.of((Weapon) item);
 		else if(item instanceof Armour)
@@ -44,7 +46,7 @@ public class Inventory implements Iterable<Item> {
 	/**
 	 * Removes the given item from the appropriate collection/field
 	 */
-	public void remove(Item item) {
+	protected void remove(Item item) {
 		if(item instanceof Weapon)
 			this.weapon = Optional.empty();
 		else if(item instanceof Armour)
@@ -56,13 +58,23 @@ public class Inventory implements Iterable<Item> {
 	/**
 	 * Checks if the given item is in any of the collections/fields
 	 */
-	public boolean contains(Item item){
+	protected boolean contains(Item item){
 		if(weapon.isPresent() && item.equals(weapon.get()))
 			return true;
 		for(Armour a: armour)
 			if(item.equals(a))
 				return true;
 		return this.items.contains(item);
+	}
+
+
+	/**
+	 * Adds up the amount of present weapons, armour and items
+	 */
+	public int size() {
+		int total = weapon.isPresent() ? items.size() + 1 : items.size();
+		for (Armour a : armour) total = a != null ? total + 1 : total;
+		return total;
 	}
 
 	/**
@@ -99,7 +111,7 @@ public class Inventory implements Iterable<Item> {
 	/**
 	 * Reset the inventory
 	 */
-	public void clear(){
+	protected void clear(){
 		this.weapon = Optional.empty();
 		this.armour = new Armour[Armour.TYPE.values().length];
 		this.items  = new ArrayList<>();
@@ -131,21 +143,5 @@ public class Inventory implements Iterable<Item> {
 		}
 
 		return s.toString();
-	}
-	
-	/** 
-	 * Inserted to check inventory size. (used in some parser tests)
-	 * */
-	public int getInventorySize() {
-		int total = items.size();
-		if(weapon != null) {
-			total++;
-		}
-		for(int k = 0; k < armour.length; k++) {
-			if(armour[k] != null) {
-				total++;
-			}
-		}
-		return total;
 	}
 }

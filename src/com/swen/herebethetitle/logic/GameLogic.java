@@ -8,9 +8,7 @@ import java.util.stream.Collectors;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.logic.ai.NpcController;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
@@ -121,6 +119,14 @@ public class GameLogic {
     }
     
     /**
+     * Starts a player movement to a tile.
+     * @param dest The destination tile.
+     */
+    public void movePlayer(Tile dest) {
+        npcController.movePlayer(getPlayer(), dest);
+    }
+    
+    /**
      * Starts a discussion with an NPC if it is possible.
      * 
      * Does nothing if the NPC has no dialog.
@@ -143,53 +149,8 @@ public class GameLogic {
                 startDiscussion(npc);
             else
                 ; // no interactions possible.
-        } else if (entity instanceof Item) {
-            Item item = (Item)entity;
-            
-            pickup(item);
-        } else if (entity instanceof Static) {
-            Static s = (Static)entity;
-            
-            s.interact(context, notifier);
-        }
-    }
-    
-    /**
-     * Uses an item in the players inventory.
-     * @param item The item to use.
-     */
-    public void use(Item item) {
-        if (!getPlayer().possesses(item))
-            throw new IllegalArgumentException("cannot use an item that is not in the inventory");
-        item.use(context);
-    }
-
-    /**
-     * Picks up an item to the inventory.
-     * 
-     * Prefer to use `interact` directly.
-     * @throws EntityOutOfRange if the item is not neighboured.
-     */
-    protected void pickup(Item item) throws EntityOutOfRange {
-        ensureCanInteractWith(item);
-
-        if (getPlayer().inventory().contains(item))
-            throw new IllegalArgumentException("item is already in inventory");
-
-        item.pickup(context);
-        notifier.notify(listener -> listener.onPlayerPickup(getPlayer(), item));
-    }
-
-    /**
-     * Drops an item from the inventory.
-     */
-    public void drop(Item item) {
-        if (getPlayer().inventory().contains(item))
-            throw new IllegalArgumentException("cannot drop an item that is not in inventory");
-
-        // FIXME: add the dropped entity to the map?
-        getGame().getPlayer().inventory().remove(item);
-        notifier.notify(listener -> listener.onPlayerDrop(getPlayer(), item));
+        } else
+	        entity.interact(context, notifier);
     }
 
     /***

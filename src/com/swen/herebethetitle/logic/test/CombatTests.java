@@ -1,16 +1,15 @@
 package com.swen.herebethetitle.logic.test;
 
-import static org.junit.Assert.*;
-
-import java.util.Optional;
-
-import org.junit.Test;
-
 import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.util.GridLocation;
+import org.junit.Test;
+
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 public class CombatTests extends BaseTest {
     @Test

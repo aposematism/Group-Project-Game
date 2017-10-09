@@ -1,10 +1,10 @@
 package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Item;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
+
+import java.util.Collection;
 
 /**
  * The Player
@@ -35,32 +35,18 @@ public class Player extends Mob {
 	 * Create a player with existing health and wallet values.
 	 * Used for loading from a save file.
 	 */
-	public Player(String name, String spritePath, double health, int wallet, Direction direction){
+	public Player(String name, String spritePath, double health, int wallet, Direction direction, Item... items){
 		super(name, spritePath, health, direction);
 		this.wallet = wallet;
 		inventory = new Inventory();
+		for(Item i: items)
+			inventory.add(i);
 	}
 
 	/**
 	 * Create a starting, default instance of Player.
 	 */
 	public Player(String spritePath, Direction direction){ this("Player", spritePath, FULL_HEALTH, 0, direction); }
-
-	/**
-	 * Puts any amount of items into the inventory
-	 */
-	public void add(Item... items) {
-		for(Item item: items)
-			inventory.add(item);
-	}
-
-	/**
-	 * Removes any amount of items from the inventory
-	 */
-	public void remove(Item... items) {
-		for(Item item: items)
-			inventory.remove(item);
-	}
 
 	/**
 	 * Checks if the inventory contains any of the given items
@@ -99,7 +85,7 @@ public class Player extends Mob {
 	 * the better the armour, the less damage taken.
 	 */
 	@Override
-	public void damage(double amount) {
+	protected void damage(double amount) {
 		double armourTotal = 0;
 		for(Armour a: inventory.getArmour())
 			if(a!=null)

@@ -1,7 +1,5 @@
 package com.swen.herebethetitle.logic.ai;
 
-import java.util.Optional;
-
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
@@ -11,6 +9,8 @@ import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.GridLocation;
+
+import java.util.Optional;
 
 /**
  * A single, self-contained fight between a player and a npc.

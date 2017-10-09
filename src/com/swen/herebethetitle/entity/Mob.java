@@ -62,7 +62,7 @@ public abstract class Mob extends Entity {
 	 * @param amount A positive number
 	 * @throws IllegalArgumentException if input amount isn't positive
 	 */
-	public void damage(double amount){
+	protected void damage(double amount){
 		if(amount<=0)
 			throw new IllegalArgumentException("Must Be Positive!");
 		health -= amount;
@@ -75,7 +75,7 @@ public abstract class Mob extends Entity {
 	 * @param amount A positive number
 	 * @throws IllegalArgumentException if input amount isn't positive
 	 */
-	public void heal(double amount){
+	protected void heal(double amount){
 		if(amount<=0)
 			throw new IllegalArgumentException("Must Be Positive!");
 		health += amount;
@@ -89,7 +89,5 @@ public abstract class Mob extends Entity {
 	public boolean isDead() { return health == NO_HEALTH; }
 
 	@Override
-	public String toString() {
-		return super.toString()+" "+health+" "+direction.toString();
-	}
+	public String toString() { return super.toString()+" "+health+" "+direction.toString(); }
 }
