@@ -57,13 +57,13 @@ public class ExternalTestsDylan {
      * Parses a region.
      */
     private static Region parse(String inputText) {
+        Tile[][] tiles = null;
         try {
-            TerrainParser.init_scanner(new StringReader(inputText));
+            TerrainParser parser = new TerrainParser(new StringReader(inputText));
+            tiles = parser.parseTiles();
         } catch (IOException e) {
             fail(e.getMessage());
         }
-
-        Tile[][] tiles = TerrainParser.parseTiles();
         return new Region(tiles);
     }
 }

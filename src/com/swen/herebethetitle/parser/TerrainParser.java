@@ -23,8 +23,15 @@ public class TerrainParser{
 	
 	
 	public TerrainParser(File region) throws IOException{
-		initScanner(new FileReader(region));
-		parseStringArray();
+		this(new FileReader(region));
+	}
+	
+	/**
+	 * Creates a new terrain parser that reads from an arbitrary reader object.
+	 */
+	public TerrainParser(Reader reader) throws IOException {
+	    initScanner(reader);
+	    parseStringArray();
 	}
 	/** 
 	 * This method is for the initialization of the region file.
