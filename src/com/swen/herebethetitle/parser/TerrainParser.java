@@ -20,10 +20,15 @@ public class TerrainParser{
 	static ArrayList<String[]> stringArray = new ArrayList<String[]>();
 	static Tile[][] regionArray;
 	
+	
+	public TerrainParser(File region) throws IOException{
+		initScanner(region);
+		parseStringArray();
+	}
 	/** 
 	 * This method is for the initialization of the region file.
 	 * */
-	public static void init_scanner(File region)throws IOException{
+	private void initScanner(File region)throws IOException{
 		BufferedReader regionBuff = null;
 		stringArray = new ArrayList<String[]>();
 		try{
@@ -49,7 +54,7 @@ public class TerrainParser{
 	 * parses the single character string array such that it generates a new Node and gives that node a mapEntity
 	 * @author - Jordan
 	 * */
-	public static void parseStringArray(){
+	private void parseStringArray(){
 		regionArray = new Tile[stringArray.size()][stringArray.get(0).length];
 		System.out.print(stringArray.get(0).length + " " + stringArray.size());
 		for(int i = 0; i < stringArray.size(); i++){
@@ -68,7 +73,7 @@ public class TerrainParser{
 	 * @author - Jordan
 	 * @return Entity implementing object.
 	 * */
-	private static Entity parseMapEntity(String p){
+	private Entity parseMapEntity(String p){
 		//TODO: Implement the parsing of map entities as they are created. 
 		if(p.equals(".")){//
 			Floor f = new Floor("Grass","grass.png");
@@ -82,9 +87,10 @@ public class TerrainParser{
 	
 	/** 
 	 * This method attempts to connect the various nodes together for the parser. Checks first if it should connect within the limits of the 2d array structure
+	 * Delete this method if it isn't used by integration stage.
 	 * @author - Jordan
 	 * */
-	public static Tile[][] connectNetworks(Tile[][] toConnect){
+	public Tile[][] connectNetworks(Tile[][] toConnect){
 		try{
 			for(int i = 0; i < toConnect.length; i++){
 				for(int j = 0; j < toConnect[i].length; j++){
@@ -113,7 +119,7 @@ public class TerrainParser{
 	 * @author - Jordan Milburn
 	 *  */
 	
-	private static boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
+	private boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
 		if(i+k < 0 || j+l < 0){//if less than zero
 			return false;
 		}
@@ -130,7 +136,7 @@ public class TerrainParser{
 		return stringArray;
 	}
 	
-	public static Tile[][] getRA(){
+	public Tile[][] getRA(){
 		return regionArray;
 	}
 }

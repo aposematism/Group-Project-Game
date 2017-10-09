@@ -276,13 +276,12 @@ public class EntityParserTests {
 	 * */
 	@Test
 	public void test_integration() throws IOException, SyntaxError {
-		TerrainParser.init_scanner(new File("res/test_terrain_file.txt"));
-		TerrainParser.parseStringArray();
-		TerrainParser.connectNetworks(TerrainParser.getRA());
-		Region r = new Region(TerrainParser.getRA());
+		TerrainParser tp = new TerrainParser(new File("res/test_terrain_file.txt"));
+		tp.connectNetworks(tp.getRA());
+		Region r = new Region(tp.getRA());
 		File inputFile = new File("res/test_entity_parser.txt");
-		EntityParser.interactive_scanner(inputFile);
-		EntityParser.parseEntitytoRegion(r);
+		EntityParser ep = new EntityParser(inputFile);
+		ep.parseEntitytoRegion(r);
 		System.out.println("total items is " + r.getInteractiveTotal());
 		assertTrue(r.getInteractiveTotal() == 10);
 	}

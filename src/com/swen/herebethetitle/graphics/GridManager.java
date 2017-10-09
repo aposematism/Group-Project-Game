@@ -29,7 +29,7 @@ public class GridManager extends Canvas{
      * @author weirjosh
      */
     public static GridManager createDefaultManager(){
-        return new GridManager(0,0,defaultCellSize, 0,0);
+        return new GridManager(0,0,defaultCellSize, 2,2);
     }
 
     /**

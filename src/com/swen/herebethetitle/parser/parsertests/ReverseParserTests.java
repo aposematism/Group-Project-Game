@@ -53,9 +53,9 @@ public class ReverseParserTests {
 			@Test
 			public void test_currentstate_from_file() throws IOException, SyntaxError{
 				File inputFile = new File("res/test_entity_parser.txt");
-				ReverseParser.reverse_scanner(inputFile);
-				ReverseParser.pullString(ReverseParser.getInteractiveList());
-				File outputFile = ReverseParser.writeToFile("test output file.txt");
+				ReverseParser rp = new ReverseParser(inputFile);
+				rp.pullString(rp.getInteractiveList());
+				File outputFile = rp.writeToFile("test output file.txt");
 				assert(compareFiles(inputFile, outputFile));
 			}
 			
@@ -67,13 +67,12 @@ public class ReverseParserTests {
 			 * */
 			@Test
 			public void test_currentstate_from_region() throws IOException, SyntaxError {
-				TerrainParser.init_scanner(new File("res/test_terrain_file.txt"));
-				TerrainParser.parseStringArray();
-				TerrainParser.connectNetworks(TerrainParser.getRA());
-				Region r = new Region(TerrainParser.getRA());
+				TerrainParser tp = new TerrainParser(new File("res/test_terrain_file.txt"));
+				tp.connectNetworks(tp.getRA());
+				Region r = new Region(tp.getRA());
 				File inputFile = new File("res/test_entity_parser.txt");
-				EntityParser.interactive_scanner(inputFile);
-				EntityParser.parseEntitytoRegion(r);
+				EntityParser ep = new EntityParser(inputFile);
+				ep.parseEntitytoRegion(r);
 				ReverseParser.parseRegion(r);
 				File outputFile = ReverseParser.writeToFile("full reversal file.txt");
 				assert(compareFiles(inputFile, outputFile));
