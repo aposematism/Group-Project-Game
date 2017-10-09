@@ -1,5 +1,7 @@
 package com.swen.herebethetitle.control;
 
+import java.util.Optional;
+
 import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
@@ -8,7 +10,6 @@ import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
-import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Tile;
@@ -16,6 +17,7 @@ import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,8 +37,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.util.Optional;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -81,7 +81,6 @@ public class Controller extends Application implements GameListener{
 	private GameContext game;
 	private GameLogic logic;
 	private boolean isPlaying;
-	private PlayerMove playerMove;
 	private Tile playerDestination;
 
 

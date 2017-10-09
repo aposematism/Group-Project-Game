@@ -16,8 +16,16 @@ import com.swen.herebethetitle.pathfinding.Path;
  *
  */
 public class PlayerMove implements Interaction {
-    private Player player;
-    private Tile dest;
+    private final Player player;
+    private final Tile dest;
+    
+    /**
+     * Creates a new player movement interaction.
+     */
+    public PlayerMove(Player player, Tile dest) {
+        this.player = player;
+        this.dest = dest;
+    }
 
     @Override
     public void tick(Region region, Notifier notifier) throws InteractionOver {
