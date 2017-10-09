@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.parser.parsertests;
 
 import static com.swen.herebethetitle.parser.Coord.parseCoordinate;
-import static com.swen.herebethetitle.parser.EntityParser.parseEntity;
 import static org.junit.Assert.*;
 
 import com.swen.herebethetitle.entity.*;
@@ -24,6 +23,10 @@ import java.util.Scanner;
 
 public class EntityParserTests {
 	
+	/** 
+	 * This is a helper method for comparing file outputs.
+	 * @author - Jordan Milburn
+	 * */
 	private boolean compareFiles(File f1, File f2) {
 		try {
 			BufferedReader in1 = new BufferedReader(new FileReader(f1));
@@ -53,17 +56,11 @@ public class EntityParserTests {
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
 	public void parse(Entity in){
-		try {
-			Scanner s = new Scanner(in.toString());
-
-			Entity out = parseEntity(s);
-
-			assertEquals(in.toString(), out.toString());
-
-			System.out.println(in.toString());
-		} catch(SyntaxError error){
-			fail("Syntax Error");
-		}
+		Scanner s = new Scanner(in.toString());
+		EntityParser ep = new EntityParser(s);
+		Entity out = ep.parseEntity(s);
+		assertEquals(in.toString(), out.toString());
+		System.out.println(in.toString());
 	}
 
 	/**
@@ -155,7 +152,8 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				Entity entity = parseEntity(s);
+				EntityParser ep = new EntityParser(s);
+				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Weapon);
 			}
 		}
@@ -180,7 +178,8 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				Entity entity = parseEntity(s);
+				EntityParser ep = new EntityParser(s);
+				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Armour);
 			}
 		}
@@ -202,7 +201,8 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				Entity entity = parseEntity(s);
+				EntityParser ep = new EntityParser(s);
+				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Potion);
 			}
 		}
@@ -224,7 +224,8 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				Entity entity = parseEntity(s);
+				EntityParser ep = new EntityParser(s);
+				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Key);
 			}
 		}
@@ -248,7 +249,8 @@ public class EntityParserTests {
 			for(String l : staticArray) {
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				Entity entity = parseEntity(s);
+				EntityParser ep = new EntityParser(s);
+				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Static);
 			}
 			
@@ -270,7 +272,8 @@ public class EntityParserTests {
 
 		try {
 			Coord coord = parseCoordinate(s);
-			Entity entity = parseEntity(s);
+			EntityParser ep = new EntityParser(s);
+			Entity entity = ep.parseEntity(s);
 			System.out.println(coord.toString()+" "+entity.toString());
 		} catch(SyntaxError e){
 			fail(e.getMessage());

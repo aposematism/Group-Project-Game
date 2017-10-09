@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
@@ -18,8 +19,9 @@ import com.swen.herebethetitle.model.Tile;
  * @author Jordan
  * */
 public class TerrainParser{	
-	static ArrayList<String[]> stringArray = new ArrayList<String[]>();
-	static Tile[][] regionArray;
+	private ArrayList<String[]> stringArray = new ArrayList<String[]>();
+	private Tile[][] regionArray;
+	private String[] neighbouringRegions = new String[4];
 	
 	
 	public TerrainParser(File region) throws IOException{
@@ -42,6 +44,12 @@ public class TerrainParser{
 		try{
 			regionBuff = new BufferedReader(reader);
 			String line = regionBuff.readLine();
+			Scanner s = new Scanner(line);
+			if(s.hasNext("neighbours:")) {//only used in regions with neighbours.
+				s.next();
+				parseNeighbouringRegions(s);
+				line = regionBuff.readLine();
+			}
 			while(line != null){
 				String[] split = line.split("");
 				stringArray.add(split);
@@ -59,8 +67,17 @@ public class TerrainParser{
 	}
 	
 	/** 
+	 * Generates a list of neighbours for the Region Manager to use.
+	 * @author - Jordan Milburn
+	 * */
+	private void parseNeighbouringRegions(Scanner s) {
+		for(int i = 0; i < 4; i++) {
+			neighbouringRegions[i] = s.next();
+		}
+	}
+	/** 
 	 * parses the single character string array such that it generates a new Node and gives that node a mapEntity
-	 * @author - Jordan
+	 * @author - Jordan Milburn
 	 * */
 	private void parseStringArray(){
 		regionArray = new Tile[stringArray.size()][stringArray.get(0).length];
@@ -163,5 +180,9 @@ public class TerrainParser{
 	
 	public Tile[][] getRA(){
 		return regionArray;
+	}
+	
+	public String[] getNeighbouringRegions() {
+		return neighbouringRegions;
 	}
 }

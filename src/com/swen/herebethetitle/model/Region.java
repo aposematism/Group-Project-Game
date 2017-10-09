@@ -46,6 +46,10 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * */
     private String regionName;
     
+    /** 
+     * List of neighbouring regions in string form.
+     * */
+    private String[] neighbouringRegions;
     /**
      * Creates a new basic grid.
      * @param width
@@ -308,6 +312,14 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     
     public int getYSize() {
     	return cells[0].length;
+    }
+    
+    public String[] getNeighbouringRegions() {
+    	return neighbouringRegions;
+    }
+    
+    public void setNeighbouringRegions(String[] nr) {
+    	this.neighbouringRegions = nr;
     }
     
     public int getInteractiveTotal() {
