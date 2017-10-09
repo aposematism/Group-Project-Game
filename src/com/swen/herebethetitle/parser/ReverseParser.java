@@ -54,7 +54,7 @@ public class ReverseParser {
 	public static void parseRegion(Region r) {
 		interactives = new ArrayList<Entity>();
 		pullInteractives(r);
-		String fileName = r.getRegionName()+"currentstate.text";
+		String fileName = r.getRegionName()+"currentstate.txt";
 		try {
 			writeToFile(fileName);
 		} catch (FileNotFoundException e) {
@@ -92,9 +92,9 @@ public class ReverseParser {
 	}
 	
 	public static File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
-		File outputFile = new File(fileName);
+ 		File outputFile = null;
 		try {
-			
+ 			outputFile = File.createTempFile(fileName, ".txt.tmp");
 			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
 			for(String s : output) {
 				pw.write(s);

@@ -159,7 +159,6 @@ public class Graph {
             // if current = goal
             if (current == this.destination)
                 return Optional.of(reconstructPath(cameFrom));
-            Tile foo = getCheapestTile();
 
             // openSet.Remove(current)
             openSet.remove(current);
