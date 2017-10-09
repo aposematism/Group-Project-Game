@@ -53,7 +53,7 @@ public class ReverseParser {
 	public static void parseRegion(Region r) {
 		interactives = new ArrayList<Entity>();
 		pullInteractives(r);
-		String fileName = r.getRegionName()+"currentstate.text";
+		String fileName = r.getRegionName()+"currentstate.txt";
 		try {
 			writeToFile(fileName);
 		} catch (FileNotFoundException e) {
