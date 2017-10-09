@@ -29,27 +29,4 @@ public class InventoryTests extends BaseTest {
             }
         }
     }
-    
-    @Test
-    public void ensureCanNotPickUpNonNeighbouringItems() {
-        GridLocation playerLocation = new GridLocation(3,3);
-        teleportPlayer(playerLocation);
-        
-        Key closeKey = placeKey(new GridLocation(4,3));
-        Key farKey = placeKey(new GridLocation(5, 3));
-
-        try {
-            logic.interact(closeKey);
-        } catch (EntityOutOfRange e) {
-            fail("should be able to pick up close key");
-        }
-        
-        try {
-            logic.interact(farKey);
-            fail("should not be abe to pick up far away key");
-        } catch (EntityOutOfRange e) {
-            assertEquals(Optional.of(farKey), e.entity);
-            assertEquals("entity out of range", e.getMessage());
-        }
-    }
 }

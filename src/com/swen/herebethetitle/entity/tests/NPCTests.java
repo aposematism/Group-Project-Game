@@ -4,6 +4,8 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.util.*;
 import com.swen.herebethetitle.model.*;
 
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -33,7 +35,9 @@ public class NPCTests {
 
 		assertFalse(a.hasMeleeWeapon(context));
 
-		new Weapon("","",true,1).interact(context);
+		Weapon w = new Weapon("","",true,1);
+		addtoFloor(context,w);
+		w.interact(context);
 
 		assertTrue(a.hasMeleeWeapon(context));
 	}
@@ -97,7 +101,9 @@ public class NPCTests {
 		GameContext context = new GameContext();
 		context.getCurrentRegion().get(1, 0).add(n);
 
-		new Weapon("", null, false, 10).interact(context);
+		Weapon w = new Weapon("", null, false, 10);
+		addtoFloor(context,w);
+		w.interact(context);
 
 		assertTrue(context.player.inventory().getWeapon().isPresent());
 
@@ -116,7 +122,9 @@ public class NPCTests {
 
 		GameContext context = new GameContext();
 
-		new Weapon("", null, false, 80).interact(context);
+		Weapon w = new Weapon("", null, false, 80);
+		addtoFloor(context,w);
+		w.interact(context);
 
 		assertTrue(context.player.inventory().getWeapon().isPresent());
 

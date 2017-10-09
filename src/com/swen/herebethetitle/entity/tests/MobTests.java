@@ -4,6 +4,8 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.*;
 
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -39,6 +41,8 @@ public class MobTests {
 		assertEquals(Player.FULL_HEALTH-20, context.getPlayer().getHealth(), 0);
 
 		Potion p = new Potion("","",20);
+		addtoFloor(context,p);
+
 		p.interact(context);
 		p.interact(context);
 
@@ -57,6 +61,8 @@ public class MobTests {
 		assertEquals(Player.FULL_HEALTH-20, context.getPlayer().getHealth(), 0);
 
 		Potion p = new Potion("","",40);
+		addtoFloor(context,p);
+
 		p.interact(context);
 		p.interact(context);
 
@@ -75,6 +81,8 @@ public class MobTests {
 		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
 
 		Potion p = new Potion("","",-40);
+		addtoFloor(context,p);
+
 		p.interact(context);
 		p.interact(context);
 
@@ -93,6 +101,8 @@ public class MobTests {
 		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
 
 		Potion p = new Potion("","",-120);
+		addtoFloor(context,p);
+
 		p.interact(context);
 		p.interact(context);
 
@@ -108,6 +118,8 @@ public class MobTests {
 		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
 
 		Potion p = new Potion("","",-120);
+		addtoFloor(context,p);
+
 		p.interact(context);
 		p.interact(context);
 

@@ -6,6 +6,8 @@ import com.swen.herebethetitle.model.*;
 
 import org.junit.Test;
 
+
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -18,6 +20,13 @@ import static org.junit.Assert.*;
  */
 public class PlayerTests {
 
+	private static void changeHealth(GameContext context, int amount){
+		Potion p = new Potion("","",amount);
+		addtoFloor(context,p);
+		p.interact(context);
+		p.interact(context);
+	}
+
 	/**
 	 * Asserts that the size of the inventory increases by two when two items are added
 	 */
@@ -25,8 +34,11 @@ public class PlayerTests {
 	public void test_add(){
 		GameContext context = new GameContext();
 
-		new Key("", null,0).interact(context);
-		new Key("", null,0).interact(context);
+		Key one = new Key("", null,0);
+		Key two = new Key("", null,0);
+		addtoFloor(context,one,two);
+		one.interact(context);
+		two.interact(context);
 
 		assertEquals(2, context.getPlayer().inventory().size());
 	}
@@ -40,6 +52,8 @@ public class PlayerTests {
 		Player p = context.getPlayer();
 
 		Item i = new Key("", null,0);
+		addtoFloor(context,i);
+
 		i.interact(context);
 		assertTrue(p.possesses(i));
 	}
@@ -65,9 +79,7 @@ public class PlayerTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		Potion po = new Potion("","",-20);
-		po.interact(context);
-		po.interact(context);
+		changeHealth(context,-20);
 
 		assertEquals(Mob.FULL_HEALTH-20, p.getHealth(), 0);
 	}
@@ -80,11 +92,11 @@ public class PlayerTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		new Armour("", null, Armour.TYPE.HELMET, 3.5).interact(context);
+		Armour a = new Armour("", null, Armour.TYPE.HELMET, 3.5);
+		addtoFloor(context,a);
+		a.interact(context);
 
-		Potion po = new Potion("","",-20);
-		po.interact(context);
-		po.interact(context);
+		changeHealth(context,-20);
 
 		assertTrue(p.getHealth()>Mob.FULL_HEALTH-20);
 		assertTrue(p.getHealth()<Mob.FULL_HEALTH);
@@ -98,13 +110,15 @@ public class PlayerTests {
 		GameContext context = new GameContext();
 		Player p = context.getPlayer();
 
-		new Armour("", null, Armour.TYPE.HELMET, 3.5).interact(context);
-		new Armour("", null, Armour.TYPE.TORSO, 6).interact(context);
-		new Armour("", null, Armour.TYPE.BOOTS, 1.75).interact(context);
+		Armour a = new Armour("", null, Armour.TYPE.HELMET, 3.5);
+		Armour b = new Armour("", null, Armour.TYPE.TORSO, 6);
+		Armour c = new Armour("", null, Armour.TYPE.BOOTS, 1.75);
+		addtoFloor(context,a,b,c);
+		a.interact(context);
+		b.interact(context);
+		c.interact(context);
 
-		Potion po = new Potion("","",-20);
-		po.interact(context);
-		po.interact(context);
+		changeHealth(context,-20);
 
 		assertTrue(p.getHealth()>Mob.FULL_HEALTH-20);
 		assertTrue(p.getHealth()<Mob.FULL_HEALTH);

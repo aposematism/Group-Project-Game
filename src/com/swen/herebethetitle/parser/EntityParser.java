@@ -300,6 +300,6 @@ public class EntityParser {
 		while(s.hasNext("\\{"))
 			items.add(parseInventoryItem(s));
 
-		return new Player(name, sprite, health, wallet, direction, (Item[]) items.toArray());
+		return new Player(name, sprite, health, wallet, direction, items.toArray(new Item[items.size()]));
 	}
 }

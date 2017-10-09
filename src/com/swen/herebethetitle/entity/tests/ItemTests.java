@@ -13,6 +13,11 @@ import static org.junit.Assert.*;
  */
 public class ItemTests {
 
+	public static void addtoFloor(GameContext context, Entity... entites){
+		for(Entity e: entites)
+			context.getCurrentRegion().getPlayerTile().add(e);
+	}
+
 	/**
 	 * Assert that Armour with a higher rating replaces the current armour when picked up
 	 * and it isn't consumed when used
@@ -23,6 +28,7 @@ public class ItemTests {
 
 		Armour worse = new Armour("", null, Armour.TYPE.TORSO, 5);
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
+		addtoFloor(context,worse,better);
 
 		worse.pickup(context);
 
@@ -47,6 +53,7 @@ public class ItemTests {
 
 		Armour worse = new Armour("", null, Armour.TYPE.TORSO, 5);
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
+		addtoFloor(context,worse,better);
 
 		better.pickup(context);
 
@@ -67,6 +74,7 @@ public class ItemTests {
 
 		Armour worse = new Armour("", null, Armour.TYPE.TORSO, 5);
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
+		addtoFloor(context,worse,better);
 
 		better.interact(context);
 
@@ -88,6 +96,7 @@ public class ItemTests {
 	public void test_Key_use(){
 		GameContext context = new GameContext();
 		Item i = new Key("", null, 0);
+		addtoFloor(context,i);
 
 		i.interact(context);
 
@@ -105,7 +114,7 @@ public class ItemTests {
 	public void test_Item_pickup(){
 		GameContext context = new GameContext();
 		Item i = new Key("", null, 0);
-		context.getCurrentRegion().getPlayerTile().add(i);
+		addtoFloor(context,i);
 		assertFalse(context.player.possesses(i));
 		i.interact(context);
 		assertTrue(context.player.possesses(i));
@@ -129,6 +138,7 @@ public class ItemTests {
 
 		Item p1 = new Potion("", null, 50);
 		Item p2 = new Potion("", null, -50);
+		addtoFloor(context,p1,p2);
 
 		p1.interact(context);
 		p2.interact(context);
@@ -154,6 +164,7 @@ public class ItemTests {
 		GameContext context = new GameContext();
 
 		Weapon w = new Weapon("", null, true, 50);
+		addtoFloor(context,w);
 
 		w.interact(context);
 

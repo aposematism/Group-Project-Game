@@ -3,6 +3,7 @@ package com.swen.herebethetitle.entity.tests;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.DoorStrategy;
 import com.swen.herebethetitle.model.*;
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -28,6 +29,7 @@ public class DoorAndKeyTests {
 		s.setBehavior(d);
 
 		Key k = new Key("", null, 123);
+		addtoFloor(context, k);
 
 		k.interact(context);
 
@@ -63,6 +65,7 @@ public class DoorAndKeyTests {
 
 		Key k = new Key("", null, 234);
 		Key k2 = new Key("", null, 123);
+		addtoFloor(context,k,k2);
 
 		k.interact(context);
 		k2.interact(context);
@@ -99,6 +102,7 @@ public class DoorAndKeyTests {
 		s.setBehavior(d);
 
 		Key k = new Key("", null, 234);
+		addtoFloor(context, k);
 
 		k.interact(context);
 
@@ -124,6 +128,7 @@ public class DoorAndKeyTests {
 
 		Key k = new Key("", null, 234);
 		Key k2 = new Key("", null, 345);
+		addtoFloor(context,k,k2);
 
 		k.interact(context);
 		k2.interact(context);

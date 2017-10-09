@@ -4,6 +4,8 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.*;
 
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 

@@ -4,6 +4,8 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.*;
 
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,6 +28,7 @@ public class InventoryTests {
 		Armour a = new Armour("", null, Armour.TYPE.BOOTS, 0);
 		Armour b = new Armour("", null, Armour.TYPE.HELMET, 0);
 		Armour c = new Armour("", null, Armour.TYPE.TORSO, 0);
+		addtoFloor(context,a,b,c);
 
 		a.interact(context);
 		b.interact(context);
@@ -56,6 +59,7 @@ public class InventoryTests {
 		Inventory i = p.inventory();
 
 		Weapon w = new Weapon("", null, true, 3);
+		addtoFloor(context,w);
 
 		w.interact(context);
 
@@ -79,6 +83,7 @@ public class InventoryTests {
 		Item b = new Key("", null,0);
 		Item c = new Key("", null,0);
 		Item d = new Key("", null,0);
+		addtoFloor(context,a,b,c,d);
 
 		a.interact(context);
 		b.interact(context);
@@ -110,6 +115,7 @@ public class InventoryTests {
 		Item a = new Key("", null,0);
 		Item b = new Key("", null,0);
 		Item c = new Key("", null,0);
+		addtoFloor(context,a,b,c);
 
 		assertEquals(0, p.inventory().getItems().size());
 
@@ -132,6 +138,7 @@ public class InventoryTests {
 		Item a = new Key("", null,0);
 		Item b = new Armour("", null, Armour.TYPE.BOOTS, 0);
 		Item c = new Weapon("", null, true, 0);
+		addtoFloor(context,a,b,c);
 
 		assertEquals(0, i.size());
 
