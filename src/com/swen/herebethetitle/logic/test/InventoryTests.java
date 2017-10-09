@@ -1,16 +1,14 @@
 package com.swen.herebethetitle.logic.test;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.junit.Test;
-
 import com.swen.herebethetitle.entity.Key;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.util.GridLocation;
+import org.junit.Test;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.fail;
 
 public class InventoryTests extends BaseTest {
     @Test

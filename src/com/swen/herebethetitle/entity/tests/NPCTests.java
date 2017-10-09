@@ -1,12 +1,11 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.util.*;
-import com.swen.herebethetitle.model.*;
+import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.util.Direction;
+import org.junit.Test;
 
 import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
-
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
@@ -15,6 +14,14 @@ import static org.junit.Assert.*;
  * @author Mark Metcalfe
  */
 public class NPCTests {
+
+	public static void changeHealth(GameContext context, NPC npc, double amount) {
+		Weapon weapon = new Weapon("", "", false, amount);
+		addtoFloor(context, weapon);
+		weapon.interact(context);
+		context.getCurrentRegion().getPlayerTile().add(npc);
+		npc.interact(context);
+	}
 
 	/**
 	 * Asserts that NPCBehavior is constructed correctly
@@ -25,21 +32,6 @@ public class NPCTests {
 		NPC n = new NPC("", null, a, 80, Direction.Down);
 		assertTrue(n.getBehavior().isPresent());
 		assertEquals(a, n.getBehavior().get());
-	}
-
-	@Test
-	public void test_hasMeleeWeapon(){
-		GameContext context = new GameContext();
-
-		NPCBehavior a = new MonsterStrategy(1);
-
-		assertFalse(a.hasMeleeWeapon(context));
-
-		Weapon w = new Weapon("","",true,1);
-		addtoFloor(context,w);
-		w.interact(context);
-
-		assertTrue(a.hasMeleeWeapon(context));
 	}
 
 	/**

@@ -1,14 +1,10 @@
 package com.swen.herebethetitle.parser.parsertests;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Armour;
-import com.swen.herebethetitle.entity.Key;
-import com.swen.herebethetitle.entity.Potion;
-import com.swen.herebethetitle.entity.Weapon;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.parser.InteractiveParser;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests item generation for every possible item.

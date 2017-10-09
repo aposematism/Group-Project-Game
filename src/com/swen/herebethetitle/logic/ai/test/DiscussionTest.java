@@ -1,16 +1,15 @@
 package com.swen.herebethetitle.logic.ai.test;
 
-import static org.junit.Assert.fail;
-
 import com.swen.herebethetitle.entity.FriendlyStrategy;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.logic.ai.Discussion;
 import com.swen.herebethetitle.logic.ai.Interaction.InteractionOver;
 import com.swen.herebethetitle.util.Direction;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class DiscussionTest {
     /**

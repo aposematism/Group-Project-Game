@@ -1,12 +1,15 @@
 package com.swen.herebethetitle.entity.tests;
 
-import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.entity.DoorStrategy;
-import com.swen.herebethetitle.model.*;
-import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
-
+import com.swen.herebethetitle.entity.Key;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.Static;
+import com.swen.herebethetitle.model.GameContext;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Mark on 30/09/2017.

@@ -1,15 +1,11 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.util.*;
-import com.swen.herebethetitle.model.*;
-
+import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.util.Direction;
 import org.junit.Test;
 
-
 import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 
@@ -20,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class PlayerTests {
 
-	private static void changeHealth(GameContext context, int amount){
+	public static void changeHealth(GameContext context, double amount) {
 		Potion p = new Potion("","",amount);
 		addtoFloor(context,p);
 		p.interact(context);

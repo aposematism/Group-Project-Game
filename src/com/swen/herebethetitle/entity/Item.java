@@ -1,6 +1,5 @@
 package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
@@ -31,7 +30,7 @@ public abstract class Item extends Entity {
 	/**
 	 * Removes the Item from the map and places it in the player's inventory
 	 */
-	public void pickup(GameContext context){
+	protected void pickup(GameContext context) {
 		context.getCurrentRegion().remove(this);
 		context.getPlayer().inventory().add(this);
 	}
@@ -39,7 +38,7 @@ public abstract class Item extends Entity {
 	/**
 	 * Removes the item from the player's inventory, removing it from the game
 	 */
-	public void use(GameContext context){
+	protected void use(GameContext context) {
 		context.getPlayer().inventory().remove(this);
 	}
 

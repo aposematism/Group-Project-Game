@@ -45,5 +45,6 @@ public final class Weapon extends Item {
 	 * Deliberately designed to do nothing when selected in the player's inventory
 	 */
 	@Override
-	public void use(GameContext context) {}
+	protected void use(GameContext context) {
+	}
 }

@@ -1,6 +1,9 @@
 package com.swen.herebethetitle.entity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Stores the Player's inventory
@@ -62,6 +65,16 @@ public class Inventory implements Iterable<Item> {
 			if(item.equals(a))
 				return true;
 		return this.items.contains(item);
+	}
+
+
+	/**
+	 * Adds up the amount of present weapons, armour and items
+	 */
+	public int size() {
+		int total = weapon.isPresent() ? items.size() + 1 : items.size();
+		for (Armour a : armour) total = a != null ? total + 1 : total;
+		return total;
 	}
 
 	/**
@@ -130,14 +143,5 @@ public class Inventory implements Iterable<Item> {
 		}
 
 		return s.toString();
-	}
-	
-	/** 
-	 * Inserted to check inventory size. (used in some parser tests)
-	 * */
-	public int size() {
-		int total = weapon.isPresent() ? items.size()+1 : items.size();
-		for(Armour a: armour) total = a!=null ? total+1 : total;
-		return total;
 	}
 }

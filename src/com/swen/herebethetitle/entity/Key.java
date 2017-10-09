@@ -24,7 +24,9 @@ public final class Key extends Item {
 	/**
 	 * Check whether a given key ID is the same as this one
 	 */
-	public boolean equals(int key) { return this.KEY == key; }
+	protected boolean equals(int key) {
+		return this.KEY == key;
+	}
 
 	@Override
 	public String toString() { return super.toString()+" "+KEY; }

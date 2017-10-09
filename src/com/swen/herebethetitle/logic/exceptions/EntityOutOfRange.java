@@ -1,8 +1,8 @@
 package com.swen.herebethetitle.logic.exceptions;
 
-import java.util.Optional;
-
 import com.swen.herebethetitle.entity.Entity;
+
+import java.util.Optional;
 
 /**
  * Called when the player attempts to interact with an out of range entity.

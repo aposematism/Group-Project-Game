@@ -27,7 +27,7 @@ public final class Potion extends Item {
 	 * Heal or Damage the player depending on whether it is a positive or negative potion
 	 */
 	@Override
-	public void use(GameContext context) {
+	protected void use(GameContext context) {
 		if(HEALTH_CHANGE>0){
 			context.player.heal(HEALTH_CHANGE);
 		} else if(HEALTH_CHANGE<0){

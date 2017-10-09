@@ -1,9 +1,9 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.model.*;
-
+import com.swen.herebethetitle.model.GameContext;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,6 +18,13 @@ public class ItemTests {
 			context.getCurrentRegion().getPlayerTile().add(e);
 	}
 
+	public static void addItem(GameContext context, Item... items) {
+		for (Item i : items) {
+			addtoFloor(context, i);
+			i.interact(context);
+		}
+	}
+
 	/**
 	 * Assert that Armour with a higher rating replaces the current armour when picked up
 	 * and it isn't consumed when used
@@ -30,11 +37,11 @@ public class ItemTests {
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
 		addtoFloor(context,worse,better);
 
-		worse.pickup(context);
+		worse.interact(context);
 
 		assertEquals(worse, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
-		better.pickup(context);
+		better.interact(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
@@ -55,11 +62,11 @@ public class ItemTests {
 		Armour better = new Armour("", null, Armour.TYPE.TORSO, 10);
 		addtoFloor(context,worse,better);
 
-		better.pickup(context);
+		better.interact(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
-		worse.pickup(context);
+		worse.interact(context);
 
 		assertEquals(better, context.getPlayer().inventory().getArmour(Armour.TYPE.TORSO));
 
@@ -173,7 +180,7 @@ public class ItemTests {
 
 		assertEquals(50, w.getStrength(), 0);
 
-		w.use(context);
+		w.interact(context);
 
 		assertTrue(context.player.possesses(w));
 	}
