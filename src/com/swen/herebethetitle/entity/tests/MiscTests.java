@@ -2,11 +2,10 @@ package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.util.*;
+import com.swen.herebethetitle.util.Direction;
+import org.junit.Test;
 
 import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
-
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
@@ -50,12 +49,17 @@ public class MiscTests {
 		Player p = context.getPlayer();
 		Inventory i = p.inventory();
 
-		new Weapon("Bronze Sword", null,true,6.59).interact(context);
-		new Armour("Steel Leggings", null, Armour.TYPE.LEGS, 14.27).interact(context);
-		new Key("Church Key", null, 391).interact(context);
-		new Potion("Major Health Potion", null, 44).interact(context);
-		new Potion("Minor Poison", null, -27).interact(context);
+		Item[] items = new Item[]{
+				new Weapon("Bronze Sword", null, true, 6.59),
+				new Armour("Steel Leggings", null, Armour.TYPE.LEGS, 14.27),
+				new Key("Church Key", null, 391),
+				new Potion("Major Health Potion", null, 44),
+				new Potion("Minor Poison", null, -27)
+		};
+		addtoFloor(context, items);
+		for (Item item : items) item.interact(context);
 
+		assertEquals(5, i.size());
 		assertNotNull(i.toString());
 		System.out.println(i.toString());
 	}
