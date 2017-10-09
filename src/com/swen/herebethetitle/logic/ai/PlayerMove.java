@@ -40,12 +40,6 @@ public class PlayerMove implements Interaction {
 
     @Override
     public boolean isSameAs(Interaction interaction) {
-        if(!(interaction instanceof PlayerMove)) {
-            return false;
-        }
-        if(((PlayerMove)interaction).dest==this.dest) {
-            return true;
-        }
-        return false;
+        return interaction instanceof PlayerMove;
     }
 }
