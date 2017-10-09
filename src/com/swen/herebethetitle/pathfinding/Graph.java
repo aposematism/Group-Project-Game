@@ -159,6 +159,7 @@ public class Graph {
             // if current = goal
             if (current == this.destination)
                 return Optional.of(reconstructPath(cameFrom));
+            Tile foo = getCheapestTile();
 
             // openSet.Remove(current)
             openSet.remove(current);
@@ -175,7 +176,8 @@ public class Graph {
                 // // The distance from start to a neighbor
                 // tentative_gScore := gScore[current] + dist_between(current,
                 // neighbor)
-                double tenative_gScore = current.getLocation().distanceBetween(neighbour.getLocation());
+                double tenative_gScore = gScore.get(current) +
+                        current.getLocation().distanceBetween(neighbour.getLocation());
 
                 // if neighbor not in openSet // Discover a new node
                 if (!openSet.contains(neighbour))

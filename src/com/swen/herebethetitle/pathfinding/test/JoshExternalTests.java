@@ -54,7 +54,6 @@ public class JoshExternalTests extends Base {
      * Shortest path is to move down 2 steps then down-right one.
      */
     @Test
-    @Ignore
     public void shortestPath_simple() {
         Region region = new Region(5, 5);
         Tile source = region.get(0, 1);
@@ -84,7 +83,6 @@ public class JoshExternalTests extends Base {
      * TODO: this seems to take an unnecessary move to the right from 1,0 to 2,0
      */
     @Test
-    @Ignore
     public void shortestPath_hard() {
         Region region = new Region(5, 5);
         Tile source = region.get(0, 1);
