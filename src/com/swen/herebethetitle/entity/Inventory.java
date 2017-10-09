@@ -136,7 +136,7 @@ public class Inventory implements Iterable<Item> {
 			}
 		}
 
-		for(Item i: this){
+		for(Item i: this.items){
 			s.append(" { ");
 			s.append(i.toString());
 			s.append(" }");

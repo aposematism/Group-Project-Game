@@ -318,6 +318,6 @@ public class EntityParser {
 		while(s.hasNext("\\{"))
 			items.add(parseInventoryItem(s));
 
-		return player;
+		return new Player(name, sprite, health, wallet, direction, items.toArray(new Item[items.size()]));
 	}
 }
