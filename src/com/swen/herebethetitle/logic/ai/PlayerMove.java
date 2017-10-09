@@ -16,8 +16,16 @@ import com.swen.herebethetitle.pathfinding.Path;
  *
  */
 public class PlayerMove implements Interaction {
-    private Player player;
-    private Tile dest;
+    private final Player player;
+    private final Tile dest;
+    
+    /**
+     * Creates a new player movement interaction.
+     */
+    public PlayerMove(Player player, Tile dest) {
+        this.player = player;
+        this.dest = dest;
+    }
 
     @Override
     public void tick(Region region, Notifier notifier) throws InteractionOver {
@@ -31,21 +39,15 @@ public class PlayerMove implements Interaction {
         }
 
         // Move the player
-        if(!(region.getPlayerTile()==dest)) { //don't move if we're already there
-            region.move(player, optimalPath.get().next());
-        }else {
+        if(region.getPlayerTile() == dest) { //don't move if we're already there
             throw new InteractionOver();
         }
+
+        region.move(player, optimalPath.get().next());
     }
 
     @Override
     public boolean isSameAs(Interaction interaction) {
-        if(!(interaction instanceof PlayerMove)) {
-            return false;
-        }
-        if(((PlayerMove)interaction).dest==this.dest) {
-            return true;
-        }
-        return false;
+        return interaction instanceof PlayerMove;
     }
 }
