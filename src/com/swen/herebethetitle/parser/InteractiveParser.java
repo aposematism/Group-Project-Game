@@ -10,18 +10,13 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.MonsterStrategy;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.MonsterStrategy;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
-import com.swen.herebethetitle.entity.statics.DoorStrategy;
-
-import javafx.scene.image.Image;
+import com.swen.herebethetitle.entity.DoorStrategy;
 
 /**
  * This is the interactive entity parser, which is the second stage of the parsing process. It initialises in a similar way, but it is fundamentally different.
@@ -115,7 +110,7 @@ public class InteractiveParser {
 		switch(className){
 			case "door":	   return parseStatic(scanner, className);
 			case "static":	   return parseStatic(scanner, className);
-			case "Player":     return parsePlayer(scanner);
+			//case "Player":     return parsePlayer(scanner);
 			case "NPC":        return parseNPC(scanner);
 			default:           return parseItem(scanner, className);
 		}
@@ -284,24 +279,20 @@ public class InteractiveParser {
 		return new MonsterStrategy(strength);
 	}
 
-	/**
-	 * This method parses players.
-	 * @author - Mark Metcalfe
-	 * */
-	public Player parsePlayer(Scanner s){
-		String name = parseString(s);
-		String sprite = parseString(s);
-		double health = Double.parseDouble(s.next());
-		Direction direction = Direction.valueOf(s.next());
-		int wallet = Integer.parseInt(s.next());
-
-		Player player = new Player(name, sprite, health, wallet, direction);
-
-		s.next(); //Consume "Inventory" token
-
-		while(s.hasNext(ITEM))
-			player.add(parseItem(s));
-
-		return player;
-	}
+//	public Player parsePlayer(Scanner s){
+//		String name = parseString(s);
+//		String sprite = parseString(s);
+//		double health = Double.parseDouble(s.next());
+//		Direction direction = Direction.valueOf(s.next());
+//		int wallet = Integer.parseInt(s.next());
+//
+//		Player player = new Player(name, sprite, health, wallet, direction);
+//
+//		s.next(); //Consume "Inventory" token
+//
+//		while(s.hasNext(ITEM))
+//			player.add(parseItem(s));
+//
+//		return player;
+//	}
 }

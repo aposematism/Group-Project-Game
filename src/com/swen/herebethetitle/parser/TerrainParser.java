@@ -5,10 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
+
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
-import com.swen.herebethetitle.entity.statics.Static;
 import com.swen.herebethetitle.model.Tile;
 
 /** 
@@ -20,14 +21,26 @@ public class TerrainParser{
 	static ArrayList<String[]> stringArray = new ArrayList<String[]>();
 	static Tile[][] regionArray;
 	
+	
+	public TerrainParser(File region) throws IOException{
+		this(new FileReader(region));
+	}
+	
+	/**
+	 * Creates a new terrain parser that reads from an arbitrary reader object.
+	 */
+	public TerrainParser(Reader reader) throws IOException {
+	    initScanner(reader);
+	    parseStringArray();
+	}
 	/** 
 	 * This method is for the initialization of the region file.
 	 * */
-	public static void init_scanner(File region)throws IOException{
+	private void initScanner(Reader reader)throws IOException{
 		BufferedReader regionBuff = null;
 		stringArray = new ArrayList<String[]>();
 		try{
-			regionBuff = new BufferedReader(new FileReader(region));
+			regionBuff = new BufferedReader(reader);
 			String line = regionBuff.readLine();
 			while(line != null){
 				String[] split = line.split("");
@@ -49,13 +62,20 @@ public class TerrainParser{
 	 * parses the single character string array such that it generates a new Node and gives that node a mapEntity
 	 * @author - Jordan
 	 * */
-	public static void parseStringArray(){
+	private void parseStringArray(){
 		regionArray = new Tile[stringArray.size()][stringArray.get(0).length];
 		System.out.print(stringArray.get(0).length + " " + stringArray.size());
 		for(int i = 0; i < stringArray.size(); i++){
 			for(int j = 0; j < stringArray.get(i).length; j++){
 				Tile z = new Tile(i, j, stringArray.get(i)[j]);
-				z.setMapFloor(parseMapEntity(stringArray.get(i)[j]));
+				
+				Entity possiblyFloor = parseMapEntity(stringArray.get(i)[j]);
+				
+				if (possiblyFloor instanceof Floor) {
+                    z.setMapFloor((Floor)possiblyFloor);
+				} else {
+				    throw new IllegalArgumentException("malformed terrain, floor must be Floor");
+				}
 				regionArray[i][j] = z;
 			}
 		}
@@ -68,23 +88,25 @@ public class TerrainParser{
 	 * @author - Jordan
 	 * @return Entity implementing object.
 	 * */
-	private static Entity parseMapEntity(String p){
+	private Entity parseMapEntity(String p){
 		//TODO: Implement the parsing of map entities as they are created. 
 		if(p.equals(".")){//
 			Floor f = new Floor("Grass","grass.png");
 			return f;
 		}
 		else if(p.equals("w")) {
-			Static w = new Static("TudorWall", "tudorwall.png");
+			Floor w = new Floor("TudorWall", "tudorwall.png");
+			return w;
 		}
 		return null;
 	}
 	
 	/** 
 	 * This method attempts to connect the various nodes together for the parser. Checks first if it should connect within the limits of the 2d array structure
+	 * Delete this method if it isn't used by integration stage.
 	 * @author - Jordan
 	 * */
-	public static Tile[][] connectNetworks(Tile[][] toConnect){
+	public Tile[][] connectNetworks(Tile[][] toConnect){
 		try{
 			for(int i = 0; i < toConnect.length; i++){
 				for(int j = 0; j < toConnect[i].length; j++){
@@ -109,11 +131,20 @@ public class TerrainParser{
 	}
 	
 	/**
+	 * Parses a tile array.
+	 */
+	public Tile[][] parseTiles() {
+	    parseStringArray();
+	    connectNetworks(getRA());
+	    return getRA();
+	}
+	
+	/**
 	 * Boundary checking method for ensuring only neighbours within acceptable ranges are added.
 	 * @author - Jordan Milburn
 	 *  */
 	
-	private static boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
+	private boolean connectNode(int rowLength, int columnLength, int i, int j, int k, int l){
 		if(i+k < 0 || j+l < 0){//if less than zero
 			return false;
 		}
@@ -130,7 +161,7 @@ public class TerrainParser{
 		return stringArray;
 	}
 	
-	public static Tile[][] getRA(){
+	public Tile[][] getRA(){
 		return regionArray;
 	}
 }

@@ -1,22 +1,12 @@
 package com.swen.herebethetitle.parser;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.parser.EntityParser;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ReverseParser {
 	
@@ -24,12 +14,16 @@ public class ReverseParser {
 	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<String> output = new ArrayList<String>();
 	
+	public ReverseParser(File region) throws IOException, SyntaxError {
+		reverseScanner(region);
+	}
+	
 	/** 
 	 * Scanner for taking files directly. Primarily for testing purposes, 
-	 * but also for not creating unnecessarily files if no items have moved.
-	 * @throws SyntaxError 
+	 * but also for not creating unnecessarily files if no items have moved. Primarily used for loading.
+	 * @throws IOException SyntaxError 
 	 * */
-	public static void reverse_scanner(File region)throws IOException, SyntaxError{
+	private static void reverseScanner(File region)throws IOException, SyntaxError{
 		interactives = new ArrayList<Entity>();
 		output = new ArrayList<String>();
 		coordinates = new ArrayList<Coord>();
@@ -53,6 +47,9 @@ public class ReverseParser {
 		}
 	}
 	
+	/** 
+	 * This classes saves all the data from a region into a correct file. Primarily used for saving.
+	 * */
 	public static void parseRegion(Region r) {
 		interactives = new ArrayList<Entity>();
 		pullInteractives(r);
@@ -82,6 +79,9 @@ public class ReverseParser {
 		}
 	}
 	
+	/** 
+	 * Left public for testing.
+	 * */
 	public static void pullString(ArrayList<Entity> entArray) {
 		for(int i = 0; i < interactives.size(); i++) {
 			String concat = coordinates.get(i).toString();

@@ -66,4 +66,8 @@ public class Sprite {
     public GridLocation getLocation() {
         return loc;
     }
+
+    public void setLocation(GridLocation newLoc){
+        loc = newLoc;
+    }
 }

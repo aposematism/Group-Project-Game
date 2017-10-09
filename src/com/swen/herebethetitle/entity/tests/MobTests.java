@@ -1,8 +1,10 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
+import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.*;
+
+import static com.swen.herebethetitle.entity.tests.ItemTests.addtoFloor;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -32,12 +34,19 @@ public class MobTests {
 	 */
 	@Test
 	public void test_health(){
-		NPCBehavior a = new MonsterStrategy(50);
-		Mob m = new NPC("", null, a, 80, Direction.Down);
-		assertEquals(80, m.getHealth(), 0);
+		GameContext context = new GameContext(
+				new Player("","", Mob.FULL_HEALTH-20, 100, Direction.Up)
+		);
 
-		m.heal(10);
-		assertEquals(90, m.getHealth(), 0);
+		assertEquals(Player.FULL_HEALTH-20, context.getPlayer().getHealth(), 0);
+
+		Potion p = new Potion("","",20);
+		addtoFloor(context,p);
+
+		p.interact(context);
+		p.interact(context);
+
+		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
 	}
 
 	/**
@@ -45,42 +54,39 @@ public class MobTests {
 	 */
 	@Test
 	public void test_health_overflow(){
-		NPCBehavior a = new MonsterStrategy(50);
-		Mob m = new NPC("", null, a, 80, Direction.Down);
-		assertEquals(80, m.getHealth(), 0);
+		GameContext context = new GameContext(
+				new Player("","", Mob.FULL_HEALTH-20, 100, Direction.Up)
+		);
 
-		m.heal(30);
-		assertEquals(100, m.getHealth(), 0);
+		assertEquals(Player.FULL_HEALTH-20, context.getPlayer().getHealth(), 0);
+
+		Potion p = new Potion("","",40);
+		addtoFloor(context,p);
+
+		p.interact(context);
+		p.interact(context);
+
+		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
 	}
 
 	/**
-	 * Asserts that a negative value can't be added
-	 */
-	@Test
-	public void test_health_invalid(){
-		NPCBehavior a = new MonsterStrategy(50);
-		Mob m = new NPC("", null, a, 80, Direction.Down);
-		assertEquals(80, m.getHealth(), 0);
-
-		try {
-			m.heal(-10);
-			fail();
-		} catch (IllegalArgumentException e){
-			assertEquals(80, m.getHealth(), 0);
-		}
-	}
-
-	/**
-	 * Asserts that the correct amount of health is added
+	 * Asserts that the correct amount of health is removed
 	 */
 	@Test
 	public void test_damage(){
-		NPCBehavior a = new MonsterStrategy(50);
-		Mob m = new NPC("", null, a, 80, Direction.Down);
-		assertEquals(80, m.getHealth(), 0);
+		GameContext context = new GameContext(
+				new Player("","", Mob.FULL_HEALTH, 100, Direction.Up)
+		);
 
-		m.damage(10);
-		assertEquals(70, m.getHealth(), 0);
+		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
+
+		Potion p = new Potion("","",-40);
+		addtoFloor(context,p);
+
+		p.interact(context);
+		p.interact(context);
+
+		assertEquals(Player.FULL_HEALTH-40, context.getPlayer().getHealth(), 0);
 	}
 
 	/**
@@ -88,37 +94,37 @@ public class MobTests {
 	 */
 	@Test
 	public void test_damage_underflow(){
-		NPCBehavior a = new MonsterStrategy(50);
-		Mob m = new NPC("", null, a, 80, Direction.Down);
-		assertEquals(80, m.getHealth(), 0);
+		GameContext context = new GameContext(
+				new Player("","", Mob.FULL_HEALTH, 100, Direction.Up)
+		);
 
-		m.damage(90);
-		assertEquals(0, m.getHealth(), 0);
-	}
+		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
 
-	/**
-	 * Asserts that a negative value can't be removed
-	 */
-	@Test
-	public void test_damage_invalid(){
-		NPCBehavior a = new MonsterStrategy(50);
-		Mob m = new NPC("", null, a, 80, Direction.Down);
-		assertEquals(80, m.getHealth(), 0);
+		Potion p = new Potion("","",-120);
+		addtoFloor(context,p);
 
-		try {
-			m.damage(-10);
-			fail();
-		} catch (IllegalArgumentException e){
-			assertEquals(80, m.getHealth(), 0);
-		}
+		p.interact(context);
+		p.interact(context);
+
+		assertEquals(Player.NO_HEALTH, context.getPlayer().getHealth(), 0);
 	}
 
 	@Test
 	public void test_isDead(){
-		Mob m = new NPC("","",Mob.FULL_HEALTH,Direction.Right);
-		m.damage(Mob.FULL_HEALTH/2);
-		assertFalse(m.isDead());
-		m.damage(Mob.FULL_HEALTH);
-		assertTrue(m.isDead());
+		GameContext context = new GameContext(
+				new Player("","", Mob.FULL_HEALTH, 100, Direction.Up)
+		);
+
+		assertEquals(Player.FULL_HEALTH, context.getPlayer().getHealth(), 0);
+
+		Potion p = new Potion("","",-120);
+		addtoFloor(context,p);
+
+		p.interact(context);
+		p.interact(context);
+
+		assertEquals(Player.NO_HEALTH, context.getPlayer().getHealth(), 0);
+
+		assertTrue(context.getPlayer().isDead());
 	}
 }

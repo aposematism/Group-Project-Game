@@ -5,9 +5,7 @@ import static com.swen.herebethetitle.parser.EntityParser.parseEntity;
 import static org.junit.Assert.*;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.parser.Coord;
 import com.swen.herebethetitle.parser.EntityParser;
@@ -67,6 +65,13 @@ public class EntityParserTests {
 			fail("Syntax Error");
 		}
 	}
+
+	/**
+	 * Constructs generic player with inventory of given items
+	 */
+	public Player playerWithItems(Item... items){
+		return new Player("The Dude","dude.png",Player.FULL_HEALTH,100,Direction.Right,items);
+	}
 	
 	/** 
 	 * tests player creation
@@ -83,11 +88,12 @@ public class EntityParserTests {
 	 * */
 	@Test
 	public void test_Player_with_inventory(){
-		Player in = new Player("silly bo.png", Direction.Down);
-		in.add(new Potion("Health Potion", "health potion.png", 50));
-		in.add(new Armour("Bronze Chestplate", "chestplate one.png", Armour.TYPE.TORSO, 5.6));
-		in.add(new Weapon("Iron Sword", "swordasdasd.png", true, 8.8));
-		in.add(new Key("Church Key", "basickey1.png", 101));
+		Player in = playerWithItems(
+				new Potion("Health Potion", "health potion.png", 50),
+				new Armour("Bronze Chestplate", "chestplate one.png", Armour.TYPE.TORSO, 5.6),
+				new Weapon("Iron Sword", "swordasdasd.png", true, 8.8),
+				new Key("Church Key", "basickey1.png", 101)
+		);
 
 		parse(in);
 	}
@@ -276,13 +282,12 @@ public class EntityParserTests {
 	 * */
 	@Test
 	public void test_integration() throws IOException, SyntaxError {
-		TerrainParser.init_scanner(new File("res/test_terrain_file.txt"));
-		TerrainParser.parseStringArray();
-		TerrainParser.connectNetworks(TerrainParser.getRA());
-		Region r = new Region(TerrainParser.getRA());
+		TerrainParser tp = new TerrainParser(new File("res/test_terrain_file.txt"));
+		tp.connectNetworks(tp.getRA());
+		Region r = new Region(tp.getRA());
 		File inputFile = new File("res/test_entity_parser.txt");
-		EntityParser.interactive_scanner(inputFile);
-		EntityParser.parseEntitytoRegion(r);
+		EntityParser ep = new EntityParser(inputFile);
+		ep.parseEntitytoRegion(r);
 		System.out.println("total items is " + r.getInteractiveTotal());
 		assertTrue(r.getInteractiveTotal() == 10);
 	}

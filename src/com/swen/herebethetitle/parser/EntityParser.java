@@ -2,7 +2,6 @@ package com.swen.herebethetitle.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,18 +10,14 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
-import com.swen.herebethetitle.util.GridLocation;
 
 /**
  * Helper class with static methods for interpreting a single line in the save file.
  *
- * @author Mark Metcalfe
+ * @author Mark Metcalfe and Jordan Milburn
  */
 public class EntityParser {
 
@@ -33,10 +28,14 @@ public class EntityParser {
 	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<Entity> entityList = new ArrayList<Entity>();
 	
+	public EntityParser(File interactives) throws IOException, SyntaxError {
+		interactiveScanner(interactives);
+	}
+	
 	/** 
 	 * Interactive scanner which takes input from a file and produces all entites from it.
 	 * */
-	public static void interactive_scanner(File interactives)throws IOException, SyntaxError{
+	private void interactiveScanner(File interactives){
 		BufferedReader interactivesBuff = null;
 		coordinates = new ArrayList<Coord>();
 		entityList = new ArrayList<Entity>();
@@ -54,12 +53,14 @@ public class EntityParser {
 			interactivesBuff.close();
 		}
 		catch(IOException e){
-			System.out.println("I/O exception: " + e.toString());
-			throw new FileNotFoundException("File failed to initialise!");
+			e.printStackTrace();
+		}
+		catch(SyntaxError z) {
+			z.printStackTrace();
 		}
 	}
 	
-	public static Region parseEntitytoRegion(Region reg) {
+	public Region parseEntitytoRegion(Region reg) {
 		for(int i = 0; i < entityList.size(); i++) {
 			Tile t = reg.get(coordinates.get(i).convert());
 			t.add(entityList.get(i));
@@ -293,13 +294,12 @@ public class EntityParser {
 		Direction direction = Direction.valueOf(s.next());
 		int wallet = s.nextInt();
 
-		Player player = new Player(name, sprite, health, wallet, direction);
-
 		s.next(); //Consume "Inventory" token
 
+		ArrayList<Item> items = new ArrayList<>();
 		while(s.hasNext("\\{"))
-			player.add(parseInventoryItem(s));
+			items.add(parseInventoryItem(s));
 
-		return player;
+		return new Player(name, sprite, health, wallet, direction, items.toArray(new Item[items.size()]));
 	}
 }
