@@ -11,9 +11,6 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.statics.*;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
@@ -317,9 +314,9 @@ public class EntityParser {
 		Player player = new Player(name, sprite, health, wallet, direction);
 
 		s.next(); //Consume "Inventory" token
-
+		ArrayList<Item> items = new ArrayList<>();
 		while(s.hasNext("\\{"))
-			player.add(parseInventoryItem(s));
+			items.add(parseInventoryItem(s));
 
 		return player;
 	}

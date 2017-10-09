@@ -2,10 +2,7 @@ package com.swen.herebethetitle.control;
 
 import java.util.Optional;
 
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
@@ -411,7 +408,7 @@ public class Controller extends Application implements GameListener{
 		/*build the interaction for the player movement*/
 		try {
 			Tile dest = game.getCurrentRegion().get(mouseLocation);
-			playerMove = new PlayerMove();
+			playerMove = new PlayerMove(null, dest);
 			//TODO this
 		}catch(Exception exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
