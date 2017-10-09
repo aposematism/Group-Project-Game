@@ -46,7 +46,7 @@ public class TerrainParser{
 			regionBuff = new BufferedReader(reader);
 			String line = regionBuff.readLine();
 			Scanner s = new Scanner(line);
-			if(s.hasNext("neighbours:")) {//only used in regions with neighbours.
+			while(s.hasNext("neighbours:")) {//only used in regions with neighbours.
 				s.next();
 				parseNeighbouringRegions(s);
 				line = regionBuff.readLine();
