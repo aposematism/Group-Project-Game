@@ -1,7 +1,6 @@
-package com.swen.herebethetitle.entity.items;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import javafx.scene.image.Image;
 
 /**
  * Item that increases the damage dealt by the player in attacks
@@ -46,5 +45,6 @@ public final class Weapon extends Item {
 	 * Deliberately designed to do nothing when selected in the player's inventory
 	 */
 	@Override
-	public void use(GameContext context) {}
+	protected void use(GameContext context) {
+	}
 }

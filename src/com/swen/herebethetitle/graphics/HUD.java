@@ -1,23 +1,11 @@
 package com.swen.herebethetitle.graphics;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Inventory;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Armour;
-import com.swen.herebethetitle.entity.items.Weapon;
-import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-import sun.awt.image.ImageWatched;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 
 /**

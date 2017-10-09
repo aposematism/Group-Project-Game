@@ -1,17 +1,12 @@
 package com.swen.herebethetitle.logic.test;
 
-import org.junit.Before;
-
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.MonsterStrategy;
-import com.swen.herebethetitle.entity.items.Key;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
+import org.junit.Before;
 
 public class BaseTest {
     /**

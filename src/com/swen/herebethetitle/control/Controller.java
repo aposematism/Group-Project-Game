@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.Item;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;

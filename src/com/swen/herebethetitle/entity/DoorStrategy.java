@@ -1,8 +1,5 @@
-package com.swen.herebethetitle.entity.statics;
+package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Key;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
@@ -15,14 +12,8 @@ import com.swen.herebethetitle.model.GameContext;
  */
 public final class DoorStrategy implements Static.Behavior {
 
-	/**
-	 * A door can either be locked, unlocked (but shut), and open
-	 */
-	public enum STATE { LOCKED, UNLOCKED, OPEN }
-
-	private STATE state;
-
 	private final int KEY;
+	private STATE state;
 
 	/**
 	 * @param key The Key code ID of the door
@@ -79,5 +70,12 @@ public final class DoorStrategy implements Static.Behavior {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName().replace("Strategy","")+" "+KEY+" "+state.toString();
+	}
+
+	/**
+	 * A door can either be locked, unlocked (but shut), and open
+	 */
+	public enum STATE {
+		LOCKED, UNLOCKED, OPEN
 	}
 }

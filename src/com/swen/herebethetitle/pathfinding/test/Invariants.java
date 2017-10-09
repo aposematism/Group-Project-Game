@@ -1,11 +1,10 @@
 package com.swen.herebethetitle.pathfinding.test;
 
-import static org.junit.Assert.assertFalse;
-
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Static;
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.Entity;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Tests invariants that must be true for pathfinding to work correctly.

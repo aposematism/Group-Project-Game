@@ -1,16 +1,16 @@
 package com.swen.herebethetitle.logic.ai;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Tile;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Controllers the enemies in the game.

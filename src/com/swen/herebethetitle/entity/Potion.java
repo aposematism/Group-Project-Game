@@ -1,7 +1,6 @@
-package com.swen.herebethetitle.entity.items;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import javafx.scene.image.Image;
 
 /**
  * Consumable that increases or decreases the player's health
@@ -28,7 +27,7 @@ public final class Potion extends Item {
 	 * Heal or Damage the player depending on whether it is a positive or negative potion
 	 */
 	@Override
-	public void use(GameContext context) {
+	protected void use(GameContext context) {
 		if(HEALTH_CHANGE>0){
 			context.player.heal(HEALTH_CHANGE);
 		} else if(HEALTH_CHANGE<0){

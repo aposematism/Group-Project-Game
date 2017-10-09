@@ -2,7 +2,6 @@ package com.swen.herebethetitle.entity;
 
 import java.util.Optional;
 
-import com.swen.herebethetitle.entity.ai.NPCBehavior;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
