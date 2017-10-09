@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.model.Tile;
@@ -45,7 +44,7 @@ public class TerrainParser{
 			regionBuff = new BufferedReader(reader);
 			String line = regionBuff.readLine();
 			Scanner s = new Scanner(line);
-			if(s.hasNext("neighbours:")) {//only used in regions with neighbours.
+			while(s.hasNext("neighbours:")) {//only used in regions with neighbours.
 				s.next();
 				parseNeighbouringRegions(s);
 				line = regionBuff.readLine();

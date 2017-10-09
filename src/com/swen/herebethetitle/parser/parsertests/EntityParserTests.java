@@ -91,7 +91,6 @@ public class EntityParserTests {
 				new Weapon("Iron Sword", "swordasdasd.png", true, 8.8),
 				new Key("Church Key", "basickey1.png", 101)
 		);
-
 		parse(in);
 	}
 	

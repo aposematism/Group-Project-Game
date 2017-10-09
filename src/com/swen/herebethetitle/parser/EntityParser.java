@@ -2,6 +2,7 @@ package com.swen.herebethetitle.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
+import com.swen.herebethetitle.util.GridLocation;
 
 /**
  * Helper class with static methods for interpreting a single line in the save file.
@@ -309,8 +311,9 @@ public class EntityParser {
 		Direction direction = Direction.valueOf(s.next());
 		int wallet = s.nextInt();
 
-		s.next(); //Consume "Inventory" token
+		Player player = new Player(name, sprite, health, wallet, direction);
 
+		s.next(); //Consume "Inventory" token
 		ArrayList<Item> items = new ArrayList<>();
 		while(s.hasNext("\\{"))
 			items.add(parseInventoryItem(s));

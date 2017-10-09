@@ -101,7 +101,7 @@ public class Player extends Mob {
 
 	@Override
 	public String toString() {
-		return super.toString()+" "+wallet+" "+inventory.toString();
+		return super.toString()+" "+wallet+" "+ inventory.toString();
 	}
 
 	/**
