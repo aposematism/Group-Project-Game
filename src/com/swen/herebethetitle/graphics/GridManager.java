@@ -100,8 +100,8 @@ public class GridManager extends Canvas{
      * @author weirjosh
      */
     public GridLocation getGridLocation(Point p, Point offset){
-        int col = ((p.x - offset.x - this.x) /(cellSize+hGap)) ;
-        int row = ((p.y - offset.y - this.y) /(cellSize+vGap)) ;
+        int col = ((p.x - (offset.x-(cellSize/2)) - this.x) /(cellSize+hGap)) ;
+        int row = ((p.y - (offset.y-(cellSize/2)) - this.y) /(cellSize+vGap));
 
         return new GridLocation(col, row);
     }
