@@ -62,7 +62,7 @@ public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 60;
+	public static final int FRAMES_PER_SECOND = 20;
 	
 	
 	//window field
@@ -235,6 +235,7 @@ public class Controller extends Application implements GameListener{
 			if(!isTesting)updateTimeline.play();
 			gameGUIRoot.requestFocus();
 			isPlaying = true;
+			playerDestination = game.getCurrentRegion().getPlayerTile();
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -401,14 +402,27 @@ public class Controller extends Application implements GameListener{
 			}
 		}
 	}
-
+	
 	/**
 	 * Handles a mouse press.
 	 * @param e the mouse event
 	 */
 	private void handleMousePress(MouseEvent e) {
-		// TODO remove test code; implement final handling
 		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
+		if(e.isSecondaryButtonDown()) {
+			handleMousePressSecondary(e);
+		}else {
+			handleMousePressPrimary(e);
+		}
+	}
+
+	/**
+	 * Handles a mouse press.
+	 * @param e the mouse event
+	 */
+	private void handleMousePressSecondary(MouseEvent e) {
+		// TODO remove test code; implement final handling
+		System.out.println("Secondary mouse press");
 		/*get the cell the player clicked on*/
 		GridLocation mouseLocation = gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
 		System.out.println("Grid location clicked: " + mouseLocation.x + "," + mouseLocation.y);
@@ -422,6 +436,10 @@ public class Controller extends Application implements GameListener{
 			return;
 		}		
 	}
+	
+	private void handleMousePressPrimary(MouseEvent e) {
+		System.out.println("Primary mouse press");
+	}
 
 	/**
 	 * Runs the "main loop" - i.e., first calls GameLogic to update, then
@@ -433,17 +451,21 @@ public class Controller extends Application implements GameListener{
 		
 		/*update game context via logic*/
 		logic.tick();
+		
 		/*move the player*/
-        /* find optimal path */
-        Graph graph = new Graph(game.getCurrentRegion(), game.getCurrentRegion().getPlayerTile(), playerDestination);
-        Optional<Path> optimalPath = graph.findPath();
+        //find optimal path
+		if(game.getCurrentRegion().getPlayerTile()!=playerDestination) {
+			Graph graph = new Graph(game.getCurrentRegion(), game.getCurrentRegion().getPlayerTile(), playerDestination);
+        	Optional<Path> optimalPath = graph.findPath();
 
-        if(optimalPath.isPresent()) {
-            // Move the player
-            if(!(game.getCurrentRegion().getPlayerTile()==playerDestination)) { //don't move if we're already there
-                game.getCurrentRegion().move(game.getPlayer(), optimalPath.get().next());
-            }
-        }
+        	if(optimalPath.isPresent()) {
+            	// Move the player
+            	if(!(game.getCurrentRegion().getPlayerTile()==playerDestination)) { //don't move if we're already there
+            		game.getCurrentRegion().move(game.getPlayer(), optimalPath.get().next());
+            	}
+        	}
+		}
+        
 		/*redraw graphics*/
 		gameCanvas.update();
 	}
