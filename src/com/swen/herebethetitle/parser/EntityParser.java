@@ -33,8 +33,19 @@ public class EntityParser {
 	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<Entity> entityList = new ArrayList<Entity>();
 	
-	public EntityParser(File interactives) throws IOException, SyntaxError {
+	/** 
+	 * This is the constructor for files. It essentially contains all behaviour within the entityParser for that file.
+	 * @author - Jordan Milburn
+	 * */
+	public EntityParser(File interactives){
 		interactiveScanner(interactives);
+	}
+	
+	/** 
+	 * This is the constructor for a single item from a scanner.
+	 * */
+	public EntityParser(Scanner s) {
+		
 	}
 	
 	/** 
@@ -78,8 +89,9 @@ public class EntityParser {
 	 *
 	 * @param s Scanner with the next token being an entity class name
 	 * @return Constructed entity instance
+	 * @throws SyntaxError 
 	 */
-	public static Entity parseEntity(Scanner s) throws SyntaxError {
+	public Entity parseEntity(Scanner s){
 		try {
 			String className = s.next();
 			switch (className) {
@@ -94,15 +106,18 @@ public class EntityParser {
 				default:
 					return parseItem(s, className);
 			}
-		} catch(InputMismatchException e){
-			throw new SyntaxError(e.getMessage());
+		} 
+		catch(InputMismatchException e){
+			e.printStackTrace();
 		}
+		return null;
+		
 	}
 
 	/**
 	 * Interprets a string formatted as "Text Here"
 	 */
-	public static String parseString(Scanner s) throws InputMismatchException {
+	public String parseString(Scanner s) throws InputMismatchException {
 		String string = s.findInLine(STRING);
 		string = string.replaceAll("\"","");
 		return string;
@@ -111,7 +126,7 @@ public class EntityParser {
 	/** 
 	 * parses item from scanner. Never used currently
 	 * */
-	private static Item parseItem(Scanner s) throws InputMismatchException {
+	private Item parseItem(Scanner s) throws InputMismatchException {
 		String className = s.next();
 		return parseItem(s, className);
 	}
@@ -119,7 +134,7 @@ public class EntityParser {
 	/** 
 	 * parses each item in the inventory
 	 * */
-	private static Item parseInventoryItem(Scanner s) throws InputMismatchException {
+	private Item parseInventoryItem(Scanner s) throws InputMismatchException {
 		s.next(); //Consume opening brace
 		String className = s.next();
 		Item i = parseItem(s, className);
@@ -130,7 +145,7 @@ public class EntityParser {
 	/** 
 	 * parses each type of item
 	 * */
-	private static Item parseItem(Scanner s, String className) throws InputMismatchException {
+	private Item parseItem(Scanner s, String className) throws InputMismatchException {
 		switch (className){
 			case "Weapon": return parseWeapon(s);
 			case "Armour": return parseArmour(s);
@@ -143,7 +158,7 @@ public class EntityParser {
 	/** 
 	 * parses weapons
 	 * */
-	private static Weapon parseWeapon(Scanner s) throws InputMismatchException {
+	private Weapon parseWeapon(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		boolean isMelee = s.nextBoolean();
@@ -155,7 +170,7 @@ public class EntityParser {
 	/** 
 	 * parses armour types.
 	 * */
-	private static Armour parseArmour(Scanner s) throws InputMismatchException {
+	private Armour parseArmour(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		Armour.TYPE type = Armour.TYPE.valueOf(s.next());
@@ -167,7 +182,7 @@ public class EntityParser {
 	/** 
 	 * parses keys.
 	 * */
-	private static Key parseKey(Scanner s) throws InputMismatchException {
+	private Key parseKey(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		int key = s.nextInt();
@@ -178,7 +193,7 @@ public class EntityParser {
 	/** 
 	 * parses potions.
 	 * */
-	private static Potion parsePotion(Scanner s) throws InputMismatchException {
+	private Potion parsePotion(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		double value = s.nextDouble();
@@ -189,7 +204,7 @@ public class EntityParser {
 	/** 
 	 * parses floors.
 	 * */
-	private static Floor parseFloor(Scanner s) throws InputMismatchException {
+	private Floor parseFloor(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 
@@ -201,7 +216,7 @@ public class EntityParser {
 	/** 
 	 * parses statics
 	 * */
-	private static Static parseStatic(Scanner s) throws InputMismatchException {
+	private Static parseStatic(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 
@@ -218,7 +233,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static Static.Behavior parseStaticBehavior(Scanner s) throws InputMismatchException {
+	private Static.Behavior parseStaticBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()) { //Check Class Token
 			case "Door": return parseDoor(s);
 			default:     throw new InputMismatchException("Couldn't Parse NPCBehavior");
@@ -228,7 +243,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static DoorStrategy parseDoor(Scanner s) throws InputMismatchException {
+	private DoorStrategy parseDoor(Scanner s) throws InputMismatchException {
 		int key = s.nextInt();
 		DoorStrategy.STATE state = DoorStrategy.STATE.valueOf(s.next());
 		return new DoorStrategy(key, state);
@@ -237,7 +252,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static NPC parseNPC(Scanner s) throws InputMismatchException {
+	private NPC parseNPC(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		double health = s.nextDouble();
@@ -256,7 +271,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static NPCBehavior parseNPCBehavior(Scanner s) throws InputMismatchException {
+	private NPCBehavior parseNPCBehavior(Scanner s) throws InputMismatchException {
 		switch(s.next()){ //Check Class Token
 			case "Monster":  return parseMonster(s);
 			case "Friendly": return parseFriendly(s);
@@ -267,7 +282,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static MonsterStrategy parseMonster(Scanner s) throws InputMismatchException {
+	private MonsterStrategy parseMonster(Scanner s) throws InputMismatchException {
 		double strength = s.nextDouble();
 
 		return new MonsterStrategy(strength);
@@ -276,7 +291,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static FriendlyStrategy parseFriendly(Scanner s) throws InputMismatchException {
+	private FriendlyStrategy parseFriendly(Scanner s) throws InputMismatchException {
 		s.next(); //Consume opening brace
 
 		FriendlyStrategy f = new FriendlyStrategy();
@@ -292,7 +307,7 @@ public class EntityParser {
 	/** 
 	 * 
 	 * */
-	private static Player parsePlayer(Scanner s) throws InputMismatchException {
+	private Player parsePlayer(Scanner s) throws InputMismatchException {
 		String name = parseString(s);
 		String sprite = parseString(s);
 		double health = s.nextDouble();

@@ -19,9 +19,9 @@ import com.swen.herebethetitle.model.Tile;
  * @author Jordan
  * */
 public class TerrainParser{	
-	static ArrayList<String[]> stringArray = new ArrayList<String[]>();
-	static Tile[][] regionArray;
-	String[] neighbouringRegions = new String[4];
+	private ArrayList<String[]> stringArray = new ArrayList<String[]>();
+	private Tile[][] regionArray;
+	private String[] neighbouringRegions = new String[4];
 	
 	
 	public TerrainParser(File region) throws IOException{
