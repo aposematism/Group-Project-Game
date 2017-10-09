@@ -60,7 +60,7 @@ public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 20;
+	public static final int FRAMES_PER_SECOND = 30;
 	//Testing mode field
 	public static boolean isTesting;
 	//window field
@@ -469,13 +469,13 @@ public class Controller extends Application implements GameListener{
 	public void initializeNewGame() {
 		game = new GameContext();
 		logic = new GameLogic(game);
+		logic.addGameListener(this);
 	}
 
 
 	@Override
 	public void onPlayerMoved(Player player) {
 		// TODO Auto-generated method stub
-
 	}
 
 

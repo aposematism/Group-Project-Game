@@ -6,7 +6,7 @@ import java.awt.Point;
 import com.swen.herebethetitle.util.GridLocation;
 
 /**A grid object is a representation of an area of evenly spaced cells over a given area.
- It will have static methods for turning its own grid coordinates into real world pixel coordinates
+ It provides methods for turning its own grid coordinates into real world pixel coordinates
  among other things.
  * Created by weirjosh on 19/09/17.
  */
