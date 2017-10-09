@@ -1,7 +1,6 @@
-package com.swen.herebethetitle.entity.items;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import javafx.scene.image.Image;
 
 /**
  * Item that increases the damage dealt by the player in attacks

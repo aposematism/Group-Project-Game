@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Tile;
 
 /** 

@@ -1,8 +1,7 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.statics.*;
+import com.swen.herebethetitle.entity.DoorStrategy;
 import com.swen.herebethetitle.model.*;
 
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class DoorAndKeyTests {
 
 		Key k = new Key("", null, 123);
 
-		p.add(k);
+		k.interact(context);
 
 		assertFalse(s.isPenetrable());
 
@@ -42,7 +41,7 @@ public class DoorAndKeyTests {
 
 		assertFalse(s.isPenetrable());
 
-		p.remove(k);
+		k.interact(context);
 
 		s.interact(context);
 
@@ -65,7 +64,8 @@ public class DoorAndKeyTests {
 		Key k = new Key("", null, 234);
 		Key k2 = new Key("", null, 123);
 
-		p.add(k,k2);
+		k.interact(context);
+		k2.interact(context);
 
 		assertFalse(s.isPenetrable());
 
@@ -77,7 +77,8 @@ public class DoorAndKeyTests {
 
 		assertFalse(s.isPenetrable());
 
-		p.remove(k,k2);
+		k.interact(context);
+		k2.interact(context);
 
 		s.interact(context);
 
@@ -99,7 +100,7 @@ public class DoorAndKeyTests {
 
 		Key k = new Key("", null, 234);
 
-		p.add(k);
+		k.interact(context);
 
 		assertFalse(s.isPenetrable());
 
@@ -124,7 +125,8 @@ public class DoorAndKeyTests {
 		Key k = new Key("", null, 234);
 		Key k2 = new Key("", null, 345);
 
-		p.add(k,k2);
+		k.interact(context);
+		k2.interact(context);
 
 		assertFalse(s.isPenetrable());
 

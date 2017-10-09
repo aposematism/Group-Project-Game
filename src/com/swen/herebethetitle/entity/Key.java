@@ -1,6 +1,4 @@
-package com.swen.herebethetitle.entity.items;
-
-import javafx.scene.image.Image;
+package com.swen.herebethetitle.entity;
 
 /**
  * Used for interacting with doors

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.items.Key;
+import com.swen.herebethetitle.entity.Key;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.util.GridLocation;
 

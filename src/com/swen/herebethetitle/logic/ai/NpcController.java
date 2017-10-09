@@ -7,7 +7,7 @@ import java.util.List;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Tile;

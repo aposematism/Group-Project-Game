@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 

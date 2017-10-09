@@ -1,8 +1,6 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
-import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.util.*;
 import com.swen.herebethetitle.model.*;
 
@@ -35,7 +33,7 @@ public class NPCTests {
 
 		assertFalse(a.hasMeleeWeapon(context));
 
-		context.player.add(new Weapon("","",true,1));
+		new Weapon("","",true,1).interact(context);
 
 		assertTrue(a.hasMeleeWeapon(context));
 	}
@@ -99,8 +97,8 @@ public class NPCTests {
 		GameContext context = new GameContext();
 		context.getCurrentRegion().get(1, 0).add(n);
 
-		Weapon w = new Weapon("", null, false, 10);
-		context.player.add(w);
+		new Weapon("", null, false, 10).interact(context);
+
 		assertTrue(context.player.inventory().getWeapon().isPresent());
 
 		assertEquals(80, n.getHealth(), 0);
@@ -118,8 +116,8 @@ public class NPCTests {
 
 		GameContext context = new GameContext();
 
-		Weapon w = new Weapon("", null, false, 80);
-		context.player.add(w);
+		new Weapon("", null, false, 80).interact(context);
+
 		assertTrue(context.player.inventory().getWeapon().isPresent());
 
 		assertEquals(80, n.getHealth(), 0);

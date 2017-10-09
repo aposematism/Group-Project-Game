@@ -2,7 +2,7 @@ package com.swen.herebethetitle.logic.ai.test;
 
 import static org.junit.Assert.fail;
 
-import com.swen.herebethetitle.entity.ai.FriendlyStrategy;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

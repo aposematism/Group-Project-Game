@@ -1,11 +1,13 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.items.*;
 import com.swen.herebethetitle.util.*;
 import com.swen.herebethetitle.model.*;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 
@@ -21,9 +23,12 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_add(){
-		Player p = new Player(null, Direction.Down);
-		p.add(new Key("", null,0), new Key("", null,0));
-		assertEquals(2, p.inventory().getItems().size());
+		GameContext context = new GameContext();
+
+		new Key("", null,0).interact(context);
+		new Key("", null,0).interact(context);
+
+		assertEquals(2, context.getPlayer().inventory().size());
 	}
 
 	/**
@@ -31,9 +36,11 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_posseses_true(){
-		Player p = new Player(null, Direction.Down);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+
 		Item i = new Key("", null,0);
-		p.add(i);
+		i.interact(context);
 		assertTrue(p.possesses(i));
 	}
 
@@ -42,8 +49,11 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_posseses_false(){
-		Player p = new Player(null, Direction.Down);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+
 		Item i = new Key("", null,0);
+
 		assertFalse(p.possesses(i));
 	}
 
@@ -52,8 +62,13 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_damage_noArmour_1(){
-		Player p = new Player(null, Direction.Down);
-		p.damage(20);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+
+		Potion po = new Potion("","",-20);
+		po.interact(context);
+		po.interact(context);
+
 		assertEquals(Mob.FULL_HEALTH-20, p.getHealth(), 0);
 	}
 
@@ -62,10 +77,15 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_damage_armour_1(){
-		Player p = new Player(null, Direction.Down);
-		Armour a = new Armour("", null, Armour.TYPE.HELMET, 3.5);
-		p.add(a);
-		p.damage(20);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+
+		new Armour("", null, Armour.TYPE.HELMET, 3.5).interact(context);
+
+		Potion po = new Potion("","",-20);
+		po.interact(context);
+		po.interact(context);
+
 		assertTrue(p.getHealth()>Mob.FULL_HEALTH-20);
 		assertTrue(p.getHealth()<Mob.FULL_HEALTH);
 	}
@@ -75,12 +95,17 @@ public class PlayerTests {
 	 */
 	@Test
 	public void test_damage_armour_2(){
-		Player p = new Player(null, Direction.Down);
-		Armour a = new Armour("", null, Armour.TYPE.HELMET, 3.5);
-		Armour b = new Armour("", null, Armour.TYPE.TORSO, 6);
-		Armour c = new Armour("", null, Armour.TYPE.BOOTS, 1.75);
-		p.add(a, b, c);
-		p.damage(20);
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+
+		new Armour("", null, Armour.TYPE.HELMET, 3.5).interact(context);
+		new Armour("", null, Armour.TYPE.TORSO, 6).interact(context);
+		new Armour("", null, Armour.TYPE.BOOTS, 1.75).interact(context);
+
+		Potion po = new Potion("","",-20);
+		po.interact(context);
+		po.interact(context);
+
 		assertTrue(p.getHealth()>Mob.FULL_HEALTH-20);
 		assertTrue(p.getHealth()<Mob.FULL_HEALTH);
 	}

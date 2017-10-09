@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.entity.items;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.logic.Notifier;
@@ -33,7 +33,7 @@ public abstract class Item extends Entity {
 	 */
 	public void pickup(GameContext context){
 		context.getCurrentRegion().remove(this);
-		context.getPlayer().add(this);
+		context.getPlayer().inventory().add(this);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package com.swen.herebethetitle.entity.ai;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.logic.Notifier;

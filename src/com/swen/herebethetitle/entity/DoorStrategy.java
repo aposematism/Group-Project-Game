@@ -1,8 +1,9 @@
-package com.swen.herebethetitle.entity.statics;
+package com.swen.herebethetitle.entity;
 
+import com.swen.herebethetitle.entity.Item;
+import com.swen.herebethetitle.entity.Key;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.items.Item;
-import com.swen.herebethetitle.entity.items.Key;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 

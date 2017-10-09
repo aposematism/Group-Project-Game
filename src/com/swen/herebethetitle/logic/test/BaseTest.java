@@ -4,9 +4,9 @@ import org.junit.Before;
 
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.ai.MonsterStrategy;
-import com.swen.herebethetitle.entity.items.Key;
-import com.swen.herebethetitle.entity.statics.Static;
+import com.swen.herebethetitle.entity.MonsterStrategy;
+import com.swen.herebethetitle.entity.Key;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;

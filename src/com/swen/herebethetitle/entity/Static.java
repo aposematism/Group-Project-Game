@@ -1,8 +1,7 @@
-package com.swen.herebethetitle.entity.statics;
+package com.swen.herebethetitle.entity;
 
 import java.util.Optional;
 
-import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 

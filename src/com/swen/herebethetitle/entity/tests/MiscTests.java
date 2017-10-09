@@ -1,9 +1,7 @@
 package com.swen.herebethetitle.entity.tests;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.ai.*;
-import com.swen.herebethetitle.entity.items.*;
-import com.swen.herebethetitle.entity.statics.*;
+import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.*;
 
 import org.junit.Test;
@@ -46,12 +44,16 @@ public class MiscTests {
 	 */
 	@Test
 	public void test_Inventory_toString(){
-		Inventory i = new Inventory();
-		i.add(new Weapon("Bronze Sword", null,true,6.59));
-		i.add(new Armour("Steel Leggings", null, Armour.TYPE.LEGS, 14.27));
-		i.add(new Key("Church Key", null, 391));
-		i.add(new Potion("Major Health Potion", null, 44));
-		i.add(new Potion("Minor Poison", null, -27));
+		GameContext context = new GameContext();
+		Player p = context.getPlayer();
+		Inventory i = p.inventory();
+
+		new Weapon("Bronze Sword", null,true,6.59).interact(context);
+		new Armour("Steel Leggings", null, Armour.TYPE.LEGS, 14.27).interact(context);
+		new Key("Church Key", null, 391).interact(context);
+		new Potion("Major Health Potion", null, 44).interact(context);
+		new Potion("Minor Poison", null, -27).interact(context);
+
 		assertNotNull(i.toString());
 		System.out.println(i.toString());
 	}

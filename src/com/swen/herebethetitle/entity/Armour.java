@@ -1,9 +1,6 @@
-package com.swen.herebethetitle.entity.items;
+package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.model.GameContext;
-import com.swen.herebethetitle.model.Tile;
-
-import javafx.scene.image.Image;
 
 /**
  * Special Item that is designed to fit in the armour slots in Inventory
@@ -59,9 +56,9 @@ public final class Armour extends Item {
 	@Override
 	public void pickup(GameContext context) {
 		if(context.player.inventory().getArmour(this.SLOT)==null)
-			context.player.add(this);
+			context.player.inventory().add(this);
 		else if(this.RATING>context.player.inventory().getArmour(this.SLOT).getRating())
-			context.player.add(this);
+			context.player.inventory().add(this);
 	}
 
 	/**

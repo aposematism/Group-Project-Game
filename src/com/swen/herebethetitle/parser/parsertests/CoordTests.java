@@ -1,8 +1,8 @@
 package com.swen.herebethetitle.parser.parsertests;
 
 import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.ai.NPCBehavior;
-import com.swen.herebethetitle.entity.ai.MonsterStrategy;
+import com.swen.herebethetitle.entity.NPCBehavior;
+import com.swen.herebethetitle.entity.MonsterStrategy;
 import com.swen.herebethetitle.parser.Coord;
 import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.util.Direction;
