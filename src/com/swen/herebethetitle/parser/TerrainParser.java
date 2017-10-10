@@ -107,11 +107,12 @@ public class TerrainParser{
 	private Entity parseMapEntity(String p){
 		//TODO: Implement the parsing of map entities as they are created. 
 		if(p.equals(".")){//
-			Floor f = new Floor("Grass","file:res/grass.png");
+			Floor f = new Floor("Grass","grass.png");
 			return f;
 		}
 		else if(p.equals("w")) {
-			Floor w = new Floor("TudorWall", "file:res/tudorwall.png");
+			Floor w = new Floor("TudorWall", "tudorwall.png");
+
 			return w;
 		}
 		return null;
