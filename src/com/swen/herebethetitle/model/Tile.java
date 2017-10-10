@@ -3,6 +3,7 @@ package com.swen.herebethetitle.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import com.swen.herebethetitle.entity.Entity;
@@ -68,6 +69,19 @@ public class Tile implements Iterable<Entity> {
 			if(t.interactives.contains(entity))
 				return true;
 		return false;
+	}
+	
+	/**
+	 * Gets the top level entity on the tile.
+	 * 
+	 * Assumes that the entities are rendered from i=0 to i=size.
+	 * i.e. The last tile in the array is the top.
+	 */
+	public Optional<Entity> getTopEntity() {
+	    if (this.interactives.isEmpty())
+	        return Optional.empty();
+	    else
+	        return Optional.of(this.interactives.get(this.interactives.size()-1));
 	}
 
 	@Override

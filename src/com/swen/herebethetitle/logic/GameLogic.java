@@ -142,6 +142,18 @@ public class GameLogic {
 
     /**
      * General-purpose entity interactions.
+     */
+    public void interact(GridLocation location) throws EntityOutOfRange {
+        Tile tile = getCurrentRegion().get(location);
+        
+        if (tile.getTopEntity().isPresent()) {
+            Entity entity = tile.getTopEntity().get();
+            interact(entity);
+        }
+    }
+
+    /**
+     * General-purpose entity interactions.
      * 
      * This should be called on entities that are in the map.
      */
