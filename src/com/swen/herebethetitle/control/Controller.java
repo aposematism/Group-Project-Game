@@ -30,6 +30,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -68,8 +69,9 @@ public class Controller extends Application implements GameListener{
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
 	public static final int FRAMES_PER_SECOND = 30;
+	public static final int TESTCODE_INPUTS = 1;
 	//Testing mode field
-	public static boolean isTesting;
+	public static int isTesting;
 	//window field
 	private Stage window;
 	//main menu fields
@@ -101,6 +103,44 @@ public class Controller extends Application implements GameListener{
 
 	@Override
 	public void start(Stage s) throws Exception {
+		/*if testing, launch in testing mode*/
+		if(isTesting>0) {
+			window = s;
+			window.setResizable(false);
+			window.setWidth(DEFAULT_WIDTH);
+			window.setHeight(DEFAULT_HEIGHT);
+			/*input testing*/
+			if(isTesting == TESTCODE_INPUTS) {
+				window.setTitle("2D RPG ***INPUT TESTING MODE***");
+				gameGUIRoot = new Group();
+				Scene testScene = new Scene(gameGUIRoot);
+				window.setScene(testScene);
+				window.show();
+				
+				Canvas testCanv = new Canvas(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+				gameGUIRoot.getChildren().add(testCanv);
+				testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
+				testCanv.getGraphicsContext2D().fillRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+
+				gameGUIRoot.setOnKeyPressed(e->{
+					testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
+					testCanv.getGraphicsContext2D().fillRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+					testCanv.getGraphicsContext2D().setFill(Color.GREEN.brighter());
+					testCanv.getGraphicsContext2D().fillText("Key pressed code: " + e.getCode(), DEFAULT_WIDTH/2-50, DEFAULT_HEIGHT/2-50);
+				});
+				gameGUIRoot.setOnMousePressed(e->{
+					testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
+					testCanv.getGraphicsContext2D().fillRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+					testCanv.getGraphicsContext2D().setFill(Color.GREEN.brighter());
+					testCanv.getGraphicsContext2D().fillText("Mouse pressed at: " + e.getX() + "," + e.getY(), DEFAULT_WIDTH/2-50, DEFAULT_HEIGHT/2-50);
+				});
+				gameGUIRoot.requestFocus();
+				return;
+			}
+			
+		}
+		
+		
 		/*initialize the stage*/
 		window = s;
 		window.setTitle("2D RPG");
@@ -486,9 +526,6 @@ public class Controller extends Application implements GameListener{
 	 * calls the WorldGraphics to update.
 	 */
 	private void update() {
-		/*handle moving the player*/
-		//TODO - this when I wake up
-
 		/*update game context via logic*/
 		logic.tick();
 
