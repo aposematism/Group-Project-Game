@@ -289,7 +289,7 @@ public class EntityParserTests {
 		Region r = new Region(tp.getRA());
 		File inputFile = new File("res/test_entity_parser.txt");
 		EntityParser ep = new EntityParser(inputFile);
-		ep.parseEntitytoRegion(r);
+		ep.parseEntityToRegion(r);
 		System.out.println("total items is " + r.getInteractiveTotal());
 		assertTrue(r.getInteractiveTotal() == 10);
 	}

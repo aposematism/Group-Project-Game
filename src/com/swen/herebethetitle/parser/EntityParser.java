@@ -73,7 +73,7 @@ public class EntityParser {
 		}
 	}
 	
-	public Region parseEntitytoRegion(Region reg) {
+	public Region parseEntityToRegion(Region reg) {
 		for(int i = 0; i < entityList.size(); i++) {
 			Tile t = reg.get(coordinates.get(i).convert());
 			t.add(entityList.get(i));

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 
 /** 
@@ -11,8 +12,25 @@ import com.swen.herebethetitle.model.Region;
  * @author - Jordan Milburn
  * */
 public class RegionManager {
-	Region currentRegion;
-	Region[] neighbouringRegions;//Clockwise from north, east, south and west.
+	private Region currentRegion;
+	private Region[] neighbouringRegions;//Clockwise from north, east, south and west.
+	private Player player;
+	
+	/**
+	 * This is the RegionManager that can take directly from the file. Proceeds in the same way as the RegionManager Constructor with input Region.
+	 * @throws IOException  
+	 * 	 * */
+	public RegionManager(File terrainFile) throws IOException {
+		TerrainParser tp = new TerrainParser(terrainFile);
+		Region reg = new Region(tp.getRA());
+		this.currentRegion = reg;
+		String[] neighbourStrings = reg.getNeighbouringRegions();
+		neighbouringRegions = new Region[neighbourStrings.length];
+		for(int i = 0; i < neighbourStrings.length; i++) {
+			neighbouringRegions[i] = createNeighbours(neighbourStrings[i]);
+		}
+		insertEntities();//adds the entities in turn.
+	}
 	
 	/** 
 	 * Generates all the regions necessary around the current region.
@@ -24,6 +42,7 @@ public class RegionManager {
 		for(int i = 0; i < neighbourStrings.length; i++) {
 			neighbouringRegions[i] = createNeighbours(neighbourStrings[i]);
 		}
+		insertEntities();//adds the entities in turn.
 	}
 	
 	/** 
@@ -49,6 +68,11 @@ public class RegionManager {
 		return null;
 	}
 	
+	private void insertEntities() {
+		EntityParser ep = new EntityParser(new File("res/" + currentRegion.getRegionName()+"-entities"));
+		ep.parseEntityToRegion(currentRegion);
+	}
+	
 	
 	/** 
 	 * These return the neighbouring region for this current Region.
@@ -71,5 +95,12 @@ public class RegionManager {
 	
 	public Region getCurrent() {
 		return currentRegion;
+	}
+	
+	/** 
+	 * My attempt at Java 8 lambda magic.
+	 * */
+	public Player getPlayer() {
+		return (Player) currentRegion.getPlayerTile().getInteractives().stream().filter(e -> e instanceof Player);
 	}
 }

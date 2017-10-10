@@ -15,7 +15,6 @@ import com.swen.herebethetitle.parser.TerrainParser;
  * @author - Jordan
  * */
 public class TerrainParserTests {
-	
 	File testTerrain = new File("res/test_terrain_file.txt");
 	/** 
 	 * Testing the first method for initializing properly
@@ -48,7 +47,6 @@ public class TerrainParserTests {
 				for(int j = 0; j < sA.get(i).length; j++){
 					//System.out.println(rA[i][j].getCharacter() + " " + sA.get(i)[j]);
 					if(!(rA[i][j].getCharacter().equals(sA.get(i)[j]))){
-						
 						fail("character pulled from regionArray does not match stringArray");
 					}
 				}
@@ -61,9 +59,6 @@ public class TerrainParserTests {
 		catch(IndexOutOfBoundsException e){
 			e.printStackTrace();
 			fail("Index fell out of bounds during the parsing process or in examining the classes themselves.");
-		}
-		finally{
-			
 		}
 	}
 	/** 

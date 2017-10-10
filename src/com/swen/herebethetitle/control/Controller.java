@@ -331,7 +331,7 @@ public class Controller extends Application implements GameListener{
 			}
 			//parse map
 			EntityParser entityParser = new EntityParser(entityFile);
-			entityParser.parseEntitytoRegion(game.getCurrentRegion());
+			entityParser.parseEntityToRegion(game.getCurrentRegion());
 			
 			//play the game
 			worldGraphics = initGameGUI();

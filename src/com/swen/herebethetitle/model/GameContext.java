@@ -40,6 +40,7 @@ public class GameContext {
 	 * */
 	public GameContext(RegionManager rm) {
 		this.currentRegion = rm.getCurrent();
+		this.player = rm.getPlayer();
 	}
 	
 	public static Region CreateTestRegion() {

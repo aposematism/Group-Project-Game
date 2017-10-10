@@ -72,7 +72,7 @@ public class ReverseParserTests {
 				Region r = new Region(tp.getRA());
 				File inputFile = new File("res/test_entity_parser.txt");
 				EntityParser ep = new EntityParser(inputFile);
-				ep.parseEntitytoRegion(r);
+				ep.parseEntityToRegion(r);
 				ReverseParser.parseRegion(r);
 				File outputFile = ReverseParser.writeToFile("full reversal file.txt");
 				assert(compareFiles(inputFile, outputFile));
