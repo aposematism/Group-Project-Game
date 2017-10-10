@@ -1,6 +1,8 @@
 package com.swen.herebethetitle.model;
 
+import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.util.Direction;
 
 /**
@@ -31,6 +33,10 @@ public class GameContext {
 	
 	public static Region CreateTestRegion() {
 	    Region region = new Region(10, 10);
+		for(int i=0;i<5;i++){
+			Entity e = new Static("", "file:res/cobble master.png");
+			region.get(5,2+i).add(e);
+		}
 	    return region;
 	}
 	
