@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Tile;
 
 /** 
@@ -89,6 +90,8 @@ public class TerrainParser{
 				
 				if (possiblyFloor instanceof Floor) {
                     z.setMapFloor((Floor)possiblyFloor);
+				} else if (possiblyFloor instanceof Static){
+					z.add((Static)possiblyFloor);
 				} else {
 				    throw new IllegalArgumentException("malformed terrain, floor must be Floor");
 				}
