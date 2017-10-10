@@ -261,6 +261,7 @@ public class Controller extends Application implements GameListener{
 			//display a file chooser
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Load a map file");
+			fileChooser.setInitialDirectory(new File("res/"));
 			fileChooser.getExtensionFilters().addAll(
 					new ExtensionFilter("Text Files", "*.txt"),
 					new ExtensionFilter("All Files", "*.*"));
