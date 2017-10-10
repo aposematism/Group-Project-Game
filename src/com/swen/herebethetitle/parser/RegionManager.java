@@ -14,6 +14,9 @@ public class RegionManager {
 	Region currentRegion;
 	Region[] neighbouringRegions;//Clockwise from north, east, south and west.
 	
+	/** 
+	 * Generates all the regions necessary around the current region.
+	 * */
 	public RegionManager(Region c) {
 		this.currentRegion = c;
 		String[] neighbourStrings = c.getNeighbouringRegions();
@@ -23,6 +26,9 @@ public class RegionManager {
 		}
 	}
 	
+	/** 
+	 * Enables feeding of regions by tests.
+	 * */
 	public RegionManager(Region c, Region[] ne) {
 		this.currentRegion = c;
 		this.neighbouringRegions = ne;
@@ -61,5 +67,9 @@ public class RegionManager {
 	
 	public Region getWest() {
 		return neighbouringRegions[3];
+	}
+	
+	public Region getCurrent() {
+		return currentRegion;
 	}
 }

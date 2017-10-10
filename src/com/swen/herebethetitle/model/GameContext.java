@@ -3,6 +3,7 @@ package com.swen.herebethetitle.model;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.Static;
+import com.swen.herebethetitle.parser.RegionManager;
 import com.swen.herebethetitle.util.Direction;
 
 /**
@@ -11,6 +12,7 @@ import com.swen.herebethetitle.util.Direction;
  */
 public class GameContext {
 	public Region currentRegion;
+	public RegionManager manager;
 	public Player player;
 	
 	public GameContext() {
@@ -31,6 +33,15 @@ public class GameContext {
 		this.currentRegion.get(0, 0).add(player);
 	}
 	
+	/** 
+	 * So this hands the GameContext a current region inside a region manager.
+	 * The region manager contains the current region and an array of its neighbouring regions.
+	 * This enables you to call for the region next to it from within the gameContext.
+	 * */
+	public GameContext(RegionManager rm) {
+		this.currentRegion = rm.getCurrent();
+	}
+	
 	public static Region CreateTestRegion() {
 	    Region region = new Region(10, 10);
 		for(int i=0;i<5;i++){
@@ -43,4 +54,20 @@ public class GameContext {
 	public Region getCurrentRegion() { return this.currentRegion; }
 
 	public Player getPlayer() { return this.player; }
+	
+	public Region getNorthRegion() {
+		return manager.getNorth();
+	}
+	
+	public Region getEastRegion() {
+		return manager.getEast();
+	}
+	
+	public Region getSouthRegion() {
+		return manager.getSouth();
+	}
+	
+	public Region getWesthRegion() {
+		return manager.getWest();
+	}
 }
