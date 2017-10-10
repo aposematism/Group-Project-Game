@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.pathfinding.PathfindingGrid;
 import com.swen.herebethetitle.util.GridLocation;
@@ -37,6 +39,17 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      */
     private Tile[][] cells;
     
+    /** 
+     * 
+     * Region Name. "Church
+     * 
+     * */
+    private String regionName;
+    
+    /** 
+     * List of neighbouring regions in string form.
+     * */
+    private String[] neighbouringRegions;
     /**
      * Creates a new basic grid.
      * @param width
@@ -51,8 +64,18 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
             for (int y=0; y<height; y++) {
                 String character = String.format("%d:%d", x, y);
                 set(new GridLocation(x,y), new Tile(x, y, character));
+                get(x,y).setMapFloor(new Floor("file:res/grass.png"));
             }
         }
+    }
+    
+    /**
+     * Creates a custom grid from tile 2d array. Used for Terrain Parser.
+     */
+    public Region(Tile[][] tiles) {
+    	this.width = tiles.length;
+    	this.height = tiles[0].length;
+    	this.cells = tiles;
     }
     
     /**
@@ -73,11 +96,18 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Gets a tile at a location if the location is in bounds.
      */
     public Optional<Tile> tryGet(GridLocation location) {
-        if (location.x < 0 || location.x >= width ||
-                location.y < 0 || location.y >= height)
+        if (!isWithin(location))
             return Optional.empty();
         
         return Optional.of(get(location));
+    }
+    
+    /**
+     * Checks if a location is within the region.
+     */
+    public boolean isWithin(GridLocation location) {
+        return location.x >= 0 && location.x < width &&
+                location.y >= 0 && location.y < height;
     }
     
     /**
@@ -93,13 +123,29 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public void set(GridLocation location, Optional<Tile> tile) {
         cells[location.x][location.y] = tile.orElse(null);
     }
+    
+    /**
+     * Checks if a location is penetrable.
+     */
+    public boolean isPenetrable(GridLocation location) {
+    	    return get(location).isPenetrable();
+    }
 
     /**
      * Removes an item from the region.
      */
     public void remove(Entity entity) {
         Tile tile = getTile(entity);
-        tile.remove(entity);
+        if (!tile.remove(entity))
+            throw new IllegalArgumentException("could not delete entity");
+    }
+    
+    /**
+     * Moves an entity to a location.
+     */
+    public void move(Entity entity, GridLocation location) {
+    	    remove(entity);
+    	    get(location).add(entity);
     }
     
     /**
@@ -148,6 +194,43 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
     
     /**
+     * Gets an iterator of tiles within a vicinity.
+     */
+    public Iterator<Tile> vicinity(GridLocation location, double radius) {
+		return vicinityList(location, radius).iterator();
+    }
+    
+    /**
+     * Gets a stream of tiles within a vicinity.
+     */
+    public Stream<Tile> vicinityStream(GridLocation location, double radius) {
+    	    return vicinityList(location, radius).stream();
+    }
+    
+    /**
+     * Gets a list of tiles within a vicinity.
+     */
+    public List<Tile> vicinityList(GridLocation location, double radius) {
+    	    List<Tile> vicinity = new ArrayList<Tile>();
+
+    	    int maxRadius = (int)Math.round(radius);
+    	    // Go through every tile in the general area.
+    	    for (int y = location.y - maxRadius; y < location.y + radius; y++) {
+			for (int x = location.x - maxRadius; x < location.x + maxRadius; x++) {
+				Optional<Tile> tile = tryGet(new GridLocation(x,y));
+				GridLocation tileLocation = new GridLocation(x,y);
+				
+				// Add any tiles within the radius.
+				if (tile.isPresent() &&
+						tileLocation.distanceBetween(location) <= radius) {
+					vicinity.add(tile.get());
+				}
+			}
+    	    }
+    	    return vicinity;
+    }
+    
+    /**
      * Gets the tile a player is located on.
      * 
      * Throws an error if the player is not in the region.
@@ -157,7 +240,7 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
 
     @Override
-    public Collection<Tile> getAdjacent(Tile tile) {
+    public Collection<Tile> getNeighbours(Tile tile) {
         GridLocation location = getLocation(tile);
 
         List<Optional<Tile>> tiles = Arrays.asList(
@@ -178,6 +261,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
     
     /**
+     * Checks if two entities are neighbouring.
+     */
+    public boolean isNeighbouring(Entity a, Entity b) {
+	    return getTile(a).getLocation().isNeighbouring(getLocation(b));
+    }
+    
+    /**
      * Gets a stream over all tiles in the region.
      * There is a consistent, but unspecified ordering of the result.
      */
@@ -189,5 +279,61 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public Iterator<Tile> iterator() {
         List<Tile> tiles = stream().collect(Collectors.toList());
         return tiles.iterator();
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int y=0; y<width; y++) {
+            for (int x=0; x<height; x++) {
+                Tile tile = get(x,y);
+                
+                String letter = tile.getInteractives().isEmpty() ? "-" : "w";
+                //String letter = tile.getInteractives().stream().findFirst().map(a -> a.toString()).orElse(" ");
+                builder.append(letter);
+            }
+            builder.append('\n');
+        }
+        
+        return builder.toString();
+    }
+    
+    public void setRegionName(String rn) {
+    	this.regionName = rn;
+    }
+    
+    public String getRegionName() {
+    	return regionName;
+    }
+    
+    public int getXSize() {
+    	return cells.length;
+    }
+    
+    public int getYSize() {
+    	return cells[0].length;
+    }
+    
+    public String[] getNeighbouringRegions() {
+    	return neighbouringRegions;
+    }
+    
+    public void setNeighbouringRegions(String[] nr) {
+    	this.neighbouringRegions = nr;
+    }
+    
+    public int getInteractiveTotal() {
+    	int total = 0;
+    	for(Entity e : this.getPlayerTile().getInteractives()) {
+    		if(e instanceof Player) {
+    			total = ((Player) e).inventory().size();
+    		}
+    	}
+    	for(int i = 0; i < width; i++) {
+    		for(int j = 0; j < height; j++) {
+    			total = total + cells[i][j].getInteractiveSize();
+    		}
+    	}
+    	return total;
     }
 }

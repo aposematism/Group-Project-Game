@@ -14,5 +14,5 @@ public interface PathfindingGrid {
     /**
      * Gets a list of tiles that are adjacent to a tile.
      */
-	public Collection<Tile> getAdjacent(Tile tile);
+	public Collection<Tile> getNeighbours(Tile tile);
 }

@@ -2,7 +2,7 @@ package com.swen.herebethetitle.pathfinding.test;
 
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.Terrain;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
@@ -30,7 +30,7 @@ public class ComplexTests extends Base {
         
         // Fill in a vertical wall right close to the left with only one empty space at the bottom.
         for (int y=0; y<region.height - 1; y++) {
-            region.get(1, y).setMapTerrain(new Terrain(null));
+			region.get(1, y).add(new Static("wall", null));
         }
         
         verifyPath(region, source, dest,
@@ -61,18 +61,17 @@ public class ComplexTests extends Base {
         // Fill in every cell except the outermost ring on the boundary.
         for (int x=1; x<region.width - 1; x++) {
             for (int y=1; y<region.height - 1; y++) {
-                region.get(x, y).setMapTerrain(new Terrain(null));
+                region.get(x, y).add(new Static("wall", null));
             }
         }
         // Set the obstacle that forces us to track over the whole boundary.
-        region.get(1, 0).setMapTerrain(new Terrain(null));
+		region.get(1, 0).add(new Static("wall", null));
         
         verifyPath(region, source, dest,
                 new GridLocation(0, 0), new GridLocation(0, 1), new GridLocation(0, 2),
-                new GridLocation(0, 3), new GridLocation(0, 4), new GridLocation(1, 4),
-                new GridLocation(2, 4), new GridLocation(3, 4), new GridLocation(4, 3),
-                new GridLocation(4, 2), new GridLocation(4, 1), new GridLocation(3, 0),
-                new GridLocation(2, 0));
+                new GridLocation(0, 3), new GridLocation(1, 4), new GridLocation(2, 4),
+                new GridLocation(3, 4), new GridLocation(4, 3), new GridLocation(4, 2),
+                new GridLocation(4, 1), new GridLocation(3, 0), new GridLocation(2, 0));
         
     }
 }

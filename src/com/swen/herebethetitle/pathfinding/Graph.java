@@ -175,7 +175,8 @@ public class Graph {
                 // // The distance from start to a neighbor
                 // tentative_gScore := gScore[current] + dist_between(current,
                 // neighbor)
-                double tenative_gScore = current.getLocation().distanceBetween(neighbour.getLocation());
+                double tenative_gScore = gScore.get(current) +
+                        current.getLocation().distanceBetween(neighbour.getLocation());
 
                 // if neighbor not in openSet // Discover a new node
                 if (!openSet.contains(neighbour))
@@ -213,6 +214,11 @@ public class Graph {
             // total_path.append(current)
             total_path.add(current);
         }
+        
+        // special case for when the source and destination are neighbours.
+        if (total_path.size() == 1)
+            total_path.add(source);
+
         Collections.reverse(total_path);
         return total_path;
     }
@@ -229,9 +235,9 @@ public class Graph {
      * Gets neighbouring tiles that we can actually travel through.
      */
     protected Collection<Tile> getReachableAdjacentTiles(Tile tile) {
-        return grid.getAdjacent(tile)
+        return grid.getNeighbours(tile)
                    .stream()
-                   .filter(t -> t.isPenetrable())
+                   .filter(t -> t == this.destination || t.isPenetrable())
                    .collect(Collectors.toList());
     }
 

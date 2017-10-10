@@ -1,11 +1,10 @@
 package com.swen.herebethetitle.pathfinding.test;
 
-import static org.junit.Assert.assertFalse;
-
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Static;
 import org.junit.Test;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Terrain;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Tests invariants that must be true for pathfinding to work correctly.
@@ -13,8 +12,8 @@ import com.swen.herebethetitle.entity.Terrain;
  */
 public class Invariants {
     @Test
-    public void obstacleEntityIsImpenetrable() {
-        Entity terrain = new Terrain(null);
-        assertFalse(terrain.isPenetrable());
+    public void stationaryEntityIsImpenetrable() {
+		Entity stationary = new Static("wall", null);
+        assertFalse(stationary.isPenetrable());
     }
 }

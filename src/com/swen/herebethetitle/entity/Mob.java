@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.entity;
 
 import com.swen.herebethetitle.util.Direction;
-
 import javafx.scene.image.Image;
 
 /**
@@ -9,46 +8,86 @@ import javafx.scene.image.Image;
  * notably for changing their health values and changing where they are in the game world.
  *
  * Created by Mark on 19/09/17.
+ *
+ * @author Mark Metcalfe
  */
 public abstract class Mob extends Entity {
+
 	/**
 	 * A full health value.
 	 */
-	public static final int FULL_HEALTH = 100;
+	public static final double FULL_HEALTH = 100;
+
 	/**
 	 * An empty health value.
 	 */
-	public static final int NO_HEALTH = 0;
+	public static final double NO_HEALTH = 0;
 
-	private int health;
+	/**
+	 * The amount of damage the mob can take before it dies
+	 */
+	protected double health;
 
+	/**
+	 * The direction that the mob is currently facing.
+	 */
 	private Direction direction;
 
-	public Mob(Image sprite, int startingHealth, Direction direction){
-		super(sprite);
+	/**
+	 * Mob itself is abstract, so must be constructed in a subclass
+	 */
+	public Mob(String name, String spritePath, double startingHealth, Direction direction){
+		super(name, spritePath);
 		this.health = startingHealth;
 		this.direction = direction;
 	}
 
-	public Direction getDirection(){
-		return direction;
-	}
+	/**
+	 * The direction that the mob is currently facing
+	 */
+	public Direction getDirection() { return direction; }
 
-	public void setDirection(Direction direction){
-		this.direction=direction;
-	}
+	/**
+	 * Update the direction that the mob is facing
+	 */
+	public void setDirection(Direction direction) { this.direction=direction; }
 
-	public int getHealth(){
-		return health;
-	}
+	/**
+	 * How much health the the mob currently has
+	 */
+	public double getHealth() { return health; }
 
-	public void damage(int amount){
+	/**
+	 * Remove health
+	 * @param amount A positive number
+	 * @throws IllegalArgumentException if input amount isn't positive
+	 */
+	protected void damage(double amount){
+		if(amount<=0)
+			throw new IllegalArgumentException("Must Be Positive!");
 		health -= amount;
-		if(health<NO_HEALTH) health = NO_HEALTH;
+		if(health<NO_HEALTH)
+			health = NO_HEALTH;
 	}
 
-	public void heal(int amount){
+	/**
+	 * Add health
+	 * @param amount A positive number
+	 * @throws IllegalArgumentException if input amount isn't positive
+	 */
+	protected void heal(double amount){
+		if(amount<=0)
+			throw new IllegalArgumentException("Must Be Positive!");
 		health += amount;
-		if(health>FULL_HEALTH) health = FULL_HEALTH;
+		if(health>FULL_HEALTH)
+			health = FULL_HEALTH;
 	}
+	
+	/**
+	 * Checks if the mob has any health left.
+	 */
+	public boolean isDead() { return health == NO_HEALTH; }
+
+	@Override
+	public String toString() { return super.toString()+" "+health+" "+direction.toString(); }
 }
