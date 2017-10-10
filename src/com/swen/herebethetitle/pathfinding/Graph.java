@@ -105,6 +105,9 @@ public class Graph {
         this.source = source;
         this.destination = destination;
         this.heuristic = heuristic;
+        
+        if (!destination.isPenetrable())
+            throw new IllegalArgumentException("cannot pathfind to an impenetrable tile");
     }
 
     /**
