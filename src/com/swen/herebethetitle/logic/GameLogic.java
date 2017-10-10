@@ -60,6 +60,11 @@ public class GameLogic {
         triggerPossibleInteractions();
 
         npcController.tick(context, notifier);
+        
+        // Check for game over.
+        if (getPlayer().inventory().containsTitle()) {
+            notifier.notify(l -> l.onGameCompleted());
+        }
     }
 
     /**

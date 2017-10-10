@@ -662,4 +662,9 @@ public class Controller extends Application implements GameListener{
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void onGameCompleted() {
+		// TODO Auto-generated method stub
+	}
 }

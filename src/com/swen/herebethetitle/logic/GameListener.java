@@ -14,6 +14,11 @@ import java.util.Optional;
  */
 public interface GameListener {
     /**
+     * Called when the player obtains a title and completes the game.
+     */
+    void onGameCompleted();
+    
+    /**
      * Called when the player is moved.
      */
     void onPlayerMoved(Player player);
