@@ -35,7 +35,11 @@ public class GameContext {
 	//TODO This needs to be replaced by something better.
 	public GameContext(Region initialRegion){
 	    this.currentRegion = initialRegion;
-        this.player = (Player)currentRegion.getPlayerTile().getInteractives().get(0);
+        if(currentRegion.getPlayerTile().getInteractives().get(0) instanceof Player){
+			this.player = (Player) currentRegion.getPlayerTile().getInteractives().get(0);
+		} else {
+			this.player = (Player) currentRegion.getPlayerTile().getInteractives().get(1);
+		}
     }
 	
 	public static Region CreateTestRegion() {

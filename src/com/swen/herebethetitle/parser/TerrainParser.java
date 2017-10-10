@@ -114,7 +114,7 @@ public class TerrainParser{
 			return f;
 		}
 		else if(p.equals("w")) {
-			Floor w = new Floor("TudorWall", "tudorwall.png");
+			Static w = new Static("TudorWall", "tudorwall.png");
 
 			return w;
 		}
