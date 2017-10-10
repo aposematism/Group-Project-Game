@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.control;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.Item;
@@ -13,7 +14,10 @@ import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.parser.EntityParser;
+import com.swen.herebethetitle.parser.TerrainParser;
 import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
@@ -222,14 +226,7 @@ public class Controller extends Application implements GameListener{
 			worldGraphics = initGameGUI();
 			window.setScene(worldGraphics);
 			/*set the timer to regularly update*/
-			updateTimeline = new Timeline(new KeyFrame(
-					Duration.millis(6000.0 / FRAMES_PER_SECOND),
-					ae -> update()));
-			updateTimeline.setCycleCount(Animation.INDEFINITE);
-			if(!isTesting)updateTimeline.play();
-			gameGUIRoot.requestFocus();
-			isPlaying = true;
-			playerDestination = game.getCurrentRegion().getPlayerTile();
+			unpauseGame();
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
@@ -263,14 +260,43 @@ public class Controller extends Application implements GameListener{
 		loadGame.setOnAction(e->{
 			//display a file chooser
 			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("Load a saved game");
+			fileChooser.setTitle("Load a map file");
 			fileChooser.getExtensionFilters().addAll(
 					new ExtensionFilter("Text Files", "*.txt"),
 					new ExtensionFilter("All Files", "*.*"));
-			File selectedFile = fileChooser.showOpenDialog(window);
-			if (selectedFile != null) {
-				//TODO parse file
+			File mapFile = fileChooser.showOpenDialog(window);
+			if (mapFile == null) {
+				System.out.println("File failure: map file null");
+				return;
 			}
+			
+			//initialize game
+			initializeNewGame();
+			
+			//parse map
+			try {
+				TerrainParser terrainParser = new TerrainParser(mapFile);
+				game.currentRegion = new Region(terrainParser.getRA());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return;
+			}
+			fileChooser.setTitle("Load an entity file");
+			File entityFile = fileChooser.showOpenDialog(window);
+			if (entityFile == null) {
+				System.out.println("File failure: entity file null");
+				return;
+			}
+			//parse map
+			EntityParser entityParser = new EntityParser(entityFile);
+			entityParser.parseEntitytoRegion(game.getCurrentRegion());
+			
+			//play the game
+			worldGraphics = initGameGUI();
+			window.setScene(worldGraphics);
+			unpauseGame();
+			
 		});
 		GridPane.setConstraints(loadGame, 0, 1);
 		layout.getChildren().add(loadGame);
@@ -345,6 +371,15 @@ public class Controller extends Application implements GameListener{
 	 * Unpauses the game.
 	 */
 	private void unpauseGame() {
+		if(updateTimeline==null) {
+			updateTimeline = new Timeline(new KeyFrame(
+					Duration.millis(6000.0 / FRAMES_PER_SECOND),
+					ae -> update()));
+			updateTimeline.setCycleCount(Animation.INDEFINITE);
+			gameGUIRoot.requestFocus();
+			isPlaying = true;
+			playerDestination = game.getCurrentRegion().getPlayerTile();
+		}
 		updateTimeline.play();
 		isPlaying = true;
 	}
