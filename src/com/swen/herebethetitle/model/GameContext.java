@@ -1,9 +1,10 @@
 package com.swen.herebethetitle.model;
 
-import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.util.Direction;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 /**
  * Top-level class for dealing with game model information.
@@ -30,13 +31,16 @@ public class GameContext {
 		this.player = player;
 		this.currentRegion.get(0, 0).add(player);
 	}
+
+	//TODO This needs to be replaced by something better.
+	public GameContext(Region initialRegion){
+	    this.currentRegion = initialRegion;
+        this.player = (Player)currentRegion.getPlayerTile().getInteractives().get(0);
+    }
 	
 	public static Region CreateTestRegion() {
 	    Region region = new Region(10, 10);
-		for(int i=0;i<5;i++){
-			Entity e = new Static("", "file:res/cobble master.png");
-			region.get(5,2+i).add(e);
-		}
+
 	    return region;
 	}
 	

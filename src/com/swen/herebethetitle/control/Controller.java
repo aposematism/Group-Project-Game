@@ -275,9 +275,11 @@ public class Controller extends Application implements GameListener{
 			initializeNewGame();
 			
 			//parse map
+			Region r;
 			try {
 				TerrainParser terrainParser = new TerrainParser(mapFile);
-				game.currentRegion = new Region(terrainParser.getRA());
+				r = new Region(terrainParser.getRA());
+
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -291,7 +293,13 @@ public class Controller extends Application implements GameListener{
 			}
 			//parse map
 			EntityParser entityParser = new EntityParser(entityFile);
-			entityParser.parseEntitytoRegion(game.getCurrentRegion());
+			entityParser.parseEntitytoRegion(r);
+
+			//TODO Needs to be replaced by something better.
+			game = new GameContext(r);
+			Player p = game.getPlayer();
+			//System.out.println(p.toString());
+			System.out.println(game.currentRegion.getLocation(p));
 			
 			//play the game
 			worldGraphics = initGameGUI();
