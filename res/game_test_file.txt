@@ -1,0 +1,6 @@
+(0,5) NPC "Fred" "Wizard.png" 50.0 Down Friendly { "Great weather today!" "Did you hear about the beast?" "It's called THE BEAST" }
+(5,2) Static "Large Rock" "cobble snow.png"
+(11,6) Player "Player" "Wizard.png" 100.0 Down 0 Inventory { Weapon "Sword" "Wizard.png" true 5.0 } { Armour "Chestplate" "" TORSO 50.0 }
+(5,6) Potion "Poison" "" -50.0
+(9,2) NPC "Zombie" "cobble snow.png" 50.0 Down Monster 50.0
+(1,4) Floor "Grass" "grass.png"
