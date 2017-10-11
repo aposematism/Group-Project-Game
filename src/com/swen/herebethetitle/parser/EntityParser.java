@@ -1,12 +1,8 @@
 package com.swen.herebethetitle.parser;
 
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.model.Region;
-import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -15,56 +11,13 @@ import java.util.regex.Pattern;
 /**
  * Helper class with static methods for interpreting a single line in the save file.
  *
- * @author Mark Metcalfe and Jordan Milburn
+ * @author Mark Metcalfe
  */
 public class EntityParser {
 
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
 	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|monster|Friendly|friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
-	private final static Pattern EXCLUDE = Pattern.compile("#");
-
-	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
-	static ArrayList<Entity> entityList = new ArrayList<Entity>();
-
-	/**
-	 * Interactive scanner which takes input from a file and produces all entites from it.
-	 * */
-	public EntityParser(BufferedReader reader) throws IOException {
-		coordinates = new ArrayList<Coord>();
-		entityList = new ArrayList<Entity>();
-		try{
-			String line = "";
-			while (line.length() == 0)
-				line = reader.readLine();
-			while(line != null){
-				Scanner s = new Scanner(line);
-
-				//Checks if line has an exclusion character, tells parser to skip line
-				if (s.findInLine(EXCLUDE) == null) {
-					Coord c = Coord.parseCoordinate(s);
-					coordinates.add(c);
-					Entity e = parseEntity(s);
-					entityList.add(e);
-				}
-
-				line = reader.readLine();
-			}
-		} catch (SyntaxError e) {
-			e.printStackTrace();
-		}
-	}
-
-	public EntityParser() {
-	}
-	
-	public Region parseEntitytoRegion(Region reg) {
-		for(int i = 0; i < entityList.size(); i++) {
-			Tile t = reg.get(coordinates.get(i).convert());
-			t.add(entityList.get(i));
-		}
-		return reg;
-	}
 
 	/**
 	 * Takes the remainder of a line and constructs an entity object from it
@@ -103,14 +56,6 @@ public class EntityParser {
 		String string = s.findInLine(STRING);
 		string = string.replaceAll("\"","");
 		return string;
-	}
-	
-	/** 
-	 * parses item from scanner. Never used currently
-	 * */
-	private Item parseItem(Scanner s) throws InputMismatchException {
-		String className = s.next();
-		return parseItem(s, className);
 	}
 
 	/** 
@@ -308,13 +253,21 @@ public class EntityParser {
 		Direction direction = Direction.valueOf(s.next());
 		int wallet = s.nextInt();
 
-		Player player = new Player(name, sprite, health, wallet, direction);
-
 		s.next(); //Consume "Inventory" token
 		ArrayList<Item> items = new ArrayList<>();
 		while(s.hasNext("\\{"))
 			items.add(parseInventoryItem(s));
 
 		return new Player(name, sprite, health, wallet, direction, items.toArray(new Item[items.size()]));
+	}
+
+	public class SyntaxError extends Exception {
+		public SyntaxError(String message) {
+			super(message);
+		}
+
+		public SyntaxError() {
+			super("Couldn't Parse Input");
+		}
 	}
 }

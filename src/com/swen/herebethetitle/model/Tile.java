@@ -8,7 +8,6 @@ import com.swen.herebethetitle.util.GridLocation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /** 
@@ -58,11 +57,13 @@ public class Tile implements Iterable<Entity> {
 	    return interactives.remove(entity);
     }
 
-	public void add(Entity entity) {
-		if (entity instanceof Floor)
-			setMapFloor((Floor) entity);
-		else
-			interactives.add(entity);
+	public void add(Entity... entities) {
+		for (Entity entity : entities) {
+			if (entity instanceof Floor)
+				setMapFloor((Floor) entity);
+			else
+				interactives.add(entity);
+		}
 	}
 
 	/**
@@ -83,11 +84,11 @@ public class Tile implements Iterable<Entity> {
 	 * Assumes that the entities are rendered from i=0 to i=size.
 	 * i.e. The last tile in the array is the top.
 	 */
-	public Optional<Entity> getTopEntity() {
-		Optional<Entity> entity = Optional.empty();
+	public Entity getTopEntity() {
+		Entity entity = mapFloor;
 		for (Entity e : interactives)
 			if (!(e instanceof Player))
-				entity = Optional.of(e);
+				entity = e;
 		return entity;
 	}
 

@@ -2,8 +2,7 @@ package com.swen.herebethetitle.parser;
 
 import com.swen.herebethetitle.model.Region;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 
 /** 
@@ -33,9 +32,7 @@ public class RegionManager {
 	 * */
 	private Region createNeighbours(String neigh) {
 		try {
-			TerrainParser tp = new TerrainParser(new BufferedReader(new FileReader(neigh)));
-			Region r = new Region(tp.getRA());
-			return r;
+			return new MapParser(new File(neigh)).getRegion();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

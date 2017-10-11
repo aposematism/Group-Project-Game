@@ -3,6 +3,7 @@ package com.swen.herebethetitle.parser;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.parser.EntityParser.SyntaxError;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import java.util.Scanner;
 public class ReverseParser {
 	
 	static ArrayList<Entity> interactives = new ArrayList<Entity>();
-	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<String> output = new ArrayList<String>();
 	
 	public ReverseParser(File region) throws IOException, SyntaxError {
@@ -26,15 +26,12 @@ public class ReverseParser {
 	private static void reverseScanner(File region)throws IOException, SyntaxError{
 		interactives = new ArrayList<Entity>();
 		output = new ArrayList<String>();
-		coordinates = new ArrayList<Coord>();
 		BufferedReader regionBuff = null;
 		try{
 			regionBuff = new BufferedReader(new FileReader(region));
 			String line = regionBuff.readLine();
 			while(line != null){
 				Scanner s = new Scanner(line);
-				Coord c = Coord.parseCoordinate(s);
-				coordinates.add(c);
 				Entity ent = new EntityParser().parseEntity(s);
 				interactives.add(ent);
 				line = regionBuff.readLine();
@@ -84,8 +81,7 @@ public class ReverseParser {
 	 * */
 	public static void pullString(ArrayList<Entity> entArray) {
 		for(int i = 0; i < interactives.size(); i++) {
-			String concat = coordinates.get(i).toString();
-			concat = concat + " " + interactives.get(i).toString();
+			String concat = " " + interactives.get(i).toString();
 			output.add(concat);
 		}
 	}

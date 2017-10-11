@@ -1,14 +1,9 @@
 package com.swen.herebethetitle.logic;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.logic.ai.NpcController;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
@@ -18,6 +13,11 @@ import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Provides updating and logic support to a game model.
@@ -145,11 +145,9 @@ public class GameLogic {
      */
     public void interact(GridLocation location) throws EntityOutOfRange {
         Tile tile = getCurrentRegion().get(location);
-        
-        if (tile.getTopEntity().isPresent()) {
-            Entity entity = tile.getTopEntity().get();
-            interact(entity);
-        }
+
+	    Entity entity = tile.getTopEntity();
+	    interact(entity);
     }
 
     /**
