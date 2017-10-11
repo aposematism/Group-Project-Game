@@ -2,4 +2,8 @@
 (5,2) Static "Large Rock" "static/cobble snow.png"
 (10,6) Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple" 5.0 }
 (5,6) Potion "Poison" "item/potion yellow.png" -50.0
+(4,4) Key "Key for door" "item/key red.png" 70
+(9,9) Potion "Bread" "item/bread.png" 25
+(9,11) Potion "Steak" "item/meat.png" 10
+(2,11) Weapon "Fire Staff" "item/staff red.png" false 10.0
 (9,2) NPC "Zombie" "cobble snow.png" 50.0 Down Monster 50.0
