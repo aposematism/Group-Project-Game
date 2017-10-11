@@ -152,7 +152,8 @@ public class EntityParser {
 			case "Armour": return parseArmour(s);
 			case "Key":    return parseKey(s);
 			case "Potion": return parsePotion(s);
-			case "Title": return parseTitle(s);
+			case "Title":
+				return parseTitle(s);
 			default:       throw new InputMismatchException("Couldn't Interpret Entity");
 		}
 	}
@@ -207,7 +208,10 @@ public class EntityParser {
 	 * Parses a title.
 	 */
 	private Title parseTitle(Scanner s) throws InputMismatchException {
-	    return new Title();
+		String name = parseString(s);
+		String sprite = parseString(s);
+
+		return new Title(name, sprite);
 	}
 
 	/** 
