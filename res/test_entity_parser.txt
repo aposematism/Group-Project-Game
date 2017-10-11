@@ -3,5 +3,5 @@
 (5,2) Static "Large Rock" "gigantic ass rock.png"
 (11,6) Player "Player" "silly boi.png" 100.0 Down 0 Inventory
 (9,2) NPC "Zombie" "zombie.png" 50.0 Down Monster 50.0
-(10,2) Title "Title" "file:res/title.png"
+(10,2) Title "Title" "title.png"
 (1,4) Floor "Grass" "grass.png"
