@@ -1,14 +1,9 @@
 package com.swen.herebethetitle.control;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-
 import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.Static;
-import com.swen.herebethetitle.exceptions.NotImplementedYetException;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
@@ -22,7 +17,6 @@ import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -45,6 +39,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -529,7 +527,8 @@ public class Controller extends Application implements GameListener{
 
 		/*build the new interaction for the player movement*/
 		try {
-			playerDestination = game.getCurrentRegion().get(mouseLocation);
+			if (game.getCurrentRegion().get(mouseLocation).isPenetrable())
+				playerDestination = game.getCurrentRegion().get(mouseLocation);
 			//TODO this
 		}catch(Exception exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
@@ -539,6 +538,16 @@ public class Controller extends Application implements GameListener{
 
 	private void handleMousePressPrimary(MouseEvent e) {
 		System.out.println("Primary mouse press");
+
+		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
+
+		tile.getTopEntity().ifPresent(entity -> {
+			try {
+				entity.interact(game);
+				System.out.println("Entity clicked: " + entity.toString());
+			} catch (Exception exc) {
+			} //Do nothing
+		});
 	}
 
 	/**
