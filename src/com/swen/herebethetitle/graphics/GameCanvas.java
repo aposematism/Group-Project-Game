@@ -22,7 +22,9 @@ import java.util.List;
  * @author weirjosh
  */
 public class GameCanvas extends Canvas {
-    private GameContext context;
+	private static Image ERROR = new Image("file:res/error.png");
+
+	private GameContext context;
 
     private Map<String, Image> imageMap = new HashMap<>();
 
@@ -135,7 +137,7 @@ public class GameCanvas extends Canvas {
 	        Image image = new Image("file:res/" + e.getSpritePath());
 
 	        if (image.getHeight() == 0 && image.getWidth() == 0) //Image didn't load properly
-		        image = new Image("file:res/error.png");
+		        image = ERROR;
 
 	        imageMap.put(e.getSpritePath(), image);
         }
