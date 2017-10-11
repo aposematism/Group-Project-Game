@@ -22,7 +22,7 @@ import java.util.List;
  * @author weirjosh
  */
 public class GameCanvas extends Canvas {
-	private static Image ERROR = new Image("file:res/error.png");
+	private static final Image ERROR = new Image("file:res/error.png");
 
 	private GameContext context;
 
