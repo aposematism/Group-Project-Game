@@ -58,7 +58,12 @@ public class Tile implements Iterable<Entity> {
 	    return interactives.remove(entity);
     }
 
-	public void add(Entity entity) { interactives.add(entity); }
+	public void add(Entity entity) {
+		if (entity instanceof Floor)
+			setMapFloor((Floor) entity);
+		else
+			interactives.add(entity);
+	}
 
 	/**
 	 * Checks if neighbouring tiles contain the specified entity

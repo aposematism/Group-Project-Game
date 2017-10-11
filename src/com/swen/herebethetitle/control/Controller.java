@@ -11,8 +11,7 @@ import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.parser.EntityParser;
-import com.swen.herebethetitle.parser.TerrainParser;
+import com.swen.herebethetitle.parser.LoadMap;
 import com.swen.herebethetitle.pathfinding.Graph;
 import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
@@ -41,7 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Optional;
 
 /**
@@ -324,28 +323,16 @@ public class Controller extends Application implements GameListener{
 			initializeNewGame();
 			
 			//parse map
-			Region r;
+			Region region;
 			try {
-				TerrainParser terrainParser = new TerrainParser(mapFile);
-				r = new Region(terrainParser.getRA());
-
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				region = new LoadMap(mapFile).getRegion();
+			} catch (FileNotFoundException f) {
+				System.out.println("File failure: couldn't locate file");
 				return;
 			}
-			fileChooser.setTitle("Load an entity file");
-			File entityFile = fileChooser.showOpenDialog(window);
-			if (entityFile == null) {
-				System.out.println("File failure: entity file null");
-				return;
-			}
-			//parse map
-			EntityParser entityParser = new EntityParser(entityFile);
-			entityParser.parseEntitytoRegion(r);
 
 			//TODO Needs to be replaced by something better.
-			game = new GameContext(r);
+			game = new GameContext(region);
 			Player p = game.getPlayer();
 			//System.out.println(p.toString());
 			System.out.println(game.currentRegion.getLocation(p));

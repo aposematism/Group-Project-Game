@@ -1,3 +1,7 @@
+. = Floor "Grass" "static/grass.png"
+w = Static "Wall" "static/tudorwall.png"
+d = Static "Door" "static/cobble master.png" Door 70 LOCKED
+
 wwwwwwwwwwwwwwww
 w......w.......w
 w......w.......w

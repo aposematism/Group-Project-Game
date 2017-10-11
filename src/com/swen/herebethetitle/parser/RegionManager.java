@@ -1,10 +1,10 @@
 package com.swen.herebethetitle.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import com.swen.herebethetitle.model.Region;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /** 
  * This class is to handle the current Region and its neighbours.
@@ -33,7 +33,7 @@ public class RegionManager {
 	 * */
 	private Region createNeighbours(String neigh) {
 		try {
-			TerrainParser tp = new TerrainParser(new File(neigh));
+			TerrainParser tp = new TerrainParser(new BufferedReader(new FileReader(neigh)));
 			Region r = new Region(tp.getRA());
 			return r;
 		}

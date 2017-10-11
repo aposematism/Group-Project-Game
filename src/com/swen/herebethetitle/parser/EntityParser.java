@@ -6,8 +6,6 @@ import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.Direction;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -28,32 +26,17 @@ public class EntityParser {
 
 	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<Entity> entityList = new ArrayList<Entity>();
-	
-	/** 
-	 * This is the constructor for files. It essentially contains all behaviour within the entityParser for that file.
-	 * @author - Jordan Milburn
-	 * */
-	public EntityParser(File interactives){
-		interactiveScanner(interactives);
-	}
-	
-	/** 
-	 * This is the constructor for a single item from a scanner.
-	 * */
-	public EntityParser(Scanner s) {
-		
-	}
-	
-	/** 
+
+	/**
 	 * Interactive scanner which takes input from a file and produces all entites from it.
 	 * */
-	private void interactiveScanner(File interactives){
-		BufferedReader interactivesBuff = null;
+	public EntityParser(BufferedReader reader) throws IOException {
 		coordinates = new ArrayList<Coord>();
 		entityList = new ArrayList<Entity>();
 		try{
-			interactivesBuff = new BufferedReader(new FileReader(interactives));
-			String line = interactivesBuff.readLine();
+			String line = "";
+			while (line.length() == 0)
+				line = reader.readLine();
 			while(line != null){
 				Scanner s = new Scanner(line);
 
@@ -65,16 +48,14 @@ public class EntityParser {
 					entityList.add(e);
 				}
 
-				line = interactivesBuff.readLine();
+				line = reader.readLine();
 			}
-			interactivesBuff.close();
-		}
-		catch(IOException e){
+		} catch (SyntaxError e) {
 			e.printStackTrace();
 		}
-		catch(SyntaxError z) {
-			z.printStackTrace();
-		}
+	}
+
+	public EntityParser() {
 	}
 	
 	public Region parseEntitytoRegion(Region reg) {
@@ -84,7 +65,7 @@ public class EntityParser {
 		}
 		return reg;
 	}
-	
+
 	/**
 	 * Takes the remainder of a line and constructs an entity object from it
 	 *

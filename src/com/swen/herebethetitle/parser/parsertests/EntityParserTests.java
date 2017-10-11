@@ -1,25 +1,21 @@
 package com.swen.herebethetitle.parser.parsertests;
 
-import static com.swen.herebethetitle.parser.Coord.parseCoordinate;
-import static org.junit.Assert.*;
-
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.parser.Coord;
 import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.SyntaxError;
 import com.swen.herebethetitle.parser.TerrainParser;
 import com.swen.herebethetitle.util.Direction;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static com.swen.herebethetitle.parser.Coord.parseCoordinate;
+import static org.junit.Assert.*;
 
 public class EntityParserTests {
 	
@@ -57,7 +53,7 @@ public class EntityParserTests {
 	 * */
 	public void parse(Entity in){
 		Scanner s = new Scanner(in.toString());
-		EntityParser ep = new EntityParser(s);
+		EntityParser ep = new EntityParser();
 		Entity out = ep.parseEntity(s);
 		assertEquals(in.toString(), out.toString());
 		System.out.println(in.toString());
@@ -151,7 +147,7 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				EntityParser ep = new EntityParser(s);
+				EntityParser ep = new EntityParser();
 				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Weapon);
 			}
@@ -177,7 +173,7 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				EntityParser ep = new EntityParser(s);
+				EntityParser ep = new EntityParser();
 				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Armour);
 			}
@@ -200,7 +196,7 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				EntityParser ep = new EntityParser(s);
+				EntityParser ep = new EntityParser();
 				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Potion);
 			}
@@ -223,7 +219,7 @@ public class EntityParserTests {
 			for(String l : itemArray){
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				EntityParser ep = new EntityParser(s);
+				EntityParser ep = new EntityParser();
 				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Key);
 			}
@@ -248,7 +244,7 @@ public class EntityParserTests {
 			for(String l : staticArray) {
 				Scanner s = new Scanner(l);
 				Coord coord = parseCoordinate(s);
-				EntityParser ep = new EntityParser(s);
+				EntityParser ep = new EntityParser();
 				Entity entity = ep.parseEntity(s);
 				assertTrue(entity instanceof Static);
 			}
@@ -271,7 +267,7 @@ public class EntityParserTests {
 
 		try {
 			Coord coord = parseCoordinate(s);
-			EntityParser ep = new EntityParser(s);
+			EntityParser ep = new EntityParser();
 			Entity entity = ep.parseEntity(s);
 			System.out.println(coord.toString()+" "+entity.toString());
 		} catch(SyntaxError e){
@@ -282,13 +278,15 @@ public class EntityParserTests {
 	/** 
 	 * Tests the integration of Terrain Parser with this class.
 	 * */
-	@Test
+	@Ignore
 	public void test_integration() throws IOException, SyntaxError {
-		TerrainParser tp = new TerrainParser(new File("res/test_terrain_file.txt"));
+		BufferedReader reader = new BufferedReader(new FileReader(new File("res/test_terrain_file.txt")));
+		TerrainParser tp = new TerrainParser(reader);
 		tp.connectNetworks(tp.getRA());
 		Region r = new Region(tp.getRA());
 		File inputFile = new File("res/test_entity_parser.txt");
-		EntityParser ep = new EntityParser(inputFile);
+		BufferedReader reader2 = new BufferedReader(new FileReader(inputFile));
+		EntityParser ep = new EntityParser(reader2);
 		ep.parseEntitytoRegion(r);
 		System.out.println("total items is " + r.getInteractiveTotal());
 		//assertTrue(r.getInteractiveTotal() == 11);

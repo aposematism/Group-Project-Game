@@ -3,9 +3,6 @@ package com.swen.herebethetitle.model;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.util.Direction;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
-
 /**
  * Top-level class for dealing with game model information.
  * @author J Woods
@@ -17,7 +14,7 @@ public class GameContext {
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
 
-		this.player = new Player("file:res/Wizard.png", Direction.Up);
+		this.player = new Player("mob/Wizard.png", Direction.Up);
 		this.currentRegion.get(0, 0).add(player);
 	}
 

@@ -35,8 +35,7 @@ public class ReverseParser {
 				Scanner s = new Scanner(line);
 				Coord c = Coord.parseCoordinate(s);
 				coordinates.add(c);
-				EntityParser ep = new EntityParser(s);
-				Entity ent = ep.parseEntity(s);
+				Entity ent = new EntityParser().parseEntity(s);
 				interactives.add(ent);
 				line = regionBuff.readLine();
 			}

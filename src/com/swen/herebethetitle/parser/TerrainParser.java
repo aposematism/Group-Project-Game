@@ -5,8 +5,12 @@ import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Tile;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /** 
@@ -14,51 +18,47 @@ import java.util.Scanner;
  * I.E. Walls, floors, Trees, Cliffs etc.
  * @author Jordan
  * */
-public class TerrainParser{	
+public class TerrainParser{
+	private final String END = "####";
 	private ArrayList<String[]> stringArray = new ArrayList<String[]>();
 	private Tile[][] regionArray;
 	private String[] neighbouringRegions = new String[4];
-	
-	
-	public TerrainParser(File region) throws IOException{
-		this(new FileReader(region));
-	}
-	
+	private Map<Character, Entity> characterMap = new HashMap<>();
+
 	/**
-	 * Creates a new terrain parser that reads from an arbitrary reader object.
-	 */
-	public TerrainParser(Reader reader) throws IOException {
-	    initScanner(reader);
-	    parseStringArray();
-	}
-	/** 
 	 * This method is for the initialization of the region file.
 	 * */
-	private void initScanner(Reader reader)throws IOException{
-		BufferedReader regionBuff = null;
+	public TerrainParser(BufferedReader reader) throws IOException {
 		stringArray = new ArrayList<String[]>();
 		try{
-			regionBuff = new BufferedReader(reader);
-			String line = regionBuff.readLine();
+			String line = reader.readLine();
 			Scanner s = new Scanner(line);
+
+			while (line.contains("=")) {
+				mapCharToStatic(s);
+				line = reader.readLine();
+				s = new Scanner(line);
+			}
+
 			while(s.hasNext("neighbours:")) {//only used in regions with neighbours.
 				s.next();
 				parseNeighbouringRegions(s);
-				line = regionBuff.readLine();
+				line = reader.readLine();
 			}
-			while(line != null){
+
+			while (!line.contains(END)) {
 				String[] split = line.split("");
-				stringArray.add(split);
-				line = regionBuff.readLine();
+				if (split.length > 1)
+					stringArray.add(split);
+				line = reader.readLine();
 			}
+
+			parseStringArray();
 
 		}
 		catch(IOException e){
 			System.out.println("I/O exception: " + e.toString());
 			throw new FileNotFoundException("File failed to initialise!");
-		}
-		finally{
-			regionBuff.close();
 		}
 	}
 	
@@ -78,25 +78,27 @@ public class TerrainParser{
 	private void parseStringArray(){
 		regionArray = new Tile[stringArray.size()][stringArray.get(0).length];
 		System.out.print(stringArray.get(0).length + " " + stringArray.size());
-		for(int i = 0; i < stringArray.size(); i++){
-			for(int j = 0; j < stringArray.get(i).length; j++){
-				Tile z = new Tile(i, j, stringArray.get(i)[j]);
-				
-				Entity possiblyFloor = parseMapEntity(stringArray.get(i)[j]);
-				
-				if (possiblyFloor instanceof Floor) {
-                    z.setMapFloor((Floor)possiblyFloor);
-				} else if (possiblyFloor instanceof Static){
-					z.add(possiblyFloor);
-				} else {
-				    throw new IllegalArgumentException("malformed terrain, floor must be Floor");
-				}
-				regionArray[i][j] = z;
+		for (int row = 0; row < stringArray.size(); row++) {
+			for (int col = 0; col < stringArray.get(row).length; col++) {
+				Tile tile = new Tile(row, col, stringArray.get(row)[col]);
+
+				Entity entity = characterMap.get(stringArray.get(row)[col].charAt(0));
+
+				tile.add(entity);
+
+				regionArray[row][col] = tile;
 			}
 		}
-		
 	}
-	
+
+	private void mapCharToStatic(Scanner s) throws IOException {
+		char c = s.next().charAt(0);
+		String s2 = s.next(); //consume "=" token
+		Entity entity = new EntityParser().parseEntity(s);
+		characterMap.put(c, entity);
+	}
+
+
 	/** 
 	 * This method turns the string[] within the ArrayList into a region entity to be set for that region.
 	 * It is essentially going to be a big ass if-elseif-else method for every type of terrain possible.
