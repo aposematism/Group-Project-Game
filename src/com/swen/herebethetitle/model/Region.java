@@ -78,6 +78,13 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     	this.cells = tiles;
     }
     
+    public Region(String name, Tile[][] tiles) {
+    	this.width = tiles.length;
+    	this.height = tiles[0].length;
+    	this.cells = tiles;
+    	this.regionName = name;
+    }
+    
     /**
      * Gets the tile at a location.
      */
