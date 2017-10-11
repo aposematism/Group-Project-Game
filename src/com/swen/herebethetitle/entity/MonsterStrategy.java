@@ -46,7 +46,7 @@ public final class MonsterStrategy extends NPCBehavior {
             notifier.notify(l -> l.onNPCAttacked(npc));
 
 			//death
-			if(npc.getHealth() <= 0) {
+			if(npc.isDead()) {
 				context.getCurrentRegion().getTile(npc).remove(npc);
 				notifier.notify(l -> l.onNPCKilled(npc));
 			}
