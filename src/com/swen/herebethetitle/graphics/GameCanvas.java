@@ -13,8 +13,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -134,8 +132,13 @@ public class GameCanvas extends Canvas {
     private Image getImage(Entity e) {
         if(e == null) return null;
         if (!imageMap.containsKey(e.getSpritePath())) {
-            imageMap.put(e.getSpritePath(), new Image("file:res/"+e.getSpritePath()));
-         }
+	        Image image = new Image("file:res/" + e.getSpritePath());
+
+	        if (image.getHeight() == 0 && image.getWidth() == 0) //Image didn't load properly
+		        image = new Image("file:res/error.png");
+
+	        imageMap.put(e.getSpritePath(), image);
+        }
         return imageMap.get(e.getSpritePath());
     }
 }
