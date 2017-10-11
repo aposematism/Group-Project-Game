@@ -143,12 +143,13 @@ public class Controller extends Application implements GameListener{
 		
 		/*initialize the stage*/
 		window = s;
-		window.setTitle("2D RPG");
+		window.setTitle("Here Be The Title");
 		window.setResizable(false);
 
 		/*initialize the main menu*/
 		mainMenuLayout = initMainMenu();
 		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		mainMenu.getStylesheets().add("file:res/mainmenu.css");
 		window.setScene(mainMenu);
 		/*initialize subordinate menus*/
 		settingsMenu = initSettingsMenu();
@@ -171,14 +172,18 @@ public class Controller extends Application implements GameListener{
 		/*add the title*/
 		//create title
 		Label titleLabel = new Label("Here Be The Title");
-		titleLabel.setFont(new Font(50));
+		titleLabel.getStyleClass().add("text");
+		titleLabel.setId("title");
 		//add title
 		layout.setTop(titleLabel);
 
 		/*add buttons*/
 		VBox buttons = new VBox(10);
+		buttons.setId("button-box");
 		//quit
 		Button quit = new Button("Quit");
+		quit.getStyleClass().add("button");
+		quit.setId("quit");
 		quit.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(quitMenu);
@@ -186,6 +191,8 @@ public class Controller extends Application implements GameListener{
 		quit.setPrefSize(100, 20);
 		//new game
 		Button newGame = new Button("New Game");
+		newGame.getStyleClass().add("button");
+		newGame.setId("newGame");
 		newGame.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(newGameMenu);
@@ -193,6 +200,8 @@ public class Controller extends Application implements GameListener{
 		newGame.setPrefSize(100, 20);
 		//load game
 		Button loadGame = new Button("Load Game");
+		loadGame.getStyleClass().add("button");
+		loadGame.setId("loadGame");
 		loadGame.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(loadGameMenu);
@@ -200,6 +209,8 @@ public class Controller extends Application implements GameListener{
 		loadGame.setPrefSize(100, 20);
 		//settings
 		Button settings = new Button("Settings");
+		settings.getStyleClass().add("button");
+		settings.setId("settings");
 		settings.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(settingsMenu);
