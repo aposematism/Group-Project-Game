@@ -160,7 +160,6 @@ public class Controller extends Application implements GameListener{
 		
 		/*initialize the audio manager*/
 		audio = new AudioManager();
-		logic.addGameListener(audio);
 
 		/*show the stage*/
 		window.show();
@@ -594,6 +593,7 @@ public class Controller extends Application implements GameListener{
 		game = new GameContext();
 		logic = new GameLogic(game);
 		logic.addGameListener(this);
+		logic.addGameListener(audio);
 	}
 
 
