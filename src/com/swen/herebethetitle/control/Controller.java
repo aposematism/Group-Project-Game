@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.control;
 
+import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
@@ -89,6 +90,8 @@ public class Controller extends Application implements GameListener{
 	private GameLogic logic;
 	private boolean isPlaying;
 	private Tile playerDestination;
+	//AudioManager
+	private AudioManager audio;
 
 
 	/**
@@ -134,8 +137,7 @@ public class Controller extends Application implements GameListener{
 				});
 				gameGUIRoot.requestFocus();
 				return;
-			}
-			
+			}			
 		}
 		
 		
@@ -149,11 +151,16 @@ public class Controller extends Application implements GameListener{
 		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		mainMenu.getStylesheets().add("file:res/mainmenu.css");
 		window.setScene(mainMenu);
+		
 		/*initialize subordinate menus*/
 		settingsMenu = initSettingsMenu();
 		newGameMenu = initNewGameMenu();
 		loadGameMenu = initLoadGameMenu();
 		quitMenu = initQuitMenu();
+		
+		/*initialize the audio manager*/
+		audio = new AudioManager();
+		logic.addGameListener(audio);
 
 		/*show the stage*/
 		window.show();
@@ -410,6 +417,9 @@ public class Controller extends Application implements GameListener{
 		gameGUIRoot.getChildren().add(gameCanvas);
 		//create new scene
 		Scene s = new Scene(gameGUIRoot);
+		
+		//set the audio manager to play the default town song
+		audio.setSong(audio.SOUNDCODE_TOWNSONG);
 		return s;
 	}
 
