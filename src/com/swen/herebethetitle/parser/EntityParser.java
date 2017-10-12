@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class EntityParser {
 
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
-	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|monster|Friendly|friendly)");
+	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|Friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
 
 	public static Entity parse(Scanner s) {

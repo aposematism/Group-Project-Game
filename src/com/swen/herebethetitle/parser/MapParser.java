@@ -17,7 +17,7 @@ import static com.swen.herebethetitle.parser.EntityParser.parse;
  * @author Jordan Milburn & Mark Metcalfe
  */
 public class MapParser {
-	private static final Pattern NEIGHBOUR = Pattern.compile("(north|east|south|west):");
+	private static final Pattern REGION_NAME = Pattern.compile("(this|north|east|south|west):");
 
 	private CharArray charArray;
 	private Tile[][] regionArray;
@@ -32,10 +32,8 @@ public class MapParser {
 		neighbouringRegions = new String[4];
 		characterMap = new HashMap<>();
 
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-
 		try {
-			readLines(reader);
+			readLines(new BufferedReader(new FileReader(file)));
 			region = new Region(regionArray);
 		} catch (IOException e) {
 			System.out.println("I/O exception: " + e.toString());
@@ -50,10 +48,10 @@ public class MapParser {
 	 */
 	private void readLines(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
-		Scanner s = new Scanner(reader.readLine());
+		Scanner s = new Scanner(line);
 
-		while (s.hasNext(NEIGHBOUR)) {//only used in regions with neighbours.
-			parseNeighbouringRegion(s);
+		while (s.hasNext(REGION_NAME)) {//only used in regions with neighbours.
+			parseRegionName(s);
 			line = reader.readLine();
 			s = new Scanner(line);
 		}
@@ -71,7 +69,6 @@ public class MapParser {
 
 		while (line.length() < 2) {
 			line = reader.readLine(); //skip whitespace
-			s = new Scanner(line);
 		}
 
 		while (line != null) {
@@ -80,6 +77,10 @@ public class MapParser {
 		}
 
 		parseStringArray();
+
+
+		System.out.println(this.regionName);
+		for (String ss : this.neighbouringRegions) System.out.println(ss);
 	}
 
 	/** 
@@ -122,9 +123,11 @@ public class MapParser {
 	 * Generates a list of neighbours for the Region Manager to use.
 	 * @author - Jordan Milburn
 	 * */
-	private void parseNeighbouringRegion(Scanner s) {
-		String next = s.findInLine(NEIGHBOUR);
-		if (next.contains("north"))
+	private void parseRegionName(Scanner s) {
+		String next = s.findInLine(REGION_NAME);
+		if (next.contains("this"))
+			regionName = s.next();
+		else if (next.contains("north"))
 			neighbouringRegions[0] = s.next();
 		else if (next.contains("east"))
 			neighbouringRegions[1] = s.next();
