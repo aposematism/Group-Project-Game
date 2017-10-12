@@ -19,6 +19,10 @@ public class EntityParser {
 	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|monster|Friendly|friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
 
+	public static Entity parse(Scanner s) {
+		return new EntityParser().parseEntity(s);
+	}
+
 	/**
 	 * Takes the remainder of a line and constructs an entity object from it
 	 *
@@ -26,7 +30,7 @@ public class EntityParser {
 	 * @return Constructed entity instance
 	 * @throws SyntaxError 
 	 */
-	public Entity parseEntity(Scanner s){
+	private Entity parseEntity(Scanner s) {
 		try {
 			String className = s.next();
 			switch (className) {

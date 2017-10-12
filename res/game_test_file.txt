@@ -1,3 +1,9 @@
+this: main
+north: cave
+east: town
+south: seaside
+west: farm
+
 . = Floor "Grass" "static/grass.png"
 w = Static "Wall" "static/tudorwall.png"
 d = Static "Door" "static/cobble master.png" Door 70 LOCKED

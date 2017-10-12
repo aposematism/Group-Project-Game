@@ -1,8 +1,6 @@
 package com.swen.herebethetitle.model;
 
-import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.util.Direction;
 
 /**
@@ -12,7 +10,7 @@ import com.swen.herebethetitle.util.Direction;
 public class GameContext {
 	public Region currentRegion;
 	public Player player;
-	
+
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
 
@@ -30,16 +28,23 @@ public class GameContext {
 		this.player = player;
 		this.currentRegion.get(0, 0).add(player);
 	}
-	
-	public static Region CreateTestRegion() {
-	    Region region = new Region(10, 10);
-		for(int i=0;i<5;i++){
-			Entity e = new Static("", "file:res/cobble master.png");
-			region.get(5,2+i).add(e);
+
+	//TODO This needs to be replaced by something better.
+	public GameContext(Region initialRegion) {
+		this.currentRegion = initialRegion;
+		if (currentRegion.getPlayerTile().getInteractives().get(0) instanceof Player) {
+			this.player = (Player) currentRegion.getPlayerTile().getInteractives().get(0);
+		} else {
+			this.player = (Player) currentRegion.getPlayerTile().getInteractives().get(1);
 		}
-	    return region;
 	}
-	
+
+	public static Region CreateTestRegion() {
+		Region region = new Region(10, 10);
+
+		return region;
+	}
+
 	public Region getCurrentRegion() { return this.currentRegion; }
 
 	public Player getPlayer() { return this.player; }

@@ -9,6 +9,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.swen.herebethetitle.parser.EntityParser.parse;
+
 public class ReverseParser {
 	
 	static ArrayList<Entity> interactives = new ArrayList<Entity>();
@@ -32,7 +34,7 @@ public class ReverseParser {
 			String line = regionBuff.readLine();
 			while(line != null){
 				Scanner s = new Scanner(line);
-				Entity ent = new EntityParser().parseEntity(s);
+				Entity ent = parse(s);
 				interactives.add(ent);
 				line = regionBuff.readLine();
 			}
