@@ -124,14 +124,6 @@ public class GameLogic {
     }
     
     /**
-     * Starts a player movement to a tile.
-     * @param dest The destination tile.
-     */
-    public void movePlayer(Tile dest) {
-        npcController.movePlayer(getPlayer(), dest);
-    }
-    
-    /**
      * Starts a discussion with an NPC if it is possible.
      * 
      * Does nothing if the NPC has no dialog.
