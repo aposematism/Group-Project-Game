@@ -29,6 +29,12 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>src</testSourceDirectory>
+    <resources outputDirectory="res">
+      <resource>
+        <targetPath>res</targetPath>
+        <directory>res/</directory>
+      </resource>
+    </resources>
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
