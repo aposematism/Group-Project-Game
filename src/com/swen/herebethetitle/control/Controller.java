@@ -1,5 +1,9 @@
 package com.swen.herebethetitle.control;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.NPC;
@@ -8,16 +12,18 @@ import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
+import com.swen.herebethetitle.logic.Notifier;
+import com.swen.herebethetitle.logic.ai.Interaction;
+import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.TerrainParser;
-import com.swen.herebethetitle.pathfinding.Graph;
-import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,10 +46,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -89,7 +91,7 @@ public class Controller extends Application implements GameListener{
 	private GameContext game;
 	private GameLogic logic;
 	private boolean isPlaying;
-	private Tile playerDestination;
+	private Optional<PlayerMove> playerMove;
 	//AudioManager
 	private AudioManager audio;
 
@@ -445,7 +447,6 @@ public class Controller extends Application implements GameListener{
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
 			gameGUIRoot.requestFocus();
 			isPlaying = true;
-			playerDestination = game.getCurrentRegion().getPlayerTile();
 		}
 		updateTimeline.play();
 		isPlaying = true;
@@ -536,10 +537,12 @@ public class Controller extends Application implements GameListener{
 
 		/*build the new interaction for the player movement*/
 		try {
-			if (game.getCurrentRegion().get(mouseLocation).isPenetrable())
-				playerDestination = game.getCurrentRegion().get(mouseLocation);
+			if (game.getCurrentRegion().get(mouseLocation).isPenetrable()) {
+				Tile playerDestination = game.getCurrentRegion().get(mouseLocation);
+			    this.playerMove = Optional.of(new PlayerMove(game.getPlayer(), playerDestination));
+			}
 			//TODO this
-		}catch(Exception exc) {
+		}catch(IllegalArgumentException exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
 			return;
 		}
@@ -566,19 +569,12 @@ public class Controller extends Application implements GameListener{
 	private void update() {
 		/*update game context via logic*/
 		logic.tick();
-
-		/*move the player*/
-		//find optimal path
-		if(game.getCurrentRegion().getPlayerTile()!=playerDestination) {
-			Graph graph = new Graph(game.getCurrentRegion(), game.getCurrentRegion().getPlayerTile(), playerDestination);
-			Optional<Path> optimalPath = graph.findPath();
-
-			if (optimalPath.isPresent()) {
-				// Move the player
-				if (!(game.getCurrentRegion().getPlayerTile() == playerDestination)) { //don't move if we're already there
-					game.getCurrentRegion().move(game.getPlayer(), optimalPath.get().next());
-				}
-			}
+		
+		try {
+		    if (this.playerMove.isPresent())
+		        this.playerMove.get().tick(game.getCurrentRegion(), new Notifier());
+		} catch (Interaction.InteractionOver e) {
+		    this.playerMove = Optional.empty();
 		}
 
 		/*redraw graphics*/
@@ -592,6 +588,7 @@ public class Controller extends Application implements GameListener{
 	public void initializeNewGame() {
 		game = new GameContext();
 		logic = new GameLogic(game);
+		playerMove = Optional.empty();
 		logic.addGameListener(this);
 		logic.addGameListener(audio);
 	}
