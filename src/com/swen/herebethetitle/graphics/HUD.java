@@ -64,7 +64,6 @@ public class HUD {
         for(Sprite s: armour){
             renderSlot(s, armourGrid, gc);
         }
-	    updateItemGrid(c, items.size());
 	    for (Sprite s : items) {
 		    renderSlot(s, itemGrid, gc);
 	    }
@@ -76,19 +75,16 @@ public class HUD {
                 slotSize, 0,0);
 
         armourGrid = new GridManager(
-                slotSize*(2) + weaponGrid.getRealCoordinates(new GridLocation(0,0)).x,
-                (int)c.getHeight()-slotSize*(3/2)-vGap,
+                slotSize/2,
+                (int)c.getHeight()-slotSize*(3/2)-7*vGap - slotSize,
                 slotSize, vGap, hGap);
 
-	    updateItemGrid(c, 0);
+        itemGrid = new GridManager(
+                slotSize * (2) + armourGrid.getRealCoordinates(new GridLocation(0, 0)).x,
+                (int) c.getHeight() - slotSize * (3 / 2) - vGap,
+                slotSize, vGap * 2, hGap * 2);
     }
 
-	private void updateItemGrid(Canvas c, int items) {
-		itemGrid = new GridManager(
-				slotSize * (2) + armourGrid.getRealCoordinates(new GridLocation(0, 0)).x,
-				(int) c.getHeight() - slotSize * (3 / 2) - vGap,
-				slotSize, vGap * 2, hGap * 2);
-	}
 
     private void renderSlot(Sprite sprite, GridManager grid, GraphicsContext gc){
         GridLocation loc = sprite.getLocation();

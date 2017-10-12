@@ -114,7 +114,7 @@ public class GameCanvas extends Canvas {
 
             //Armour entities will be placed along the bottom row, so increase
             //x value as going along.
-            armourSprites[i] = new Sprite(img, new GridLocation(i, 0));
+            armourSprites[i] = new Sprite(img, new GridLocation(0, -i));
         }
 
         Image weaponImage = null;
@@ -124,9 +124,10 @@ public class GameCanvas extends Canvas {
         Sprite weaponSprite = new Sprite(weaponImage, new GridLocation(0,0));
 
 	    List<Sprite> itemSprites = new ArrayList<>();
-	    for (Item i : inv.getItems()) {
-		    Image img = getImage(i);
-		    itemSprites.add(new Sprite(img, new GridLocation(0, 0)));
+	    for (int i=0;i<inv.getItems().size();i++) {
+
+		    Image img = getImage(inv.getItems().get(i));
+		    itemSprites.add(new Sprite(img, new GridLocation(i, 0)));
 	    }
 
 	    hud.drawAll(weaponSprite, armourSprites, itemSprites, this);
