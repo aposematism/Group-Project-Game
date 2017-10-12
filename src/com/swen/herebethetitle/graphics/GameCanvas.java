@@ -1,9 +1,6 @@
 package com.swen.herebethetitle.graphics;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Inventory;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Weapon;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -126,7 +123,13 @@ public class GameCanvas extends Canvas {
         }
         Sprite weaponSprite = new Sprite(weaponImage, new GridLocation(0,0));
 
-        hud.drawAll(weaponSprite, armourSprites, this);
+	    List<Sprite> itemSprites = new ArrayList<>();
+	    for (Item i : inv.getItems()) {
+		    Image img = getImage(i);
+		    itemSprites.add(new Sprite(img, new GridLocation(0, 0)));
+	    }
+
+	    hud.drawAll(weaponSprite, armourSprites, itemSprites, this);
     }
 
 

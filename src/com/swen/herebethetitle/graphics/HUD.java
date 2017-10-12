@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
+import java.util.Collection;
 
 
 /**
@@ -21,6 +22,7 @@ public class HUD {
 
     private GridManager armourGrid;
     private GridManager weaponGrid;
+	private GridManager itemGrid;
 
     /**
      * Create a new HUD on the specified Canvas
@@ -56,12 +58,16 @@ public class HUD {
      * @param c The canvas to render to.
      * @author weirjosh
      */
-    public void drawAll(Sprite weapon, Sprite[] armour, Canvas c){
+    public void drawAll(Sprite weapon, Sprite[] armour, Collection<Sprite> items, Canvas c) {
         GraphicsContext gc = c.getGraphicsContext2D();
         renderSlot(weapon, weaponGrid, gc);
         for(Sprite s: armour){
             renderSlot(s, armourGrid, gc);
         }
+	    updateItemGrid(c, items.size());
+	    for (Sprite s : items) {
+		    renderSlot(s, itemGrid, gc);
+	    }
     }
 
     private void createGridLayouts(Canvas c){
@@ -73,7 +79,16 @@ public class HUD {
                 slotSize*(2) + weaponGrid.getRealCoordinates(new GridLocation(0,0)).x,
                 (int)c.getHeight()-slotSize*(3/2)-vGap,
                 slotSize, vGap, hGap);
+
+	    updateItemGrid(c, 0);
     }
+
+	private void updateItemGrid(Canvas c, int items) {
+		itemGrid = new GridManager(
+				slotSize * (2) + armourGrid.getRealCoordinates(new GridLocation(0, 0)).x,
+				(int) c.getHeight() - slotSize * (3 / 2) - vGap,
+				slotSize, vGap * 2, hGap * 2);
+	}
 
     private void renderSlot(Sprite sprite, GridManager grid, GraphicsContext gc){
         GridLocation loc = sprite.getLocation();
