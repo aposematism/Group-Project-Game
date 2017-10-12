@@ -91,10 +91,8 @@ public class Controller extends Application implements GameListener{
 	private GameContext game;
 	private GameLogic logic;
 	private boolean isPlaying;
-	private Optional<PlayerMove> playerMove;
 	//AudioManager
 	private AudioManager audio;
-
 
 	/**
 	 * Default constructor, needed for use with the Main class.
@@ -539,7 +537,7 @@ public class Controller extends Application implements GameListener{
 		try {
 			if (game.getCurrentRegion().get(mouseLocation).isPenetrable()) {
 				Tile playerDestination = game.getCurrentRegion().get(mouseLocation);
-			    this.playerMove = Optional.of(new PlayerMove(game.getPlayer(), playerDestination));
+				logic.movePlayer(playerDestination);
 			}
 			//TODO this
 		}catch(IllegalArgumentException exc) {
@@ -569,13 +567,6 @@ public class Controller extends Application implements GameListener{
 	private void update() {
 		/*update game context via logic*/
 		logic.tick();
-		
-		try {
-		    if (this.playerMove.isPresent())
-		        this.playerMove.get().tick(game.getCurrentRegion(), new Notifier());
-		} catch (Interaction.InteractionOver e) {
-		    this.playerMove = Optional.empty();
-		}
 
 		/*redraw graphics*/
 		gameCanvas.update();
@@ -588,7 +579,6 @@ public class Controller extends Application implements GameListener{
 	public void initializeNewGame() {
 		game = new GameContext();
 		logic = new GameLogic(game);
-		playerMove = Optional.empty();
 		logic.addGameListener(this);
 		logic.addGameListener(audio);
 	}

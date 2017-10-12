@@ -6,10 +6,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.FriendlyStrategy;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.FriendlyStrategy;
+import com.swen.herebethetitle.logic.ai.Interaction;
 import com.swen.herebethetitle.logic.ai.NpcController;
+import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
@@ -42,6 +44,8 @@ public class GameLogic {
      */
     private NpcController npcController;
 
+	private Optional<PlayerMove> playerMove;
+
     /**
      * Creates a new game logic class.
      */
@@ -49,6 +53,7 @@ public class GameLogic {
         this.context = context;
         this.notifier = new Notifier();
         this.npcController = new NpcController();
+        this.playerMove = Optional.empty();
     }
 
     /**
@@ -60,6 +65,14 @@ public class GameLogic {
         triggerPossibleInteractions();
 
         npcController.tick(context, notifier);
+
+		
+		try {
+		    if (this.playerMove.isPresent())
+		        this.playerMove.get().tick(getCurrentRegion(), new Notifier());
+		} catch (Interaction.InteractionOver e) {
+		    this.playerMove = Optional.empty();
+		}
         
         // Check for game over.
         if (getPlayer().inventory().containsTitle()) {
@@ -128,7 +141,7 @@ public class GameLogic {
      * @param dest The destination tile.
      */
     public void movePlayer(Tile dest) {
-        npcController.movePlayer(getPlayer(), dest);
+        this.playerMove = Optional.of(new PlayerMove(getPlayer(), dest));
     }
     
     /**
