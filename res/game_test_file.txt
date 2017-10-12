@@ -1,6 +1,6 @@
 (0,4) NPC "Fred" "mob/wizard.png" 50.0 Down Friendly { "Great weather today!" "Did you hear about the beast?" "It's called THE BEAST" }
 (5,2) Static "Large Rock" "static/cobble snow.png"
-(10,6) Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple" 5.0 }
+(10,6) Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple.png" 5.0 }
 (5,6) Potion "Poison" "item/potion yellow.png" -50.0
 (4,4) Key "Key for door" "item/key red.png" 70
 (9,9) Potion "Bread" "item/bread.png" 25
