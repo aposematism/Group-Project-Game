@@ -1,9 +1,5 @@
 package com.swen.herebethetitle.control;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.NPC;
@@ -23,7 +19,6 @@ import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.TerrainParser;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,13 +34,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -175,16 +174,8 @@ public class Controller extends Application implements GameListener{
 		BorderPane layout = new BorderPane();
 		layout.setPadding(new Insets(60));
 
-		/*add the title*/
-		//create title
-		Label titleLabel = new Label("Here Be The Title");
-		titleLabel.getStyleClass().add("text");
-		titleLabel.setId("title");
-		//add title
-		layout.setTop(titleLabel);
-
 		/*add buttons*/
-		VBox buttons = new VBox(10);
+		HBox buttons = new HBox(10);
 		buttons.setId("button-box");
 		//quit
 		Button quit = new Button("Quit");
@@ -224,7 +215,7 @@ public class Controller extends Application implements GameListener{
 		settings.setPrefSize(100, 20);
 		//add all the buttons
 		buttons.getChildren().addAll(newGame,loadGame,settings,quit);
-		layout.setLeft(buttons);
+		layout.setCenter(buttons);
 
 		return layout;
 	}
@@ -420,7 +411,7 @@ public class Controller extends Application implements GameListener{
 		Scene s = new Scene(gameGUIRoot);
 		
 		//set the audio manager to play the default town song
-		audio.setSong(audio.SOUNDCODE_TOWNSONG);
+		audio.setSong(AudioManager.SOUNDCODE_TOWNSONG);
 		return s;
 	}
 

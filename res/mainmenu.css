@@ -1,23 +1,14 @@
 .root { //Background Colour
     -fx-base: #0F0F0F;
+    -fx-background-image: url("mainmenu.png");
+    -fx-background-repeat: stretch;
     -fx-alignment: center;
+    -fx-font-family: "Helvetica", center;
 }
 
-.text {
-    -fx-font-family: "Comic Sans MS", "Comic Sans", center;
-}
-
-.button {
-    -fx-font-family: "Courier New", center;
-    -fx-font-size: 15px;
-}
-
-#title { //"Here be the title" text
+HBox {
     -fx-alignment: center;
-    -fx-font-size: 100px;
-    -fx-fill: #FF0000;
-    -fx-stroke: black;
-    -fx-stroke-width: 1;
+    -fx-padding: 200 250 0 0;
 }
 
 #button-box {
