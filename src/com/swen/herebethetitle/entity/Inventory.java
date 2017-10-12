@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Stores the Player's inventory
@@ -107,6 +108,18 @@ public class Inventory implements Iterable<Item> {
 	 * The default iterator for the items
 	 */
 	public Iterator<Item> iterator() { return this.items.iterator(); }
+	
+	/**
+	 * Gets a stream of items.
+	 */
+	public Stream<Item> stream() { return this.items.stream(); }
+	
+	/**
+	 * Checks if the inventory contains at least one title.
+	 */
+	public boolean containsTitle() {
+	    return stream().anyMatch(i -> i instanceof Title);
+	}
 
 	/**
 	 * Reset the inventory

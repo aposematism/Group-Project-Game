@@ -1,20 +1,18 @@
 package com.swen.herebethetitle.parser;
 
+import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.model.Region;
+import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.util.Direction;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.model.Region;
-import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.util.Direction;
-import com.swen.herebethetitle.util.GridLocation;
 
 /**
  * Helper class with static methods for interpreting a single line in the save file.
@@ -26,7 +24,8 @@ public class EntityParser {
 	private final static Pattern STATIC_BEHAVIOR = Pattern.compile("(Door)");
 	private final static Pattern NPC_BEHAVIOR = Pattern.compile("(Monster|monster|Friendly|friendly)");
 	private final static Pattern STRING = Pattern.compile("\"[^\"]*\"");
-	
+	private final static Pattern EXCLUDE = Pattern.compile("#");
+
 	static ArrayList<Coord> coordinates = new ArrayList<Coord>();
 	static ArrayList<Entity> entityList = new ArrayList<Entity>();
 	
@@ -57,10 +56,15 @@ public class EntityParser {
 			String line = interactivesBuff.readLine();
 			while(line != null){
 				Scanner s = new Scanner(line);
-				Coord c = Coord.parseCoordinate(s);
-				coordinates.add(c);
-				Entity e = parseEntity(s);
-				entityList.add(e);
+
+				//Checks if line has an exclusion character, tells parser to skip line
+				if (s.findInLine(EXCLUDE) == null) {
+					Coord c = Coord.parseCoordinate(s);
+					coordinates.add(c);
+					Entity e = parseEntity(s);
+					entityList.add(e);
+				}
+
 				line = interactivesBuff.readLine();
 			}
 			interactivesBuff.close();
@@ -148,6 +152,8 @@ public class EntityParser {
 			case "Armour": return parseArmour(s);
 			case "Key":    return parseKey(s);
 			case "Potion": return parsePotion(s);
+			case "Title":
+				return parseTitle(s);
 			default:       throw new InputMismatchException("Couldn't Interpret Entity");
 		}
 	}
@@ -196,6 +202,16 @@ public class EntityParser {
 		double value = s.nextDouble();
 
 		return new Potion(name, sprite, value);
+	}
+	
+	/**
+	 * Parses a title.
+	 */
+	private Title parseTitle(Scanner s) throws InputMismatchException {
+		String name = parseString(s);
+		String sprite = parseString(s);
+
+		return new Title(name, sprite);
 	}
 
 	/** 

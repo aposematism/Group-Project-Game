@@ -1,0 +1,41 @@
+.root { //Background Colour
+    -fx-base: #0F0F0F;
+    -fx-alignment: center;
+}
+
+.text {
+    -fx-font-family: "Comic Sans MS", "Comic Sans", center;
+}
+
+.button {
+    -fx-font-family: "Courier New", center;
+    -fx-font-size: 15px;
+}
+
+#title { //"Here be the title" text
+    -fx-alignment: center;
+    -fx-font-size: 100px;
+    -fx-fill: #FF0000;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+
+#button-box {
+
+}
+
+#quit {
+    -fx-base: #FF0000;
+}
+
+#newGame {
+    -fx-base: #00FF00;
+}
+
+#loadGame {
+    -fx-base: #0000FF;
+}
+
+#settings {
+    -fx-base: #000000;
+}

@@ -1,13 +1,15 @@
 package com.swen.herebethetitle.model;
 
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Floor;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.util.GridLocation;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
-
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Floor;
-import com.swen.herebethetitle.util.GridLocation;
 
 /** 
  * Implementation of foundation level node for the parser.
@@ -36,12 +38,12 @@ public class Tile implements Iterable<Entity> {
 		this.interactives = new ArrayList<Entity>();
 	}
 
-	public void setMapFloor(Floor mapFloor) {
-		this.mapFloor = mapFloor;
-	}
-	
 	public Floor getMapFloor() {
 	    return this.mapFloor;
+	}
+
+	public void setMapFloor(Floor mapFloor) {
+		this.mapFloor = mapFloor;
 	}
 
 	public List<Entity> getInteractives(){return interactives;}
@@ -68,6 +70,20 @@ public class Tile implements Iterable<Entity> {
 			if(t.interactives.contains(entity))
 				return true;
 		return false;
+	}
+	
+	/**
+	 * Gets the top level entity on the tile.
+	 * 
+	 * Assumes that the entities are rendered from i=0 to i=size.
+	 * i.e. The last tile in the array is the top.
+	 */
+	public Optional<Entity> getTopEntity() {
+		Optional<Entity> entity = Optional.empty();
+		for (Entity e : interactives)
+			if (!(e instanceof Player))
+				entity = Optional.of(e);
+		return entity;
 	}
 
 	@Override

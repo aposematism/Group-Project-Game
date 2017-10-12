@@ -1,16 +1,13 @@
 package com.swen.herebethetitle.parser;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Scanner;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Tile;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /** 
  * This class is the terrain parser, which is the first stage in the parsing process. for parsing any objects which do not interact with the player, NPCs or enemies.
@@ -89,6 +86,8 @@ public class TerrainParser{
 				
 				if (possiblyFloor instanceof Floor) {
                     z.setMapFloor((Floor)possiblyFloor);
+				} else if (possiblyFloor instanceof Static){
+					z.add(possiblyFloor);
 				} else {
 				    throw new IllegalArgumentException("malformed terrain, floor must be Floor");
 				}
@@ -107,11 +106,12 @@ public class TerrainParser{
 	private Entity parseMapEntity(String p){
 		//TODO: Implement the parsing of map entities as they are created. 
 		if(p.equals(".")){//
-			Floor f = new Floor("Grass","grass.png");
+			Floor f = new Floor("Grass", "static/grass.png");
 			return f;
 		}
 		else if(p.equals("w")) {
-			Floor w = new Floor("TudorWall", "tudorwall.png");
+			Static w = new Static("TudorWall", "static/tudorwall.png");
+
 			return w;
 		}
 		return null;
@@ -167,10 +167,7 @@ public class TerrainParser{
 		if(rowLength <= i+k || columnLength <= j+l){//if outside the boundary of the array.
 			return false;
 		}
-		if(k == 0 && l == 0){
-			return false;
-		}
-		return true;
+		return !(k == 0 && l == 0);
 	}
 	
 	public ArrayList<String[]> getStringArray(){

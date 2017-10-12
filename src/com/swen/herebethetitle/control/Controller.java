@@ -1,19 +1,23 @@
 package com.swen.herebethetitle.control;
 
-import java.util.Optional;
-
-import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.exceptions.NotImplementedYetException;
+import com.swen.herebethetitle.audio.AudioManager;
+import com.swen.herebethetitle.entity.Item;
+import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
-import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
+import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
+import com.swen.herebethetitle.parser.EntityParser;
+import com.swen.herebethetitle.parser.TerrainParser;
+import com.swen.herebethetitle.pathfinding.Graph;
+import com.swen.herebethetitle.pathfinding.Path;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,6 +25,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -31,8 +36,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -43,24 +54,25 @@ import javafx.util.Duration;
 
 /*
  * TODO
- * 
- * -Add in subordinate menu functionality for load game & settings
+ *
  * -audio functionality
- * 
+ *
  * Immediately:
- * -input event handling implementation
- * 
+ * -input events for interactions and attacking
+ * -Add in subordinate menu functionality for load game & settings
+ * -player pathfinding
+ *
  */
 public class Controller extends Application implements GameListener{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 60;
-	
-	
+	public static final int FRAMES_PER_SECOND = 30;
+	public static final int TESTCODE_INPUTS = 1;
+	//Testing mode field
+	public static int isTesting;
 	//window field
 	private Stage window;
-	
 	//main menu fields
 	private Scene mainMenu;
 	private BorderPane mainMenuLayout;
@@ -68,52 +80,91 @@ public class Controller extends Application implements GameListener{
 	private GridPane newGameMenu;
 	private GridPane loadGameMenu;
 	private GridPane quitMenu;
-	
 	//main game UI fields
 	private Scene worldGraphics;
 	private Timeline updateTimeline;
 	private Group gameGUIRoot;
 	private GameCanvas gameCanvas;
-	
 	//Game fields
 	private GameContext game;
 	private GameLogic logic;
 	private boolean isPlaying;
-	private PlayerMove playerMove;
-	
-	//Testing mode field
-	public static boolean isTesting;
+	private Tile playerDestination;
+	//AudioManager
+	private AudioManager audio;
 
-	
+
 	/**
 	 * Default constructor, needed for use with the Main class.
 	 */
 	public Controller() {
 		super();
 	}
-	
+
 
 	@Override
 	public void start(Stage s) throws Exception {
+		/*if testing, launch in testing mode*/
+		if(isTesting>0) {
+			window = s;
+			window.setResizable(false);
+			window.setWidth(DEFAULT_WIDTH);
+			window.setHeight(DEFAULT_HEIGHT);
+			/*input testing*/
+			if(isTesting == TESTCODE_INPUTS) {
+				window.setTitle("2D RPG ***INPUT TESTING MODE***");
+				gameGUIRoot = new Group();
+				Scene testScene = new Scene(gameGUIRoot);
+				window.setScene(testScene);
+				window.show();
+				
+				Canvas testCanv = new Canvas(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+				gameGUIRoot.getChildren().add(testCanv);
+				testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
+				testCanv.getGraphicsContext2D().fillRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+
+				gameGUIRoot.setOnKeyPressed(e->{
+					testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
+					testCanv.getGraphicsContext2D().fillRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+					testCanv.getGraphicsContext2D().setFill(Color.GREEN.brighter());
+					testCanv.getGraphicsContext2D().fillText("Key pressed code: " + e.getCode(), DEFAULT_WIDTH/2-50, DEFAULT_HEIGHT/2-50);
+				});
+				gameGUIRoot.setOnMousePressed(e->{
+					testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
+					testCanv.getGraphicsContext2D().fillRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+					testCanv.getGraphicsContext2D().setFill(Color.GREEN.brighter());
+					testCanv.getGraphicsContext2D().fillText("Mouse pressed at: " + e.getX() + "," + e.getY(), DEFAULT_WIDTH/2-50, DEFAULT_HEIGHT/2-50);
+				});
+				gameGUIRoot.requestFocus();
+				return;
+			}			
+		}
+		
+		
 		/*initialize the stage*/
 		window = s;
-		window.setTitle("2D RPG");
+		window.setTitle("Here Be The Title");
 		window.setResizable(false);
-		
+
 		/*initialize the main menu*/
 		mainMenuLayout = initMainMenu();
 		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		mainMenu.getStylesheets().add("file:res/mainmenu.css");
 		window.setScene(mainMenu);
+		
 		/*initialize subordinate menus*/
 		settingsMenu = initSettingsMenu();
 		newGameMenu = initNewGameMenu();
 		loadGameMenu = initLoadGameMenu();
 		quitMenu = initQuitMenu();
 		
+		/*initialize the audio manager*/
+		audio = new AudioManager();
+
 		/*show the stage*/
 		window.show();
 	}
-	
+
 	/**
 	 * Initializes the main menu.
 	 */
@@ -121,18 +172,22 @@ public class Controller extends Application implements GameListener{
 		/*initialize layout*/
 		BorderPane layout = new BorderPane();
 		layout.setPadding(new Insets(60));
-		
+
 		/*add the title*/
 		//create title
 		Label titleLabel = new Label("Here Be The Title");
-		titleLabel.setFont(new Font(50));
+		titleLabel.getStyleClass().add("text");
+		titleLabel.setId("title");
 		//add title
 		layout.setTop(titleLabel);
-		
+
 		/*add buttons*/
 		VBox buttons = new VBox(10);
+		buttons.setId("button-box");
 		//quit
 		Button quit = new Button("Quit");
+		quit.getStyleClass().add("button");
+		quit.setId("quit");
 		quit.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(quitMenu);
@@ -140,6 +195,8 @@ public class Controller extends Application implements GameListener{
 		quit.setPrefSize(100, 20);
 		//new game
 		Button newGame = new Button("New Game");
+		newGame.getStyleClass().add("button");
+		newGame.setId("newGame");
 		newGame.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(newGameMenu);
@@ -147,6 +204,8 @@ public class Controller extends Application implements GameListener{
 		newGame.setPrefSize(100, 20);
 		//load game
 		Button loadGame = new Button("Load Game");
+		loadGame.getStyleClass().add("button");
+		loadGame.setId("loadGame");
 		loadGame.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(loadGameMenu);
@@ -154,6 +213,8 @@ public class Controller extends Application implements GameListener{
 		loadGame.setPrefSize(100, 20);
 		//settings
 		Button settings = new Button("Settings");
+		settings.getStyleClass().add("button");
+		settings.setId("settings");
 		settings.setOnAction(e->{
 			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
 			mainMenuLayout.setCenter(settingsMenu);
@@ -162,22 +223,22 @@ public class Controller extends Application implements GameListener{
 		//add all the buttons
 		buttons.getChildren().addAll(newGame,loadGame,settings,quit);
 		layout.setLeft(buttons);
-		
+
 		return layout;
 	}
-	
+
 	/**
 	 * Initializes the settings menu.
 	 * @return the settings menu
 	 */
-	private GridPane initSettingsMenu() {	
+	private GridPane initSettingsMenu() {
 		/*initialize layout*/
 		GridPane layout = new GridPane();
 		GridPane.setConstraints(layout, 1, 4);
 		layout.setPadding(new Insets(10,0,0,60));
 		layout.setHgap(10);
 		layout.setVgap(10);
-		
+
 		/*add the title*/
 		//create title
 		Label titleLabel = new Label("Settings");
@@ -185,12 +246,12 @@ public class Controller extends Application implements GameListener{
 		//add title
 		GridPane.setConstraints(titleLabel, 0, 0);
 		layout.getChildren().add(titleLabel);
-		
+
 		/*add widgety stuff to change settings TODO*/
-		
+
 		return layout;
 	}
-	
+
 	/**
 	 * Initializes the new game menu.
 	 * @return the new game menu
@@ -202,7 +263,7 @@ public class Controller extends Application implements GameListener{
 		layout.setPadding(new Insets(10,0,0,60));
 		layout.setHgap(10);
 		layout.setVgap(10);
-		
+
 		/*add the title*/
 		//create title
 		Label titleLabel = new Label("New Game");
@@ -210,7 +271,7 @@ public class Controller extends Application implements GameListener{
 		//add title
 		GridPane.setConstraints(titleLabel, 0, 0);
 		layout.getChildren().add(titleLabel);
-		
+
 		/*create the button that generates the test region*/
 		Button play = new Button("Play");
 		play.setPrefSize(100, 20);
@@ -220,20 +281,14 @@ public class Controller extends Application implements GameListener{
 			worldGraphics = initGameGUI();
 			window.setScene(worldGraphics);
 			/*set the timer to regularly update*/
-			updateTimeline = new Timeline(new KeyFrame(
-			        Duration.millis(6000.0/FRAMES_PER_SECOND),
-			        ae -> update()));
-			updateTimeline.setCycleCount(Animation.INDEFINITE);
-			if(!isTesting)updateTimeline.play();
-			gameGUIRoot.requestFocus();
-			isPlaying = true;
+			unpauseGame();
 		});
 		GridPane.setConstraints(play, 0, 1);
 		layout.getChildren().add(play);
-		
+
 		return layout;
 	}
-	
+
 	/**
 	 * Initializes the game loading menu.
 	 * @return the load game menu
@@ -245,7 +300,7 @@ public class Controller extends Application implements GameListener{
 		layout.setPadding(new Insets(10,0,0,60));
 		layout.setHgap(10);
 		layout.setVgap(10);
-		
+
 		/*add the title*/
 		//create title
 		Label titleLabel = new Label("Load Game");
@@ -253,16 +308,65 @@ public class Controller extends Application implements GameListener{
 		//add title
 		GridPane.setConstraints(titleLabel, 0, 0);
 		layout.getChildren().add(titleLabel);
-		
+
 		/*add widgety stuff to change settings TODO*/
 		//here should be Jordan's loading methods integrated to a GUI
 		Button loadGame = new Button("Load Game");
-		loadGame.setOnAction(e->{throw new NotImplementedYetException();});
+		loadGame.setOnAction(e->{
+			//display a file chooser
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Load a map file");
+			fileChooser.setInitialDirectory(new File("res/"));
+			fileChooser.getExtensionFilters().addAll(
+					new ExtensionFilter("Text Files", "*.txt"),
+					new ExtensionFilter("All Files", "*.*"));
+			File mapFile = fileChooser.showOpenDialog(window);
+			if (mapFile == null) {
+				System.out.println("File failure: map file null");
+				return;
+			}
+			
+			//initialize game
+			initializeNewGame();
+			
+			//parse map
+			Region r;
+			try {
+				TerrainParser terrainParser = new TerrainParser(mapFile);
+				r = new Region(terrainParser.getRA());
+
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return;
+			}
+			fileChooser.setTitle("Load an entity file");
+			File entityFile = fileChooser.showOpenDialog(window);
+			if (entityFile == null) {
+				System.out.println("File failure: entity file null");
+				return;
+			}
+			//parse map
+			EntityParser entityParser = new EntityParser(entityFile);
+			entityParser.parseEntitytoRegion(r);
+
+			//TODO Needs to be replaced by something better.
+			game = new GameContext(r);
+			Player p = game.getPlayer();
+			//System.out.println(p.toString());
+			System.out.println(game.currentRegion.getLocation(p));
+			
+			//play the game
+			worldGraphics = initGameGUI();
+			window.setScene(worldGraphics);
+			unpauseGame();
+			
+		});
 		GridPane.setConstraints(loadGame, 0, 1);
 		layout.getChildren().add(loadGame);
 		return layout;
 	}
-	
+
 	/**
 	 * Initializes the quit menu.
 	 * @return the settings menu
@@ -274,7 +378,7 @@ public class Controller extends Application implements GameListener{
 		layout.setPadding(new Insets(10,0,0,60));
 		layout.setHgap(10);
 		layout.setVgap(10);
-		
+
 		/*add the title*/
 		//create title
 		Label titleLabel = new Label("Quit");
@@ -282,23 +386,23 @@ public class Controller extends Application implements GameListener{
 		//add title
 		GridPane.setConstraints(titleLabel, 0, 0);
 		layout.getChildren().add(titleLabel);
-		
+
 		/*add the actual menu stuff*/
 		//create & add label asking user if they want to quit
 		Label areYouSure = new Label("Are you sure you want to quit?");
 		GridPane.setConstraints(areYouSure, 0, 1);
 		layout.getChildren().add(areYouSure);
-		
+
 		//create quit button
 		Button quit = new Button("Yes");
 		quit.setPrefSize(100, 20);
 		quit.setOnAction(e->System.exit(0));
 		GridPane.setConstraints(quit, 0, 2);
 		layout.getChildren().add(quit);
-		
+
 		return layout;
 	}
-	
+
 	/**
 	 * Initializes the game GUI.
 	 * @return A scene holding the GameCanvas and root with event handling.
@@ -312,9 +416,12 @@ public class Controller extends Application implements GameListener{
 		gameGUIRoot.getChildren().add(gameCanvas);
 		//create new scene
 		Scene s = new Scene(gameGUIRoot);
+		
+		//set the audio manager to play the default town song
+		audio.setSong(audio.SOUNDCODE_TOWNSONG);
 		return s;
 	}
-	
+
 	/**
 	 * Pauses the game.
 	 */
@@ -324,18 +431,27 @@ public class Controller extends Application implements GameListener{
 		gameCanvas.getGraphicsContext2D().setFill(new Color(0.5,0.5,0.5,0.5));
 		gameCanvas.getGraphicsContext2D().fillRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		isPlaying = false;
-		
+
 		/*TODO draw the pause menu*/
 	}
 	/**
 	 * Unpauses the game.
 	 */
 	private void unpauseGame() {
+		if(updateTimeline==null) {
+			updateTimeline = new Timeline(new KeyFrame(
+					Duration.millis(6000.0 / FRAMES_PER_SECOND),
+					ae -> update()));
+			updateTimeline.setCycleCount(Animation.INDEFINITE);
+			gameGUIRoot.requestFocus();
+			isPlaying = true;
+			playerDestination = game.getCurrentRegion().getPlayerTile();
+		}
 		updateTimeline.play();
 		isPlaying = true;
 	}
-	
-	
+
+
 	/**
 	 * Handles a key press.
 	 * @param e the key event
@@ -344,7 +460,7 @@ public class Controller extends Application implements GameListener{
 		//TODO remove test code; implement final handling
 		System.out.println("Key pressed: " + e.getText());
 		System.out.println("Key pressed: " + e.getCode());
-		
+
 		if(e.getCode()==KeyCode.ESCAPE) {
 			System.out.println("Escape pressed");	//debug code
 			if(isPlaying) {
@@ -353,12 +469,12 @@ public class Controller extends Application implements GameListener{
 				unpauseGame();
 			}
 		}
-		
+
 		/*If paused, don't handle events*/
 		if(!isPlaying) {
 			return;
 		}
-		
+
 		/*movement - may want to implement pathfinding mouse-based movement instead*/
 		if(e.getCode()==KeyCode.W) {
 			//move north
@@ -399,21 +515,48 @@ public class Controller extends Application implements GameListener{
 	 * @param e the mouse event
 	 */
 	private void handleMousePress(MouseEvent e) {
-		// TODO remove test code; implement final handling
 		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
+		if(e.isSecondaryButtonDown()) {
+			handleMousePressSecondary(e);
+		}else {
+			handleMousePressPrimary(e);
+		}
+	}
+
+	/**
+	 * Handles a mouse press.
+	 * @param e the mouse event
+	 */
+	private void handleMousePressSecondary(MouseEvent e) {
+		// TODO remove test code; implement final handling
+		System.out.println("Secondary mouse press");
 		/*get the cell the player clicked on*/
 		GridLocation mouseLocation = gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
 		System.out.println("Grid location clicked: " + mouseLocation.x + "," + mouseLocation.y);
-		
-		/*build the interaction for the player movement*/
+
+		/*build the new interaction for the player movement*/
 		try {
-			Tile dest = game.getCurrentRegion().get(mouseLocation);
-			playerMove = new PlayerMove(null, dest);
+			if (game.getCurrentRegion().get(mouseLocation).isPenetrable())
+				playerDestination = game.getCurrentRegion().get(mouseLocation);
 			//TODO this
 		}catch(Exception exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
 			return;
-		}		
+		}
+	}
+
+	private void handleMousePressPrimary(MouseEvent e) {
+		System.out.println("Primary mouse press");
+
+		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
+
+		tile.getTopEntity().ifPresent(entity -> {
+			try {
+				entity.interact(game);
+				System.out.println("Entity clicked: " + entity.toString());
+			} catch (Exception exc) {
+			} //Do nothing
+		});
 	}
 
 	/**
@@ -421,119 +564,137 @@ public class Controller extends Application implements GameListener{
 	 * calls the WorldGraphics to update.
 	 */
 	private void update() {
-		/*handle moving the player*/
-		//TODO - this when I wake up
-		
 		/*update game context via logic*/
 		logic.tick();
+
+		/*move the player*/
+		//find optimal path
+		if(game.getCurrentRegion().getPlayerTile()!=playerDestination) {
+			Graph graph = new Graph(game.getCurrentRegion(), game.getCurrentRegion().getPlayerTile(), playerDestination);
+			Optional<Path> optimalPath = graph.findPath();
+
+			if (optimalPath.isPresent()) {
+				// Move the player
+				if (!(game.getCurrentRegion().getPlayerTile() == playerDestination)) { //don't move if we're already there
+					game.getCurrentRegion().move(game.getPlayer(), optimalPath.get().next());
+				}
+			}
+		}
+
 		/*redraw graphics*/
 		gameCanvas.update();
 	}
-	
-	
+
+
 	/**
 	 * Creates a new game in the default world.
 	 */
 	public void initializeNewGame() {
 		game = new GameContext();
 		logic = new GameLogic(game);
+		logic.addGameListener(this);
+		logic.addGameListener(audio);
 	}
 
 
 	@Override
 	public void onPlayerMoved(Player player) {
 		// TODO Auto-generated method stub
-		
 	}
 
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onPlayerPickup(Player player, Item item) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onPlayerDrop(Player player, Item item) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onNPCAttacked(NPC victim) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onNPCKilled(NPC npc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onNPCDialogBegin(NPC npc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onNPCDialogMessage(NPC npc, String message) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onNPCDialogEnd(NPC npc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onDoorUnlocked(Static door) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onDoorUnlockFailed(Static door, String message) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onDoorOpened(Static door) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void onDoorClosed(Static door) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void onGameCompleted() {
+		// TODO Auto-generated method stub
 	}
 }

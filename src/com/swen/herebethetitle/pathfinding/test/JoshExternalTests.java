@@ -100,4 +100,27 @@ public class JoshExternalTests extends Base {
                 new GridLocation(3, 2), new GridLocation(4, 1));
     }
 
+    /**
+     * Looks like this
+     * -----------
+     * |A        |
+     * |         |
+     * |         |
+     * |      B  |
+     * |         |
+     * -----------
+     * If the destination is a wall
+     */
+    @Test
+    @Ignore
+    public void destinationIsWall() {
+        Region region = new Region(5, 5);
+        Tile source = region.get(0, 0);
+        Tile dest = region.get(4, 4);
+
+        region.get(4,4).add(new Static("wall", null));
+
+        verifyUnreachable(region, source, dest);
+    }
+
 }

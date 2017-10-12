@@ -60,6 +60,11 @@ public class GameLogic {
         triggerPossibleInteractions();
 
         npcController.tick(context, notifier);
+        
+        // Check for game over.
+        if (getPlayer().inventory().containsTitle()) {
+            notifier.notify(l -> l.onGameCompleted());
+        }
     }
 
     /**
@@ -133,6 +138,18 @@ public class GameLogic {
      */
     protected void startDiscussion(NPC npc) {
         npcController.startDiscussion(npc);
+    }
+
+    /**
+     * General-purpose entity interactions.
+     */
+    public void interact(GridLocation location) throws EntityOutOfRange {
+        Tile tile = getCurrentRegion().get(location);
+        
+        if (tile.getTopEntity().isPresent()) {
+            Entity entity = tile.getTopEntity().get();
+            interact(entity);
+        }
     }
 
     /**

@@ -1,21 +1,14 @@
 package com.swen.herebethetitle.graphics.tests;
 
-import com.swen.herebethetitle.graphics.GridManager;
 import com.swen.herebethetitle.graphics.HUD;
 import com.swen.herebethetitle.graphics.Sprite;
 import com.swen.herebethetitle.util.GridLocation;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import org.junit.*;
-
-import java.awt.*;
+import java.util.ArrayList;
 
 public class HUDTest extends TestWindow {
 
@@ -36,7 +29,7 @@ public class HUDTest extends TestWindow {
             Sprite weapon = new Sprite(null, new GridLocation(0,0));
 
             HUD hud = new HUD(c);
-            hud.drawAll(weapon, armourSprites, c);
+	        hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
         }};
     }
 
@@ -55,10 +48,9 @@ public class HUDTest extends TestWindow {
                 Sprite weapon = new Sprite(null, new GridLocation(0, 0));
 
                 HUD hud = new HUD(c);
-                hud.drawAll(weapon, armourSprites, c);
+	            hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
             }
 
-            ;
         };
     }
 
@@ -77,10 +69,9 @@ public class HUDTest extends TestWindow {
                 Sprite weapon = new Sprite(new Image("file:res/wizard.png"), new GridLocation(0, 0));
 
                 HUD hud = new HUD(c);
-                hud.drawAll(weapon, armourSprites, c);
+	            hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
             }
 
-            ;
         };
     }
 

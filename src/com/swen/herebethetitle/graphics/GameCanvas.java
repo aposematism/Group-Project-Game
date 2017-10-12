@@ -1,9 +1,6 @@
 package com.swen.herebethetitle.graphics;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Inventory;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Weapon;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -22,7 +19,9 @@ import java.util.List;
  * @author weirjosh
  */
 public class GameCanvas extends Canvas {
-    private GameContext context;
+	private static final Image ERROR = new Image("file:res/error.png");
+
+	private GameContext context;
 
     private Map<String, Image> imageMap = new HashMap<>();
 
@@ -124,7 +123,13 @@ public class GameCanvas extends Canvas {
         }
         Sprite weaponSprite = new Sprite(weaponImage, new GridLocation(0,0));
 
-        hud.drawAll(weaponSprite, armourSprites, this);
+	    List<Sprite> itemSprites = new ArrayList<>();
+	    for (Item i : inv.getItems()) {
+		    Image img = getImage(i);
+		    itemSprites.add(new Sprite(img, new GridLocation(0, 0)));
+	    }
+
+	    hud.drawAll(weaponSprite, armourSprites, itemSprites, this);
     }
 
 
@@ -132,7 +137,12 @@ public class GameCanvas extends Canvas {
     private Image getImage(Entity e) {
         if(e == null) return null;
         if (!imageMap.containsKey(e.getSpritePath())) {
-            imageMap.put(e.getSpritePath(), new Image(e.getSpritePath()));
+	        Image image = new Image("file:res/" + e.getSpritePath());
+
+	        if (image.getHeight() == 0 && image.getWidth() == 0) //Image didn't load properly
+		        image = ERROR;
+
+	        imageMap.put(e.getSpritePath(), image);
         }
         return imageMap.get(e.getSpritePath());
     }
