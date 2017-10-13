@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class GameCanvas extends Canvas {
 	private static final Image ERROR = new Image("file:res/error.png");
+    private static boolean grid;
 
 	private GameContext context;
 
@@ -38,6 +39,9 @@ public class GameCanvas extends Canvas {
     public GameCanvas(GameContext context, int width, int height){
         super(width, height);
         world = new WorldRenderer();
+        if(grid){
+            world.getGrid().toggleBorder();
+        }
         hud = new HUD(this);
         this.context = context;
 
@@ -69,8 +73,15 @@ public class GameCanvas extends Canvas {
     /**
      * Toggles the gap between cells on or off.
      */
-    public void toggleGrid(){
-        world.getGrid().toggleBorder();
+    public static void toggleGrid(){
+        grid = true;
+    }
+
+    /**
+     * Toggle the grid from the pause menu
+     */
+    public void toggleGridInGame(){
+
     }
 
 
