@@ -3,10 +3,10 @@ package com.swen.herebethetitle.parser;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.parser.EntityParser.SyntaxError;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.swen.herebethetitle.parser.EntityParser.parse;
@@ -15,8 +15,8 @@ public class ReverseParser {
 	
 	static ArrayList<Entity> interactives = new ArrayList<Entity>();
 	static ArrayList<String> output = new ArrayList<String>();
-	
-	public ReverseParser(File region) throws IOException, SyntaxError {
+
+	public ReverseParser(File region) throws IOException, InputMismatchException {
 		reverseScanner(region);
 	}
 	
@@ -25,7 +25,7 @@ public class ReverseParser {
 	 * but also for not creating unnecessarily files if no items have moved. Primarily used for loading.
 	 * @throws IOException SyntaxError 
 	 * */
-	private static void reverseScanner(File region)throws IOException, SyntaxError{
+	private static void reverseScanner(File region) throws IOException, InputMismatchException {
 		interactives = new ArrayList<Entity>();
 		output = new ArrayList<String>();
 		BufferedReader regionBuff = null;
