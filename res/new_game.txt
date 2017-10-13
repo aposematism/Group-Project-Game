@@ -16,13 +16,17 @@ m = Floor "Grass" "static/grass.png" + Potion "Steak" "item/meat.png" 10
 b = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25
 k = Floor "Grass" "static/grass.png" + Key "Key for door" "item/key red.png" 70
 r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.png"
+1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 1.png"
+2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 2.png"
+3 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 3.png"
+4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 4.png"
 
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w......w................................................w
-w......w...p............................................w
-w......w...........x............s.............k.........w
-w......w................................................w
-wwwwwwdw.......wwwwwwwwww.........wwwwwwwwwww.....wwwwwww
+w......w...p..............13......................13....w
+w......w...........x......24....s.............k...24....w
+w......w..13............................................w
+wwwwwwdw..24...wwwwwwwwww.........wwwwwwwwwww.....wwwwwww
 w......w.......w________w....b....w_________w.....w______
 w......w..z....w________w.........w_________w.....w______
 w..............w________w.........w_________wwwwwww______
