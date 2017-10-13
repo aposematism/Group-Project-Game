@@ -3,11 +3,13 @@ package com.swen.herebethetitle.graphics;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import javax.xml.soap.Text;
 import java.awt.*;
 import java.util.Collection;
-
+import java.util.Optional;
 
 
 /**
@@ -22,7 +24,14 @@ public class HUD {
     private GridManager armourGrid;
     private GridManager weaponGrid;
 	private GridManager itemGrid;
-	private int gap = 10;
+	private GridManager textBoxGrid;
+
+    private Optional<TextBox> textBox = Optional.empty();
+
+    private final int boxWidth;
+    private final int boxHeight;
+
+    private final int GAP = 10;
 
     /**
      * Create a new HUD on the specified Canvas
@@ -31,6 +40,10 @@ public class HUD {
      */
     public HUD(Canvas c){
         createGridLayouts(c);
+
+        boxWidth = (int)(3*c.getWidth()/5);
+        boxHeight = (int)(c.getHeight()/4);
+
     }
 
 //    public void drawAll(Canvas c){
@@ -67,26 +80,40 @@ public class HUD {
 	    for (Sprite s : items) {
 		    renderSlot(s, itemGrid, gc);
 	    }
+
+	    textBox.ifPresent(textBox1 -> textBox1.draw(gc, textBoxGrid));
+    }
+
+    public void createTextBox(String msg, Image icon){
+        textBox = Optional.of(new TextBox(icon,
+                new GridLocation(0,0), msg, boxWidth, boxHeight));
+    }
+
+    public void removeTextBox(){
+        textBox = Optional.empty();
     }
 
     private void createGridLayouts(Canvas c){
         weaponGrid = new GridManager(slotSize/2,
-		        (int) c.getHeight() - slotSize * (3 / 2) - gap,
+		        (int) c.getHeight() - slotSize * (3 / 2) - GAP,
 		        slotSize);
 
         armourGrid = new GridManager(
                 slotSize/2,
-		        (int) c.getHeight() - slotSize * (3 / 2) - 7 * gap - slotSize,
+		        (int) c.getHeight() - slotSize * (3 / 2) - 7 * GAP - slotSize,
 		        slotSize);
 
         itemGrid = new GridManager(
                 slotSize * (2) + armourGrid.getRealCoordinates(new GridLocation(0, 0)).x,
-		        (int) c.getHeight() - slotSize * (3 / 2) - gap,
+		        (int) c.getHeight() - slotSize * (3 / 2) - GAP,
 		        slotSize);
 
-        weaponGrid.setGap(gap);
-        armourGrid.setGap(gap);
-        itemGrid.setGap(gap);
+        textBoxGrid = new GridManager(
+                (int)c.getWidth()/4, (int)c.getHeight()/2, slotSize);
+
+        weaponGrid.setGap(GAP);
+        armourGrid.setGap(GAP);
+        itemGrid.setGap(GAP);
     }
 
 

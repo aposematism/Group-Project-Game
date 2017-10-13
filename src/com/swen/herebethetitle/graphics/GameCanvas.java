@@ -84,6 +84,21 @@ public class GameCanvas extends Canvas {
 
     }
 
+    /**
+     * @param msg The String message of the NPC conversation
+     * @param npc The NPC of which the player is talking to
+     */
+    public void createTextBox(String msg, Entity npc){
+        hud.createTextBox(msg, getImage(npc));
+    }
+
+    /**
+     * Remove any current text box from the HUD (when the player finishes
+     * speaking with an NPC).
+     */
+    public void removeTextBox(){
+        hud.removeTextBox();
+    }
 
 
 
