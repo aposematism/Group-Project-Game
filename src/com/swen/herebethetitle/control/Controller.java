@@ -39,7 +39,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This is the main, top-level class for the conceptual controller.
