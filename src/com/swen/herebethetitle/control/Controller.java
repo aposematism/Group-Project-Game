@@ -3,7 +3,6 @@ package com.swen.herebethetitle.control;
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.graphics.GameCanvas;
-import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.logic.ai.Interaction;
