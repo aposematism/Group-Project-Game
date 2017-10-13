@@ -1,7 +1,15 @@
+this: starting
+north: nope
+east: nope
+south: nope
+west: nope
+
+entities:
 . = Floor "Grass" "static/grass.png"
 w = Static "Wall" "static/tudorwall.png"
 d = Static "Door" "static/cobble master.png" Door 70 LOCKED
 
+map:
 wwwwwwwwwwwwwwww
 w......w.......w
 w......w.......w
