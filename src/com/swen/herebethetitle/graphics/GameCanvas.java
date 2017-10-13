@@ -66,6 +66,13 @@ public class GameCanvas extends Canvas {
         return world.getLocation(new Point(x,y));
     }
 
+    /**
+     * Toggles the gap between cells on or off.
+     */
+    public void toggleGrid(){
+        world.getGrid().toggleBorder();
+    }
+
 
 
 
@@ -147,4 +154,5 @@ public class GameCanvas extends Canvas {
         }
         return imageMap.get(e.getSpritePath());
     }
+
 }

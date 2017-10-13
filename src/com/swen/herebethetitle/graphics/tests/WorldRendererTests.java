@@ -43,7 +43,7 @@ public class WorldRendererTests extends TestWindow {
 
 
             Map<Sprite, List<Sprite>> sprites = new HashMap<>();
-            Sprite player = new Sprite(new Image("file:res/wizard.png"), new GridLocation(0,0));
+            Sprite player = new Sprite(new Image("file:res/mob/wizard.png"), new GridLocation(0,0));
 
             for(int i=0;i<5;i++){
                 List<Sprite> interactives = new ArrayList<>();
@@ -76,20 +76,20 @@ public class WorldRendererTests extends TestWindow {
 
 
             Map<Sprite, List<Sprite>> sprites = new HashMap<>();
-            Sprite player = new Sprite(new Image("file:res/wizard.png"), new GridLocation(0,0));
+            Sprite player = new Sprite(new Image("file:res/mob/wizard.png"), new GridLocation(0,0));
 
             for(int i=0;i<10;i++){
                 for(int j=0;j<10;j++){
-                    Sprite grass = new Sprite(new Image("file:res/grass.png"), new GridLocation(i,j));
+                    Sprite grass = new Sprite(new Image("file:res/static/grass.png"), new GridLocation(i,j));
                     List<Sprite> interactives = new ArrayList<>();
 
                     if(i==j){
-                        interactives.add(new Sprite(new Image("file:res/cobble master.png"),
+                        interactives.add(new Sprite(new Image("file:res/static/cobble master.png"),
                                 new GridLocation(i,j)));
                     }
                     sprites.put(grass, interactives);
                     if(i==5 && j==5){
-                        player = new Sprite(new Image("file:res/wizard.png"), new GridLocation(i,j));
+                        player = new Sprite(new Image("file:res/mob/wizard.png"), new GridLocation(i,j));
                         interactives.add(player);
                     }
                 }
@@ -111,17 +111,17 @@ public class WorldRendererTests extends TestWindow {
      */
     public void testTranslation(){
         testCode = new Operation(){public void run(Canvas c){
-            player = new Sprite(new Image("file:res/wizard.png"), new GridLocation(0,0));
+            player = new Sprite(new Image("file:res/mob/wizard.png"), new GridLocation(0,0));
             WorldRenderer world = new WorldRenderer();
             Map<Sprite, List<Sprite>> sprites = new HashMap<>();
 
             for(int i=0;i<10;i++){
                 for(int j=0;j<10;j++){
-                    Sprite grass = new Sprite(new Image("file:res/grass.png"), new GridLocation(i,j));
+                    Sprite grass = new Sprite(new Image("file:res/static/grass.png"), new GridLocation(i,j));
                     List<Sprite> interactives = new ArrayList<>();
 
                     if(i==j){
-                        interactives.add(new Sprite(new Image("file:res/cobble master.png"),
+                        interactives.add(new Sprite(new Image("file:res/mob/cobble master.png"),
                                 new GridLocation(i,j)));
                     }
                     sprites.put(grass, interactives);

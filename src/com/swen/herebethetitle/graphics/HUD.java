@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import java.awt.*;
 import java.util.Collection;
 
-import static com.swen.herebethetitle.graphics.GridManager.gap;
 
 
 /**
@@ -23,6 +22,7 @@ public class HUD {
     private GridManager armourGrid;
     private GridManager weaponGrid;
 	private GridManager itemGrid;
+	private int gap = 10;
 
     /**
      * Create a new HUD on the specified Canvas
@@ -83,6 +83,10 @@ public class HUD {
                 slotSize * (2) + armourGrid.getRealCoordinates(new GridLocation(0, 0)).x,
 		        (int) c.getHeight() - slotSize * (3 / 2) - gap,
 		        slotSize);
+
+        weaponGrid.setGap(gap);
+        armourGrid.setGap(gap);
+        itemGrid.setGap(gap);
     }
 
 

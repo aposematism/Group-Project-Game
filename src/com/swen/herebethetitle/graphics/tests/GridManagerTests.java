@@ -73,7 +73,7 @@ public class GridManagerTests {
         Assert.assertEquals(m.getRealCoordinates(gl2).y
 		        - m.getRealCoordinates(gl1).y - 2, m.getCellSize());
 
-	    GridManager.toggleBorder();
+	    m.toggleBorder();
 	    Assert.assertEquals(m.getRealCoordinates(gl5).x
 			    - m.getRealCoordinates(gl4).x, m.getCellSize());
     }

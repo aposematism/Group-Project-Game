@@ -13,7 +13,7 @@ public class GridManager extends Canvas{
 
 	private static final int defaultCellSize = 64;
 	//The horizontal and vertical gaps of this grid
-	protected static int gap = 2;
+	protected int gap = 2;
 	private int cellSize;
 	private int x;
     private int y;
@@ -38,7 +38,7 @@ public class GridManager extends Canvas{
 		return new GridManager(0, 0, defaultCellSize);
 	}
 
-	public static void toggleBorder() {
+	public void toggleBorder() {
 		gap = gap != 0 ? 0 : 2;
 	}
 
@@ -122,6 +122,20 @@ public class GridManager extends Canvas{
     public void setOrigin(int x, int y){
         this.x=x;
         this.y=y;
+    }
+
+    /**
+     * Set the gap between cells
+     */
+    public void setGap(int newGap){
+        gap = newGap;
+    }
+
+    /**
+     * @return The gap between cells.
+     */
+    public int getGap(){
+        return gap;
     }
 
     /**@return The origin of the GridManager

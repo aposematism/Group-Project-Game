@@ -9,6 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HUDTest extends TestWindow {
 
@@ -24,7 +25,7 @@ public class HUDTest extends TestWindow {
         testCode = new Operation(){public void run(Canvas c){
             Sprite [] armourSprites = new Sprite[4];
             for(int i=0;i<armourSprites.length;i++){
-                armourSprites[i] = new Sprite(null, new GridLocation(i,0));
+                armourSprites[i] = new Sprite(null, new GridLocation(0,-i));
             }
             Sprite weapon = new Sprite(null, new GridLocation(0,0));
 
@@ -43,7 +44,7 @@ public class HUDTest extends TestWindow {
             public void run(Canvas c) {
                 Sprite[] armourSprites = new Sprite[4];
                 for (int i = 0; i < armourSprites.length; i++) {
-                    armourSprites[i] = new Sprite(new Image("file:res/tudorwall.png"), new GridLocation(i, 0));
+                    armourSprites[i] = new Sprite(new Image("file:res/static/tudorwall.png"), new GridLocation(0, -i));
                 }
                 Sprite weapon = new Sprite(null, new GridLocation(0, 0));
 
@@ -64,15 +65,34 @@ public class HUDTest extends TestWindow {
             public void run(Canvas c) {
                 Sprite[] armourSprites = new Sprite[4];
                 for (int i = 0; i < armourSprites.length; i++) {
-                    armourSprites[i] = new Sprite(null, new GridLocation(i, 0));
+                    armourSprites[i] = new Sprite(null, new GridLocation(0, -i));
                 }
-                Sprite weapon = new Sprite(new Image("file:res/wizard.png"), new GridLocation(0, 0));
+                Sprite weapon = new Sprite(new Image("file:res/mob/wizard.png"), new GridLocation(0, 0));
 
                 HUD hud = new HUD(c);
 	            hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
             }
 
         };
+    }
+    @Test
+    @Ignore
+    public void inventorySlots(){
+        testCode = new Operation(){public void run(Canvas c) {
+            Sprite[] armourSprites = new Sprite[4];
+            for (int i = 0; i < armourSprites.length; i++) {
+                armourSprites[i] = new Sprite(null, new GridLocation(0, -i));
+            }
+
+            List invSprites = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                invSprites.add(new Sprite(null, new GridLocation(i, 0)));
+            }
+            Sprite weapon = new Sprite(null, new GridLocation(0, 0));
+
+            HUD hud = new HUD(c);
+            hud.drawAll(weapon, armourSprites, invSprites, c);
+        }};
     }
 
 }
