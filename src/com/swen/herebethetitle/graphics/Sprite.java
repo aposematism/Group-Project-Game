@@ -14,8 +14,13 @@ import java.awt.*;
  */
 public class Sprite {
 
-    private GridLocation loc;
-    private Image img;
+    protected GridLocation loc;
+    protected Image img;
+
+    /**
+     * Default constructor
+     */
+    public Sprite(){}
 
     /**
      * Create a new Sprite.

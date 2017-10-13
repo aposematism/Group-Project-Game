@@ -214,7 +214,7 @@ public class Controller extends Application implements GameListener{
 				toggleBorder.setText("Turn Off Tile Borders");
 				toggleBorder.setId("turnOffTileBorders");
 			}
-			gameCanvas.toggleGrid();
+			GameCanvas.toggleGrid();
 		});
 
 		settingsBox.getChildren().add(toggleBorder);
@@ -494,14 +494,14 @@ public class Controller extends Application implements GameListener{
 
 	@Override
 	public void onNPCDialogMessage(NPC npc, String message) {
-		// TODO Auto-generated method stub
+		gameCanvas.createTextBox(message, npc);
 
 	}
 
 
 	@Override
 	public void onNPCDialogEnd(NPC npc) {
-		// TODO Auto-generated method stub
+		gameCanvas.removeTextBox();
 
 	}
 
