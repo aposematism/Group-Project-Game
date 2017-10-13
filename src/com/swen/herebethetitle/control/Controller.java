@@ -204,9 +204,18 @@ public class Controller extends Application implements GameListener{
 	private void initSettingsMenu(BorderPane layout) {
 		HBox settingsBox = new HBox();
 
-		Button toggleBorder = new Button("Toggle Tile Borders");
-		toggleBorder.setId("toggleTileBorders");
-		toggleBorder.setOnAction(e -> GridManager.toggleBorder());
+		Button toggleBorder = new Button("Turn Off Tile Borders");
+		toggleBorder.setId("turnOffTileBorders");
+		toggleBorder.setOnAction(e -> {
+			if (toggleBorder.getText().equals("Turn Off Tile Borders")) {
+				toggleBorder.setText("Turn On Tile Borders");
+				toggleBorder.setId("turnOnTileBorders");
+			} else {
+				toggleBorder.setText("Turn Off Tile Borders");
+				toggleBorder.setId("turnOffTileBorders");
+			}
+			GridManager.toggleBorder();
+		});
 
 		settingsBox.getChildren().add(toggleBorder);
 

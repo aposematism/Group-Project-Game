@@ -19,9 +19,12 @@ HBox {
     -fx-padding: 30 250 0 0;
 }
 
+#turnOffTileBorders {
+    -fx-base: #FFFFFF;
+}
 
-#button-box {
-
+#turnOnTileBorders {
+    -fx-base: #000000;
 }
 
 #quit {
