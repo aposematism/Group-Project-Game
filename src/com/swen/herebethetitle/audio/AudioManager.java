@@ -10,6 +10,7 @@ import javafx.scene.media.AudioClip;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Class for playing audio through the main javaFX thread.
@@ -22,10 +23,12 @@ public class AudioManager implements GameListener{
 	public static final int SOUNDCODE_DEMON1 = 1;
 	public static final int SOUNDCODE_DEMON2 = 2;
 	public static final int SOUNDCODE_DOOR = 3;
-	public static final int SOUNDCODE_MAN1 = 4;
-	public static final int SOUNDCODE_MAN2 = 5;
+	public static final int SOUNDCODE_PLAYERDAMAGE1 = 4;
+	public static final int SOUNDCODE_PLAYERDAMAGE2 = 5;
 	public static final int SOUNDCODE_ROBOT1 = 6;
 	public static final int SOUNDCODE_ROBOT2 = 7;
+	public static final int SOUNDCODE_FOOTSTEP1 = 8;
+	public static final int SOUNDCODE_FOOTSTEP2 = 9;
 	public static final int SOUNDCODE_MENUSONG = 0;
 	public static final int SOUNDCODE_TOWNSONG = -1;
 	public static final int SOUNDCODE_BATTLESONG = -1;	//TODO get battle music
@@ -44,10 +47,12 @@ public class AudioManager implements GameListener{
 		sounds.put(SOUNDCODE_DEMON1, new AudioClip("file:res/sound/demon1.mp3"));
 		sounds.put(SOUNDCODE_DEMON2, new AudioClip("file:res/sound/demon2.mp3"));
 		sounds.put(SOUNDCODE_DOOR, new AudioClip("file:res/sound/door.mp3"));
-		sounds.put(SOUNDCODE_MAN1, new AudioClip("file:res/sound/man1.mp3"));
-		sounds.put(SOUNDCODE_MAN2, new AudioClip("file:res/sound/man2.mp3"));
+		sounds.put(SOUNDCODE_PLAYERDAMAGE1, new AudioClip("file:res/sound/playerdamage1.mp3"));
+		sounds.put(SOUNDCODE_PLAYERDAMAGE2, new AudioClip("file:res/sound/playerdamage2.mp3"));
 		sounds.put(SOUNDCODE_ROBOT1, new AudioClip("file:res/sound/robot1.mp3"));
 		sounds.put(SOUNDCODE_ROBOT2, new AudioClip("file:res/sound/robot2.mp3"));
+		sounds.put(SOUNDCODE_FOOTSTEP1, new AudioClip("file:res/sound/footstep1.mp3"));
+		sounds.put(SOUNDCODE_FOOTSTEP2, new AudioClip("file:res/sound/footstep2.mp3"));
 		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.mp3"));
 		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.mp3"));
 		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.mp3"));
@@ -92,17 +97,20 @@ public class AudioManager implements GameListener{
 	@Override
 	public void onPlayerMoved(Player player) {
 		// TODO Auto-generated method stub
-		
+		if (ThreadLocalRandom.current().nextBoolean())
+			playSound(AudioManager.SOUNDCODE_FOOTSTEP1);
+		else
+			playSound(AudioManager.SOUNDCODE_FOOTSTEP2);
 	}
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		playSound(SOUNDCODE_MAN1);		
+		playSound(SOUNDCODE_PLAYERDAMAGE1);
 	}
 
 	@Override
 	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
-		playSound(SOUNDCODE_MAN2);		
+		playSound(SOUNDCODE_PLAYERDAMAGE2);
 	}
 
 	@Override
@@ -131,7 +139,7 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onNPCDialogBegin(NPC npc) {
-		playSound(SOUNDCODE_MAN1);
+		playSound(SOUNDCODE_PLAYERDAMAGE1);
 	}
 
 	@Override
@@ -141,7 +149,7 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onNPCDialogEnd(NPC npc) {
-		playSound(SOUNDCODE_MAN2);
+		playSound(SOUNDCODE_PLAYERDAMAGE2);
 	}
 
 	@Override
