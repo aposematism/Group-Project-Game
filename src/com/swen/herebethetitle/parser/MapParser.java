@@ -23,7 +23,7 @@ public class MapParser {
 	private Tile[][] regionArray;
 	private String regionName;
 	private String[] neighbouringRegions;
-	private Map<Character, List<Entity>> characterMap;
+	private Map<String, List<Entity>> characterMap;
 
 	private Region region;
 
@@ -31,7 +31,6 @@ public class MapParser {
 		charArray = new CharArray();
 		neighbouringRegions = new String[4];
 		characterMap = new HashMap<>();
-
 		try {
 			readLines(new BufferedReader(new FileReader(file)));
 			region = new Region(regionArray);
@@ -49,7 +48,7 @@ public class MapParser {
 	private void readLines(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		Scanner s = new Scanner(line);
-
+		//Neighbouring Regions.
 		while (s.hasNext(REGION_NAME)) {//only used in regions with neighbours.
 			parseRegionName(s);
 			line = reader.readLine();
@@ -58,24 +57,31 @@ public class MapParser {
 
 		while (line.length() < 2) {
 			line = reader.readLine(); //skip whitespace
-			s = new Scanner(line);
 		}
-
-		while (line.contains("=")) {
-			mapCharToEntities(s);
+		//If you have entities, take them.
+		if(line.contains("entities:")) {
 			line = reader.readLine();
 			s = new Scanner(line);
+			while (line.contains("=")) {
+				mapCharToEntities(s);
+				line = reader.readLine();
+				s = new Scanner(line);
+			}
 		}
 
 		while (line.length() < 2) {
 			line = reader.readLine(); //skip whitespace
 		}
-
-		while (line != null) {
-			charArray.addLine(line.split(""));
+		
+		if(line.contains("map:")) {
 			line = reader.readLine();
+			while (line != null) {
+				System.out.println(line);
+				charArray.addLine(line.split(""));
+				line = reader.readLine();
+			}
 		}
-
+		
 		parseStringArray();
 
 
@@ -108,7 +114,7 @@ public class MapParser {
 	 * @author Mark Metcalfe
 	 */
 	private void mapCharToEntities(Scanner s) throws IOException {
-		char c = s.next().charAt(0);
+		String c = s.next();
 		s.next(); //consume "=" token
 		List<Entity> entities = new ArrayList<>();
 		entities.add(parse(s));
@@ -144,32 +150,41 @@ public class MapParser {
 	public String[] getNeighbouringRegions() {
 		return neighbouringRegions;
 	}
+	
+	public CharArray getCharArray() {
+		return charArray;
+	}
 
 	/**
 	 * Container class for the character array used by the MapParser
 	 *
 	 * @author Mark Metcalfe
 	 */
-	private class CharArray {
+	public class CharArray {
 
-		private ArrayList<Character[]> charArray = new ArrayList<>();
-
+		private ArrayList<String[]> charArray = new ArrayList<>();
+		//I made these methods public for testing purposes.
 		public void addLine(String[] in) {
-			Character[] chars = new Character[in.length];
-			for (int i = 0; i < chars.length; i++)
-				chars[i] = in[i].charAt(0);
+			String[] chars = new String[in.length];
+			for (int i = 0; i < chars.length; i++) {
+				chars[i] = in[i];
+			}
 			charArray.add(chars);
 		}
 
-		private Character get(int row, int col) {
+		public String get(int row, int col) {
 			return charArray.get(row)[col];
 		}
+		
+		public ArrayList<String[]> getList(){
+			return charArray;
+		}
 
-		private int width() {
+		public int width() {
 			return charArray.get(0).length;
 		}
 
-		private int height() {
+		public int height() {
 			return charArray.size();
 		}
 	}

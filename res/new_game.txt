@@ -4,6 +4,7 @@ east: town
 south: seaside
 west: farm
 
+entities:
 . = Floor "Grass" "static/grass.png"
 w = Static "Wall" "static/tudorwall.png"
 d = Static "Door" "static/cobble master.png" Door 70 LOCKED
@@ -21,6 +22,7 @@ r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.p
 3 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 3.png"
 4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 4.png"
 
+map:
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w......w................................................w
 w......w...p..............13......................13....w
