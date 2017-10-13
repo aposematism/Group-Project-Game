@@ -3,6 +3,7 @@ package com.swen.herebethetitle.control;
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.graphics.GameCanvas;
+import com.swen.herebethetitle.graphics.GridManager;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
@@ -24,15 +25,14 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -147,9 +147,6 @@ public class Controller extends Application implements GameListener{
 		mainMenu.getStylesheets().add("file:res/mainmenu.css");
 		window.setScene(mainMenu);
 		
-		/*initialize subordinate menus*/
-		settingsMenu = initSettingsMenu();
-		
 		/*initialize the audio manager*/
 		audio = new AudioManager();
 
@@ -170,13 +167,11 @@ public class Controller extends Application implements GameListener{
 		buttons.setId("button-box");
 		//quit
 		Button quit = new Button("Quit");
-		quit.getStyleClass().add("button");
 		quit.setId("quit");
 		quit.setOnAction(e -> System.exit(0));
 		quit.setPrefSize(100, 20);
 		//new game
 		Button newGame = new Button("New Game");
-		newGame.getStyleClass().add("button");
 		newGame.setId("newGame");
 		newGame.setOnAction(e ->
 				loadGame(new File("res/new_game.txt"))
@@ -184,7 +179,6 @@ public class Controller extends Application implements GameListener{
 		newGame.setPrefSize(100, 20);
 		//load game
 		Button loadGame = new Button("Load Game");
-		loadGame.getStyleClass().add("button");
 		loadGame.setId("loadGame");
 		loadGame.setOnAction(e ->
 				chooseFile().ifPresent(file ->
@@ -193,12 +187,8 @@ public class Controller extends Application implements GameListener{
 		loadGame.setPrefSize(100, 20);
 		//settings
 		Button settings = new Button("Settings");
-		settings.getStyleClass().add("button");
 		settings.setId("settings");
-		settings.setOnAction(e->{
-			mainMenuLayout.getChildren().removeAll(settingsMenu);
-			mainMenuLayout.setCenter(settingsMenu);
-		});
+		settings.setOnAction(e -> initSettingsMenu(layout));
 		settings.setPrefSize(100, 20);
 		//add all the buttons
 		buttons.getChildren().addAll(newGame,loadGame,settings,quit);
@@ -211,25 +201,22 @@ public class Controller extends Application implements GameListener{
 	 * Initializes the settings menu.
 	 * @return the settings menu
 	 */
-	private GridPane initSettingsMenu() {
-		/*initialize layout*/
-		GridPane layout = new GridPane();
-		GridPane.setConstraints(layout, 1, 4);
-		layout.setPadding(new Insets(10,0,0,60));
-		layout.setHgap(10);
-		layout.setVgap(10);
+	private void initSettingsMenu(BorderPane layout) {
+		HBox settingsBox = new HBox();
 
-		/*add the title*/
-		//create title
-		Label titleLabel = new Label("Settings");
-		titleLabel.setFont(new Font(30));
-		//add title
-		GridPane.setConstraints(titleLabel, 0, 0);
-		layout.getChildren().add(titleLabel);
+		Button toggleBorder = new Button("Toggle Tile Borders");
+		toggleBorder.setId("toggleTileBorders");
+		toggleBorder.setOnAction(e -> GridManager.toggleBorder());
 
-		/*add widgety stuff to change settings TODO*/
+		settingsBox.getChildren().add(toggleBorder);
 
-		return layout;
+		VBox menuAndSettings = new VBox();
+		menuAndSettings.setId("menuBox");
+		menuAndSettings.getChildren().add(layout.getChildren().get(0));
+		settingsBox.setId("settingsBox");
+		menuAndSettings.getChildren().add(settingsBox);
+
+		layout.setCenter(menuAndSettings);
 	}
 
 	private Optional<File> chooseFile() {

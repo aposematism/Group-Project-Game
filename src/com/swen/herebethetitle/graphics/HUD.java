@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import java.awt.*;
 import java.util.Collection;
 
+import static com.swen.herebethetitle.graphics.GridManager.gap;
+
 
 /**
  * The Heads Up Display that will be drawn to the GameCanvas. Currently supports
@@ -17,8 +19,6 @@ import java.util.Collection;
 public class HUD {
 
     private final int slotSize = 45;
-    private final int hGap = 6;
-    private final int vGap = 6;
 
     private GridManager armourGrid;
     private GridManager weaponGrid;
@@ -71,18 +71,18 @@ public class HUD {
 
     private void createGridLayouts(Canvas c){
         weaponGrid = new GridManager(slotSize/2,
-                (int)c.getHeight()-slotSize*(3/2)-vGap,
-                slotSize, 0,0);
+		        (int) c.getHeight() - slotSize * (3 / 2) - gap,
+		        slotSize);
 
         armourGrid = new GridManager(
                 slotSize/2,
-                (int)c.getHeight()-slotSize*(3/2)-7*vGap - slotSize,
-                slotSize, vGap, hGap);
+		        (int) c.getHeight() - slotSize * (3 / 2) - 7 * gap - slotSize,
+		        slotSize);
 
         itemGrid = new GridManager(
                 slotSize * (2) + armourGrid.getRealCoordinates(new GridLocation(0, 0)).x,
-                (int) c.getHeight() - slotSize * (3 / 2) - vGap,
-                slotSize, vGap * 2, hGap * 2);
+		        (int) c.getHeight() - slotSize * (3 / 2) - gap,
+		        slotSize);
     }
 
 

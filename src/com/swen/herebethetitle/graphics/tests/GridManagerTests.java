@@ -2,7 +2,9 @@ package com.swen.herebethetitle.graphics.tests;
 
 import com.swen.herebethetitle.graphics.GridManager;
 import com.swen.herebethetitle.util.GridLocation;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.awt.*;
 
@@ -31,19 +33,15 @@ public class GridManagerTests {
 
         offset = new Point(20, 20);
         cellSize = 30;
-        vGap = 0;
-        hGap = 0;
 
-        m = new GridManager(0,0 ,cellSize, vGap, hGap);
+	    m = new GridManager(0, 0, cellSize);
 
     }
 
     @Test
     public void test01_initialize(){
-        GridManager m = new GridManager(0,0,cellSize, vGap, hGap);
-        Assert.assertEquals(m.getCellSize(), 30);
-        Assert.assertEquals(m.gethGap(), 0);
-        Assert.assertEquals(m.getvGap(), 0);
+	    GridManager m = new GridManager(0, 0, cellSize);
+	    Assert.assertEquals(m.getCellSize(), 30);
     }
     @Test
     public void test02_getCoordinates(){
@@ -55,9 +53,9 @@ public class GridManagerTests {
         Assert.assertEquals(m.getRealCoordinates(gl5), new Point(60, 60));
         Assert.assertEquals(m.getRealCoordinates(gl6), new Point(120, 120));
 
-        m = new GridManager(45, 30, cellSize, vGap,hGap);
-        Assert.assertEquals(m.getRealCoordinates(gl1), new Point(45, 60));
-        Assert.assertEquals(m.getRealCoordinates(gl2), new Point(45, 90));
+	    m = new GridManager(45, 30, cellSize);
+	    Assert.assertEquals(m.getRealCoordinates(gl1), new Point(45, 60));
+	    Assert.assertEquals(m.getRealCoordinates(gl2), new Point(45, 90));
     }
     @Test
     public void test03_getCoordinatesWithOffset(){
@@ -72,13 +70,12 @@ public class GridManagerTests {
 
     @Test
     public void test04_testGaps(){
-        m.setvGap(1);
         Assert.assertEquals(m.getRealCoordinates(gl2).y
-                -m.getRealCoordinates(gl1).y - m.getvGap(), m.getCellSize());
+		        - m.getRealCoordinates(gl1).y - 2, m.getCellSize());
 
-        m.sethGap(5);
-        Assert.assertEquals(m.getRealCoordinates(gl5).x
-                -m.getRealCoordinates(gl4).x - m.gethGap(), m.getCellSize());
+	    GridManager.toggleBorder();
+	    Assert.assertEquals(m.getRealCoordinates(gl5).x
+			    - m.getRealCoordinates(gl4).x, m.getCellSize());
     }
 
     @Test
@@ -97,9 +94,9 @@ public class GridManagerTests {
 
     @Test
     public void test06_getCoordsFromDifferentOrigin(){
-        GridManager m = new GridManager(45, 30, cellSize, vGap,hGap);
-        Assert.assertEquals(m.getRealCoordinates(gl1), new Point(45, 60));
-        Assert.assertEquals(m.getRealCoordinates(gl2), new Point(45, 90));
+	    GridManager m = new GridManager(45, 30, cellSize);
+	    Assert.assertEquals(m.getRealCoordinates(gl1), new Point(45, 60));
+	    Assert.assertEquals(m.getRealCoordinates(gl2), new Point(45, 90));
     }
 
 

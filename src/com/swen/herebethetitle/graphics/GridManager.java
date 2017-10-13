@@ -1,9 +1,8 @@
 package com.swen.herebethetitle.graphics;
 
-import java.awt.Canvas;
-import java.awt.Point;
-
 import com.swen.herebethetitle.util.GridLocation;
+
+import java.awt.*;
 
 /**A grid object is a representation of an area of evenly spaced cells over a given area.
  It provides methods for turning its own grid coordinates into real world pixel coordinates
@@ -12,53 +11,36 @@ import com.swen.herebethetitle.util.GridLocation;
  */
 public class GridManager extends Canvas{
 
-    private int cellSize;
-
-    //The horizontal and vertical gaps of this grid
-    private int vGap;
-    private int hGap;
-
-    private int x;
+	private static final int defaultCellSize = 64;
+	//The horizontal and vertical gaps of this grid
+	protected static int gap = 2;
+	private int cellSize;
+	private int x;
     private int y;
-
-    private static final int defaultCellSize = 64;
-
-    /**The Grid manager that will be used to render the game world.
-     *
-     * @return
-     * @author weirjosh
-     */
-    public static GridManager createDefaultManager(){
-        return new GridManager(0,0,defaultCellSize, 2,2);
-    }
 
     /**
      * Create a new grid manager
      * @param cellSize size (width & height) of each cell in the grid
-     * @param vGap vertical gap between each cell in the grid.
-     * @param hGap horizontal gap between each cell in the grid.
      * @author weirjosh
      */
-    public GridManager(int x, int y, int cellSize, int vGap, int hGap){
+    public GridManager(int x, int y, int cellSize) {
         this.cellSize = cellSize;
-        this.vGap = vGap;
-        this.hGap = hGap;
         this.x = x;
         this.y = y;
     }
 
-    /**
-     * Takes a GridLocation and returns real world coordinates
-     * @param location The grid location
-     * @return A pixel coordinate
-     * @author weirjosh
-     */
-    public Point getRealCoordinates(GridLocation location){
-        int x = this.x +(location.x * cellSize) + location.x*hGap;
-        int y = this.y +(location.y * cellSize) + location.y*vGap;
+	/**The Grid manager that will be used to render the game world.
+	 *
+	 * @return
+	 * @author weirjosh
+	 */
+	public static GridManager createDefaultManager() {
+		return new GridManager(0, 0, defaultCellSize);
+	}
 
-        return new Point(x,y);
-    }
+	public static void toggleBorder() {
+		gap = gap != 0 ? 0 : 2;
+	}
 
     //FIXME Probbly don't need this method
     /**
@@ -77,6 +59,20 @@ public class GridManager extends Canvas{
 
         //return new Point(x,y);
     }*/
+
+	/**
+	 * Takes a GridLocation and returns real world coordinates
+	 *
+	 * @param location The grid location
+	 * @return A pixel coordinate
+	 * @author weirjosh
+	 */
+	public Point getRealCoordinates(GridLocation location) {
+		int x = this.x + (location.x * cellSize) + location.x * gap;
+		int y = this.y + (location.y * cellSize) + location.y * gap;
+
+		return new Point(x, y);
+	}
 
     /**
      * Takes a grid location, and calculates a real world coordinate offset by an arbitrary amount of pixels
@@ -99,37 +95,12 @@ public class GridManager extends Canvas{
      * @return
      * @author weirjosh
      */
-    public GridLocation getGridLocation(Point p, Point offset){
-        int col = ((p.x - (offset.x-(cellSize/2)) - this.x) /(cellSize+hGap)) ;
-        int row = ((p.y - (offset.y-(cellSize/2)) - this.y) /(cellSize+vGap));
+    public GridLocation getGridLocation(Point p, Point offset) {
+	    int col = ((p.x - (offset.x - (cellSize / 2)) - this.x) / (cellSize + gap));
+	    int row = ((p.y - (offset.y - (cellSize / 2)) - this.y) / (cellSize+gap));
 
         return new GridLocation(col, row);
     }
-
-
-    /**
-     * @return Get the vertical gap of this GridManager.
-     * @author weirjosh
-     */
-    public int getvGap(){ return vGap; }
-
-    /**
-     * @return Get the horizontal gap of this GridManager.
-     * @author weirjosh
-     */
-    public int gethGap(){return hGap;}
-
-    /**
-     * set the vertical gap
-     * @author weirjosh
-     */
-    public void setvGap(int newVGap){vGap = newVGap;}
-
-    /**
-     * set the horizontal gap
-     * @author weirjosh
-     */
-    public void sethGap(int newHGap){hGap = newHGap;}
 
     /**
      * @return get the cell size of this GridManager
@@ -159,6 +130,4 @@ public class GridManager extends Canvas{
     public Point getOrigin(){
         return new Point(this.x, this.y);
     }
-
-
 }
