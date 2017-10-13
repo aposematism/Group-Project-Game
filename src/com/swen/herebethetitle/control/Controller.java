@@ -3,7 +3,6 @@ package com.swen.herebethetitle.control;
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.graphics.GameCanvas;
-import com.swen.herebethetitle.graphics.GridManager;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
@@ -87,6 +86,7 @@ public class Controller extends Application implements GameListener{
 	private Optional<PlayerMove> playerMove;
 	//AudioManager
 	private AudioManager audio;
+	private boolean settingsOpen = false;
 
 
 	/**
@@ -95,7 +95,6 @@ public class Controller extends Application implements GameListener{
 	public Controller() {
 		super();
 	}
-
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -112,7 +111,7 @@ public class Controller extends Application implements GameListener{
 				Scene testScene = new Scene(gameGUIRoot);
 				window.setScene(testScene);
 				window.show();
-				
+
 				Canvas testCanv = new Canvas(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 				gameGUIRoot.getChildren().add(testCanv);
 				testCanv.getGraphicsContext2D().setFill(Color.BLUE.darker());
@@ -132,21 +131,21 @@ public class Controller extends Application implements GameListener{
 				});
 				gameGUIRoot.requestFocus();
 				return;
-			}			
+			}
 		}
-		
-		
+
+
 		/*initialize the stage*/
 		window = s;
 		window.setTitle("Here Be The Title");
 		window.setResizable(false);
 
 		/*initialize the main menu*/
-		mainMenuLayout = initMainMenu();
+		initMainMenu();
 		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		mainMenu.getStylesheets().add("file:res/mainmenu.css");
 		window.setScene(mainMenu);
-		
+
 		/*initialize the audio manager*/
 		audio = new AudioManager();
 
@@ -157,7 +156,7 @@ public class Controller extends Application implements GameListener{
 	/**
 	 * Initializes the main menu.
 	 */
-	private BorderPane initMainMenu() {
+	private void initMainMenu() {
 		/*initialize layout*/
 		BorderPane layout = new BorderPane();
 		layout.setPadding(new Insets(60));
@@ -188,13 +187,16 @@ public class Controller extends Application implements GameListener{
 		//settings
 		Button settings = new Button("Settings");
 		settings.setId("settings");
-		settings.setOnAction(e -> initSettingsMenu(layout));
+		settings.setOnAction(e -> {
+			if (!settingsOpen) initSettingsMenu(layout);
+			else initMainMenu();
+		});
 		settings.setPrefSize(100, 20);
 		//add all the buttons
 		buttons.getChildren().addAll(newGame,loadGame,settings,quit);
 		layout.setCenter(buttons);
 
-		return layout;
+		mainMenuLayout = layout;
 	}
 
 	/**
@@ -226,6 +228,8 @@ public class Controller extends Application implements GameListener{
 		menuAndSettings.getChildren().add(settingsBox);
 
 		layout.setCenter(menuAndSettings);
+
+		settingsOpen = true;
 	}
 
 	private Optional<File> chooseFile() {
