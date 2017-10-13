@@ -214,7 +214,7 @@ public class Controller extends Application implements GameListener{
 				toggleBorder.setText("Turn Off Tile Borders");
 				toggleBorder.setId("turnOffTileBorders");
 			}
-			gameCanvas.toggleGrid();
+			GameCanvas.toggleGrid();
 		});
 
 		settingsBox.getChildren().add(toggleBorder);
