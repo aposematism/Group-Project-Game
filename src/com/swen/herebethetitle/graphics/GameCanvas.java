@@ -1,9 +1,6 @@
 package com.swen.herebethetitle.graphics;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Inventory;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Weapon;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -117,7 +114,7 @@ public class GameCanvas extends Canvas {
 
             //Armour entities will be placed along the bottom row, so increase
             //x value as going along.
-            armourSprites[i] = new Sprite(img, new GridLocation(i, 0));
+            armourSprites[i] = new Sprite(img, new GridLocation(0, -i));
         }
 
         Image weaponImage = null;
@@ -126,7 +123,14 @@ public class GameCanvas extends Canvas {
         }
         Sprite weaponSprite = new Sprite(weaponImage, new GridLocation(0,0));
 
-        hud.drawAll(weaponSprite, armourSprites, this);
+	    List<Sprite> itemSprites = new ArrayList<>();
+	    for (int i=0;i<inv.getItems().size();i++) {
+
+		    Image img = getImage(inv.getItems().get(i));
+		    itemSprites.add(new Sprite(img, new GridLocation(i, 0)));
+	    }
+
+	    hud.drawAll(weaponSprite, armourSprites, itemSprites, this);
     }
 
 

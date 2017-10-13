@@ -91,17 +91,6 @@ public class NpcController {
     }
     
     /**
-     * Starts a player movement interaction.
-     */
-    public void movePlayer(Player player, Tile dest) {
-        // Do not support moving into walls.
-        if (!dest.isPenetrable())
-            return;
-        
-        startInteraction(new PlayerMove(player, dest));
-    }
-    
-    /**
      * Starts an interaction if it is not already in progress.
      */
     protected void startInteraction(Interaction interaction) {

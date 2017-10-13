@@ -1,16 +1,22 @@
 package com.swen.herebethetitle.control;
 
-import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.audio.AudioManager;
+import com.swen.herebethetitle.entity.Item;
+import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
+import com.swen.herebethetitle.logic.Notifier;
+import com.swen.herebethetitle.logic.ai.Interaction;
+import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.parser.MapParser;
-import com.swen.herebethetitle.pathfinding.Graph;
-import com.swen.herebethetitle.pathfinding.Path;
+import com.swen.herebethetitle.parser.EntityParser;
+import com.swen.herebethetitle.parser.TerrainParser;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.animation.Animation;
@@ -28,7 +34,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -37,7 +43,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -85,7 +90,9 @@ public class Controller extends Application implements GameListener{
 	private GameContext game;
 	private GameLogic logic;
 	private boolean isPlaying;
-	private Tile playerDestination;
+	private Optional<PlayerMove> playerMove;
+	//AudioManager
+	private AudioManager audio;
 
 
 	/**
@@ -131,8 +138,7 @@ public class Controller extends Application implements GameListener{
 				});
 				gameGUIRoot.requestFocus();
 				return;
-			}
-			
+			}			
 		}
 		
 		
@@ -146,11 +152,15 @@ public class Controller extends Application implements GameListener{
 		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		mainMenu.getStylesheets().add("file:res/mainmenu.css");
 		window.setScene(mainMenu);
+		
 		/*initialize subordinate menus*/
 		settingsMenu = initSettingsMenu();
 		newGameMenu = initNewGameMenu();
 		loadGameMenu = initLoadGameMenu();
 		quitMenu = initQuitMenu();
+		
+		/*initialize the audio manager*/
+		audio = new AudioManager();
 
 		/*show the stage*/
 		window.show();
@@ -164,16 +174,8 @@ public class Controller extends Application implements GameListener{
 		BorderPane layout = new BorderPane();
 		layout.setPadding(new Insets(60));
 
-		/*add the title*/
-		//create title
-		Label titleLabel = new Label("Here Be The Title");
-		titleLabel.getStyleClass().add("text");
-		titleLabel.setId("title");
-		//add title
-		layout.setTop(titleLabel);
-
 		/*add buttons*/
-		VBox buttons = new VBox(10);
+		HBox buttons = new HBox(10);
 		buttons.setId("button-box");
 		//quit
 		Button quit = new Button("Quit");
@@ -213,7 +215,7 @@ public class Controller extends Application implements GameListener{
 		settings.setPrefSize(100, 20);
 		//add all the buttons
 		buttons.getChildren().addAll(newGame,loadGame,settings,quit);
-		layout.setLeft(buttons);
+		layout.setCenter(buttons);
 
 		return layout;
 	}
@@ -321,19 +323,28 @@ public class Controller extends Application implements GameListener{
 			initializeNewGame();
 			
 			//parse map
-			Region region;
+			Region r;
 			try {
-				region = new MapParser(mapFile).getRegion();
-			} catch (IOException ex) {
-				if (ex instanceof FileNotFoundException)
-					System.out.println("File failure: couldn't find file");
-				else
-					System.out.println("File failure: couldn't parse file");
+				TerrainParser terrainParser = new TerrainParser(mapFile);
+				r = new Region(terrainParser.getRA());
+
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 				return;
 			}
+			fileChooser.setTitle("Load an entity file");
+			File entityFile = fileChooser.showOpenDialog(window);
+			if (entityFile == null) {
+				System.out.println("File failure: entity file null");
+				return;
+			}
+			//parse map
+			EntityParser entityParser = new EntityParser(entityFile);
+			entityParser.parseEntitytoRegion(r);
 
 			//TODO Needs to be replaced by something better.
-			game = new GameContext(region);
+			game = new GameContext(r);
 			Player p = game.getPlayer();
 			//System.out.println(p.toString());
 			System.out.println(game.currentRegion.getLocation(p));
@@ -398,6 +409,9 @@ public class Controller extends Application implements GameListener{
 		gameGUIRoot.getChildren().add(gameCanvas);
 		//create new scene
 		Scene s = new Scene(gameGUIRoot);
+		
+		//set the audio manager to play the default town song
+		audio.setSong(AudioManager.SOUNDCODE_TOWNSONG);
 		return s;
 	}
 
@@ -424,7 +438,6 @@ public class Controller extends Application implements GameListener{
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
 			gameGUIRoot.requestFocus();
 			isPlaying = true;
-			playerDestination = game.getCurrentRegion().getPlayerTile();
 		}
 		updateTimeline.play();
 		isPlaying = true;
@@ -515,10 +528,12 @@ public class Controller extends Application implements GameListener{
 
 		/*build the new interaction for the player movement*/
 		try {
-			if (game.getCurrentRegion().get(mouseLocation).isPenetrable())
-				playerDestination = game.getCurrentRegion().get(mouseLocation);
+			if (game.getCurrentRegion().get(mouseLocation).isPenetrable()) {
+				Tile playerDestination = game.getCurrentRegion().get(mouseLocation);
+			    this.playerMove = Optional.of(new PlayerMove(game.getPlayer(), playerDestination));
+			}
 			//TODO this
-		}catch(Exception exc) {
+		}catch(IllegalArgumentException exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
 			return;
 		}
@@ -529,12 +544,13 @@ public class Controller extends Application implements GameListener{
 
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
 
-		Entity entity = tile.getTopEntity();
-		try {
-			entity.interact(game);
-			System.out.println("Entity clicked: " + entity.toString());
-		} catch (Exception exc) {
-		} //Do nothing
+		tile.getTopEntity().ifPresent(entity -> {
+			try {
+				entity.interact(game);
+				System.out.println("Entity clicked: " + entity.toString());
+			} catch (Exception exc) {
+			} //Do nothing
+		});
 	}
 
 	/**
@@ -544,19 +560,12 @@ public class Controller extends Application implements GameListener{
 	private void update() {
 		/*update game context via logic*/
 		logic.tick();
-
-		/*move the player*/
-		//find optimal path
-		if(game.getCurrentRegion().getPlayerTile()!=playerDestination) {
-			Graph graph = new Graph(game.getCurrentRegion(), game.getCurrentRegion().getPlayerTile(), playerDestination);
-			Optional<Path> optimalPath = graph.findPath();
-
-			if (optimalPath.isPresent()) {
-				// Move the player
-				if (!(game.getCurrentRegion().getPlayerTile() == playerDestination)) { //don't move if we're already there
-					game.getCurrentRegion().move(game.getPlayer(), optimalPath.get().next());
-				}
-			}
+		
+		try {
+		    if (this.playerMove.isPresent())
+		        this.playerMove.get().tick(game.getCurrentRegion(), new Notifier());
+		} catch (Interaction.InteractionOver e) {
+		    this.playerMove = Optional.empty();
 		}
 
 		/*redraw graphics*/
@@ -570,7 +579,9 @@ public class Controller extends Application implements GameListener{
 	public void initializeNewGame() {
 		game = new GameContext();
 		logic = new GameLogic(game);
+		playerMove = Optional.empty();
 		logic.addGameListener(this);
+		logic.addGameListener(audio);
 	}
 
 
