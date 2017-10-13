@@ -247,6 +247,23 @@ public class EntityParserTests {
 			fail(e.getMessage());
 		}
 	}
+	
+	/** 
+	 * Test floor generation
+	 * */
+	@Test
+	public void test_title_generation() {
+		try {
+			String line = "Title \"Quest\" \"title.png\"";
+			Scanner s = new Scanner(line);
+			Entity entity = EntityParser.parse(s);
+			assertTrue(entity instanceof Title);
+			parse(entity);
+		}
+		catch(InputMismatchException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Tests line
