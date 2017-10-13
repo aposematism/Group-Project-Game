@@ -29,7 +29,7 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>src</testSourceDirectory>
-    <resources outputDirectory="res">
+      <resources>
       <resource>
         <targetPath>res</targetPath>
         <directory>res/</directory>
