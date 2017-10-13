@@ -105,7 +105,10 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		playSound(SOUNDCODE_PLAYERDAMAGE1);
+		if (ThreadLocalRandom.current().nextBoolean())
+			playSound(AudioManager.SOUNDCODE_PLAYERDAMAGE1);
+		else
+			playSound(AudioManager.SOUNDCODE_PLAYERDAMAGE2);
 	}
 
 	@Override

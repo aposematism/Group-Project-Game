@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.graphics;
 
 import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -18,7 +19,7 @@ import java.util.List;
  * Terrain, entities and HUD included.
  * @author weirjosh
  */
-public class GameCanvas extends Canvas {
+public class GameCanvas extends Canvas implements GameListener {
 	private static final Image ERROR = new Image("file:res/error.png");
     private static boolean grid;
 
@@ -180,5 +181,93 @@ public class GameCanvas extends Canvas {
         }
         return imageMap.get(e.getSpritePath());
     }
+
+	@Override
+	public void onGameCompleted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerMoved(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerAttacked(Player player, NPC attacker) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerPickup(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPlayerDrop(Player player, Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCAttacked(NPC victim) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCKilled(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCDialogBegin(NPC npc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNPCDialogMessage(NPC npc, String message) {
+		createTextBox(message, npc);
+	}
+
+	@Override
+	public void onNPCDialogEnd(NPC npc) {
+		removeTextBox();
+	}
+
+	@Override
+	public void onDoorUnlocked(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorUnlockFailed(Static door, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorOpened(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoorClosed(Static door) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

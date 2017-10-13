@@ -61,7 +61,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * -player pathfinding
  *
  */
-public class Controller extends Application implements GameListener{
+public class Controller extends Application{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
@@ -290,6 +290,10 @@ public class Controller extends Application implements GameListener{
 		
 		//set the audio manager to play the default town song
 		audio.setSong(AudioManager.SOUNDCODE_TOWNSONG);
+		
+		//add the game canvas to the logic's listeners
+		logic.addGameListener(gameCanvas);
+		
 		return s;
 	}
 
@@ -429,112 +433,6 @@ public class Controller extends Application implements GameListener{
 		game = new GameContext();
 		logic = new GameLogic(game);
 		playerMove = Optional.empty();
-		logic.addGameListener(this);
 		logic.addGameListener(audio);
-	}
-
-
-	@Override
-	public void onPlayerMoved(Player player) {
-		// TODO Auto-generated method stub
-	}
-
-
-	@Override
-	public void onPlayerAttacked(Player player, NPC attacker) {
-		// TODO Auto-generated method stub
-		if (ThreadLocalRandom.current().nextBoolean())
-			audio.playSound(AudioManager.SOUNDCODE_PLAYERDAMAGE1);
-		else
-			audio.playSound(AudioManager.SOUNDCODE_PLAYERDAMAGE2);
-	}
-
-
-	@Override
-	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onPlayerPickup(Player player, Item item) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onPlayerDrop(Player player, Item item) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onNPCAttacked(NPC victim) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onNPCKilled(NPC npc) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onNPCDialogBegin(NPC npc) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onNPCDialogMessage(NPC npc, String message) {
-		gameCanvas.createTextBox(message, npc);
-
-	}
-
-
-	@Override
-	public void onNPCDialogEnd(NPC npc) {
-		gameCanvas.removeTextBox();
-
-	}
-
-
-	@Override
-	public void onDoorUnlocked(Static door) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onDoorUnlockFailed(Static door, String message) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void onDoorOpened(Static door) {
-		// TODO Auto-generated method stub
-		audio.playSound(AudioManager.SOUNDCODE_DOOR);
-	}
-
-
-	@Override
-	public void onDoorClosed(Static door) {
-		// TODO Auto-generated method stub
-		audio.playSound(AudioManager.SOUNDCODE_DOOR);
-	}
-
-	@Override
-	public void onGameCompleted() {
-		// TODO Auto-generated method stub
 	}
 }
