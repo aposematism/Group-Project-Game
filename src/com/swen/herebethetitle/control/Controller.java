@@ -1,10 +1,7 @@
 package com.swen.herebethetitle.control;
 
 import com.swen.herebethetitle.audio.AudioManager;
-import com.swen.herebethetitle.entity.Item;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Static;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameListener;
 import com.swen.herebethetitle.logic.GameLogic;
@@ -15,8 +12,7 @@ import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
-import com.swen.herebethetitle.parser.EntityParser;
-import com.swen.herebethetitle.parser.TerrainParser;
+import com.swen.herebethetitle.parser.MapParser;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.animation.Animation;
@@ -45,6 +41,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -78,9 +75,6 @@ public class Controller extends Application implements GameListener{
 	private Scene mainMenu;
 	private BorderPane mainMenuLayout;
 	private GridPane settingsMenu;
-	private GridPane newGameMenu;
-	private GridPane loadGameMenu;
-	private GridPane quitMenu;
 	//main game UI fields
 	private Scene worldGraphics;
 	private Timeline updateTimeline;
@@ -155,9 +149,6 @@ public class Controller extends Application implements GameListener{
 		
 		/*initialize subordinate menus*/
 		settingsMenu = initSettingsMenu();
-		newGameMenu = initNewGameMenu();
-		loadGameMenu = initLoadGameMenu();
-		quitMenu = initQuitMenu();
 		
 		/*initialize the audio manager*/
 		audio = new AudioManager();
@@ -181,35 +172,31 @@ public class Controller extends Application implements GameListener{
 		Button quit = new Button("Quit");
 		quit.getStyleClass().add("button");
 		quit.setId("quit");
-		quit.setOnAction(e->{
-			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
-			mainMenuLayout.setCenter(quitMenu);
-		});
+		quit.setOnAction(e -> System.exit(0));
 		quit.setPrefSize(100, 20);
 		//new game
 		Button newGame = new Button("New Game");
 		newGame.getStyleClass().add("button");
 		newGame.setId("newGame");
-		newGame.setOnAction(e->{
-			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
-			mainMenuLayout.setCenter(newGameMenu);
-		});
+		newGame.setOnAction(e ->
+				loadGame(new File("res/new_game.txt"))
+		);
 		newGame.setPrefSize(100, 20);
 		//load game
 		Button loadGame = new Button("Load Game");
 		loadGame.getStyleClass().add("button");
 		loadGame.setId("loadGame");
-		loadGame.setOnAction(e->{
-			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
-			mainMenuLayout.setCenter(loadGameMenu);
-		});
+		loadGame.setOnAction(e ->
+				chooseFile().ifPresent(file ->
+						loadGame(file)
+				));
 		loadGame.setPrefSize(100, 20);
 		//settings
 		Button settings = new Button("Settings");
 		settings.getStyleClass().add("button");
 		settings.setId("settings");
 		settings.setOnAction(e->{
-			mainMenuLayout.getChildren().removeAll(settingsMenu,newGameMenu,loadGameMenu,quitMenu);
+			mainMenuLayout.getChildren().removeAll(settingsMenu);
 			mainMenuLayout.setCenter(settingsMenu);
 		});
 		settings.setPrefSize(100, 20);
@@ -245,155 +232,50 @@ public class Controller extends Application implements GameListener{
 		return layout;
 	}
 
-	/**
-	 * Initializes the new game menu.
-	 * @return the new game menu
-	 */
-	private GridPane initNewGameMenu() {
-		/*initialize layout*/
-		GridPane layout = new GridPane();
-		GridPane.setConstraints(layout, 1, 4);
-		layout.setPadding(new Insets(10,0,0,60));
-		layout.setHgap(10);
-		layout.setVgap(10);
-
-		/*add the title*/
-		//create title
-		Label titleLabel = new Label("New Game");
-		titleLabel.setFont(new Font(30));
-		//add title
-		GridPane.setConstraints(titleLabel, 0, 0);
-		layout.getChildren().add(titleLabel);
-
-		/*create the button that generates the test region*/
-		Button play = new Button("Play");
-		play.setPrefSize(100, 20);
-		play.setOnAction(e->{
-			/*initialize the game*/
-			initializeNewGame();
-			worldGraphics = initGameGUI();
-			window.setScene(worldGraphics);
-			/*set the timer to regularly update*/
-			unpauseGame();
-		});
-		GridPane.setConstraints(play, 0, 1);
-		layout.getChildren().add(play);
-
-		return layout;
+	private Optional<File> chooseFile() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Load a map file");
+		fileChooser.setInitialDirectory(new File("res/"));
+		fileChooser.getExtensionFilters().addAll(
+				new ExtensionFilter("Text Files", "*.txt"),
+				new ExtensionFilter("All Files", "*.*"));
+		File mapFile = fileChooser.showOpenDialog(window);
+		if (mapFile == null) {
+			System.out.println("File failure: map file null");
+			return Optional.empty();
+		}
+		return Optional.of(mapFile);
 	}
 
 	/**
 	 * Initializes the game loading menu.
+	 *
 	 * @return the load game menu
 	 */
-	private GridPane initLoadGameMenu() {
-		/*initialize layout*/
-		GridPane layout = new GridPane();
-		GridPane.setConstraints(layout, 1, 4);
-		layout.setPadding(new Insets(10,0,0,60));
-		layout.setHgap(10);
-		layout.setVgap(10);
+	private void loadGame(File file) {
+		//initialize game
+		initializeNewGame();
 
-		/*add the title*/
-		//create title
-		Label titleLabel = new Label("Load Game");
-		titleLabel.setFont(new Font(30));
-		//add title
-		GridPane.setConstraints(titleLabel, 0, 0);
-		layout.getChildren().add(titleLabel);
+		//parse map
+		Region r;
+		try {
+			r = new MapParser(file).getRegion();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
 
-		/*add widgety stuff to change settings TODO*/
-		//here should be Jordan's loading methods integrated to a GUI
-		Button loadGame = new Button("Load Game");
-		loadGame.setOnAction(e->{
-			//display a file chooser
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("Load a map file");
-			fileChooser.setInitialDirectory(new File("res/"));
-			fileChooser.getExtensionFilters().addAll(
-					new ExtensionFilter("Text Files", "*.txt"),
-					new ExtensionFilter("All Files", "*.*"));
-			File mapFile = fileChooser.showOpenDialog(window);
-			if (mapFile == null) {
-				System.out.println("File failure: map file null");
-				return;
-			}
-			
-			//initialize game
-			initializeNewGame();
-			
-			//parse map
-			Region r;
-			try {
-				TerrainParser terrainParser = new TerrainParser(mapFile);
-				r = new Region(terrainParser.getRA());
+		//TODO Needs to be replaced by something better.
+		game = new GameContext(r);
+		Player p = game.getPlayer();
+		//System.out.println(p.toString());
+		System.out.println(game.currentRegion.getLocation(p));
 
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				return;
-			}
-			fileChooser.setTitle("Load an entity file");
-			File entityFile = fileChooser.showOpenDialog(window);
-			if (entityFile == null) {
-				System.out.println("File failure: entity file null");
-				return;
-			}
-			//parse map
-			EntityParser entityParser = new EntityParser(entityFile);
-			entityParser.parseEntitytoRegion(r);
-
-			//TODO Needs to be replaced by something better.
-			game = new GameContext(r);
-			Player p = game.getPlayer();
-			//System.out.println(p.toString());
-			System.out.println(game.currentRegion.getLocation(p));
-			
-			//play the game
-			worldGraphics = initGameGUI();
-			window.setScene(worldGraphics);
-			unpauseGame();
-			
-		});
-		GridPane.setConstraints(loadGame, 0, 1);
-		layout.getChildren().add(loadGame);
-		return layout;
-	}
-
-	/**
-	 * Initializes the quit menu.
-	 * @return the settings menu
-	 */
-	private GridPane initQuitMenu() {
-		/*initialize layout*/
-		GridPane layout = new GridPane();
-		GridPane.setConstraints(layout, 1, 4);
-		layout.setPadding(new Insets(10,0,0,60));
-		layout.setHgap(10);
-		layout.setVgap(10);
-
-		/*add the title*/
-		//create title
-		Label titleLabel = new Label("Quit");
-		titleLabel.setFont(new Font(30));
-		//add title
-		GridPane.setConstraints(titleLabel, 0, 0);
-		layout.getChildren().add(titleLabel);
-
-		/*add the actual menu stuff*/
-		//create & add label asking user if they want to quit
-		Label areYouSure = new Label("Are you sure you want to quit?");
-		GridPane.setConstraints(areYouSure, 0, 1);
-		layout.getChildren().add(areYouSure);
-
-		//create quit button
-		Button quit = new Button("Yes");
-		quit.setPrefSize(100, 20);
-		quit.setOnAction(e->System.exit(0));
-		GridPane.setConstraints(quit, 0, 2);
-		layout.getChildren().add(quit);
-
-		return layout;
+		//play the game
+		worldGraphics = initGameGUI();
+		window.setScene(worldGraphics);
+		unpauseGame();
 	}
 
 	/**
@@ -454,51 +336,27 @@ public class Controller extends Application implements GameListener{
 		System.out.println("Key pressed: " + e.getCode());
 
 		if(e.getCode()==KeyCode.ESCAPE) {
-			System.out.println("Escape pressed");	//debug code
-			if(isPlaying) {
-				pauseGame();
-			}else {
-				unpauseGame();
-			}
+			if (isPlaying) pauseGame();
+			else unpauseGame();
 		}
 
 		/*If paused, don't handle events*/
-		if(!isPlaying) {
-			return;
-		}
+		if (!isPlaying) return;
 
 		/*movement - may want to implement pathfinding mouse-based movement instead*/
-		if(e.getCode()==KeyCode.W) {
-			//move north
-			try {
-				logic.movePlayer(Direction.Up);
-			} catch (InvalidDestination e1) {
-				e1.printStackTrace();
+		try {
+			switch (e.getCode()) {
+				case W:
+					logic.movePlayer(Direction.Up);
+				case A:
+					logic.movePlayer(Direction.Left);
+				case S:
+					logic.movePlayer(Direction.Down);
+				case D:
+					logic.movePlayer(Direction.Right);
 			}
-		}
-		if(e.getCode()==KeyCode.A) {
-			//move west
-			try {
-				logic.movePlayer(Direction.Left);
-			} catch (InvalidDestination e1) {
-				e1.printStackTrace();
-			}
-		}
-		if(e.getCode()==KeyCode.S) {
-			//move south
-			try {
-				logic.movePlayer(Direction.Down);
-			} catch (InvalidDestination e1) {
-				e1.printStackTrace();
-			}
-		}
-		if(e.getCode()==KeyCode.D) {
-			//move east
-			try {
-				logic.movePlayer(Direction.Right);
-			} catch (InvalidDestination e1) {
-				e1.printStackTrace();
-			}
+		} catch (InvalidDestination er) {
+			er.printStackTrace();
 		}
 	}
 
@@ -508,11 +366,10 @@ public class Controller extends Application implements GameListener{
 	 */
 	private void handleMousePress(MouseEvent e) {
 		System.out.println("Mouse pressed: " + e.getX() + "," + e.getY());
-		if(e.isSecondaryButtonDown()) {
+		if (e.isSecondaryButtonDown())
 			handleMousePressSecondary(e);
-		}else {
+		else
 			handleMousePressPrimary(e);
-		}
 	}
 
 	/**
@@ -544,13 +401,9 @@ public class Controller extends Application implements GameListener{
 
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
 
-		tile.getTopEntity().ifPresent(entity -> {
-			try {
-				entity.interact(game);
-				System.out.println("Entity clicked: " + entity.toString());
-			} catch (Exception exc) {
-			} //Do nothing
-		});
+		Entity entity = tile.getTopEntity();
+		entity.interact(game);
+		System.out.println("Entity clicked: " + entity.toString());
 	}
 
 	/**
@@ -594,7 +447,10 @@ public class Controller extends Application implements GameListener{
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
 		// TODO Auto-generated method stub
-
+		if (ThreadLocalRandom.current().nextBoolean())
+			audio.playSound(AudioManager.SOUNDCODE_PLAYERDAMAGE1);
+		else
+			audio.playSound(AudioManager.SOUNDCODE_PLAYERDAMAGE2);
 	}
 
 
@@ -671,14 +527,14 @@ public class Controller extends Application implements GameListener{
 	@Override
 	public void onDoorOpened(Static door) {
 		// TODO Auto-generated method stub
-
+		audio.playSound(AudioManager.SOUNDCODE_DOOR);
 	}
 
 
 	@Override
 	public void onDoorClosed(Static door) {
 		// TODO Auto-generated method stub
-
+		audio.playSound(AudioManager.SOUNDCODE_DOOR);
 	}
 
 	@Override
