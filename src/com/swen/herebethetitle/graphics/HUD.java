@@ -102,9 +102,9 @@ public class HUD {
      * Adds a text box to the HUD, with the icon displayed in the
      * top right corner and the message displayed
      */
-    public void createTextBox(String msg, Image icon){
+    public void createTextBox(String msg, Image icon, String name){
         textBox = Optional.of(new TextBox(icon,
-                new GridLocation(0,0), msg, textBoxWidth, textBoxHeight));
+                new GridLocation(0,0), msg, textBoxWidth, textBoxHeight, name));
     }
 
     /**
