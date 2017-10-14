@@ -45,6 +45,7 @@ public final class FriendlyStrategy extends NPCBehavior {
 	 * from side to side until they have nothing left to say
 	 */
 	public void ping(GameContext context, NPC npc) {
+		//FIXME - ordinal will return -1 some (all?) the time, causes outofbounds erro
 		if(canTalkTo()){
 			int ordinal = npc.getDirection().ordinal();
 
