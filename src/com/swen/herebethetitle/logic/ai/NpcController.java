@@ -44,7 +44,7 @@ public class NpcController {
         this.tickAccumulator += 1;
         
         // Skip until we've hit our tick divider.
-        if (this.tickAccumulator != TICK_DIVIDER)
+        if (this.tickAccumulator < TICK_DIVIDER)
             return;
 
         progressInteractions(context, notifier);
