@@ -52,7 +52,8 @@ public final class FriendlyStrategy extends NPCBehavior {
 			if(ThreadLocalRandom.current().nextBoolean())
 				ordinal = (ordinal+1) % Direction.values().length;
 			else
-				ordinal = (ordinal-1) % Direction.values().length;
+				//TODO This causes index -1 problems
+				//ordinal = (ordinal-1) % Direction.values().length;
 
 			npc.setDirection(Direction.values()[ordinal]);
 		}

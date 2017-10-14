@@ -190,7 +190,7 @@ public class GameLogic {
      *             impenetrable obstacle in the way.
      */
     public void movePlayer(Direction direction) throws InvalidDestination {
-        GridLocation currentLocation = getCurrentRegion().getLocation(context.getPlayer());
+        GridLocation currentLocation = getCurrentRegion().getLocation(getPlayer());
         GridLocation newLocation = currentLocation.adjacent(direction);
 
         if (!getCurrentRegion().isWithin(newLocation))
