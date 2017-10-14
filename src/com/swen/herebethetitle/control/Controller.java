@@ -204,15 +204,15 @@ public class Controller extends Application{
 	private void initSettingsMenu(BorderPane layout) {
 		HBox settingsBox = new HBox();
 
-		Button toggleBorder = new Button("Turn Off Tile Borders");
-		toggleBorder.setId("turnOffTileBorders");
+		Button toggleBorder = new Button("Turn On Tile Borders");
+		toggleBorder.setId("turnOnTileBorders");
 		toggleBorder.setOnAction(e -> {
-			if (toggleBorder.getText().equals("Turn Off Tile Borders")) {
-				toggleBorder.setText("Turn On Tile Borders");
-				toggleBorder.setId("turnOnTileBorders");
-			} else {
+			if (toggleBorder.getText().equals("Turn On Tile Borders")) {
 				toggleBorder.setText("Turn Off Tile Borders");
 				toggleBorder.setId("turnOffTileBorders");
+			} else {
+				toggleBorder.setText("Turn On Tile Borders");
+				toggleBorder.setId("turnOnTileBorders");
 			}
 			GameCanvas.toggleGrid();
 		});

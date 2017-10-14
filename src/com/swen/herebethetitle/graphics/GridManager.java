@@ -13,7 +13,8 @@ public class GridManager extends Canvas{
 
 	private static final int defaultCellSize = 64;
 	//The horizontal and vertical gaps of this grid
-	protected int gap = 2;
+    public static final int GAPSIZE = 2;
+	protected int gap = 0;
 	private int cellSize;
 	private int x;
     private int y;
@@ -39,7 +40,7 @@ public class GridManager extends Canvas{
 	}
 
 	public void toggleBorder() {
-		gap = gap != 0 ? 0 : 2;
+		gap = gap != 0 ? 0 : GAPSIZE;
 	}
 
     //FIXME Probbly don't need this method

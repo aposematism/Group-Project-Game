@@ -75,7 +75,11 @@ public class GameCanvas extends Canvas implements GameListener {
      * Toggles the gap between cells on or off.
      */
     public static void toggleGrid(){
-        grid = true;
+        if(grid){
+            grid = false;
+        }else{
+            grid = true;
+        }
     }
 
     /**
