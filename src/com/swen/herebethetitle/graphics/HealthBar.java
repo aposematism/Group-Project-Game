@@ -14,7 +14,6 @@ public class HealthBar {
 
     public void draw(int x, int y, double health, GraphicsContext gc, int width, int height){
         double t = (health - Mob.NO_HEALTH)/(Mob.FULL_HEALTH-Mob.NO_HEALTH);
-        System.out.println(t);
         double newWidth = (x + t*((x+width)-x)) - x;
 
         gc.setFill(Color.DARKGREY);
