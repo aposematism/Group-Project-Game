@@ -251,21 +251,18 @@ public class Controller extends Application{
 	 * @return the load game menu
 	 */
 	private void loadGame(File file) {
-		//initialize game
-		initializeNewGame();
 
 		//parse map
 		Region r;
 		try {
 			r = new MapParser(file).getRegion();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return;
 		}
 
 		//TODO Needs to be replaced by something better.
-		game = new GameContext(r);
+		initializeNewGame(r);
 		Player p = game.getPlayer();
 		//System.out.println(p.toString());
 		System.out.println(game.currentRegion.getLocation(p));
@@ -441,8 +438,8 @@ public class Controller extends Application{
 	/**
 	 * Creates a new game in the default world.
 	 */
-	public void initializeNewGame() {
-		game = new GameContext();
+	public void initializeNewGame(Region r) {
+		game = new GameContext(r);
 		logic = new GameLogic(game);
 		playerMove = Optional.empty();
 		logic.addGameListener(audio);
