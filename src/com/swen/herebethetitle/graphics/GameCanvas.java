@@ -196,7 +196,7 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		// TODO Auto-generated method stub
+		hud.updateHealth(player.getHealth());
 		
 	}
 

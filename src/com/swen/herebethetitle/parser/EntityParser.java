@@ -3,6 +3,7 @@ package com.swen.herebethetitle.parser;
 import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.util.Direction;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -263,5 +264,9 @@ public class EntityParser {
 			items.add(parseInventoryItem(s));
 
 		return new Player(name, sprite, health, wallet, direction, items.toArray(new Item[items.size()]));
+	}
+
+	public class SyntaxError extends IOException{
+
 	}
 }

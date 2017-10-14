@@ -38,7 +38,7 @@ public class TestWindow extends Application {
         window.setTitle("HUD test");
         StackPane root = new StackPane();
 
-        Canvas c = new Canvas(350, 350);
+        Canvas c = new Canvas(500, 500);
         GraphicsContext gc = c.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
         gc.strokeRect(0,0,c.getWidth(),c.getHeight());

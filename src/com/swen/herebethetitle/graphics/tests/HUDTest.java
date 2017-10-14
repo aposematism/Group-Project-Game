@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.graphics.tests;
 
+import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.graphics.HUD;
 import com.swen.herebethetitle.graphics.Sprite;
 import com.swen.herebethetitle.util.GridLocation;
@@ -101,6 +102,33 @@ public class HUDTest extends TestWindow {
                         new Image("file:res/mob/wise old man.png"));
                 hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
                 GraphicsContext gc = c.getGraphicsContext2D();
+            }
+        };
+    }
+
+    @Test
+    @Ignore
+    public void HalfHealth() {
+        testCode = new Operation() {
+            public void run(Canvas c) {
+                Sprite [] armourSprites = defaultArmourSprites();
+                Sprite weapon = new Sprite(null, new GridLocation(0,0));
+                HUD hud = new HUD(c);
+                hud.updateHealth(Mob.FULL_HEALTH/2);
+                hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
+            }
+        };
+    }
+    @Test
+    @Ignore
+    public void QuarterHealth() {
+        testCode = new Operation() {
+            public void run(Canvas c) {
+                Sprite [] armourSprites = defaultArmourSprites();
+                Sprite weapon = new Sprite(null, new GridLocation(0,0));
+                HUD hud = new HUD(c);
+                hud.updateHealth(Mob.FULL_HEALTH/4);
+                hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
             }
         };
     }

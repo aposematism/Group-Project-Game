@@ -1,12 +1,12 @@
 package com.swen.herebethetitle.graphics;
 
+import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-import javax.xml.soap.Text;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Optional;
@@ -28,8 +28,14 @@ public class HUD {
 
     private Optional<TextBox> textBox = Optional.empty();
 
-    private final int boxWidth;
-    private final int boxHeight;
+    private final int textBoxWidth;
+    private final int textBoxHeight;
+
+    private final int healthBarWidth;
+    private final int healthBarHeight;
+    private final Point healthBarPos;
+    private double health;
+    private HealthBar healthBar;
 
     private final int GAP = 10;
 
@@ -41,8 +47,15 @@ public class HUD {
     public HUD(Canvas c){
         createGridLayouts(c);
 
-        boxWidth = (int)(3*c.getWidth()/5);
-        boxHeight = (int)(c.getHeight()/4);
+        textBoxWidth = (int)(3*c.getWidth()/5);
+        textBoxHeight = (int)(c.getHeight()/4);
+
+        healthBarWidth = (int)(c.getWidth()/4);
+        healthBarHeight = slotSize/2;
+        healthBarPos = new Point(slotSize/2, slotSize/2);
+        health = Mob.FULL_HEALTH;
+        healthBar = new HealthBar();
+
 
     }
 
@@ -82,16 +95,39 @@ public class HUD {
 	    }
 
 	    textBox.ifPresent(textBox1 -> textBox1.draw(gc, textBoxGrid));
+        drawHealthMeter(gc);
     }
 
+    /**
+     * Adds a text box to the HUD, with the icon displayed in the
+     * top right corner and the message displayed
+     */
     public void createTextBox(String msg, Image icon){
         textBox = Optional.of(new TextBox(icon,
-                new GridLocation(0,0), msg, boxWidth, boxHeight));
+                new GridLocation(0,0), msg, textBoxWidth, textBoxHeight));
     }
 
+    /**
+     * Remove any text boxes that might be present in this HUD.
+     */
     public void removeTextBox(){
         textBox = Optional.empty();
     }
+
+
+    /**
+     * Updates the health meter for the health bar.
+     */
+    public void updateHealth(double health){
+        this.health = health;
+    }
+
+
+    private void drawHealthMeter(GraphicsContext gc){
+        healthBar.draw(healthBarPos.x, healthBarPos.y,
+                health, gc, healthBarWidth, healthBarHeight);
+    }
+
 
     private void createGridLayouts(Canvas c){
         weaponGrid = new GridManager(slotSize/2,
