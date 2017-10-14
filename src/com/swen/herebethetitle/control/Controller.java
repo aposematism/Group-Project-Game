@@ -25,6 +25,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -204,6 +205,7 @@ public class Controller extends Application{
 	private void initSettingsMenu(BorderPane layout) {
 		HBox settingsBox = new HBox();
 
+		/*toggle grid button*/
 		Button toggleBorder = new Button("Turn On Tile Borders");
 		toggleBorder.setId("turnOnTileBorders");
 		toggleBorder.setOnAction(e -> {
@@ -216,8 +218,15 @@ public class Controller extends Application{
 			}
 			GameCanvas.toggleGrid();
 		});
-
 		settingsBox.getChildren().add(toggleBorder);
+		
+		/*music volume*/
+		 Slider musicSlider = new Slider(0, 1, 0.5);
+//		 musicSlider.setShowTickMarks(true);
+//		 musicSlider.setShowTickLabels(true);
+		 musicSlider.setMajorTickUnit(0.25f);
+		 musicSlider.setBlockIncrement(0.1f);
+		 settingsBox.getChildren().add(musicSlider);
 
 		VBox menuAndSettings = new VBox();
 		menuAndSettings.setId("menuBox");
