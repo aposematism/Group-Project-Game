@@ -400,18 +400,19 @@ public class Controller extends Application{
 	}
 
 	private void handleMousePressPrimary(MouseEvent e) {
-		System.out.println("Primary mouse press");
+		//System.out.println("Primary mouse press");
+
+		System.out.println("CONTROLLER: "+game.toString());
+		System.out.println("GRAPHICS: "+gameCanvas.context);
 
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
 		Entity entity = tile.getTopEntity();
-		System.out.println("CONTROLLER: "+game.toString());
-		System.out.println("GRAPHICS: "+gameCanvas.context);
 		try {
 			logic.interact(entity);
 		} catch (EntityOutOfRange ex) {
-			System.out.println("Can't interact");
+			//System.out.println("Can't interact");
 		}
-		System.out.println("Entity clicked: " + entity.toString());
+		//System.out.println("Entity clicked: " + entity.toString());
 	}
 
 	/**
