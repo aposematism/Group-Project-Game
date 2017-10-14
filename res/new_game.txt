@@ -11,7 +11,7 @@ d = Static "Door" "static/cobble master.png" Door 70 LOCKED
 _ = Static "Void" "blank.png"
 x = Floor "Grass" "static/grass.png" + NPC "Fred" "mob/wizard.png" 50.0 Down Friendly { "Great weather today!" "Did you hear about the beast?" "It's called THE BEAST" }
 p = Floor "Grass" "static/grass.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple.png" 5.0 }
-z = Floor "Grass" "static/grass.png" + NPC "Zombie" "cobble snow.png" 50.0 Down Monster 50.0
+z = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 50.0
 s = Floor "Grass" "static/grass.png" + Weapon "Fire Staff" "item/staff red.png" false 10.0
 m = Floor "Grass" "static/grass.png" + Potion "Steak" "item/meat.png" 10
 b = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25
@@ -21,11 +21,13 @@ r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.p
 2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 2.png"
 3 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 3.png"
 4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 4.png"
+0 = Floor "Grass" "static/grass.png" + NPC "Dat boi" "mob/wizard.png" 50.0 Down Friendly { "NAOISE DOMHALL" "HELLO" "I AM MAN" "YES" "NO PLEASE" }
+9 = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 20.0
 
 map:
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w......w................................................w
-w......w...p..............13......................13....w
+w......w...p...9..........13........0.............13....w
 w......w...........x......24....s.............k...24....w
 w......w..13............................................w
 wwwwwwdw..24...wwwwwwwwww.........wwwwwwwwwww.....wwwwwww
