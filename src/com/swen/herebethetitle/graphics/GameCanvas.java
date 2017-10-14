@@ -6,9 +6,13 @@ import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
+import com.swen.herebethetitle.util.Direction;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.*;
@@ -184,6 +188,20 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	        imageMap.put(e.getSpritePath(), image);
         }
+
+//        if(e instanceof Mob){
+//            Mob mob = (Mob)e;
+//            Direction d = mob.getDirection();
+//
+//            ImageView iv = new ImageView(imageMap.get(mob.getSpritePath()));
+//            SnapshotParameters params = new SnapshotParameters();
+//            params.setFill(Color.TRANSPARENT);
+//            iv.setRotate(d.ordinal()*90);
+//            //System.out.println(iv.getRotate());
+//            return iv.snapshot(params, null);
+//        }
+
+
         return imageMap.get(e.getSpritePath());
     }
 

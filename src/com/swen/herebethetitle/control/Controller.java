@@ -43,12 +43,9 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-
-import javax.swing.GroupLayout.Alignment;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -369,10 +366,12 @@ public class Controller extends Application{
 	 * Unpauses the game.
 	 */
 	private void unpauseGame() {
-		if(updateTimeline==null) {
+		if(updateTimeline ==null) {
+
 			updateTimeline = new Timeline(new KeyFrame(
 					Duration.millis(6000.0 / FRAMES_PER_SECOND),
 					ae -> update()));
+
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
 			gameGUIRoot.requestFocus();
 			isPlaying = true;

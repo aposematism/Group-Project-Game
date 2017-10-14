@@ -17,11 +17,11 @@ public class Discussion implements Interaction {
     /**
      * How many words the average reader can read.
      */
-    public static final double AVERAGE_HUMAN_READING_SPEED_WPM = 200;
+    public static final double AVERAGE_HUMAN_READING_SPEED_WPM = 135;
     /**
      * An error amount to account for slow readers.
      */
-    public static final double SLOW_HUMAN_READING_ERROR_WPM = 50;
+    public static final double SLOW_HUMAN_READING_ERROR_WPM = 40;
     /**
      * How many words per minute we should display our dialog for.
      */
