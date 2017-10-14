@@ -1,12 +1,14 @@
 package com.swen.herebethetitle.control;
 
 import com.swen.herebethetitle.audio.AudioManager;
-import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.logic.ai.Interaction;
 import com.swen.herebethetitle.logic.ai.PlayerMove;
+import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
@@ -404,7 +406,11 @@ public class Controller extends Application{
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
 
 		Entity entity = tile.getTopEntity();
-		entity.interact(game);
+		try {
+			logic.interact(entity);
+		} catch (EntityOutOfRange ex) {
+			System.out.println("Can't interact");
+		}
 		System.out.println("Entity clicked: " + entity.toString());
 	}
 
