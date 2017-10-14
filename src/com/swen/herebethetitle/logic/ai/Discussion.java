@@ -17,15 +17,15 @@ public class Discussion implements Interaction {
     /**
      * How many words the average reader can read.
      */
-    public static final int AVERAGE_HUMAN_READING_SPEED_WPM = 200;
+    public static final double AVERAGE_HUMAN_READING_SPEED_WPM = 200;
     /**
      * An error amount to account for slow readers.
      */
-    public static final int SLOW_HUMAN_READING_ERROR_WPM = 50;
+    public static final double SLOW_HUMAN_READING_ERROR_WPM = 50;
     /**
      * How many words per minute we should display our dialog for.
      */
-    public static final int DIALOG_SPEED_WPM = AVERAGE_HUMAN_READING_SPEED_WPM + SLOW_HUMAN_READING_ERROR_WPM;
+    public static final double DIALOG_SPEED_WPM = AVERAGE_HUMAN_READING_SPEED_WPM + SLOW_HUMAN_READING_ERROR_WPM;
     /**
      * The NPC that is speaking.
      */
@@ -65,7 +65,7 @@ public class Discussion implements Interaction {
         }
 
         if (this.nextMessageAt.isPresent() &&
-                this.nextMessageAt.get().isAfter(Instant.now()))
+                this.nextMessageAt.get().isBefore(Instant.now()))
             sayNext(notifier);
     }
 
@@ -133,15 +133,15 @@ public class Discussion implements Interaction {
 		 * Estimate the time it takes for a human to read text.
 		 */
 		protected static Duration EstimateReadingDuration(String text) {
-			double minutesPerWord = 1.0 / ((double) DIALOG_SPEED_WPM);
+			double minutesPerWord = 1.0 / DIALOG_SPEED_WPM;
 			double secondsPerWord = minutesPerWord * 60.0;
 			double millisPerWord = secondsPerWord * 1000.0;
 
 			int wordCount = text.split(" ").length;
-			double millis = millisPerWord * wordCount;
+            double millis = millisPerWord * wordCount;
 			long millisRounded = Math.round(millis);
-			return Duration.ofMillis(millisRounded);
-		}
+            return Duration.ofMillis(millisRounded);
+        }
 	}
 
 }
