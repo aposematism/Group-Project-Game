@@ -1,15 +1,19 @@
 package com.swen.herebethetitle.logic.test;
 
-import com.swen.herebethetitle.entity.Mob;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
-import com.swen.herebethetitle.util.GridLocation;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import com.swen.herebethetitle.entity.Mob;
+import com.swen.herebethetitle.entity.NPC;
+import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.logic.ai.NpcController;
+import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
+import com.swen.herebethetitle.util.GridLocation;
 
 public class CombatTests extends BaseTest {
     @Test
@@ -17,13 +21,13 @@ public class CombatTests extends BaseTest {
         NPC enemy = placeEnemy(new GridLocation(3, 3));
         
         assertEquals(new GridLocation(3, 3), region.getLocation(enemy));
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         assertEquals(new GridLocation(2, 2), region.getLocation(enemy));
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
     }
     
@@ -36,13 +40,13 @@ public class CombatTests extends BaseTest {
         assertEquals(new GridLocation(2, 2), region.getLocation(enemy));
         assertEquals(previousHealth, player.getHealth(), 0.1);
 
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         assertEquals(new GridLocation(1, 1), region.getLocation(enemy));
         if (!(player.getHealth() < previousHealth))
             fail("npc should have attacked enemy after update");
         previousHealth = player.getHealth();
 
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         if (!(player.getHealth() < previousHealth))
             fail("npc should have attacked enemy after update");
         previousHealth = player.getHealth();
@@ -54,7 +58,7 @@ public class CombatTests extends BaseTest {
         NPC enemy = placeEnemy(new GridLocation(9, 9));
         
         assertEquals(new GridLocation(9, 9), region.getLocation(enemy));
-        logic.tick();
+        tick(NpcController.TICK_DIVIDER);
         assertEquals(new GridLocation(9, 9), region.getLocation(enemy));
     }
     
@@ -104,5 +108,9 @@ public class CombatTests extends BaseTest {
         }
         
         assertTrue(enemy.isDead());
+    }
+    
+    private void tick() {
+        
     }
 }

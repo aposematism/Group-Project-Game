@@ -20,7 +20,7 @@ public class NpcController {
     /**
      * How many game ticks we take between updating NPCs.
      */
-    private static final int TICK_DIVIDER = 4;
+    public static final int TICK_DIVIDER = 4;
     
     /**
      * A list of all interactions that are currently in progress.
