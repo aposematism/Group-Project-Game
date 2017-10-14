@@ -270,7 +270,6 @@ public class Controller extends Application{
 		game = new GameContext(r);
 		Player p = game.getPlayer();
 		//System.out.println(p.toString());
-		System.out.println(game.currentRegion.getLocation(p));
 
 		//play the game
 		worldGraphics = initGameGUI();
@@ -404,8 +403,9 @@ public class Controller extends Application{
 		System.out.println("Primary mouse press");
 
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
-
 		Entity entity = tile.getTopEntity();
+		System.out.println("CONTROLLER: "+game.toString());
+		System.out.println("GRAPHICS: "+gameCanvas.context);
 		try {
 			logic.interact(entity);
 		} catch (EntityOutOfRange ex) {

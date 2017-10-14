@@ -14,7 +14,7 @@ public class TextBox extends Sprite {
     protected final int WIDTH;
     protected final int HEIGHT;
 
-    protected final double FONTSIZE = 14;
+    protected final double FONTSIZE = 20;
     protected final String FONT = "Courier New";
     protected final int MAX_CHARS;
 

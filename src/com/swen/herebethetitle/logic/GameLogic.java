@@ -156,8 +156,10 @@ public class GameLogic {
                 startDiscussion(npc);
             else
                 ; // no interactions possible.
-        } else
-	        entity.interact(context, notifier);
+        } else {
+            System.out.println("LOGIC: "+context.toString());
+            entity.interact(context, notifier);
+        }
     }
 
     /***

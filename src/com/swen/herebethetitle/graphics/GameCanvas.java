@@ -23,7 +23,7 @@ public class GameCanvas extends Canvas implements GameListener {
 	private static final Image ERROR = new Image("file:res/error.png");
     private static boolean grid;
 
-	private GameContext context;
+	public GameContext context;
 
     private Map<String, Image> imageMap = new HashMap<>();
 

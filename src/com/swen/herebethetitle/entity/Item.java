@@ -21,10 +21,12 @@ public abstract class Item extends Entity {
 	 */
 	@Override
 	public void interact(GameContext context, Notifier notifier) {
-		if(context.currentRegion.getPlayerTile().contains(this))
+		if(context.currentRegion.getPlayerTile().contains(this)) {
 			pickup(context);
-		else if(context.player.possesses(this))
+		}
+		else if(context.player.possesses(this)) {
 			use(context);
+		}
 	}
 
 	/**
