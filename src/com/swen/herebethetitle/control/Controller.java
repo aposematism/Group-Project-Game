@@ -52,12 +52,10 @@ import java.util.Optional;
 /*
  * TODO
  *
- * -audio functionality
- *
  * Immediately:
  * -input events for interactions and attacking
  * -Add in subordinate menu functionality for load game & settings
- * -player pathfinding
+ * -pause menu
  *
  */
 public class Controller extends Application{
@@ -406,12 +404,13 @@ public class Controller extends Application{
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
 
 		Entity entity = tile.getTopEntity();
+		System.out.println("Entity clicked: " + entity.toString());
 		try {
 			logic.interact(entity);
+			System.out.println("Interacted");
 		} catch (EntityOutOfRange ex) {
 			System.out.println("Can't interact");
 		}
-		System.out.println("Entity clicked: " + entity.toString());
 	}
 
 	/**
