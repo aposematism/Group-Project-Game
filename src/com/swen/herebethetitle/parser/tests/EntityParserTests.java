@@ -1,23 +1,19 @@
 package com.swen.herebethetitle.parser.tests;
 
-import static org.junit.Assert.*;
-
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.MapParser;
 import com.swen.herebethetitle.util.Direction;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import static org.junit.Assert.*;
 
 public class EntityParserTests {
 
@@ -287,7 +283,7 @@ public class EntityParserTests {
 	/**
 	 * Tests the integration of Terrain Parser with this class.
 	 * */
-	@Test
+	@Ignore
 	public void test_integration(){
 		try {
 			MapParser tp = new MapParser(new File("res/new_game.txt"));
