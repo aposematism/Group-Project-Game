@@ -356,12 +356,16 @@ public class Controller extends Application{
 			switch (e.getCode()) {
 				case W:
 					logic.movePlayer(Direction.Up);
+					break;
 				case A:
 					logic.movePlayer(Direction.Left);
+					break;
 				case S:
 					logic.movePlayer(Direction.Down);
+					break;
 				case D:
 					logic.movePlayer(Direction.Right);
+					break;
 			}
 		} catch (InvalidDestination er) {
 			er.printStackTrace();

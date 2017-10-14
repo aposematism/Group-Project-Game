@@ -93,8 +93,8 @@ public class GameCanvas extends Canvas implements GameListener {
      * @param msg The String message of the NPC conversation
      * @param npc The NPC of which the player is talking to
      */
-    public void createTextBox(String msg, Entity npc){
-        hud.createTextBox(msg, getImage(npc));
+    public void createTextBox(String msg, Entity npc, String name){
+        hud.createTextBox(msg, getImage(npc), name);
     }
 
     /**
@@ -168,6 +168,7 @@ public class GameCanvas extends Canvas implements GameListener {
 		    itemSprites.add(new Sprite(img, new GridLocation(i, 0)));
 	    }
 
+        hud.updateHealth(context.getPlayer().getHealth());
 	    hud.drawAll(weaponSprite, armourSprites, itemSprites, this);
     }
 
@@ -200,7 +201,6 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		hud.updateHealth(player.getHealth());
 		
 	}
 
@@ -224,7 +224,6 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onNPCAttacked(NPC victim) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -242,7 +241,7 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onNPCDialogMessage(NPC npc, String message) {
-		createTextBox(message, npc);
+        createTextBox(message, npc, npc.getName());
 	}
 
 	@Override
