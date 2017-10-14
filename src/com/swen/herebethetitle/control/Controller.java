@@ -14,6 +14,7 @@ import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.parser.MapParser;
+import com.swen.herebethetitle.parser.ReverseParser;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.animation.Animation;
@@ -21,6 +22,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -34,14 +36,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+
+import javax.swing.GroupLayout.Alignment;
 
 /**
  * This is the main, top-level class for the conceptual controller.
@@ -77,7 +84,9 @@ public class Controller extends Application{
 	private Scene worldGraphics;
 	private Timeline updateTimeline;
 	private Group gameGUIRoot;
-	private GameCanvas gameCanvas;
+	private	GameCanvas gameCanvas;
+	private BorderPane pauseMenuLayout;
+	private Scene pauseMenu;
 	//Game fields
 	private GameContext game;
 	private GameLogic logic;
@@ -226,6 +235,9 @@ public class Controller extends Application{
 //		 musicSlider.setShowTickLabels(true);
 		 musicSlider.setMajorTickUnit(0.25f);
 		 musicSlider.setBlockIncrement(0.1f);
+		 musicSlider.setOnMousePressed(e->{
+			 audio.setMusicVol(musicSlider.getValue());
+		 });
 		 settingsBox.getChildren().add(musicSlider);
 
 		VBox menuAndSettings = new VBox();
@@ -302,6 +314,41 @@ public class Controller extends Application{
 		//add the game canvas & audio manager to the logic's listeners
 		logic.addGameListener(gameCanvas);
 		
+		/*initialize the pause menu*/
+		pauseMenuLayout = new BorderPane();
+		pauseMenu = new Scene(pauseMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		
+		HBox titleBox = new HBox();
+		titleBox.setAlignment(Pos.CENTER);
+		Text titleText = new Text();
+		titleText.setFont(new Font(50.0));
+		titleText.setText("Paused");
+		titleBox.getChildren().add(new Text("Paused"));
+		
+		VBox optionBox = new VBox();
+		optionBox.setAlignment(Pos.CENTER);
+		
+		pauseMenuLayout.setTop(titleBox);
+		pauseMenuLayout.setCenter(optionBox);
+		
+		Button saveGame = new Button();
+		saveGame.setPrefSize(100, 20);
+		saveGame.setText("Save");
+		saveGame.setOnAction(e->{
+			//initialize reverse parser
+			ReverseParser.parseRegion(game.getCurrentRegion());
+		});
+		optionBox.getChildren().add(saveGame);
+		
+		Button unpause = new Button();
+		unpause.setPrefSize(100, 20);
+		unpause.setText("Resume");
+		unpause.setOnAction(e->{
+			unpauseGame();
+		});
+		optionBox.getChildren().add(unpause);
+	
+		
 		return s;
 	}
 
@@ -316,6 +363,7 @@ public class Controller extends Application{
 		isPlaying = false;
 
 		/*TODO draw the pause menu*/
+		window.setScene(pauseMenu);
 	}
 	/**
 	 * Unpauses the game.
@@ -329,6 +377,7 @@ public class Controller extends Application{
 			gameGUIRoot.requestFocus();
 			isPlaying = true;
 		}
+		window.setScene(worldGraphics);
 		updateTimeline.play();
 		isPlaying = true;
 	}

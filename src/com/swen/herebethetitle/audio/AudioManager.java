@@ -39,9 +39,9 @@ public class AudioManager implements GameListener{
 	private AudioClip song;
 	private Map<Integer, AudioClip> sounds;
 	/*fields for volumes*/
-	public static float masterVol = 1.0f;
-	public static float musicVol = 1.0f;
-	public static float sfxVol = 1.0f;
+	public static double masterVol = 1.0f;
+	public static double musicVol = 1.0f;
+	public static double sfxVol = 1.0f;
 	
 
 	/**
@@ -103,7 +103,7 @@ public class AudioManager implements GameListener{
 	 * Sets the master volume and readjusts all audioclip volumes accordingly.
 	 * @param v
 	 */
-	public void setMasterVol(float v) {
+	public void setMasterVol(double v) {
 		masterVol = v;
 		adjustVols();
 	}	
@@ -112,7 +112,7 @@ public class AudioManager implements GameListener{
 	 * Sets the sfx volume and readjusts all audioclip volumes accordingly.
 	 * @param v
 	 */
-	public void setSfxVol(float v) {
+	public void setSfxVol(double v) {
 		sfxVol = v;
 		adjustVols();
 	}	
@@ -121,7 +121,7 @@ public class AudioManager implements GameListener{
 	 * Sets the music volume and readjusts all audioclip volumes accordingly.
 	 * @param v
 	 */	
-	public void setMusicVol(float v) {
+	public void setMusicVol(double v) {
 		musicVol = v;
 		adjustVols();
 	}
