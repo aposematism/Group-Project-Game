@@ -3,6 +3,7 @@ package com.swen.herebethetitle.logic.ai;
 import java.util.Optional;
 
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -44,6 +45,7 @@ public class PlayerMove implements Interaction {
         }
 
         region.move(player, optimalPath.get().next());
+        notifier.notify(listener -> listener.onPlayerMoved(player));
     }
 
     @Override

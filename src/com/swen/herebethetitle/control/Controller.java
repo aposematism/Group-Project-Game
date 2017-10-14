@@ -295,7 +295,7 @@ public class Controller extends Application{
 		//set the audio manager to play the default town song
 		audio.setSong(AudioManager.SOUNDCODE_TOWNSONG);
 		
-		//add the game canvas to the logic's listeners
+		//add the game canvas & audio manager to the logic's listeners
 		logic.addGameListener(gameCanvas);
 		
 		return s;
@@ -423,8 +423,13 @@ public class Controller extends Application{
 		logic.tick();
 		
 		try {
-		    if (this.playerMove.isPresent())
-		        this.playerMove.get().tick(game.getCurrentRegion(), new Notifier());
+		    if (this.playerMove.isPresent()) {
+		    	//doing some awful stuff to get the notifier to work without digging into logic
+		    	Notifier n = new Notifier();
+		    	n.addListener(audio);
+		    	n.addListener(gameCanvas);
+		        this.playerMove.get().tick(game.getCurrentRegion(), n);
+		    }
 		} catch (Interaction.InteractionOver e) {
 		    this.playerMove = Optional.empty();
 		}
