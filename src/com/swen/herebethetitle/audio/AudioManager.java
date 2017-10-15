@@ -125,51 +125,7 @@ public class AudioManager implements GameListener{
 	 */
 	public boolean isPlaying(int s) {
 		return sounds.get(s).isPlaying();
-	}
-	
-	
-	/*volume setting methods*/
-	
-	/**
-	 * Sets the master volume and readjusts all audioclip volumes accordingly.
-	 * @param v
-	 */
-	public void setMasterVol(double v) {
-		masterVol = v;
-		adjustVols();
 	}	
-	
-	/**
-	 * Sets the sfx volume and readjusts all audioclip volumes accordingly.
-	 * @param v
-	 */
-	public void setSfxVol(double v) {
-		sfxVol = v;
-		adjustVols();
-	}	
-	
-	/**
-	 * Sets the music volume and readjusts all audioclip volumes accordingly.
-	 * @param v
-	 */	
-	public void setMusicVol(double v) {
-		musicVol = v;
-		adjustVols();
-	}
-	
-	/**
-	 * Adjusts the volumes for all the AudioClips appropriately according
-	 * to master, music, and sfx volumes.
-	 */
-	private void adjustVols() {		
-		for(AudioClip c: sounds.values()) {
-			c.setVolume(masterVol*sfxVol);
-		}
-		sounds.get(SOUNDCODE_MENUSONG).setVolume(masterVol*musicVol);
-		sounds.get(SOUNDCODE_TOWNSONG).setVolume(masterVol*musicVol);
-		sounds.get(SOUNDCODE_BATTLESONG).setVolume(masterVol*musicVol);
-	}
-	
 	
 	/*GameListener methods*/
 	

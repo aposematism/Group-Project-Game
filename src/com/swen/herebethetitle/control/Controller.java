@@ -225,17 +225,6 @@ public class Controller extends Application{
 			GameCanvas.toggleGrid();
 		});
 		settingsBox.getChildren().add(toggleBorder);
-		
-		/*music volume*/
-		 Slider musicSlider = new Slider(0, 1, 0.5);
-//		 musicSlider.setShowTickMarks(true);
-//		 musicSlider.setShowTickLabels(true);
-		 musicSlider.setMajorTickUnit(0.25f);
-		 musicSlider.setBlockIncrement(0.1f);
-		 musicSlider.setOnMousePressed(e->{
-			 audio.setMusicVol(musicSlider.getValue());
-		 });
-		 settingsBox.getChildren().add(musicSlider);
 
 		VBox menuAndSettings = new VBox();
 		menuAndSettings.setId("menuBox");
