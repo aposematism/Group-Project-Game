@@ -8,6 +8,7 @@ import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.logic.GameListener;
 import javafx.scene.media.AudioClip;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -19,6 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  */
 public class AudioManager implements GameListener{
+	/*limit for sounds playing*/
+	private static final int MAX_SOUNDS = 3;
 	
 	/*audio clip codes for playing*/
 	public static final int SOUNDCODE_DEMON1 = 1;
@@ -32,12 +35,19 @@ public class AudioManager implements GameListener{
 	public static final int SOUNDCODE_FOOTSTEP2 = 9;
 	public static final int SOUNDCODE_KEYPICKUP = 10;
 	public static final int SOUNDCODE_ITEMPICKUP = 11;
+	public static final int SOUNDCODE_GAMEEND = 12;
+	public static final int SOUNDCODE_ITEMDROPPED = 15;
+	public static final int SOUNDCODE_UNLOCK = 16;
+	public static final int SOUNDCODE_UNLOCKFAIL = 17;
+	
+	
 	public static final int SOUNDCODE_MENUSONG = 0;
 	public static final int SOUNDCODE_TOWNSONG = -1;
 	public static final int SOUNDCODE_BATTLESONG = -1;	//TODO get battle music
 	/*fields for audioclips*/
 	private AudioClip song;
 	private Map<Integer, AudioClip> sounds;
+	private ArrayDeque<AudioClip> playingSounds;
 	/*fields for volumes*/
 	public static double masterVol = 1.0f;
 	public static double musicVol = 1.0f;
@@ -50,6 +60,7 @@ public class AudioManager implements GameListener{
 	 */
 	public AudioManager() {
 		sounds = new HashMap<Integer, AudioClip>();
+		playingSounds = new ArrayDeque<AudioClip>();
 		
 		/*load sounds into the audio clip TODO finish*/
 		sounds.put(SOUNDCODE_DEMON1, new AudioClip("file:res/sound/demon1.mp3"));
@@ -63,10 +74,14 @@ public class AudioManager implements GameListener{
 		sounds.put(SOUNDCODE_FOOTSTEP2, new AudioClip("file:res/sound/footstep2.mp3"));
 		sounds.put(SOUNDCODE_KEYPICKUP, new AudioClip("file:res/sound/keypickup.wav"));
 		sounds.put(SOUNDCODE_ITEMPICKUP, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound file
+		sounds.put(SOUNDCODE_GAMEEND, new AudioClip("file:res/sound/playerdamage1.mp3"));	//TODO source new sound
+		sounds.put(SOUNDCODE_ITEMDROPPED, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound
+		sounds.put(SOUNDCODE_UNLOCK, new AudioClip("file:res/sound/keypickup.wav"));		//TODO source new sound
+		sounds.put(SOUNDCODE_UNLOCKFAIL, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound
 		
 		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.wav"));
 		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.wav"));
-		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));
+		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));	//TODO decide whether to keep or not
 		
 		
 		/*play the main menu music*/
@@ -92,10 +107,15 @@ public class AudioManager implements GameListener{
 	 * @param s
 	 */
 	public void playSound(int s) {
+		if(playingSounds.size()>=MAX_SOUNDS) {
+			playingSounds.pop().stop();
+		}
 		sounds.get(s).setCycleCount(1);
+		playingSounds.add(sounds.get(s));
 		sounds.get(s).play();
 	}
 
+	
 	
 	/*testing methods*/
 	
@@ -156,8 +176,7 @@ public class AudioManager implements GameListener{
 	
 	@Override
 	public void onGameCompleted() {
-		// TODO Auto-generated method stub
-		
+		playSound(AudioManager.SOUNDCODE_GAMEEND);
 	}
 
 	@Override
@@ -192,8 +211,8 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onPlayerDrop(Player player, Item item) {
-		// TODO Auto-generated method stub
-		
+		// TODO multiple sounds?
+		playSound(SOUNDCODE_ITEMDROPPED);
 	}
 
 	@Override
@@ -215,7 +234,7 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onNPCDialogMessage(NPC npc, String message) {
-		// TODO Auto-generated method stub
+		playSound(SOUNDCODE_PLAYERDAMAGE1);
 	}
 
 	@Override
@@ -225,14 +244,12 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onDoorUnlocked(Static door) {
-		// TODO Auto-generated method stub
-		
+		playSound(SOUNDCODE_UNLOCK);
 	}
 
 	@Override
 	public void onDoorUnlockFailed(Static door, String message) {
-		// TODO Auto-generated method stub
-		
+		playSound(SOUNDCODE_UNLOCKFAIL);
 	}
 
 	@Override
