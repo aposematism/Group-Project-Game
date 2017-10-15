@@ -58,14 +58,20 @@ public class TextBox extends Sprite {
     public void draw(GraphicsContext gc, GridManager g, Point offset){}
 
     @Override
+    public void draw(GraphicsContext gc, GridManager g){}
+
     /**
      * Draw this sprite to the given canvas.
      * @param gc the GraphicsContext used to render the image
      * @param g The gridManager for positioning
      * @author weirjosh
      */
-    public void draw(GraphicsContext gc, GridManager g){
+    public void draw(GraphicsContext gc, GridManager g, double canvasHeight){
         Point pos = g.getRealCoordinates(loc);
+
+        if(pos.y+HEIGHT > canvasHeight){
+            pos.y -= (pos.y+HEIGHT)-canvasHeight;
+        }
 
         gc.setFill(Color.WHITE);
         gc.fillRect(pos.x, pos.y, WIDTH, HEIGHT);

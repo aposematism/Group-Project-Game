@@ -81,7 +81,7 @@ public class HUD {
 
 	    }
 
-	    textBox.ifPresent(textBox1 -> textBox1.draw(gc, textBoxGrid));
+	    textBox.ifPresent(textBox1 -> textBox1.draw(gc, textBoxGrid, c.getHeight()));
         drawHealthMeter(gc);
     }
 
@@ -132,7 +132,7 @@ public class HUD {
 		        slotSize);
 
         textBoxGrid = new GridManager(
-                (int)c.getWidth()/4, (int)c.getHeight()/2, slotSize);
+                (int)c.getWidth()/4, 3*(int)c.getHeight()/4, slotSize);
 
         weaponGrid.setGap(GAP);
         armourGrid.setGap(GAP);
