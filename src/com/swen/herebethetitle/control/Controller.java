@@ -333,7 +333,7 @@ public class Controller extends Application{
 		saveGame.setText("Save");
 		saveGame.setOnAction(e->{
 			//initialize reverse parser
-			ReverseParser.parseRegion(game.getCurrentRegion());
+			ReverseParser ep = new ReverseParser(game.getCurrentRegion());
 		});
 		optionBox.getChildren().add(saveGame);
 		
