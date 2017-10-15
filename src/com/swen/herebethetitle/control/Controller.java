@@ -1,17 +1,20 @@
 package com.swen.herebethetitle.control;
 
 import com.swen.herebethetitle.audio.AudioManager;
-import com.swen.herebethetitle.entity.*;
+import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.logic.ai.Interaction;
 import com.swen.herebethetitle.logic.ai.PlayerMove;
+import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.parser.MapParser;
+import com.swen.herebethetitle.parser.ReverseParser;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.animation.Animation;
@@ -19,10 +22,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +36,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -50,19 +57,17 @@ import java.util.Optional;
 /*
  * TODO
  *
- * -audio functionality
- *
  * Immediately:
  * -input events for interactions and attacking
  * -Add in subordinate menu functionality for load game & settings
- * -player pathfinding
+ * -pause menu
  *
  */
 public class Controller extends Application{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 30;
+	public static final int FRAMES_PER_SECOND = 45;
 	public static final int TESTCODE_INPUTS = 1;
 	//Testing mode field
 	public static int isTesting;
@@ -76,7 +81,9 @@ public class Controller extends Application{
 	private Scene worldGraphics;
 	private Timeline updateTimeline;
 	private Group gameGUIRoot;
-	private GameCanvas gameCanvas;
+	private	GameCanvas gameCanvas;
+	private BorderPane pauseMenuLayout;
+	private Scene pauseMenu;
 	//Game fields
 	private GameContext game;
 	private GameLogic logic;
@@ -204,20 +211,31 @@ public class Controller extends Application{
 	private void initSettingsMenu(BorderPane layout) {
 		HBox settingsBox = new HBox();
 
-		Button toggleBorder = new Button("Turn Off Tile Borders");
-		toggleBorder.setId("turnOffTileBorders");
+		/*toggle grid button*/
+		Button toggleBorder = new Button("Turn On Tile Borders");
+		toggleBorder.setId("turnOnTileBorders");
 		toggleBorder.setOnAction(e -> {
-			if (toggleBorder.getText().equals("Turn Off Tile Borders")) {
-				toggleBorder.setText("Turn On Tile Borders");
-				toggleBorder.setId("turnOnTileBorders");
-			} else {
+			if (toggleBorder.getText().equals("Turn On Tile Borders")) {
 				toggleBorder.setText("Turn Off Tile Borders");
 				toggleBorder.setId("turnOffTileBorders");
+			} else {
+				toggleBorder.setText("Turn On Tile Borders");
+				toggleBorder.setId("turnOnTileBorders");
 			}
 			GameCanvas.toggleGrid();
 		});
-
 		settingsBox.getChildren().add(toggleBorder);
+		
+		/*music volume*/
+		 Slider musicSlider = new Slider(0, 1, 0.5);
+//		 musicSlider.setShowTickMarks(true);
+//		 musicSlider.setShowTickLabels(true);
+		 musicSlider.setMajorTickUnit(0.25f);
+		 musicSlider.setBlockIncrement(0.1f);
+		 musicSlider.setOnMousePressed(e->{
+			 audio.setMusicVol(musicSlider.getValue());
+		 });
+		 settingsBox.getChildren().add(musicSlider);
 
 		VBox menuAndSettings = new VBox();
 		menuAndSettings.setId("menuBox");
@@ -251,21 +269,18 @@ public class Controller extends Application{
 	 * @return the load game menu
 	 */
 	private void loadGame(File file) {
-		//initialize game
-		initializeNewGame();
 
 		//parse map
 		Region r;
 		try {
 			r = new MapParser(file).getRegion();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return;
 		}
 
 		//TODO Needs to be replaced by something better.
-		game = new GameContext(r);
+		initializeNewGame(r);
 		Player p = game.getPlayer();
 		//System.out.println(p.toString());
 		System.out.println(game.currentRegion.getLocation(p));
@@ -293,8 +308,43 @@ public class Controller extends Application{
 		//set the audio manager to play the default town song
 		audio.setSong(AudioManager.SOUNDCODE_TOWNSONG);
 		
-		//add the game canvas to the logic's listeners
+		//add the game canvas & audio manager to the logic's listeners
 		logic.addGameListener(gameCanvas);
+		
+		/*initialize the pause menu*/
+		pauseMenuLayout = new BorderPane();
+		pauseMenu = new Scene(pauseMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		
+		HBox titleBox = new HBox();
+		titleBox.setAlignment(Pos.CENTER);
+		Text titleText = new Text();
+		titleText.setFont(new Font(50.0));
+		titleText.setText("Paused");
+		titleBox.getChildren().add(new Text("Paused"));
+		
+		VBox optionBox = new VBox();
+		optionBox.setAlignment(Pos.CENTER);
+		
+		pauseMenuLayout.setTop(titleBox);
+		pauseMenuLayout.setCenter(optionBox);
+		
+		Button saveGame = new Button();
+		saveGame.setPrefSize(100, 20);
+		saveGame.setText("Save");
+		saveGame.setOnAction(e->{
+			//initialize reverse parser
+			ReverseParser.parseRegion(game.getCurrentRegion());
+		});
+		optionBox.getChildren().add(saveGame);
+		
+		Button unpause = new Button();
+		unpause.setPrefSize(100, 20);
+		unpause.setText("Resume");
+		unpause.setOnAction(e->{
+			unpauseGame();
+		});
+		optionBox.getChildren().add(unpause);
+	
 		
 		return s;
 	}
@@ -310,19 +360,23 @@ public class Controller extends Application{
 		isPlaying = false;
 
 		/*TODO draw the pause menu*/
+		window.setScene(pauseMenu);
 	}
 	/**
 	 * Unpauses the game.
 	 */
 	private void unpauseGame() {
-		if(updateTimeline==null) {
+		if(updateTimeline ==null) {
+
 			updateTimeline = new Timeline(new KeyFrame(
 					Duration.millis(6000.0 / FRAMES_PER_SECOND),
 					ae -> update()));
+
 			updateTimeline.setCycleCount(Animation.INDEFINITE);
 			gameGUIRoot.requestFocus();
 			isPlaying = true;
 		}
+		window.setScene(worldGraphics);
 		updateTimeline.play();
 		isPlaying = true;
 	}
@@ -350,12 +404,16 @@ public class Controller extends Application{
 			switch (e.getCode()) {
 				case W:
 					logic.movePlayer(Direction.Up);
+					break;
 				case A:
 					logic.movePlayer(Direction.Left);
+					break;
 				case S:
 					logic.movePlayer(Direction.Down);
+					break;
 				case D:
 					logic.movePlayer(Direction.Right);
+					break;
 			}
 		} catch (InvalidDestination er) {
 			er.printStackTrace();
@@ -404,8 +462,13 @@ public class Controller extends Application{
 		Tile tile = game.getCurrentRegion().get(gameCanvas.getMousePos((int) e.getX(), (int) e.getY()));
 
 		Entity entity = tile.getTopEntity();
-		entity.interact(game);
 		System.out.println("Entity clicked: " + entity.toString());
+		try {
+			logic.interact(entity);
+			System.out.println("Interacted");
+		} catch (EntityOutOfRange ex) {
+			System.out.println("Can't interact");
+		}
 	}
 
 	/**
@@ -417,8 +480,13 @@ public class Controller extends Application{
 		logic.tick();
 		
 		try {
-		    if (this.playerMove.isPresent())
-		        this.playerMove.get().tick(game.getCurrentRegion(), new Notifier());
+		    if (this.playerMove.isPresent()) {
+		    	//doing some awful stuff to get the notifier to work without digging into logic
+		    	Notifier n = new Notifier();
+		    	n.addListener(audio);
+		    	n.addListener(gameCanvas);
+		        this.playerMove.get().tick(game.getCurrentRegion(), n);
+		    }
 		} catch (Interaction.InteractionOver e) {
 		    this.playerMove = Optional.empty();
 		}
@@ -431,8 +499,8 @@ public class Controller extends Application{
 	/**
 	 * Creates a new game in the default world.
 	 */
-	public void initializeNewGame() {
-		game = new GameContext();
+	public void initializeNewGame(Region r) {
+		game = new GameContext(r);
 		logic = new GameLogic(game);
 		playerMove = Optional.empty();
 		logic.addGameListener(audio);

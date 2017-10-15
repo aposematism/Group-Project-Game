@@ -67,9 +67,11 @@ public class WorldRenderer {
         Point offset = calcOffset(width, height, player);
 
         for(Sprite s: sprites.keySet()){
-            s.draw(gc, currentGrid, offset);
-            for(Sprite si: sprites.get(s)){
-                si.draw(gc, currentGrid, offset);
+
+            if(s.drawInBounds(gc, currentGrid, offset, width, height)) {
+                for (Sprite si : sprites.get(s)) {
+                    si.draw(gc, currentGrid, offset);
+                }
             }
         }
     }

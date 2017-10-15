@@ -1,19 +1,14 @@
 package com.swen.herebethetitle.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Floor;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.pathfinding.PathfindingGrid;
 import com.swen.herebethetitle.util.GridLocation;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Representation of a game region, which could be inside or outside.
@@ -58,14 +53,14 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     public Region(int width, int height) {
         this.width = width;
         this.height = height;
-        
-        this.cells = new Tile[width][height];
-        for (int x=0; x<width; x++) {
-            for (int y=0; y<height; y++) {
-                String character = String.format("%d:%d", x, y);
+
+	    this.cells = new Tile[height][width];
+	    for (int y = 0; y < height; y++) {
+		    for (int x = 0; x < width; x++) {
+			    String character = String.format("%d:%d", x, y);
                 set(new GridLocation(x,y), new Tile(x, y, character));
-                get(x,y).setMapFloor(new Floor("file:res/grass.png"));
-            }
+			    get(x, y).setMapFloor(new Floor("", "file:res/blank.png"));
+		    }
         }
     }
     
@@ -73,15 +68,15 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Creates a custom grid from tile 2d array. Used for Terrain Parser.
      */
     public Region(Tile[][] tiles) {
-    	this.width = tiles.length;
-    	this.height = tiles[0].length;
-    	this.cells = tiles;
+	    this.height = tiles.length;
+	    this.width = tiles[0].length;
+	    this.cells = tiles;
     }
     
     public Region(String name, Tile[][] tiles) {
-    	this.width = tiles.length;
-    	this.height = tiles[0].length;
-    	this.cells = tiles;
+	    this.height = tiles.length;
+	    this.width = tiles[0].length;
+	    this.cells = tiles;
     	this.regionName = name;
     }
     
@@ -89,14 +84,14 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Gets the tile at a location.
      */
     public Tile get(GridLocation location) {
-        return cells[location.x][location.y];
+	    return cells[location.y][location.x];
     }
     
     /**
      * Gets the tile at a location.
      */
     public Tile get(int x, int y) {
-        return get(new GridLocation(x, y));
+	    return get(new GridLocation(x, y));
     }
     
     /**
@@ -107,6 +102,17 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
             return Optional.empty();
         
         return Optional.of(get(location));
+    }
+    
+    /**
+     * Checks if the region contains an entity.
+     */
+    public boolean contains(Entity entity) {
+        for (int y=0; y<this.height; y++)
+            for (int x=0; x<this.width; x++)
+                if (get(x, y).contains(entity))
+                    return true;
+        return false;
     }
     
     /**
@@ -128,7 +134,7 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Places a tile at a location.
      */
     public void set(GridLocation location, Optional<Tile> tile) {
-        cells[location.x][location.y] = tile.orElse(null);
+	    cells[location.y][location.x] = tile.orElse(null);
     }
     
     /**
@@ -159,9 +165,9 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Gets the location of a tile in the region.
      */
     public GridLocation getLocation(Tile tile) {
-        for (int x=0; x<width; x++) {
-            for (int y=0; y<height; y++) {
-                GridLocation location = new GridLocation(x,y);
+	    for (int y = 0; y < height; y++) {
+		    for (int x = 0; x < width; x++) {
+			    GridLocation location = new GridLocation(x,y);
                 Tile currentTile = get(location);
                 
                 if (currentTile == tile)
@@ -218,11 +224,11 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Gets a list of tiles within a vicinity.
      */
     public List<Tile> vicinityList(GridLocation location, double radius) {
-    	    List<Tile> vicinity = new ArrayList<Tile>();
+	    List<Tile> vicinity = new ArrayList<Tile>();
 
-    	    int maxRadius = (int)Math.round(radius);
-    	    // Go through every tile in the general area.
-    	    for (int y = location.y - maxRadius; y < location.y + radius; y++) {
+	    int maxRadius = (int) Math.round(radius);
+	    // Go through every tile in the general area.
+	    for (int y = location.y - maxRadius; y < location.y + radius; y++) {
 			for (int x = location.x - maxRadius; x < location.x + maxRadius; x++) {
 				Optional<Tile> tile = tryGet(new GridLocation(x,y));
 				GridLocation tileLocation = new GridLocation(x,y);
@@ -233,8 +239,8 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
 					vicinity.add(tile.get());
 				}
 			}
-    	    }
-    	    return vicinity;
+	    }
+	    return vicinity;
     }
     
     /**
@@ -243,7 +249,7 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Throws an error if the player is not in the region.
      */
     public Tile getPlayerTile() {
-        return maybeGetPlayerTile().get();
+	    return maybeGetPlayerTile().get();
     }
 
     @Override
@@ -279,7 +285,7 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * There is a consistent, but unspecified ordering of the result.
      */
     public Stream<Tile> stream() {
-        return (Stream<Tile>)Arrays.asList(cells).stream().flatMap(row -> Arrays.asList(row).stream());
+	    return Arrays.asList(cells).stream().flatMap(row -> Arrays.asList(row).stream());
     }
 
     @Override
@@ -291,9 +297,9 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (int y=0; y<width; y++) {
-            for (int x=0; x<height; x++) {
-                Tile tile = get(x,y);
+	    for (int y = 0; y < height; y++) {
+		    for (int x = 0; x < width; x++) {
+			    Tile tile = get(x,y);
                 
                 String letter = tile.getInteractives().isEmpty() ? "-" : "w";
                 //String letter = tile.getInteractives().stream().findFirst().map(a -> a.toString()).orElse(" ");
@@ -304,42 +310,42 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
         
         return builder.toString();
     }
-    
-    public void setRegionName(String rn) {
-    	this.regionName = rn;
-    }
-    
-    public String getRegionName() {
-    	return regionName;
-    }
-    
-    public int getXSize() {
-    	return cells.length;
-    }
-    
-    public int getYSize() {
-    	return cells[0].length;
-    }
-    
-    public String[] getNeighbouringRegions() {
-    	return neighbouringRegions;
-    }
-    
-    public void setNeighbouringRegions(String[] nr) {
-    	this.neighbouringRegions = nr;
-    }
-    
-    public int getInteractiveTotal() {
+
+	public String getRegionName() {
+		return regionName;
+	}
+
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
+	}
+
+	public int getXSize() {
+		return cells[0].length;
+	}
+
+	public int getYSize() {
+		return cells.length;
+	}
+
+	public String[] getNeighbouringRegions() {
+		return neighbouringRegions;
+	}
+
+	public void setNeighbouringRegions(String[] nr) {
+		this.neighbouringRegions = nr;
+	}
+
+	public int getInteractiveTotal() {
     	int total = 0;
     	for(Entity e : this.getPlayerTile().getInteractives()) {
     		if(e instanceof Player) {
     			total = ((Player) e).inventory().size();
     		}
     	}
-    	for(int i = 0; i < width; i++) {
-    		for(int j = 0; j < height; j++) {
-    			total = total + cells[i][j].getInteractiveSize();
-    		}
+	    for (int y = 0; y < height; y++) {
+		    for (int x = 0; x < height; x++) {
+			    total = total + cells[y][x].getInteractiveSize();
+		    }
     	}
     	return total;
     }

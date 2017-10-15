@@ -79,4 +79,12 @@ public class BaseTest {
         context.getCurrentRegion().get(location).add(key);
         return key;
     }
+    
+    /**
+     * Runs a number of ticks.
+     */
+    protected void tick(int ticks) {
+        for (int i=0; i<ticks; i++)
+            logic.tick();
+    }
 }

@@ -13,15 +13,19 @@ import com.swen.herebethetitle.model.GameContext;
 public final class DoorStrategy implements Static.Behavior {
 
 	private final int KEY;
+	private final String openSprite;
+	private final String closedSprite;
 	private STATE state;
 
 	/**
 	 * @param key The Key code ID of the door
 	 * @param state Whether the door is locked, unlocked or open
 	 */
-	public DoorStrategy(int key, STATE state){
+	public DoorStrategy(int key, STATE state, String closedSprite, String openSprite) {
 		KEY = key;
 		this.state = state;
+		this.closedSprite = closedSprite;
+		this.openSprite = openSprite;
 	}
 
 	/**
@@ -33,7 +37,8 @@ public final class DoorStrategy implements Static.Behavior {
 	    case LOCKED:
 		    if (hasKey(context.player)) {
                 state = STATE.OPEN;
-                notifier.notify(l -> l.onDoorUnlocked(door));
+			    door.setSprite(openSprite);
+			    notifier.notify(l -> l.onDoorUnlocked(door));
 		    } else {
 		        notifier.notify(l -> l.onDoorUnlockFailed(door,
 		                "You don't have the key for this door!"));
@@ -41,10 +46,12 @@ public final class DoorStrategy implements Static.Behavior {
 		    break;
 	    case UNLOCKED:
 			state = STATE.OPEN;
+		    door.setSprite(openSprite);
 			notifier.notify(l -> l.onDoorOpened(door));
 			break;
 	    case OPEN:
 			state = STATE.UNLOCKED;
+		    door.setSprite(closedSprite);
 			notifier.notify(l -> l.onDoorClosed(door));
 			break;
 	    }
@@ -69,7 +76,8 @@ public final class DoorStrategy implements Static.Behavior {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName().replace("Strategy","")+" "+KEY+" "+state.toString();
+		return getClass().getSimpleName().replace("Strategy", "") + " " +
+				KEY + " " + state.toString() + " \"" + closedSprite + "\" \"" + openSprite + "\"";
 	}
 
 	/**

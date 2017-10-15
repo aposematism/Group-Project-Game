@@ -98,9 +98,12 @@ public class MapParser {
 		regionArray = new Tile[charArray.height()][charArray.width()];
 		for (int row = 0; row < charArray.height(); row++) {
 			for (int col = 0; col < charArray.width(); col++) {
-				Tile tile = new Tile(row, col, charArray.get(row, col) + "");
+				String character = charArray.get(row, col);
 
-				List<Entity> entities = characterMap.get(charArray.get(row, col));
+				//col = x, row = y
+				Tile tile = new Tile(col, row, character);
+
+				List<Entity> entities = characterMap.get(character);
 
 				tile.add(entities.toArray(new Entity[entities.size()]));
 
@@ -176,8 +179,8 @@ public class MapParser {
 		public String get(int row, int col) {
 			return charArray.get(row)[col];
 		}
-		
-		public ArrayList<String[]> getList(){
+
+		public ArrayList<String[]> getList() {
 			return charArray;
 		}
 

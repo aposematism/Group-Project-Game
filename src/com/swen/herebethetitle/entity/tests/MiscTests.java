@@ -31,7 +31,7 @@ public class MiscTests {
 	 */
 	@Test
 	public void test_Door_toString(){
-		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(123, DoorStrategy.STATE.LOCKED, "", "");
 		Static s = new Static("", null);
 		s.setBehavior(d);
 		assertNotNull(d.toString());
@@ -102,7 +102,7 @@ public class MiscTests {
 	@Test
 	public void test_StaticAndBehavior_toString(){
 		Static s = new Static("Front DoorStrategy", null);
-		DoorStrategy d = new DoorStrategy(209, DoorStrategy.STATE.LOCKED);
+		DoorStrategy d = new DoorStrategy(209, DoorStrategy.STATE.LOCKED, "closed.png", "open.png");
 		s.setBehavior(d);
 		assertNotNull(s.toString());
 		System.out.println(s.toString());

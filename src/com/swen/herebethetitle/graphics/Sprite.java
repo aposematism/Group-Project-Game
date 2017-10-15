@@ -4,6 +4,7 @@ import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.awt.*;
 
@@ -56,6 +57,18 @@ public class Sprite {
         gc.drawImage(img, pos.x, pos.y, g.getCellSize(), g.getCellSize());
     }
 
+    public boolean drawInBounds(GraphicsContext gc, GridManager g, Point offset, int width, int height){
+
+        Point pos = g.getRealCoordinates(loc, offset);
+
+        if(checkInBounds(pos, g, width, height)) {
+            gc.drawImage(img, pos.x, pos.y, g.getCellSize(), g.getCellSize());
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * @return The image of this sprite
      * @author weirjosh
@@ -74,5 +87,17 @@ public class Sprite {
 
     public void setLocation(GridLocation newLoc){
         loc = newLoc;
+    }
+
+
+    private boolean checkInBounds(Point p, GridManager g, int width, int height){
+        int size = g.getCellSize();
+        if(p.x+size < 0 ||
+                p.x > width ||
+                p.y+size < 0 ||
+                p.y > height){
+            return false;
+        }
+        return true;
     }
 }

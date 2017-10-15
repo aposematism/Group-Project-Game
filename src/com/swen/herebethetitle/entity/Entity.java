@@ -45,6 +45,15 @@ public abstract class Entity {
 	public String getSpritePath() { return spritePath; }
 
 	/**
+	 * Update the sprite used
+	 *
+	 * @param spritePath
+	 */
+	protected void setSprite(String spritePath) {
+		this.spritePath = spritePath;
+	}
+
+	/**
 	 * Get the name of the entity instance
 	 * Could be used for tooltips etc
 	 */

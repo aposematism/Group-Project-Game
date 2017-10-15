@@ -71,11 +71,11 @@ public class GridManagerTests {
     @Test
     public void test04_testGaps(){
         Assert.assertEquals(m.getRealCoordinates(gl2).y
-		        - m.getRealCoordinates(gl1).y - 2, m.getCellSize());
+		        - m.getRealCoordinates(gl1).y, m.getCellSize());
 
 	    m.toggleBorder();
 	    Assert.assertEquals(m.getRealCoordinates(gl5).x
-			    - m.getRealCoordinates(gl4).x, m.getCellSize());
+			    - m.getRealCoordinates(gl4).x-GridManager.GAPSIZE, m.getCellSize());
     }
 
     @Test

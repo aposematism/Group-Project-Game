@@ -6,9 +6,13 @@ import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
+import com.swen.herebethetitle.util.Direction;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.*;
@@ -75,7 +79,11 @@ public class GameCanvas extends Canvas implements GameListener {
      * Toggles the gap between cells on or off.
      */
     public static void toggleGrid(){
-        grid = true;
+        if(grid){
+            grid = false;
+        }else{
+            grid = true;
+        }
     }
 
     /**
@@ -89,8 +97,8 @@ public class GameCanvas extends Canvas implements GameListener {
      * @param msg The String message of the NPC conversation
      * @param npc The NPC of which the player is talking to
      */
-    public void createTextBox(String msg, Entity npc){
-        hud.createTextBox(msg, getImage(npc));
+    public void createTextBox(String msg, Entity npc, String name){
+        hud.createTextBox(msg, getImage(npc), name);
     }
 
     /**
@@ -164,6 +172,7 @@ public class GameCanvas extends Canvas implements GameListener {
 		    itemSprites.add(new Sprite(img, new GridLocation(i, 0)));
 	    }
 
+        hud.updateHealth(context.getPlayer().getHealth());
 	    hud.drawAll(weaponSprite, armourSprites, itemSprites, this);
     }
 
@@ -179,6 +188,20 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	        imageMap.put(e.getSpritePath(), image);
         }
+
+//        if(e instanceof Mob){
+//            Mob mob = (Mob)e;
+//            Direction d = mob.getDirection();
+//
+//            ImageView iv = new ImageView(imageMap.get(mob.getSpritePath()));
+//            SnapshotParameters params = new SnapshotParameters();
+//            params.setFill(Color.TRANSPARENT);
+//            iv.setRotate(d.ordinal()*90);
+//            //System.out.println(iv.getRotate());
+//            return iv.snapshot(params, null);
+//        }
+
+
         return imageMap.get(e.getSpritePath());
     }
 
@@ -196,7 +219,6 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		hud.updateHealth(player.getHealth());
 		
 	}
 
@@ -220,7 +242,6 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onNPCAttacked(NPC victim) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -238,7 +259,7 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onNPCDialogMessage(NPC npc, String message) {
-		createTextBox(message, npc);
+        createTextBox(message, npc, npc.getName());
 	}
 
 	@Override

@@ -18,23 +18,38 @@ import java.util.List;
  */
 public class NpcController {
     /**
+     * How many game ticks we take between updating NPCs.
+     */
+    public static final int TICK_DIVIDER = 4;
+    
+    /**
      * A list of all interactions that are currently in progress.
      */
     protected List<Interaction> activeInteractions;
+    
+    private int tickAccumulator;
 
     /**
      * Creates a new enemy controller.
      */
     public NpcController() {
         this.activeInteractions = new ArrayList<Interaction>();
+        this.tickAccumulator = 0;
     }
     
     /**
      * Updates the game after a single tick.
      */
     public void tick(GameContext context, Notifier notifier) {
+        this.tickAccumulator += 1;
+        
+        // Skip until we've hit our tick divider.
+        if (this.tickAccumulator < TICK_DIVIDER)
+            return;
+
         progressInteractions(context, notifier);
         updateNpcs(context);
+        this.tickAccumulator = 0;
     }
     
     /**

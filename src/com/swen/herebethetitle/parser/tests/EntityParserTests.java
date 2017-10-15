@@ -1,23 +1,19 @@
 package com.swen.herebethetitle.parser.tests;
 
-import static org.junit.Assert.*;
-
 import com.swen.herebethetitle.entity.*;
-import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.parser.EntityParser;
 import com.swen.herebethetitle.parser.MapParser;
 import com.swen.herebethetitle.util.Direction;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import static org.junit.Assert.*;
 
 public class EntityParserTests {
 
@@ -53,6 +49,7 @@ public class EntityParserTests {
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
 	public void parse(Entity in){
+		System.out.println(in.toString());
 		Scanner s = new Scanner(in.toString());
 		Entity out = EntityParser.parse(s);
 		assertEquals(in.toString(), out.toString());
@@ -232,7 +229,7 @@ public class EntityParserTests {
 	public void test_static_generation() {
 		ArrayList<String> staticArray = new ArrayList<String>();
 		String line = "Static \"Tudor Wall\" \"tudorwall.png\"";
-		String line1 = "Static \"Church Door\" \"heavydoor.png\" Door 3 LOCKED";
+		String line1 = "Static \"Door\" \"static/cobble master.png\" Door 70 LOCKED \"static/tudorwall.png\" \"static/grass.png\"";
 		staticArray.add(line); staticArray.add(line1);
 		try {
 			for(String l : staticArray) {
@@ -287,7 +284,7 @@ public class EntityParserTests {
 	/**
 	 * Tests the integration of Terrain Parser with this class.
 	 * */
-	@Test
+	@Ignore
 	public void test_integration(){
 		try {
 			MapParser tp = new MapParser(new File("res/new_game.txt"));

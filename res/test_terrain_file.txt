@@ -7,7 +7,7 @@ west: nope
 entities:
 . = Floor "Grass" "static/grass.png"
 w = Static "Wall" "static/tudorwall.png"
-d = Static "Door" "static/cobble master.png" Door 70 LOCKED
+d = Static "Door" "static/cobble master.png" Door 70 LOCKED "static/tudorwall.png" "static/grass.png"
 
 map:
 wwwwwwwwwwwwwwww

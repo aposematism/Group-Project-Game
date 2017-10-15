@@ -1,12 +1,12 @@
 package com.swen.herebethetitle.entity;
 
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.NPCBehavior;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.util.Direction;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -45,17 +45,17 @@ public final class FriendlyStrategy extends NPCBehavior {
 	 * from side to side until they have nothing left to say
 	 */
 	public void ping(GameContext context, NPC npc) {
-		if(canTalkTo()){
-			int ordinal = npc.getDirection().ordinal();
+		if (!canTalkTo()) return;
 
-			// 50/50 Chance of turning clockwise/anti-clockwise
-			if(ThreadLocalRandom.current().nextBoolean())
-				ordinal = (ordinal+1) % Direction.values().length;
-			else
-				ordinal = (ordinal-1) % Direction.values().length;
+		int ordinal = npc.getDirection().ordinal();
 
-			npc.setDirection(Direction.values()[ordinal]);
-		}
+		// 50/50 Chance of turning clockwise/anti-clockwise
+		if (ThreadLocalRandom.current().nextBoolean())
+			ordinal = ordinal + 1 >= Direction.values().length ? ordinal + 1 : 0;
+		else
+			ordinal = ordinal - 1 > 0 ? ordinal - 1 : 0;
+
+		npc.setDirection(Direction.values()[ordinal]);
 	}
 
 	/**

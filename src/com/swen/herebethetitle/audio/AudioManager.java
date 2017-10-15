@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.audio;
 
 import com.swen.herebethetitle.entity.Item;
+import com.swen.herebethetitle.entity.Key;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.entity.Static;
@@ -29,12 +30,19 @@ public class AudioManager implements GameListener{
 	public static final int SOUNDCODE_ROBOT2 = 7;
 	public static final int SOUNDCODE_FOOTSTEP1 = 8;
 	public static final int SOUNDCODE_FOOTSTEP2 = 9;
+	public static final int SOUNDCODE_KEYPICKUP = 10;
+	public static final int SOUNDCODE_ITEMPICKUP = 11;
 	public static final int SOUNDCODE_MENUSONG = 0;
 	public static final int SOUNDCODE_TOWNSONG = -1;
 	public static final int SOUNDCODE_BATTLESONG = -1;	//TODO get battle music
 	/*fields for audioclips*/
 	private AudioClip song;
 	private Map<Integer, AudioClip> sounds;
+	/*fields for volumes*/
+	public static double masterVol = 1.0f;
+	public static double musicVol = 1.0f;
+	public static double sfxVol = 1.0f;
+	
 
 	/**
 	 * Constructs a new AudioManager with the song set to the main 
@@ -53,9 +61,12 @@ public class AudioManager implements GameListener{
 		sounds.put(SOUNDCODE_ROBOT2, new AudioClip("file:res/sound/robot2.mp3"));
 		sounds.put(SOUNDCODE_FOOTSTEP1, new AudioClip("file:res/sound/footstep1.mp3"));
 		sounds.put(SOUNDCODE_FOOTSTEP2, new AudioClip("file:res/sound/footstep2.mp3"));
-		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.mp3"));
-		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.mp3"));
-		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.mp3"));
+		sounds.put(SOUNDCODE_KEYPICKUP, new AudioClip("file:res/sound/keypickup.wav"));
+		sounds.put(SOUNDCODE_ITEMPICKUP, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound file
+		
+		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.wav"));
+		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.wav"));
+		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));
 		
 		
 		/*play the main menu music*/
@@ -86,6 +97,49 @@ public class AudioManager implements GameListener{
 	}
 
 	
+	/*volume setting methods*/
+	
+	/**
+	 * Sets the master volume and readjusts all audioclip volumes accordingly.
+	 * @param v
+	 */
+	public void setMasterVol(double v) {
+		masterVol = v;
+		adjustVols();
+	}	
+	
+	/**
+	 * Sets the sfx volume and readjusts all audioclip volumes accordingly.
+	 * @param v
+	 */
+	public void setSfxVol(double v) {
+		sfxVol = v;
+		adjustVols();
+	}	
+	
+	/**
+	 * Sets the music volume and readjusts all audioclip volumes accordingly.
+	 * @param v
+	 */	
+	public void setMusicVol(double v) {
+		musicVol = v;
+		adjustVols();
+	}
+	
+	/**
+	 * Adjusts the volumes for all the AudioClips appropriately according
+	 * to master, music, and sfx volumes.
+	 */
+	private void adjustVols() {		
+		for(AudioClip c: sounds.values()) {
+			c.setVolume(masterVol*sfxVol);
+		}
+		sounds.get(SOUNDCODE_MENUSONG).setVolume(masterVol*musicVol);
+		sounds.get(SOUNDCODE_TOWNSONG).setVolume(masterVol*musicVol);
+		sounds.get(SOUNDCODE_BATTLESONG).setVolume(masterVol*musicVol);
+	}
+	
+	
 	/*GameListener methods*/
 	
 	@Override
@@ -96,7 +150,6 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onPlayerMoved(Player player) {
-		// TODO Auto-generated method stub
 		if (ThreadLocalRandom.current().nextBoolean())
 			playSound(AudioManager.SOUNDCODE_FOOTSTEP1);
 		else
@@ -118,8 +171,11 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onPlayerPickup(Player player, Item item) {
-		// TODO Auto-generated method stub
-		
+		if(item instanceof Key) {
+			playSound(SOUNDCODE_KEYPICKUP);
+		}else {
+			playSound(SOUNDCODE_ITEMPICKUP);
+		}
 	}
 
 	@Override
