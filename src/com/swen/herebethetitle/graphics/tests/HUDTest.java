@@ -79,7 +79,7 @@ public class HUDTest extends TestWindow {
             Sprite [] armourSprites = defaultArmourSprites();
 
             List invSprites = new ArrayList<>();
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 7; i++) {
                 invSprites.add(new Sprite(null, new GridLocation(i, 0)));
             }
             Sprite weapon = new Sprite(null, new GridLocation(0, 0));
@@ -99,7 +99,7 @@ public class HUDTest extends TestWindow {
                 Sprite weapon = new Sprite(null, new GridLocation(0,0));
                 HUD hud = new HUD(c);
                 hud.createTextBox("\"Great weather today!\" \"Did you hear about the beast?\" \"It's called THE BEAST",
-                        new Image("file:res/mob/wise old man.png"), "Wize ol");
+                        new Image("file:res/mob/wise old man.png"), "Wize old man");
                 hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
                 GraphicsContext gc = c.getGraphicsContext2D();
             }

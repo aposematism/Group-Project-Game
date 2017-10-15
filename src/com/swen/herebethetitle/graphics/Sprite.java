@@ -35,7 +35,7 @@ public class Sprite {
     }
 
     /**
-     * Draw this sprite to the given canvas. Offset by a given point.
+     * Draw this sprite using the given GraphicsContext. Offset by a given point.
      * @param gc the GraphicsContext used to render the image
      * @param g The gridManager for positioning
      * @param offset The offset from the origin.
@@ -47,7 +47,7 @@ public class Sprite {
     }
 
     /**
-     * Draw this sprite to the given canvas.
+     * Draw this sprite using the given GraphicsContext.
      * @param gc the GraphicsContext used to render the image
      * @param g The gridManager for positioning
      * @author weirjosh
@@ -57,6 +57,15 @@ public class Sprite {
         gc.drawImage(img, pos.x, pos.y, g.getCellSize(), g.getCellSize());
     }
 
+    /**
+     * Draws this sprite only if its position is within the given bounds
+     * @param gc the GraphicsContext used to render the image
+     * @param g The gridManager for positioning
+     * @param offset The offset from the origin.
+     * @param width The width of the bounds
+     * @param height The height of the bounds
+     * @return Whether or not drawing was successful.
+     */
     public boolean drawInBounds(GraphicsContext gc, GridManager g, Point offset, int width, int height){
 
         Point pos = g.getRealCoordinates(loc, offset);
@@ -88,6 +97,10 @@ public class Sprite {
     public void setLocation(GridLocation newLoc){
         loc = newLoc;
     }
+
+    public void setImage(Image im){img = im;}
+
+
 
 
     private boolean checkInBounds(Point p, GridManager g, int width, int height){
