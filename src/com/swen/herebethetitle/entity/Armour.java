@@ -65,9 +65,9 @@ public final class Armour extends Item {
 	 * The four different types of armour there are that covers a body part
 	 */
 	public enum TYPE {
-		HELMET,
-		TORSO,
+		BOOTS,
 		LEGS,
-		BOOTS
+		TORSO,
+		HELMET
 	}
 }
