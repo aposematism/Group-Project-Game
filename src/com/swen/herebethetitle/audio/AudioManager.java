@@ -80,9 +80,9 @@ public class AudioManager implements GameListener{
 		sounds.put(SOUNDCODE_DIALOG_MESSAGE, new AudioClip("file:res/sound/dialogmessage.mp3"));
 		sounds.put(SOUNDCODE_DIALOG_END, new AudioClip("file:res/sound/dialogend.mp3"));
 
-		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.mp3"));
-		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.mp3"));
-		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.mp3"));    //TODO decide whether to keep or not
+		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.wav"));
+		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.wav"));
+		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));    //TODO decide whether to keep or not
 		
 		
 		/*play the main menu music*/
