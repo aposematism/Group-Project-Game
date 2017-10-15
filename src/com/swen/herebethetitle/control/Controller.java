@@ -43,9 +43,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 /**
@@ -344,18 +342,8 @@ public class Controller extends Application{
 		saveGame.setPrefSize(100, 20);
 		saveGame.setText("Save");
 		saveGame.setOnAction(e ->
-				chooseSaveFile().ifPresent(file -> {
-					ReverseParser rp = new ReverseParser(game.getCurrentRegion(), file);
-					try {
-						rp.writeToFile(game.getCurrentRegion().getRegionName() + "currentstate");
-					} catch (FileNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (UnsupportedEncodingException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-				}
-					
+				chooseSaveFile().ifPresent(file ->
+						new ReverseParser(game.getCurrentRegion(), file)
 				)
 		);
 		optionBox.getChildren().add(saveGame);
