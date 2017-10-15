@@ -448,6 +448,7 @@ public class Controller extends Application{
 					logic.movePlayer(Direction.Down);
 					break;
 					
+					
 					/*inventory interaction cases*/
 				case DIGIT1:
 					useItemInPlayerInventory(0);
