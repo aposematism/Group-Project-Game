@@ -99,7 +99,7 @@ public class HUDTest extends TestWindow {
                 Sprite weapon = new Sprite(null, new GridLocation(0,0));
                 HUD hud = new HUD(c);
                 hud.createTextBox("\"Great weather today!\" \"Did you hear about the beast?\" \"It's called THE BEAST",
-                        new Image("file:res/mob/wise old man.png"), "Wize old man");
+                        new Image("file:res/mob/wise old man.png"), "Wize ol");
                 hud.drawAll(weapon, armourSprites, new ArrayList<>(), c);
                 GraphicsContext gc = c.getGraphicsContext2D();
             }
