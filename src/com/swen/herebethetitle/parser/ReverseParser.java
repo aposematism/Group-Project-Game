@@ -6,6 +6,7 @@ import com.swen.herebethetitle.model.Tile;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,11 +14,18 @@ import static com.swen.herebethetitle.parser.EntityParser.parse;
 
 public class ReverseParser {
 	
-	static ArrayList<Entity> interactives = new ArrayList<Entity>();
-	static ArrayList<String> output = new ArrayList<String>();
+	ArrayList<Entity> interactives = new ArrayList<Entity>();
+	ArrayList<String> entityOutput = new ArrayList<String>();
+	HashMap<String, String> characterMap = new HashMap<String, String>();
+	Region r;
 
 	public ReverseParser(File region) throws IOException, InputMismatchException {
 		reverseScanner(region);
+	}
+	
+	public ReverseParser(Region reg) {
+		r = reg;
+		parseRegion(reg);
 	}
 	
 	/** 
@@ -25,14 +33,17 @@ public class ReverseParser {
 	 * but also for not creating unnecessarily files if no items have moved. Primarily used for loading.
 	 * @throws IOException SyntaxError 
 	 * */
-	private static void reverseScanner(File region) throws IOException, InputMismatchException {
+	private void reverseScanner(File region) throws IOException, InputMismatchException {
 		interactives = new ArrayList<Entity>();
-		output = new ArrayList<String>();
+		entityOutput = new ArrayList<String>();
 		BufferedReader regionBuff = null;
 		try{
 			regionBuff = new BufferedReader(new FileReader(region));
 			String line = regionBuff.readLine();
 			while(line != null){
+				if(line.contains("map:")) {
+					pullEntities(r);
+				}
 				Scanner s = new Scanner(line);
 				Entity ent = parse(s);
 				interactives.add(ent);
@@ -49,9 +60,9 @@ public class ReverseParser {
 	/** 
 	 * This classes saves all the data from a region into a correct file. Primarily used for saving.
 	 * */
-	public static void parseRegion(Region r) {
-		interactives = new ArrayList<Entity>();
-		pullInteractives(r);
+	public void parseRegion(Region r) {
+		
+		pullEntities(r);
 		String fileName = r.getRegionName()+"currentstate.txt";
 		try {
 			writeToFile(fileName);
@@ -62,39 +73,53 @@ public class ReverseParser {
 		}
 	}
 
-	private static void pullInteractives(Region r) {
+	/** 
+	 * This pulls entities from the region.
+	 * */
+	private void pullEntities(Region r) {
 		for(int i = 0; i < r.getXSize(); i++) {
 			for(int j = 0; j < r.getYSize(); j++) {
-				pullString(i, j , r);
+				pullEntities(i, j , r);
 			}
 		}
 	}
 	
-	private static void pullString(int i, int j, Region r) {
+	private void pullEntities(int i, int j, Region r) {
 		Tile t = r.get(i,j);
 		for(Entity ent : t.getInteractives()) {
-			String concat = "("+ i +","+ j +") "+ ent.toString();
-			output.add(concat);
+			if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
+				
+			}
+			else {//otherwise add it to the map.
+				characterMap.put(t.getCharacter(), ent.toString());
+			}
+			String concat = t.getCharacter() +" = "+ ent.toString();
+			entityOutput.add(concat);
 		}
 	}
 	
-	/** 
-	 * Left public for testing.
-	 * */
-	public static void pullString(ArrayList<Entity> entArray) {
-		for(int i = 0; i < interactives.size(); i++) {
-			String concat = " " + interactives.get(i).toString();
-			output.add(concat);
-		}
-	}
 	
-	public static File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
+	public File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
  		File outputFile = null;
 		try {
  			outputFile = File.createTempFile(fileName, ".txt.tmp");
 			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
-			for(String s : output) {
-				pw.write(s);
+			pw.write("this: " + r.getRegionName()); pw.newLine();
+			pw.write("north: " + r.getNeighbouringRegions()[0]); pw.newLine();
+			pw.write("east: " + r.getNeighbouringRegions()[1]); pw.newLine();
+			pw.write("south: " + r.getNeighbouringRegions()[2]); pw.newLine();
+			pw.write("west: " + r.getNeighbouringRegions()[3]); pw.newLine();
+			pw.write(" "); pw.newLine();
+			pw.write("entities:");
+			for(String s : entityOutput) {
+				pw.write(s); 
+				pw.newLine();
+			}
+			pw.write("map:");
+			for(int i = 0; i < r.getXSize(); i++) {
+				for(int j = 0; j < r.getYSize(); j++) {
+					pw.write(r.get(i, j).getCharacter());
+				}
 				pw.newLine();
 			}
 			pw.close();
@@ -112,11 +137,11 @@ public class ReverseParser {
 		return outputFile;
 	}
 	
-	public static ArrayList<Entity> getInteractiveList() {
+	public ArrayList<Entity> getInteractiveList() {
 		return interactives;
 	}
 	
-	public static ArrayList<String> getOutputList(){
-		return output;
+	public ArrayList<String> getOutputList(){
+		return entityOutput;
 	}
 }

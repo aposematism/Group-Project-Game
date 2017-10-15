@@ -76,7 +76,6 @@ public class MapParser {
 		if(line.contains("map:")) {
 			line = reader.readLine();
 			while (line != null) {
-				System.out.println(line);
 				charArray.addLine(line.split(""));
 				line = reader.readLine();
 			}
