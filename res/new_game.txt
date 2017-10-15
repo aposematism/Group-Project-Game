@@ -6,16 +6,26 @@ west: farm
 
 entities:
 . = Floor "Grass" "static/grass.png"
-w = Static "Wall" "static/tudorwall.png"
-d = Floor "Grass" "static/grass.png" + Static "Door" "static/door brown locked.png" Door 70 LOCKED "static/door brown closed.png" "static/door brown open.png"
+, = Floor "Floorboard" "static/woodfloor.png"
 _ = Static "Void" "blank.png"
-x = Floor "Grass" "static/grass.png" + NPC "Fred" "mob/wizard.png" 50.0 Down Friendly { "Hi there!" "You are a squire who needs to gain the title of knight!" "You can't leave this room until you unlock that door" "Theres a key right over there" "To move, right click on the space you want to move to" "And to pick items up, you left click them" "You can interact with lots of stuff by left clicking them actually!" "Go on now, try it out!" }
-p = Floor "Grass" "static/grass.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple.png" 5.0 }
-z = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 50.0
+w = Static "Wall" "static/tudorwall.png"
+d = Floor "Floorboard" "static/woodfloor.png" + Static "Door" "static/door brown locked.png" Door 0 UNLOCKED "static/door brown closed.png" "static/door brown open.png"
+e = Floor "Floorboard" "static/woodfloor.png" + Static "Door" "static/door brown locked.png" Door 70 LOCKED "static/door brown closed.png" "static/door brown open.png"
+f = Floor "Floorboard" "static/woodfloor.png" + Static "Door" "static/door brown locked.png" Door 0 UNLOCKED "static/door brown closed.png" "static/door brown open.png"
+x = Floor "Floorboard" "static/woodfloor.png" + NPC "Friendly Wizard" "mob/wizard.png" 50.0 Down Friendly { "Hi there!" "You're a squire who needs to earn the title of knight!" "Well, gain the title... by finding it... on the ground..." "It makes sense I promise!" "Anyway, to move, simply right click where you want to go" "To interact with stuff, you left click when close by" "Now go up to that door and open it, and then go talk to the locksmith" "Salutations!" }
+y = Floor "Floorboard" "static/woodfloor.png" + NPC "Locksmith" "mob/wizard.png" 50.0 Down Friendly { "mmmYello?" "Oh hullo!" "To open doors that are locked, you'll need a key" "The one on the floor just over there should do the trick!" "Go get it, then go up to the door and unlock it!" }
+z = Floor "Floorboard" "static/woodfloor.png" + NPC "Black Smith" "mob/wizard.png" 50.0 Down Friendly { "Why hello there" "The name's Black..." "...Smith..." "..." "..yeah" "You need some protection!" "It's a scary world out there!" "You'll need some protection" "Feel free to grab some of this armour, its on the house!" "When you pick up new armour and weapons, they'll be automagically equipped if its better than what you've already got." "Good luck on your journey!" }
+p = Floor "Floorboard" "static/woodfloor.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory
+k = Floor "Floorboard" "static/woodfloor.png" + Key "Key for door" "item/key red.png" 70
+# = Floor "Floorboard" "static/woodfloor.png" + Weapon "Bronze Sword" "item/sword brown.png" true 5.0
+@ = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Hat" "item/helmet1.png" HELMET 5.0 
+! = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Chestplate" "item/torso1.png" TORSO 5.0 
+$ = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Leggings" "item/legs1.png" LEGS 5.0 
+% = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Boots" "item/boots1.png" BOOTS 5.0 
+n = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 50.0
 s = Floor "Grass" "static/grass.png" + Weapon "Fire Staff" "item/staff red.png" false 10.0
 m = Floor "Grass" "static/grass.png" + Potion "Steak" "item/meat.png" 10
 b = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25
-k = Floor "Grass" "static/grass.png" + Key "Key for door" "item/key red.png" 70
 r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.png"
 1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 1.png"
 2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 2.png"
@@ -25,15 +35,34 @@ r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.p
 9 = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 20.0
 
 map:
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-w......w................................................w
-w..p.x.w.......9..........12........0.............12....w
-w......w..................34....s.................34....w
-w..k...w..12............................................w
-wwwwwwdw..34...wwwwwwwwww.........wwwwwwwwwww.....wwwwwww
-w......w.......w________w....b....w_________w.....w______
-w.12...w..z....w________w.........w_________w.....w______
-w.34...........w________w.........w_________wwwwwww______
-w......w.......w________wwwwwwwwwww______________________
-w......w.......w_________________________________________
-wwwwwwwwwwwwww.w_________________________________________
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+....................................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+...................................w............................................w
+..................................w.............................................w
+.................................w..............................n...............w
+................................w...............................................w
+........................wwwwwwwwwwwwwwww.....12.................................w
+........................w,,,,,,w,,,,,,,f.....34.................................w
+........................w,,px,,w,,,,,,,w..........12........0.............12....w
+........................w,,,,,,w,,,%,,,w..........34....s.................34....w
+........................wwwwwwdw,,,$,,,w........................................w
+........................w,,,,,,w,,,!,,,wwwwwwwwww.........wwwwwwwwwww.....wwwwwww
+........................w,,,,,,w,,,@,,,w........w....b....w.........w.....w......
+........................w,,,,,,w,,,#,,,w........w.........w.........w.....w......
+........................w,,,y,,e,,,,,,,w........w.........w.........wwwwwww......
+........................w,,,,,,w,,,z,,,w........wwwwwwwwwww......................
+........................w,,k,,,w,,,,,,,w.........................................
+........................wwwwwwwwwwwwwwww.........................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................
+.................................................................................

@@ -44,10 +44,11 @@ public final class Armour extends Item {
 	 */
 	@Override
 	protected void pickup(GameContext context) {
-		if(context.player.inventory().getArmour(this.SLOT)==null)
-			context.player.inventory().add(this);
-		else if(this.RATING>context.player.inventory().getArmour(this.SLOT).getRating())
-			context.player.inventory().add(this);
+		if (context.player.inventory().getArmour(this.SLOT) == null || //doesn't have armour
+				this.RATING > context.player.inventory().getArmour(this.SLOT).getRating() //or this armour is better
+				) {
+			super.pickup(context);
+		}
 	}
 
 	/**

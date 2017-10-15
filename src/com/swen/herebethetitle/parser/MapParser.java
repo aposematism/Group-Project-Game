@@ -105,7 +105,12 @@ public class MapParser {
 
 				List<Entity> entities = characterMap.get(character);
 
-				tile.add(entities.toArray(new Entity[entities.size()]));
+				try {
+					tile.add(entities.toArray(new Entity[entities.size()]));
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+					throw new InputMismatchException("Missing character mapping for '" + character + "'!");
+				}
 
 				regionArray[row][col] = tile;
 			}
