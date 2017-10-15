@@ -1,28 +1,14 @@
 package com.swen.herebethetitle.audio.tests;
 
-import java.util.Optional;
-
 import com.swen.herebethetitle.audio.AudioManager;
-import com.swen.herebethetitle.entity.Armour;
 import com.swen.herebethetitle.entity.Item;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Static;
 import com.swen.herebethetitle.entity.Key;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class AudioTestApplication extends Application{
 
 	public static AudioManager audio;
-	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Audio testing");
-		audio = new AudioManager();
-		primaryStage.show();
-	}
 	
 	/**
 	 * Tests if the audiomanager can play multiple sounds.
@@ -42,7 +28,7 @@ public class AudioTestApplication extends Application{
 		if(!audio.isPlaying(AudioManager.SOUNDCODE_ROBOT1)) {
 			return false;
 		}
-		
+
 		audio.playSound(AudioManager.SOUNDCODE_DEMON1);
 		audio.playSound(AudioManager.SOUNDCODE_DEMON2);
 		audio.playSound(AudioManager.SOUNDCODE_ROBOT1);
@@ -57,12 +43,7 @@ public class AudioTestApplication extends Application{
 		if(!audio.isPlaying(AudioManager.SOUNDCODE_ROBOT1)) {
 			return false;
 		}
-		if(!audio.isPlaying(AudioManager.SOUNDCODE_FOOTSTEP1)) {
-			return false;
-		}
-		
-		
-		return true;
+		return audio.isPlaying(AudioManager.SOUNDCODE_FOOTSTEP1);
 	}
 	
 	/**
@@ -78,10 +59,7 @@ public class AudioTestApplication extends Application{
 		if(audio.isPlaying(AudioManager.SOUNDCODE_MENUSONG)) {
 			return false;
 		}
-		if(audio.isPlaying(AudioManager.SOUNDCODE_TOWNSONG)) {
-			return true;
-		}
-		return false;
+		return audio.isPlaying(AudioManager.SOUNDCODE_TOWNSONG);
 	}
 	
 	/**
@@ -136,7 +114,7 @@ public class AudioTestApplication extends Application{
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DEMON1)) {
 	    	System.out.println("Game listener fail: onNPCAttacked");
 	    	return false;
-	    }	    
+	    }
 	    /*player kills npc*/
 	    audio.onNPCKilled(null);
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DEMON2)) {
@@ -144,8 +122,8 @@ public class AudioTestApplication extends Application{
 	    	return false;
 	    }
 	    /*dialog begin*/
-	    audio.onNPCDialogBegin(null);	    
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE1)) {
+		audio.onNPCDialogBegin(null);
+		if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE1)) {
 	    	System.out.println("Game listener fail: onNPCDialogBegin");
 	    	return false;
 	    }
@@ -169,8 +147,8 @@ public class AudioTestApplication extends Application{
 	    }
 	    /*door unlock failure*/
 	    audio.onDoorUnlockFailed(null, null);
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_UNLOCKFAIL)) {
-	    	System.out.println("Game listener fail: onDoorUnlockFailed");
+		if (!audio.isPlaying(AudioManager.SOUNDCODE_ERROR)) {
+			System.out.println("Game listener fail: onDoorUnlockFailed");
 	    	return false;
 	    }
 	    /*door opened*/
@@ -186,6 +164,13 @@ public class AudioTestApplication extends Application{
 	    	return false;
 	    }
 	    return true;
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("Audio testing");
+		audio = new AudioManager();
+		primaryStage.show();
 	}
 	
 	static class DummyItem extends Item {
