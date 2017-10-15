@@ -190,7 +190,10 @@ public class EntityParser {
 	private DoorStrategy parseDoor(Scanner s) throws InputMismatchException {
 		int key = s.nextInt();
 		DoorStrategy.STATE state = DoorStrategy.STATE.valueOf(s.next());
-		return new DoorStrategy(key, state);
+		String closedSprite = parseString(s);
+		String openSprite = parseString(s);
+
+		return new DoorStrategy(key, state, closedSprite, openSprite);
 	}
 
 	/** 

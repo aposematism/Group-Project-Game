@@ -7,7 +7,7 @@ west: farm
 entities:
 . = Floor "Grass" "static/grass.png"
 w = Static "Wall" "static/tudorwall.png"
-d = Static "Door" "static/cobble master.png" Door 70 LOCKED
+d = Static "Door" "static/cobble master.png" Door 70 LOCKED "static/cobble master.png" "static/grass.png"
 _ = Static "Void" "blank.png"
 x = Floor "Grass" "static/grass.png" + NPC "Fred" "mob/wizard.png" 50.0 Down Friendly { "Great weather today!" "Did you hear about the beast?" "It's called THE BEAST" }
 p = Floor "Grass" "static/grass.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple.png" 5.0 }

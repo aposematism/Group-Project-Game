@@ -49,6 +49,7 @@ public class EntityParserTests {
 	 * @author - Mark Metcalfe and Jordan Milburn
 	 * */
 	public void parse(Entity in){
+		System.out.println(in.toString());
 		Scanner s = new Scanner(in.toString());
 		Entity out = EntityParser.parse(s);
 		assertEquals(in.toString(), out.toString());
@@ -228,7 +229,7 @@ public class EntityParserTests {
 	public void test_static_generation() {
 		ArrayList<String> staticArray = new ArrayList<String>();
 		String line = "Static \"Tudor Wall\" \"tudorwall.png\"";
-		String line1 = "Static \"Church Door\" \"heavydoor.png\" Door 3 LOCKED";
+		String line1 = "Static \"Door\" \"static/cobble master.png\" Door 70 LOCKED \"static/tudorwall.png\" \"static/grass.png\"";
 		staticArray.add(line); staticArray.add(line1);
 		try {
 			for(String l : staticArray) {
