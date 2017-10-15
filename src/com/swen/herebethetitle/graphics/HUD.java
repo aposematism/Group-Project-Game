@@ -62,24 +62,6 @@ public class HUD {
 
     }
 
-//    public void drawAll(Canvas c){
-//        GraphicsContext gc = c.getGraphicsContext2D();
-//        Armour[] armour = inventory.getArmour();
-//        for(int i=0;i<armour.length;i++){
-//            Entity e = armour[i];
-//            Image sprite = getImage(e);
-//            renderSlot(sprite, armourGrid, gc, 0, i);
-//        }
-//
-//        Image weaponImg = null;
-//        Optional<Weapon> weapon = inventory.getWeapon();
-//        if(weapon.isPresent()){
-//            weaponImg = getImage(weapon.get());
-//        }
-//        renderSlot(weaponImg, weaponGrid, gc, 0,0);
-//
-//    }
-
     /**
      * renders the HUD to the given Canvas
      * @param weapon The sprite that goes in the weapon slot

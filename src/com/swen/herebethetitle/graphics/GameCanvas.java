@@ -26,10 +26,16 @@ public class GameCanvas extends Canvas implements GameListener {
 	private GameContext context;
 
     private Map<String, Image> imageMap = new HashMap<>();
-    private Map<Entity, Sprite> movingSprites = new HashMap<>();
+    private Map<Entity, Sprite> interactives = new HashMap<>();
 
     private HUD hud;
     private WorldRenderer world;
+
+    private Optional<String> entityAtMouse = Optional.empty();
+    ToolTip toolTip = new ToolTip();
+
+    private int mouseX;
+    private int mouseY;
 
     /**
      * Create a new GameCanvas
@@ -59,6 +65,8 @@ public class GameCanvas extends Canvas implements GameListener {
         gc.clearRect(0,0,getWidth(),getHeight());
         updateWorld();
         updateHUD();
+
+        entityAtMouse.ifPresent(e -> toolTip.draw(mouseX, mouseY, entityAtMouse.get(), gc));
     }
 
     /**
@@ -69,7 +77,18 @@ public class GameCanvas extends Canvas implements GameListener {
      * @author weirjosh
      */
     public GridLocation getMousePos(int x, int y){
-        return world.getLocation(new Point(x,y));
+        mouseX = x;
+        mouseY = y;
+
+        GridLocation loc = world.getLocation(new Point(x,y));
+        Entity e = context.getCurrentRegion().get(loc).getTopEntity();
+
+        if(e instanceof Mob || e instanceof Item){
+            entityAtMouse = Optional.of(e.getName());
+        }else{
+            entityAtMouse = Optional.empty();
+        }
+        return loc;
     }
 
     /**
@@ -175,16 +194,16 @@ public class GameCanvas extends Canvas implements GameListener {
 
 
     private Sprite getSprite(Entity e, GridLocation l){
-        if(e instanceof Mob) {
-            if (!movingSprites.containsKey(e)) {
+        if(e instanceof Mob || e instanceof Item) {
+            if (!interactives.containsKey(e)) {
                 Sprite sprite = new Sprite(getImage(e), l);
-                movingSprites.put(e, sprite);
+                interactives.put(e, sprite);
                 System.out.println(l);
             } else {
-                movingSprites.get(e).setImage(getImage(e));
-                movingSprites.get(e).setLocation(l);
+                interactives.get(e).setImage(getImage(e));
+                interactives.get(e).setLocation(l);
             }
-            return movingSprites.get(e);
+            return interactives.get(e);
         }else{
             return new Sprite(getImage(e), l);
         }

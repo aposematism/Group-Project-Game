@@ -1,6 +1,5 @@
 package com.swen.herebethetitle.graphics;
 
-import com.sun.deploy.util.StringUtils;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
