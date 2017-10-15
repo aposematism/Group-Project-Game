@@ -79,6 +79,7 @@ public class MapParser {
 			line = reader.readLine();
 			while (line != null) {
 				charArray.addLine(line.split(""));
+				System.out.println(line);
 				line = reader.readLine();
 			}
 		}
