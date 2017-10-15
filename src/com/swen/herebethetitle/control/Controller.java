@@ -27,7 +27,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -185,7 +184,7 @@ public class Controller extends Application{
 		Button loadGame = new Button("Load Game");
 		loadGame.setId("loadGame");
 		loadGame.setOnAction(e ->
-				chooseFile().ifPresent(file ->
+				chooseLoadFile().ifPresent(file ->
 						loadGame(file)
 				));
 		loadGame.setPrefSize(100, 20);
@@ -237,9 +236,9 @@ public class Controller extends Application{
 		settingsOpen = true;
 	}
 
-	private Optional<File> chooseFile() {
+	private Optional<File> chooseLoadFile() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Load a map file");
+		fileChooser.setTitle("Load your game");
 		fileChooser.setInitialDirectory(new File("res/"));
 		fileChooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Text Files", "*.txt"),
@@ -247,6 +246,21 @@ public class Controller extends Application{
 		File mapFile = fileChooser.showOpenDialog(window);
 		if (mapFile == null) {
 			System.out.println("File failure: map file null");
+			return Optional.empty();
+		}
+		return Optional.of(mapFile);
+	}
+
+	private Optional<File> chooseSaveFile() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save your game");
+		fileChooser.setInitialDirectory(new File("."));
+		fileChooser.getExtensionFilters().addAll(
+				new ExtensionFilter("Text Files", "*.txt"),
+				new ExtensionFilter("All Files", "*.*"));
+		File mapFile = fileChooser.showSaveDialog(window);
+		if (mapFile == null) {
+			System.out.println("File failure");
 			return Optional.empty();
 		}
 		return Optional.of(mapFile);
@@ -299,33 +313,40 @@ public class Controller extends Application{
 		
 		//add the game canvas & audio manager to the logic's listeners
 		logic.addGameListener(gameCanvas);
-		
+
+		initPauseMenu();
+
+		return s;
+	}
+
+	public void initPauseMenu() {
 		/*initialize the pause menu*/
 		pauseMenuLayout = new BorderPane();
 		pauseMenu = new Scene(pauseMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		
+
 		HBox titleBox = new HBox();
 		titleBox.setAlignment(Pos.CENTER);
 		Text titleText = new Text();
 		titleText.setFont(new Font(50.0));
 		titleText.setText("Paused");
 		titleBox.getChildren().add(new Text("Paused"));
-		
+
 		VBox optionBox = new VBox();
 		optionBox.setAlignment(Pos.CENTER);
-		
+
 		pauseMenuLayout.setTop(titleBox);
 		pauseMenuLayout.setCenter(optionBox);
-		
+
 		Button saveGame = new Button();
 		saveGame.setPrefSize(100, 20);
 		saveGame.setText("Save");
-		saveGame.setOnAction(e->{
-			//initialize reverse parser
-			ReverseParser ep = new ReverseParser(game.getCurrentRegion());
-		});
+		saveGame.setOnAction(e ->
+				chooseSaveFile().ifPresent(file ->
+						new ReverseParser(game.getCurrentRegion(), file)
+				)
+		);
 		optionBox.getChildren().add(saveGame);
-		
+
 		Button unpause = new Button();
 		unpause.setPrefSize(100, 20);
 		unpause.setText("Resume");
@@ -333,9 +354,6 @@ public class Controller extends Application{
 			unpauseGame();
 		});
 		optionBox.getChildren().add(unpause);
-	
-		
-		return s;
 	}
 
 	/**

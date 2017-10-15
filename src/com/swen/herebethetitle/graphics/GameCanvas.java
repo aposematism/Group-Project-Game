@@ -6,13 +6,9 @@ import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
-import com.swen.herebethetitle.util.Direction;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.*;
@@ -30,6 +26,7 @@ public class GameCanvas extends Canvas implements GameListener {
 	private GameContext context;
 
     private Map<String, Image> imageMap = new HashMap<>();
+    private Map<Entity, Sprite> movingSprites = new HashMap<>();
 
     private HUD hud;
     private WorldRenderer world;
@@ -129,13 +126,13 @@ public class GameCanvas extends Canvas implements GameListener {
 
             //Get all interactive entities on this tile
             for(Entity e: t.getInteractives()){
-                frontLayer.add(new Sprite(getImage(e), l));
+                frontLayer.add(getSprite(e, l));
                 //Record the player
                 if(e instanceof Player){
                     playerLoc = l;
                 }
             }
-            worldSprites.put(new Sprite(getImage(t.getMapFloor()), l), frontLayer);
+            worldSprites.put(getSprite(t.getMapFloor(), l), frontLayer);
         }
         world.drawAll(worldSprites, playerLoc, this);
     }
@@ -177,6 +174,22 @@ public class GameCanvas extends Canvas implements GameListener {
     }
 
 
+    private Sprite getSprite(Entity e, GridLocation l){
+        if(e instanceof Mob) {
+            if (!movingSprites.containsKey(e)) {
+                Sprite sprite = new Sprite(getImage(e), l);
+                movingSprites.put(e, sprite);
+                System.out.println(l);
+            } else {
+                movingSprites.get(e).setImage(getImage(e));
+                movingSprites.get(e).setLocation(l);
+            }
+            return movingSprites.get(e);
+        }else{
+            return new Sprite(getImage(e), l);
+        }
+}
+
 
     private Image getImage(Entity e) {
         if(e == null) return null;
@@ -188,20 +201,6 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	        imageMap.put(e.getSpritePath(), image);
         }
-
-//        if(e instanceof Mob){
-//            Mob mob = (Mob)e;
-//            Direction d = mob.getDirection();
-//
-//            ImageView iv = new ImageView(imageMap.get(mob.getSpritePath()));
-//            SnapshotParameters params = new SnapshotParameters();
-//            params.setFill(Color.TRANSPARENT);
-//            iv.setRotate(d.ordinal()*90);
-//            //System.out.println(iv.getRotate());
-//            return iv.snapshot(params, null);
-//        }
-
-
         return imageMap.get(e.getSpritePath());
     }
 
@@ -219,12 +218,11 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		
+
 	}
 
 	@Override
 	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -242,8 +240,7 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onNPCAttacked(NPC victim) {
-		
-	}
+    }
 
 	@Override
 	public void onNPCKilled(NPC npc) {

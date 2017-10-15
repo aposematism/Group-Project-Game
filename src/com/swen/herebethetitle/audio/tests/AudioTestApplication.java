@@ -153,14 +153,14 @@ public class AudioTestApplication extends Application{
 	    }
 	    /*door opened*/
 	    audio.onDoorOpened(null);
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DOOR)) {
-	    	System.out.println("Game listener fail: onDoorOpened");
+		if (!audio.isPlaying(AudioManager.SOUNDCODE_DOOROPEN)) {
+			System.out.println("Game listener fail: onDoorOpened");
 	    	return false;
 	    }
 	    /*door closed*/
 	    audio.onDoorClosed(null);
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DOOR)) {
-	    	System.out.println("Game listener fail: onDoorClosed");
+		if (!audio.isPlaying(AudioManager.SOUNDCODE_DOORCLOSE)) {
+			System.out.println("Game listener fail: onDoorClosed");
 	    	return false;
 	    }
 	    return true;

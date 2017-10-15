@@ -6,8 +6,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -84,14 +87,16 @@ public class HUD {
      * @param c The canvas to render to.
      * @author weirjosh
      */
-    public void drawAll(Sprite weapon, Sprite[] armour, Collection<Sprite> items, Canvas c) {
+    public void drawAll(Sprite weapon, Sprite[] armour, List<Sprite> items, Canvas c) {
         GraphicsContext gc = c.getGraphicsContext2D();
         renderSlot(weapon, weaponGrid, gc);
         for(Sprite s: armour){
             renderSlot(s, armourGrid, gc);
         }
-	    for (Sprite s : items) {
-		    renderSlot(s, itemGrid, gc);
+	    for (int i=0; i<items.size();i++) {
+            Sprite s = items.get(i);
+            renderSlot(s,itemGrid, gc, (i+1)%10);
+
 	    }
 
 	    textBox.ifPresent(textBox1 -> textBox1.draw(gc, textBoxGrid));
@@ -164,5 +169,17 @@ public class HUD {
         gc.strokeRect(p.x, p.y, slotSize, slotSize);
         sprite.draw(gc, grid);
 
+    }
+    private void renderSlot(Sprite sprite, GridManager grid, GraphicsContext gc, Integer number){
+        renderSlot(sprite, grid, gc);
+
+        int size = 14;
+        Point p = grid.getRealCoordinates(sprite.getLocation());
+
+        gc.setFill(new Color(0,0,0,0.7));
+        gc.fillRect(p.x,p.y,size,size);
+        gc.setFill(Color.WHITE);
+        gc.setFont(Font.font("Arial", size+1));
+        gc.fillText(Integer.toString(number), p.x, p.y+size-2);
     }
 }
