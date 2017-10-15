@@ -106,7 +106,7 @@ public class ReverseParser {
 	public File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
  		File outputFile = null;
 		try {
- 			outputFile = File.createTempFile(fileName, ".txt");
+ 			outputFile = new File("res/"+fileName);
 			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
 			pw.write("this: " + r.getRegionName()); pw.newLine();
 			pw.write("north: " + r.getNeighbouringRegions()[0]); pw.newLine();
