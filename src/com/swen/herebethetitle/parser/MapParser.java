@@ -94,7 +94,7 @@ public class MapParser {
 	 * @author - Jordan Milburn
 	 * */
 	private void parseStringArray() {
-		regionArray = new Tile[charArray.width()][charArray.height()];
+		regionArray = new Tile[charArray.height()][charArray.width()];
 		for (int row = 0; row < charArray.height(); row++) {
 			for (int col = 0; col < charArray.width(); col++) {
 				String character = charArray.get(row, col);
@@ -106,7 +106,7 @@ public class MapParser {
 
 				tile.add(entities.toArray(new Entity[entities.size()]));
 
-				regionArray[col][row] = tile;
+				regionArray[row][col] = tile;
 			}
 		}
 	}

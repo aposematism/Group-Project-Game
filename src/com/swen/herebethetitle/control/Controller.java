@@ -67,7 +67,7 @@ public class Controller extends Application{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
 	public static final int DEFAULT_HEIGHT = 650;
-	public static final int FRAMES_PER_SECOND = 45;
+	public static final int FRAMES_PER_SECOND = 30;
 	public static final int TESTCODE_INPUTS = 1;
 	//Testing mode field
 	public static int isTesting;
