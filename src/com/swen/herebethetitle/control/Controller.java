@@ -2,6 +2,7 @@ package com.swen.herebethetitle.control;
 
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameLogic;
@@ -445,6 +446,38 @@ public class Controller extends Application{
 				case KP_DOWN:
 					logic.movePlayer(Direction.Down);
 					break;
+					
+					/*inventory interaction cases*/
+				case DIGIT1:
+					useItemInPlayerInventory(0);
+					break;
+				case DIGIT2:
+					useItemInPlayerInventory(1);
+					break;
+				case DIGIT3:
+					useItemInPlayerInventory(2);
+					break;
+				case DIGIT4:
+					useItemInPlayerInventory(3);
+					break;
+				case DIGIT5:
+					useItemInPlayerInventory(4);
+					break;
+				case DIGIT6:
+					useItemInPlayerInventory(5);
+					break;
+				case DIGIT7:
+					useItemInPlayerInventory(6);
+					break;
+				case DIGIT8:
+					useItemInPlayerInventory(7);
+					break;
+				case DIGIT9:
+					useItemInPlayerInventory(8);
+					break;
+				case DIGIT0:
+					useItemInPlayerInventory(9);
+					break;
 			}
 		} catch (InvalidDestination er) {
 			er.printStackTrace();
@@ -499,6 +532,24 @@ public class Controller extends Application{
 			System.out.println("Interacted");
 		} catch (EntityOutOfRange ex) {
 			System.out.println("Can't interact");
+		}
+	}
+	
+	/**
+	 * Attempts to interact with an item in the player's inventory at a given slot.
+	 * If it doesn't exist, does nothing.
+	 * @param i
+	 */
+	private void useItemInPlayerInventory(int i) {
+		try {
+			Item item = game.getPlayer().inventory().getItems().get(i);
+			if(item==null) {
+				return;
+			}
+			item.interact(game);
+		}catch(IndexOutOfBoundsException e) {
+			//do nothing, means we've selected an inventory
+			//slot with no item in it
 		}
 	}
 
