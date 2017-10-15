@@ -110,6 +110,17 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
     }
     
     /**
+     * Checks if the region contains an entity.
+     */
+    public boolean contains(Entity entity) {
+        for (int y=0; y<this.height; y++)
+            for (int x=0; x<this.width; x++)
+                if (get(x, y).contains(entity))
+                    return true;
+        return false;
+    }
+    
+    /**
      * Checks if a location is within the region.
      */
     public boolean isWithin(GridLocation location) {

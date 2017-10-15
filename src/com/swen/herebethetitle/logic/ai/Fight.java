@@ -34,6 +34,9 @@ class Fight implements Interaction {
      * @throws InteractionOver if the player is inaccessible to the enemy.
      */
     public void tick(Region region, Notifier notifier) throws InteractionOver {
+        if (!region.contains(npc))
+            throw new InteractionOver(); // enemy may already be dead.
+
         Optional<Path> optimalPath = optimalPathToPlayer(region);
         
         if (optimalPath.isPresent()) {
