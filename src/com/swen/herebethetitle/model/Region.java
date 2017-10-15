@@ -84,7 +84,11 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
      * Gets the tile at a location.
      */
     public Tile get(GridLocation location) {
-	    return cells[location.y][location.x];
+        try {
+            return cells[location.y][location.x];
+        }catch(IndexOutOfBoundsException E){
+            return Tile.nullTile();
+        }
     }
     
     /**

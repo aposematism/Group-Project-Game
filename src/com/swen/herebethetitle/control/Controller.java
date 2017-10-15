@@ -303,6 +303,7 @@ public class Controller extends Application{
 		/*set up event handling*/
 		gameGUIRoot.setOnKeyPressed(e->handleKeyPress(e));
 		gameGUIRoot.setOnMousePressed(e->handleMousePress(e));
+		gameGUIRoot.setOnMouseMoved(e -> handleMouseMove(e));
 		gameCanvas = new GameCanvas(game, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		gameGUIRoot.getChildren().add(gameCanvas);
 		//create new scene
@@ -450,6 +451,15 @@ public class Controller extends Application{
 			er.printStackTrace();
 		}
 	}
+
+	/**
+	 * Handles a mouse move.
+	 * @param e the mouse event
+	 */
+	private void handleMouseMove(MouseEvent e){
+		gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
+	}
+
 
 	/**
 	 * Handles a mouse press.

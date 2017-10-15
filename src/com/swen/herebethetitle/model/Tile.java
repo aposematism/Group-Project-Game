@@ -135,4 +135,9 @@ public class Tile implements Iterable<Entity> {
 	public int getInteractiveSize() {
 		return interactives.size();
 	}
+
+
+	public static Tile nullTile(){
+		return new Tile(0,0,null);
+	}
 }
