@@ -86,7 +86,7 @@ public class ReverseParser {
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
 							if(t.getMapFloor() != null) {
-								characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
+								//characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
 								break;
 							}
 							else {
