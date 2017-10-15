@@ -97,6 +97,18 @@ public class AudioManager implements GameListener{
 	}
 
 	
+	/*testing methods*/
+	
+	/**
+	 * Returns whether or not an audioclip associated with a given soundcode is playing.
+	 * @param s the soundcode of the audioclip to check is playing or not
+	 * @return whether the audioclip is playing
+	 */
+	public boolean isPlaying(int s) {
+		return sounds.get(s).isPlaying();
+	}
+	
+	
 	/*volume setting methods*/
 	
 	/**
