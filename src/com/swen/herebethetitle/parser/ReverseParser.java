@@ -80,6 +80,11 @@ public class ReverseParser {
 	
 	private void pullEntities(int i, int j, Region r) {
 		Tile t = r.get(i,j);
+		if(t.getInteractives().isEmpty()) {
+			if(!characterMap.containsKey(t.getCharacter())) {
+				characterMap.put(t.getCharacter(), t.getMapFloor().toString());
+			}
+		}
 		for(Entity ent : t.getInteractives()) {
 			if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
 				if(!characterMap.get(t.getCharacter()).equals(ent.toString())) {//make sure the ent output matches.
