@@ -21,7 +21,7 @@ public class ReverseParser {
 		reverseScanner(region);
 	}
 
-	public ReverseParser(Region reg, File file){
+	public ReverseParser(Region reg, File file) {
 		r = reg;
 		parseRegion(reg, file.getPath().replace(file.getName(), ""));
 	}
