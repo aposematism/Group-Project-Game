@@ -499,7 +499,7 @@ public class Controller extends Application{
 	 * @param e the mouse event
 	 */
 	private void handleMouseMove(MouseEvent e){
-		gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
+		gameCanvas.getMousePos((int)e.getX()+15, (int)e.getY()+20);
 	}
 
 
