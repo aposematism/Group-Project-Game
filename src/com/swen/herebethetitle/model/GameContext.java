@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.model;
 
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.parser.RegionManager;
 import com.swen.herebethetitle.util.Direction;
 
 /**
@@ -10,6 +11,7 @@ import com.swen.herebethetitle.util.Direction;
 public class GameContext {
 	public Region currentRegion;
 	public Player player;
+	public RegionManager rm;
 
 	public GameContext() {
 		this.currentRegion = CreateTestRegion();
@@ -37,6 +39,12 @@ public class GameContext {
 		} else {
 			this.player = (Player) currentRegion.getPlayerTile().getInteractives().get(1);
 		}
+		this.rm = new RegionManager(this.currentRegion);
+	}
+	
+	public void moveRegion(Region reg) {
+		this.currentRegion = reg;
+		this.rm = new RegionManager(reg);
 	}
 
 	public static Region CreateTestRegion() {
@@ -47,5 +55,7 @@ public class GameContext {
 
 	public Region getCurrentRegion() { return this.currentRegion; }
 
+	public RegionManager getRegionManager() {return this.rm;}
+	
 	public Player getPlayer() { return this.player; }
 }

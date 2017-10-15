@@ -1,9 +1,8 @@
 this: main
 north: cave
-east: town
+east: res/new_game.txt
 south: seaside
 west: farm
-
 entities:
 . = Floor "Grass" "static/grass.png"
 , = Floor "Floorboard" "static/woodfloor.png"
@@ -33,6 +32,7 @@ r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.p
 4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree01 4.png"
 0 = Floor "Grass" "static/grass.png" + NPC "Dat boi" "mob/wizard.png" 50.0 Down Friendly { "NAOISE DOMHALL" "HELLO" "I AM MAN" "YES" "NO PLEASE" }
 9 = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 20.0
+q = Floor "Grass" "static/grass.png" + RegionDoor "town" "static/door brown open.png" East
 
 map:
 .................................................................................
@@ -45,7 +45,7 @@ map:
 ..................................w.............................................w
 .................................w..............................n...............w
 ................................w...............................................w
-........................wwwwwwwwwwwwwwww.....12.................................w
+........................wwwwwwwwwwwwwwww.....12.................................q
 ........................w,,,,,,w,,,,,,,f.....34.................................w
 ........................w,,px,,w,,,,,,,w..........12........0.............12....w
 ........................w,,,,,,w,,,%,,,w..........34....s.................34....w

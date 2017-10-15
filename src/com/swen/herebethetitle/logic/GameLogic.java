@@ -137,7 +137,6 @@ public class GameLogic {
      */
     public void interact(GridLocation location) throws EntityOutOfRange {
         Tile tile = getCurrentRegion().get(location);
-
 	    Entity entity = tile.getTopEntity();
 	    interact(entity);
     }
@@ -201,6 +200,13 @@ public class GameLogic {
 
         context.getCurrentRegion().move(context.getPlayer(), newLocation);
         notifier.notify(listener -> listener.onPlayerMoved(getPlayer()));
+    }
+    
+    /** 
+     * This is supposed be used for moving region.
+     * */
+    public void moveRegion(Direction dir) {
+    	
     }
 
     /**

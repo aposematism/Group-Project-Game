@@ -3,6 +3,7 @@ package com.swen.herebethetitle.logic;
 import com.swen.herebethetitle.entity.Item;
 import com.swen.herebethetitle.entity.NPC;
 import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.RegionDoor;
 import com.swen.herebethetitle.entity.Static;
 
 import java.util.Optional;
@@ -86,6 +87,10 @@ public interface GameListener {
      */
     void onDoorOpened(Static door);
     
+    /** 
+     * called when moving region.
+     * */
+    void onMoveRegion(RegionDoor door);
     /**
      * Called when a door is closed.
      * 
