@@ -8,9 +8,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import static com.swen.herebethetitle.parser.EntityParser.parse;
 
 public class ReverseParser {
 	
@@ -23,10 +20,10 @@ public class ReverseParser {
 	public ReverseParser(File region) throws IOException, InputMismatchException {
 		reverseScanner(region);
 	}
-	
-	public ReverseParser(Region reg) {
+
+	public ReverseParser(Region reg, File file) {
 		r = reg;
-		parseRegion(reg);
+		parseRegion(reg, file.getPath().replace(file.getName(), ""));
 	}
 	
 	/** 
@@ -58,9 +55,9 @@ public class ReverseParser {
 	/** 
 	 * This classes saves all the data from a region into a correct file. Primarily used for saving.
 	 * */
-	public void parseRegion(Region r) {
+	public void parseRegion(Region r, String path) {
 		pullEntities(r);
-		String fileName = r.getRegionName()+"currentstate.txt";
+		String fileName = path + r.getRegionName() + "currentstate.txt";
 		try {
 			writeToFile(fileName);
 		} catch (FileNotFoundException e) {
@@ -106,7 +103,7 @@ public class ReverseParser {
 	public File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
  		File outputFile = null;
 		try {
- 			outputFile = new File("res/"+fileName);
+			outputFile = new File(fileName);
 			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
 			pw.write("this: " + r.getRegionName()); pw.newLine();
 			pw.write("north: " + r.getNeighbouringRegions()[0]); pw.newLine();
@@ -124,9 +121,9 @@ public class ReverseParser {
 			pw.newLine();
 			pw.write("map:");
 			pw.newLine();
-			for(int i = 0; i < r.getXSize(); i++) {
-				for(int j = 0; j < r.getYSize(); j++) {
-					pw.write(r.get(i, j).getCharacter());
+			for (int row = 0; row < r.getYSize(); row++) {
+				for (int col = 0; col < r.getXSize(); col++) {
+					pw.write(r.get(col, row).getCharacter()); //col = x, row = y
 				}
 				pw.newLine();
 			}

@@ -1,23 +1,15 @@
 package com.swen.herebethetitle.parser.tests;
 
-import static org.junit.Assert.*;
+import com.swen.herebethetitle.model.Region;
+import com.swen.herebethetitle.parser.MapParser;
+import com.swen.herebethetitle.parser.ReverseParser;
+import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.sound.sampled.Line;
-
-import org.junit.Test;
-
-import com.swen.herebethetitle.model.Region;
-import com.swen.herebethetitle.parser.EntityParser;
-import com.swen.herebethetitle.parser.ReverseParser;
-import com.swen.herebethetitle.parser.MapParser;
+import static org.junit.Assert.fail;
 
 public class ReverseParserTests {
 
@@ -91,7 +83,7 @@ public class ReverseParserTests {
 				File inputFile = new File("res/new_game.txt");
 				MapParser tp = new MapParser(inputFile);
 				Region r = tp.getRegion();
-				ReverseParser rp = new ReverseParser(r);
+				ReverseParser rp = new ReverseParser(r, new File(""));
 				File outputFile = rp.writeToFile("full reversal file");
 				assert(compareFiles(inputFile, outputFile));
 			}
