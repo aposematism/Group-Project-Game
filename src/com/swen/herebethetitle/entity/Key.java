@@ -1,5 +1,7 @@
 package com.swen.herebethetitle.entity;
 
+import com.swen.herebethetitle.model.GameContext;
+
 /**
  * Used for interacting with doors
  *
@@ -26,6 +28,13 @@ public final class Key extends Item {
 	 */
 	protected boolean equals(int key) {
 		return this.KEY == key;
+	}
+
+	/**
+	 * Picking up key doesn't do anything, handled by DoorStrategy instead
+	 */
+	@Override
+	protected void use(GameContext context) {
 	}
 
 	@Override

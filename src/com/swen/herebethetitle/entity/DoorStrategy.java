@@ -3,6 +3,8 @@ package com.swen.herebethetitle.entity;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.model.GameContext;
 
+import java.util.Optional;
+
 /**
  * NPCBehavior for Doors
  *
@@ -35,8 +37,14 @@ public final class DoorStrategy implements Static.Behavior {
 	public void interact(GameContext context, Static door, Notifier notifier) {
 	    switch(state) {
 	    case LOCKED:
-		    if (hasKey(context.player)) {
-                state = STATE.OPEN;
+		    if (getKey(context.player).isPresent()) {
+			    state = STATE.OPEN;
+
+			    //remove key from player's inventory
+			    context.getPlayer().inventory().remove(
+					    getKey(context.getPlayer()).get()
+			    );
+
 			    door.setSprite(openSprite);
 			    notifier.notify(l -> l.onDoorUnlocked(door));
 		    } else {
@@ -60,12 +68,12 @@ public final class DoorStrategy implements Static.Behavior {
 	/**
 	 * Check that the Player possess a key with the same key ID as this door
 	 */
-	private boolean hasKey(Player player){
+	private Optional<Key> getKey(Player player) {
 		for(Item i: player.inventory())
 			if(i instanceof Key)
 				if(((Key)i).equals(KEY))
-					return true;
-		return false;
+					return Optional.of((Key) i);
+		return Optional.empty();
 	}
 
 	/**
