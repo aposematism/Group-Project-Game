@@ -36,6 +36,6 @@ public class RegionDoor extends Entity{
 
 	@Override
 	public String toString() {
-		return super.toString()+(behavior.isPresent() ? " "+behavior.get().toString() : "");
+		return super.toString()+("");
 	}
 }
