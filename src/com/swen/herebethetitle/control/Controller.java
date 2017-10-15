@@ -321,7 +321,7 @@ public class Controller extends Application{
 		return s;
 	}
 
-	public void initPauseMenu() {
+	private void initPauseMenu() {
 		/*initialize the pause menu*/
 		pauseMenuLayout = new BorderPane();
 		pauseMenu = new Scene(pauseMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -356,6 +356,14 @@ public class Controller extends Application{
 			unpauseGame();
 		});
 		optionBox.getChildren().add(unpause);
+		
+		Button quit = new Button();
+		quit.setPrefSize(100, 20);
+		quit.setText("Quit");
+		quit.setOnAction(e->{
+			System.exit(0);
+		});
+		optionBox.getChildren().add(quit);
 	}
 
 	/**
