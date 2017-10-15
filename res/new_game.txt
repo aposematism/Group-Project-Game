@@ -7,9 +7,9 @@ west: farm
 entities:
 . = Floor "Grass" "static/grass.png"
 w = Static "Wall" "static/tudorwall.png"
-d = Static "Door" "static/cobble master.png" Door 70 LOCKED "static/cobble master.png" "static/grass.png"
+d = Floor "Grass" "static/grass.png" + Static "Door" "static/door brown locked.png" Door 70 LOCKED "static/door brown closed.png" "static/door brown open.png"
 _ = Static "Void" "blank.png"
-x = Floor "Grass" "static/grass.png" + NPC "Fred" "mob/wizard.png" 50.0 Down Friendly { "Great weather today!" "Did you hear about the beast?" "It's called THE BEAST" }
+x = Floor "Grass" "static/grass.png" + NPC "Fred" "mob/wizard.png" 50.0 Down Friendly { "Hi there!" "You are a squire who needs to gain the title of knight!" "You can't leave this room until you unlock that door" "Theres a key right over there" "To move, right click on the space you want to move to" "And to pick items up, you left click them" "You can interact with lots of stuff by left clicking them actually!" "Go on now, try it out!" }
 p = Floor "Grass" "static/grass.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Weapon "Sword" "item/sword red.png" true 5.0 } { Armour "Chestplate" "item/staff blue.png" TORSO 50.0 } { Potion "Health" "item/potion purple.png" 5.0 }
 z = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 50.0
 s = Floor "Grass" "static/grass.png" + Weapon "Fire Staff" "item/staff red.png" false 10.0
@@ -27,9 +27,9 @@ r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/cobble snow.p
 map:
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w......w................................................w
-w......w...p...9..........13........0.............13....w
-w......w...........x......24....s.............k...24....w
-w......w..13............................................w
+w..p.x.w.......9..........13........0.............13....w
+w......w..................24....s.................24....w
+w..k...w..13............................................w
 wwwwwwdw..24...wwwwwwwwww.........wwwwwwwwwww.....wwwwwww
 w......w.......w________w....b....w_________w.....w______
 w......w..z....w________w.........w_________w.....w______
