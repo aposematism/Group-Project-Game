@@ -58,7 +58,7 @@ public class ReverseParser {
 	 * */
 	public void parseRegion(Region r, String path) {
 		pullEntities(r);
-		String fileName = path + r.getRegionName() + "4currentstate.txt";
+		String fileName = path + r.getRegionName() + "currentstate.txt";
 		try {
 			writeToFile(fileName);
 		} catch (FileNotFoundException e) {
@@ -81,18 +81,16 @@ public class ReverseParser {
 	
 	private void pullEntities(int i, int j, Region r) {
 		Tile t = r.get(i,j);
-		if(t.getInteractives().isEmpty()) {
-			if(!characterMap.containsKey(t.getCharacter())) {
-				characterMap.put(t.getCharacter(), t.getMapFloor().toString());
-			}
+		if(t.getInteractives().isEmpty() && !t.getCharacter().equals("?")){
+			characterMap.put(t.getCharacter(), t.getMapFloor().toString());
 		}
 		for(Entity ent : t.getInteractives()) {
 			if(ent instanceof Player) {
 				characterMap.put("?", t.getMapFloor().toString() + " + " + ent.toString());
-				System.out.println("'I found a player!");
+				System.out.println("I found a player!");
 			}
 			if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
-				if(!characterMap.get(t.getCharacter()).equals(ent.toString())) {//make sure the ent output matches.
+				if(!characterMap.get(t.getCharacter()).equals(ent.toString()) && !t.getCharacter().equals("?")) {//make sure the ent output matches.
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
 							if(t.getMapFloor() != null) {
@@ -109,11 +107,13 @@ public class ReverseParser {
 				}
 			}
 			else {//otherwise add it to the map.
-				if(t.getMapFloor() != null) {
-					characterMap.put(t.getCharacter(), t.getMapFloor().toString() + " + " + ent.toString());
-				}
-				else {
-					characterMap.put(t.getCharacter(), ent.toString());
+				if(!t.getCharacter().equals("?")) {
+					if(t.getMapFloor() != null) {
+						characterMap.put(t.getCharacter(), t.getMapFloor().toString() + " + " + ent.toString());
+					}
+					else {
+						characterMap.put(t.getCharacter(), ent.toString());
+					}
 				}
 			}
 		}
@@ -124,7 +124,8 @@ public class ReverseParser {
  		File outputFile = null;
 		try {
 			outputFile = new File(fileName);
-			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
+			outputFile.createNewFile();
+			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, false), "UTF-8"));
 			pw.write("this: " + r.getRegionName()); pw.newLine();
 			pw.write("north: " + r.getNeighbouringRegions()[0]); pw.newLine();
 			pw.write("east: " + r.getNeighbouringRegions()[1]); pw.newLine();
@@ -151,6 +152,9 @@ public class ReverseParser {
 					}
 					if(isPlayer) {
 						pw.write("?");
+					}
+					else if(r.get(col, row).getCharacter().equals("?")) {
+						pw.write(",");
 					}
 					else{
 						pw.write(r.get(col, row).getCharacter()); //col = x, row = y
