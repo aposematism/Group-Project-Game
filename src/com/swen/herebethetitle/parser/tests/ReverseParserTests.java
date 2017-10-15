@@ -33,9 +33,9 @@ public class ReverseParserTests {
 						lineFile = in1.readLine();
 					}
 					lineFile = in1.readLine();
-					System.out.println(lineFile);
+					//System.out.println(lineFile);
 					String ReverseLine = in2.readLine();
-					System.out.println(ReverseLine);
+					//System.out.println(ReverseLine);
 					while(lineFile != null) {
 						if(!lineFile.equals(ReverseLine)) {
 							return false;

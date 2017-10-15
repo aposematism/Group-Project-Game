@@ -18,6 +18,7 @@ public class ReverseParser {
 	ArrayList<String> entityOutput = new ArrayList<String>();
 	HashMap<String, String> characterMap = new HashMap<String, String>();
 	Region r;
+	String[] alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
 	public ReverseParser(File region) throws IOException, InputMismatchException {
 		reverseScanner(region);
@@ -44,9 +45,6 @@ public class ReverseParser {
 				if(line.contains("map:")) {
 					pullEntities(r);
 				}
-				Scanner s = new Scanner(line);
-				Entity ent = parse(s);
-				interactives.add(ent);
 				line = regionBuff.readLine();
 			}
 			regionBuff.close();
@@ -61,7 +59,6 @@ public class ReverseParser {
 	 * This classes saves all the data from a region into a correct file. Primarily used for saving.
 	 * */
 	public void parseRegion(Region r) {
-		
 		pullEntities(r);
 		String fileName = r.getRegionName()+"currentstate.txt";
 		try {
@@ -88,7 +85,14 @@ public class ReverseParser {
 		Tile t = r.get(i,j);
 		for(Entity ent : t.getInteractives()) {
 			if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
-				
+				if(!characterMap.get(t.getCharacter()).equals(ent.toString())) {//make sure the ent output matches.
+					for(int k = 0; k < alphabet.length; k++) {
+						if(!characterMap.containsKey(alphabet[k])){
+							characterMap.put(alphabet[k], ent.toString());
+							break;
+						}
+					}
+				}
 			}
 			else {//otherwise add it to the map.
 				characterMap.put(t.getCharacter(), ent.toString());
@@ -102,20 +106,24 @@ public class ReverseParser {
 	public File writeToFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
  		File outputFile = null;
 		try {
- 			outputFile = File.createTempFile(fileName, ".txt.tmp");
+ 			outputFile = File.createTempFile(fileName, ".txt");
 			BufferedWriter pw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"));
 			pw.write("this: " + r.getRegionName()); pw.newLine();
 			pw.write("north: " + r.getNeighbouringRegions()[0]); pw.newLine();
 			pw.write("east: " + r.getNeighbouringRegions()[1]); pw.newLine();
 			pw.write("south: " + r.getNeighbouringRegions()[2]); pw.newLine();
 			pw.write("west: " + r.getNeighbouringRegions()[3]); pw.newLine();
-			pw.write(" "); pw.newLine();
+			pw.newLine();
 			pw.write("entities:");
-			for(String s : entityOutput) {
-				pw.write(s); 
+			pw.newLine();
+			for(String s : characterMap.keySet()) {
+				pw.write(s + " = " + characterMap.get(s)); 
 				pw.newLine();
 			}
+			pw.newLine();
+			pw.newLine();
 			pw.write("map:");
+			pw.newLine();
 			for(int i = 0; i < r.getXSize(); i++) {
 				for(int j = 0; j < r.getYSize(); j++) {
 					pw.write(r.get(i, j).getCharacter());

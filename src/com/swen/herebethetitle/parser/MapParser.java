@@ -34,6 +34,8 @@ public class MapParser {
 		try {
 			readLines(new BufferedReader(new FileReader(file)));
 			region = new Region(regionArray);
+			region.setRegionName(regionName);
+			region.setNeighbouringRegions(neighbouringRegions);
 		} catch (IOException e) {
 			System.out.println("I/O exception: " + e.toString());
 			throw new FileNotFoundException("Failed to read file!");
