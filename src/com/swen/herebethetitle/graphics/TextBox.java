@@ -1,5 +1,6 @@
 package com.swen.herebethetitle.graphics;
 
+import com.sun.deploy.util.StringUtils;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,38 +19,40 @@ public class TextBox extends Sprite {
     protected final int WIDTH;
     protected final int HEIGHT;
 
-    protected final double FONTSIZE = 14;
+    protected final double FONTSIZE = 20;
     protected final String FONT = "Courier New";
     protected final int MAX_CHARS;
 
-    public TextBox(Image i, GridLocation l, String t, int width, int height, String name){
-        img = i;
+    public TextBox(Image im, GridLocation l, String t, int width, int height, String name){
+        img = im;
         loc = l;
         WIDTH = width;
-        HEIGHT = height;
 
         this.name = name + ":";
 
         MAX_CHARS = (int)(WIDTH*1.5/FONTSIZE);
+        System.out.println(MAX_CHARS);
 
         t = "\n\n"+t;
         StringBuilder splitString = new StringBuilder(t);
-
-        for(int j=0;j<splitString.length();j++) {
-            if (j % MAX_CHARS == 0 && j > 0) {
-
-                int k = j;
-                char c = splitString.charAt(k);
-                while(c != ' ' && k-1 > 0){
-                    k--; c = splitString.charAt(k);
+        int i = 0;
+        int j = 0;
+        while(i < splitString.length()){
+            j++;
+            if(j >= MAX_CHARS){
+                int k = i;
+                while(splitString.charAt(k) != ' ' && k-1 >= 0){
+                    k--;
                 }
-//                if(j-1 > 0){
-//                    j--;
-//                }
                 splitString.setCharAt(k, '\n');
+                j = 0;
             }
+            i++;
         }
         text = splitString.toString();
+        int newLines = getOcurances(text, '\n');
+
+        HEIGHT = (3+newLines)*(int)FONTSIZE;
     }
 
     @Override
@@ -78,8 +81,20 @@ public class TextBox extends Sprite {
         gc.setStroke(Color.GREY);
         gc.strokeRect(pos.x, pos.y, WIDTH, HEIGHT);
 
-        gc.drawImage(img, pos.x-(g.getCellSize()/2), pos.y-(g.getCellSize()/2),
-                g.getCellSize(), g.getCellSize());
+        gc.drawImage(img, pos.x-(g.getCellSize()*1.3/2), pos.y-(g.getCellSize()*1.3/2),
+                g.getCellSize()*1.3, g.getCellSize()*1.3);
+    }
+
+
+    private int getOcurances(String s, char occurance){
+        int i = 0;
+        char [] characters = s.toCharArray();
+        for(char c: characters){
+            if(c == occurance){
+                i++;
+            }
+        }
+        return i;
     }
 
 }

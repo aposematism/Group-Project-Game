@@ -1,13 +1,10 @@
 package com.swen.herebethetitle.audio;
 
-import com.swen.herebethetitle.entity.Item;
-import com.swen.herebethetitle.entity.Key;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
-import com.swen.herebethetitle.entity.Static;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.logic.GameListener;
 import javafx.scene.media.AudioClip;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +16,6 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  */
 public class AudioManager implements GameListener{
-	
 	/*audio clip codes for playing*/
 	public static final int SOUNDCODE_DEMON1 = 1;
 	public static final int SOUNDCODE_DEMON2 = 2;
@@ -32,16 +28,26 @@ public class AudioManager implements GameListener{
 	public static final int SOUNDCODE_FOOTSTEP2 = 9;
 	public static final int SOUNDCODE_KEYPICKUP = 10;
 	public static final int SOUNDCODE_ITEMPICKUP = 11;
+	public static final int SOUNDCODE_GAMEEND = 12;
+	public static final int SOUNDCODE_ITEMDROPPED = 15;
+	public static final int SOUNDCODE_UNLOCK = 16;
+	public static final int SOUNDCODE_ERROR = 17;
+	public static final int SOUNDCODE_DIALOG_START = 18;
+	public static final int SOUNDCODE_DIALOG_MESSAGE = 19;
+	public static final int SOUNDCODE_DIALOG_END = 20;
 	public static final int SOUNDCODE_MENUSONG = 0;
 	public static final int SOUNDCODE_TOWNSONG = -1;
 	public static final int SOUNDCODE_BATTLESONG = -1;	//TODO get battle music
-	/*fields for audioclips*/
-	private AudioClip song;
-	private Map<Integer, AudioClip> sounds;
+	/*limit for sounds playing*/
+	private static final int MAX_SOUNDS = 3;
 	/*fields for volumes*/
 	public static double masterVol = 1.0f;
 	public static double musicVol = 1.0f;
 	public static double sfxVol = 1.0f;
+	/*fields for audioclips*/
+	private AudioClip song;
+	private Map<Integer, AudioClip> sounds;
+	private ArrayDeque<AudioClip> playingSounds;
 	
 
 	/**
@@ -50,6 +56,7 @@ public class AudioManager implements GameListener{
 	 */
 	public AudioManager() {
 		sounds = new HashMap<Integer, AudioClip>();
+		playingSounds = new ArrayDeque<AudioClip>();
 		
 		/*load sounds into the audio clip TODO finish*/
 		sounds.put(SOUNDCODE_DEMON1, new AudioClip("file:res/sound/demon1.mp3"));
@@ -63,10 +70,17 @@ public class AudioManager implements GameListener{
 		sounds.put(SOUNDCODE_FOOTSTEP2, new AudioClip("file:res/sound/footstep2.mp3"));
 		sounds.put(SOUNDCODE_KEYPICKUP, new AudioClip("file:res/sound/keypickup.wav"));
 		sounds.put(SOUNDCODE_ITEMPICKUP, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound file
+		sounds.put(SOUNDCODE_GAMEEND, new AudioClip("file:res/sound/playerdamage1.mp3"));	//TODO source new sound
+		sounds.put(SOUNDCODE_ITEMDROPPED, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound
+		sounds.put(SOUNDCODE_UNLOCK, new AudioClip("file:res/sound/keypickup.wav"));		//TODO source new sound
+		sounds.put(SOUNDCODE_ERROR, new AudioClip("file:res/sound/error.mp3"));
+		sounds.put(SOUNDCODE_DIALOG_START, new AudioClip("file:res/sound/dialogstart.mp3"));
+		sounds.put(SOUNDCODE_DIALOG_MESSAGE, new AudioClip("file:res/sound/dialogmessage.mp3"));
+		sounds.put(SOUNDCODE_DIALOG_END, new AudioClip("file:res/sound/dialogend.mp3"));
 		
 		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.wav"));
 		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.wav"));
-		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));
+		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));	//TODO decide whether to keep or not
 		
 		
 		/*play the main menu music*/
@@ -92,60 +106,32 @@ public class AudioManager implements GameListener{
 	 * @param s
 	 */
 	public void playSound(int s) {
+		if(playingSounds.size()>=MAX_SOUNDS) {
+			playingSounds.pop().stop();
+		}
 		sounds.get(s).setCycleCount(1);
+		playingSounds.add(sounds.get(s));
 		sounds.get(s).play();
 	}
 
 	
-	/*volume setting methods*/
+	
+	/*testing methods*/
 	
 	/**
-	 * Sets the master volume and readjusts all audioclip volumes accordingly.
-	 * @param v
+	 * Returns whether or not an audioclip associated with a given soundcode is playing.
+	 * @param s the soundcode of the audioclip to check is playing or not
+	 * @return whether the audioclip is playing
 	 */
-	public void setMasterVol(double v) {
-		masterVol = v;
-		adjustVols();
+	public boolean isPlaying(int s) {
+		return sounds.get(s).isPlaying();
 	}	
-	
-	/**
-	 * Sets the sfx volume and readjusts all audioclip volumes accordingly.
-	 * @param v
-	 */
-	public void setSfxVol(double v) {
-		sfxVol = v;
-		adjustVols();
-	}	
-	
-	/**
-	 * Sets the music volume and readjusts all audioclip volumes accordingly.
-	 * @param v
-	 */	
-	public void setMusicVol(double v) {
-		musicVol = v;
-		adjustVols();
-	}
-	
-	/**
-	 * Adjusts the volumes for all the AudioClips appropriately according
-	 * to master, music, and sfx volumes.
-	 */
-	private void adjustVols() {		
-		for(AudioClip c: sounds.values()) {
-			c.setVolume(masterVol*sfxVol);
-		}
-		sounds.get(SOUNDCODE_MENUSONG).setVolume(masterVol*musicVol);
-		sounds.get(SOUNDCODE_TOWNSONG).setVolume(masterVol*musicVol);
-		sounds.get(SOUNDCODE_BATTLESONG).setVolume(masterVol*musicVol);
-	}
-	
 	
 	/*GameListener methods*/
 	
 	@Override
 	public void onGameCompleted() {
-		// TODO Auto-generated method stub
-		
+		playSound(AudioManager.SOUNDCODE_GAMEEND);
 	}
 
 	@Override
@@ -180,8 +166,8 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onPlayerDrop(Player player, Item item) {
-		// TODO Auto-generated method stub
-		
+		// TODO multiple sounds?
+		playSound(SOUNDCODE_ITEMDROPPED);
 	}
 
 	@Override
@@ -198,29 +184,27 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onNPCDialogBegin(NPC npc) {
-		playSound(SOUNDCODE_PLAYERDAMAGE1);
+		playSound(SOUNDCODE_DIALOG_START);
 	}
 
 	@Override
 	public void onNPCDialogMessage(NPC npc, String message) {
-		// TODO Auto-generated method stub
+		playSound(SOUNDCODE_DIALOG_MESSAGE);
 	}
 
 	@Override
 	public void onNPCDialogEnd(NPC npc) {
-		playSound(SOUNDCODE_PLAYERDAMAGE2);
+		playSound(SOUNDCODE_DIALOG_END);
 	}
 
 	@Override
 	public void onDoorUnlocked(Static door) {
-		// TODO Auto-generated method stub
-		
+		playSound(SOUNDCODE_DOOR);
 	}
 
 	@Override
 	public void onDoorUnlockFailed(Static door, String message) {
-		// TODO Auto-generated method stub
-		
+		playSound(SOUNDCODE_ERROR);
 	}
 
 	@Override

@@ -51,6 +51,8 @@ public class DoorAndKeyTests {
 		s.interact(context);
 
 		assertTrue(s.isPenetrable());
+
+		assertFalse(p.possesses(k));
 	}
 
 	/**
@@ -89,6 +91,10 @@ public class DoorAndKeyTests {
 		s.interact(context);
 
 		assertTrue(s.isPenetrable());
+
+		assertFalse(p.possesses(k2));
+
+		assertTrue(p.possesses(k));
 	}
 
 	/**
@@ -114,6 +120,8 @@ public class DoorAndKeyTests {
 		s.interact(context);
 
 		assertFalse(s.isPenetrable());
+
+		assertTrue(p.possesses(k));
 	}
 
 	/**
@@ -141,5 +149,7 @@ public class DoorAndKeyTests {
 		s.interact(context);
 
 		assertFalse(s.isPenetrable());
+
+		assertTrue(p.possesses(k, k2));
 	}
 }

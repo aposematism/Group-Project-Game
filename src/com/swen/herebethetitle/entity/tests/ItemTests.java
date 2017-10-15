@@ -97,7 +97,7 @@ public class ItemTests {
 	}
 
 	/**
-	 * Assert that a Key is removed from the player's inventory when used
+	 * Assert that a Key isn't removed from the player's inventory when used
 	 */
 	@Test
 	public void test_Key_use(){
@@ -111,7 +111,7 @@ public class ItemTests {
 
 		i.interact(context);
 
-		assertFalse(context.player.possesses(i));
+		assertTrue(context.player.possesses(i));
 	}
 
 	/**
