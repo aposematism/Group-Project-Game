@@ -26,7 +26,7 @@ public class GameCanvas extends Canvas implements GameListener {
 	private GameContext context;
 
     private Map<String, Image> imageMap = new HashMap<>();
-    private Map<Entity, Sprite> interactives = new HashMap<>();
+    private Map<Entity, MobSprite> interactives = new HashMap<>();
 
     private HUD hud;
     private WorldRenderer world;
@@ -194,13 +194,13 @@ public class GameCanvas extends Canvas implements GameListener {
 
 
     private Sprite getSprite(Entity e, GridLocation l){
-        if(e instanceof Mob || e instanceof Item) {
+        if(e instanceof Mob) {
             if (!interactives.containsKey(e)) {
-                Sprite sprite = new Sprite(getImage(e), l);
+                MobSprite sprite = new MobSprite(getImage(e), l);
                 interactives.put(e, sprite);
                 System.out.println(l);
             } else {
-                interactives.get(e).setImage(getImage(e));
+                //interactives.get(e).setImage(getImage(e));
                 interactives.get(e).setLocation(l);
             }
             return interactives.get(e);
@@ -237,12 +237,14 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-
+        MobSprite s = interactives.get(player);
+        s.damage();
 	}
 
 	@Override
 	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
-		
+        MobSprite s = interactives.get(player);
+        s.damage();
 	}
 
 	@Override
@@ -253,12 +255,13 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerDrop(Player player, Item item) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onNPCAttacked(NPC victim) {
+        MobSprite s = interactives.get(victim);
+        s.damage();
     }
 
 	@Override
@@ -285,7 +288,6 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onDoorUnlocked(Static door) {
-		// TODO Auto-generated method stub
 		
 	}
 

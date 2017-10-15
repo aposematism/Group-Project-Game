@@ -283,11 +283,11 @@ public class Controller extends Application{
 			return;
 		}
 
-		//TODO Needs to be replaced by something better.
 		initializeNewGame(r);
+		//TODO Needs to be replaced by something better.
 		Player p = game.getPlayer();
 		//System.out.println(p.toString());
-		System.out.println(game.currentRegion.getLocation(p));
+		//System.out.println(game.currentRegion.getLocation(p));
 
 		//play the game
 		worldGraphics = initGameGUI();

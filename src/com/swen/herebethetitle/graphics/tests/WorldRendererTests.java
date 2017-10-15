@@ -1,13 +1,10 @@
 package com.swen.herebethetitle.graphics.tests;
 
-import com.swen.herebethetitle.graphics.WorldRenderer;
+import com.swen.herebethetitle.graphics.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import com.swen.herebethetitle.graphics.GridManager;
-import com.swen.herebethetitle.graphics.HUD;
-import com.swen.herebethetitle.graphics.Sprite;
 import com.swen.herebethetitle.util.GridLocation;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -137,6 +134,42 @@ public class WorldRendererTests extends TestWindow {
             updateTimeline.play();
         }};
     }
+
+    @Test
+    @Ignore
+    public void testdamagedSprite(){
+        testCode = new Operation(){public void run(Canvas c){
+
+
+            Map<Sprite, List<Sprite>> sprites = new HashMap<>();
+            MobSprite player = new MobSprite(new Image("file:res/mob/wizard.png"), new GridLocation(0,0));
+            player.damage();
+
+            for(int i=0;i<5;i++){
+                List<Sprite> interactives = new ArrayList<>();
+                for(int j=0;j<3;j++){
+                    interactives.add(new Sprite(null, new GridLocation(j,0)));
+                }
+                sprites.put(
+                        new Sprite(null,
+                                new GridLocation(i,0)),
+                        interactives);
+                if(i==0) interactives.add(player);
+            }
+
+            WorldRenderer world = new WorldRenderer();
+            world.drawAll(sprites, player.getLocation(), c);
+
+            Timeline updateTimeline = new Timeline(new KeyFrame(
+                    Duration.millis(1000),
+                    ae -> {
+                        world.drawAll(sprites, player.getLocation(), c);
+                    }));
+            updateTimeline.setCycleCount(1);
+            updateTimeline.play();
+        }};
+    }
+
 
     private void movePlayerRight(){
         player.setLocation(new GridLocation(player.getLocation().x+1,
