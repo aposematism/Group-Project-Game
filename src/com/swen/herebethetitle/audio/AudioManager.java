@@ -19,7 +19,7 @@ public class AudioManager implements GameListener{
 	/*audio clip codes for playing*/
 	public static final int SOUNDCODE_DEMON1 = 1;
 	public static final int SOUNDCODE_DEMON2 = 2;
-	public static final int SOUNDCODE_DOOR = 3;
+	public static final int SOUNDCODE_DOOROPEN = 3;
 	public static final int SOUNDCODE_PLAYERDAMAGE1 = 4;
 	public static final int SOUNDCODE_PLAYERDAMAGE2 = 5;
 	public static final int SOUNDCODE_ROBOT1 = 6;
@@ -35,6 +35,7 @@ public class AudioManager implements GameListener{
 	public static final int SOUNDCODE_DIALOG_START = 18;
 	public static final int SOUNDCODE_DIALOG_MESSAGE = 19;
 	public static final int SOUNDCODE_DIALOG_END = 20;
+	public static final int SOUNDCODE_DOORCLOSE = 21;
 	public static final int SOUNDCODE_MENUSONG = 0;
 	public static final int SOUNDCODE_TOWNSONG = -1;
 	public static final int SOUNDCODE_BATTLESONG = -1;	//TODO get battle music
@@ -61,26 +62,27 @@ public class AudioManager implements GameListener{
 		/*load sounds into the audio clip TODO finish*/
 		sounds.put(SOUNDCODE_DEMON1, new AudioClip("file:res/sound/demon1.mp3"));
 		sounds.put(SOUNDCODE_DEMON2, new AudioClip("file:res/sound/demon2.mp3"));
-		sounds.put(SOUNDCODE_DOOR, new AudioClip("file:res/sound/door.mp3"));
+		sounds.put(SOUNDCODE_DOOROPEN, new AudioClip("file:res/sound/dooropen.mp3"));
+		sounds.put(SOUNDCODE_DOORCLOSE, new AudioClip("file:res/sound/doorclose.mp3"));
 		sounds.put(SOUNDCODE_PLAYERDAMAGE1, new AudioClip("file:res/sound/playerdamage1.mp3"));
 		sounds.put(SOUNDCODE_PLAYERDAMAGE2, new AudioClip("file:res/sound/playerdamage2.mp3"));
 		sounds.put(SOUNDCODE_ROBOT1, new AudioClip("file:res/sound/robot1.mp3"));
 		sounds.put(SOUNDCODE_ROBOT2, new AudioClip("file:res/sound/robot2.mp3"));
 		sounds.put(SOUNDCODE_FOOTSTEP1, new AudioClip("file:res/sound/footstep1.mp3"));
 		sounds.put(SOUNDCODE_FOOTSTEP2, new AudioClip("file:res/sound/footstep2.mp3"));
-		sounds.put(SOUNDCODE_KEYPICKUP, new AudioClip("file:res/sound/keypickup.wav"));
-		sounds.put(SOUNDCODE_ITEMPICKUP, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound file
+		sounds.put(SOUNDCODE_KEYPICKUP, new AudioClip("file:res/sound/keypickup.mp3"));
+		sounds.put(SOUNDCODE_ITEMPICKUP, new AudioClip("file:res/sound/keypickup.mp3"));    //TODO source new sound file
 		sounds.put(SOUNDCODE_GAMEEND, new AudioClip("file:res/sound/playerdamage1.mp3"));	//TODO source new sound
-		sounds.put(SOUNDCODE_ITEMDROPPED, new AudioClip("file:res/sound/keypickup.wav"));	//TODO source new sound
-		sounds.put(SOUNDCODE_UNLOCK, new AudioClip("file:res/sound/keypickup.wav"));		//TODO source new sound
+		sounds.put(SOUNDCODE_ITEMDROPPED, new AudioClip("file:res/sound/keypickup.mp3"));    //TODO source new sound
+		sounds.put(SOUNDCODE_UNLOCK, new AudioClip("file:res/sound/keypickup.mp3"));        //TODO source new sound
 		sounds.put(SOUNDCODE_ERROR, new AudioClip("file:res/sound/error.mp3"));
 		sounds.put(SOUNDCODE_DIALOG_START, new AudioClip("file:res/sound/dialogstart.mp3"));
 		sounds.put(SOUNDCODE_DIALOG_MESSAGE, new AudioClip("file:res/sound/dialogmessage.mp3"));
 		sounds.put(SOUNDCODE_DIALOG_END, new AudioClip("file:res/sound/dialogend.mp3"));
-		
-		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.wav"));
-		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.wav"));
-		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.wav"));	//TODO decide whether to keep or not
+
+		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.mp3"));
+		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.mp3"));
+		sounds.put(SOUNDCODE_BATTLESONG, new AudioClip("file:res/sound/elfish_docks.mp3"));    //TODO decide whether to keep or not
 		
 		
 		/*play the main menu music*/
@@ -199,7 +201,7 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onDoorUnlocked(Static door) {
-		playSound(SOUNDCODE_DOOR);
+		playSound(SOUNDCODE_DOOROPEN);
 	}
 
 	@Override
@@ -209,11 +211,11 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onDoorOpened(Static door) {
-		playSound(SOUNDCODE_DOOR);	
+		playSound(SOUNDCODE_DOOROPEN);
 	}
 
 	@Override
 	public void onDoorClosed(Static door) {
-		playSound(SOUNDCODE_DOOR);
+		playSound(SOUNDCODE_DOORCLOSE);
 	}
 }
