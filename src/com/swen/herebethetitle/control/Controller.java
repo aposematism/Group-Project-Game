@@ -239,7 +239,7 @@ public class Controller extends Application{
 	private Optional<File> chooseLoadFile() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Load your game");
-		fileChooser.setInitialDirectory(new File("res/"));
+		fileChooser.setInitialDirectory(new File("."));
 		fileChooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Text Files", "*.txt"),
 				new ExtensionFilter("All Files", "*.*"));
