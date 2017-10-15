@@ -85,17 +85,27 @@ public class ReverseParser {
 				if(!characterMap.get(t.getCharacter()).equals(ent.toString())) {//make sure the ent output matches.
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
-							characterMap.put(alphabet[k], ent.toString());
-							break;
+							if(t.getMapFloor() != null) {
+								characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
+								break;
+							}
+							else {
+								characterMap.put(alphabet[k], ent.toString());
+								break;
+							}
+							
 						}
 					}
 				}
 			}
 			else {//otherwise add it to the map.
-				characterMap.put(t.getCharacter(), ent.toString());
+				if(t.getMapFloor() != null) {
+					characterMap.put(t.getCharacter(), t.getMapFloor().toString() + " + " + ent.toString());
+				}
+				else {
+					characterMap.put(t.getCharacter(), ent.toString());
+				}
 			}
-			String concat = t.getCharacter() +" = "+ ent.toString();
-			entityOutput.add(concat);
 		}
 	}
 	

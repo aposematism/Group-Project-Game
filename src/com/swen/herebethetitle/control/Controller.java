@@ -421,6 +421,30 @@ public class Controller extends Application{
 				case D:
 					logic.movePlayer(Direction.Right);
 					break;
+				case LEFT:
+					logic.movePlayer(Direction.Left);
+					break;
+				case UP:
+					logic.movePlayer(Direction.Up);
+					break;
+				case RIGHT:
+					logic.movePlayer(Direction.Right);
+					break;
+				case DOWN:
+					logic.movePlayer(Direction.Down);
+					break;
+				case KP_LEFT:
+					logic.movePlayer(Direction.Left);
+					break;
+				case KP_UP:
+					logic.movePlayer(Direction.Up);
+					break;
+				case KP_RIGHT:
+					logic.movePlayer(Direction.Right);
+					break;
+				case KP_DOWN:
+					logic.movePlayer(Direction.Down);
+					break;
 			}
 		} catch (InvalidDestination er) {
 			er.printStackTrace();
