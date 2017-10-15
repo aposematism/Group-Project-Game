@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.parser;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 
@@ -57,7 +58,7 @@ public class ReverseParser {
 	 * */
 	public void parseRegion(Region r, String path) {
 		pullEntities(r);
-		String fileName = path + r.getRegionName() + "currentstate.txt";
+		String fileName = path + r.getRegionName() + "4currentstate.txt";
 		try {
 			writeToFile(fileName);
 		} catch (FileNotFoundException e) {
@@ -86,6 +87,10 @@ public class ReverseParser {
 			}
 		}
 		for(Entity ent : t.getInteractives()) {
+			if(ent instanceof Player) {
+				characterMap.put("?", t.getMapFloor().toString() + " + " + ent.toString());
+				System.out.println("'I found a player!");
+			}
 			if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
 				if(!characterMap.get(t.getCharacter()).equals(ent.toString())) {//make sure the ent output matches.
 					for(int k = 0; k < alphabet.length; k++) {
@@ -138,7 +143,18 @@ public class ReverseParser {
 			pw.newLine();
 			for (int row = 0; row < r.getYSize(); row++) {
 				for (int col = 0; col < r.getXSize(); col++) {
-					pw.write(r.get(col, row).getCharacter()); //col = x, row = y
+					boolean isPlayer = false;
+					for(Entity ent : r.get(col, row).getInteractives()) {
+						if(ent instanceof Player) {
+							isPlayer = true;
+						}
+					}
+					if(isPlayer) {
+						pw.write("?");
+					}
+					else{
+						pw.write(r.get(col, row).getCharacter()); //col = x, row = y
+					}
 				}
 				pw.newLine();
 			}
