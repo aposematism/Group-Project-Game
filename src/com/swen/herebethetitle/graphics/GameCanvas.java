@@ -219,8 +219,7 @@ public class GameCanvas extends Canvas implements GameListener {
 
 	@Override
 	public void onPlayerAttacked(Player player, NPC attacker) {
-		
-	}
+    }
 
 	@Override
 	public void onPlayerKilled(Player player, Optional<NPC> aggressor) {
