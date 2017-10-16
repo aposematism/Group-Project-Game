@@ -504,7 +504,26 @@ public class Controller extends Application{
 	 * @param d direction to try to move the player
 	 */
 	private void movePlayerDirectional(Direction d) {
-		//TODO
+		/*find the tile adjacent to the player in the given direction*/
+		int x = game.getCurrentRegion().getPlayerTile().getLocation().x;
+		int y = game.getCurrentRegion().getPlayerTile().getLocation().y;
+		
+		if(d == Direction.Down) {
+			y++;
+		}else if(d == Direction.Up) {
+			y--;
+		}else if(d == Direction.Left) {
+			x--;
+		}else if(d == Direction.Right) {
+			x++;
+		}
+		
+		Tile dest = game.getCurrentRegion().get(x, y);
+		if(!dest.isPenetrable()) {
+			//can't move through walls!
+			return;
+		}
+	    this.playerMove = Optional.of(new PlayerMove(game.getPlayer(), dest));
 	}
 
 	/**
