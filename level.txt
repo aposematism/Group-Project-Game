@@ -58,7 +58,6 @@ M = Floor "Dirt" "static/dirt.png" + NPC "Marco the Persistent" "mob/mario.png" 
 
 
 map:
-_____________________________________________________________________________________________________
 wwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,z,,,,,,,56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,y,,,x,,,,r
 w.?..!...w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,r
