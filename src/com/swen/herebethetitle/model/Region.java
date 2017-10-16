@@ -191,8 +191,10 @@ public class Region implements PathfindingGrid, Iterable<Tile> {
         
         if (tile.isPresent())
             return getLocation(tile.get());
-        else
+        else {
+            System.out.println(entity.toString());
             throw new IllegalArgumentException("entity is not present in the region");
+        }
     }
     
     /**

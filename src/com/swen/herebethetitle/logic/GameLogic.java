@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class GameLogic {
     public static final double VICINITY_RADIUS = 6.0;
 
-    private final int titlesRequired = 4;
+    private final int titlesRequired = 3;
 
     /**
      * The listener notifier.
@@ -171,7 +171,8 @@ public class GameLogic {
     /**
      * Checks if an entity can interact with another entity.
      * 
-     * This can only happen if the player is neighboring the entity.
+     * This can only happen if the player is neighboring the entity, or the
+     * player is in the same tile as the entity
      */
     private boolean canInteractWith(Entity entity) {
         GridLocation entityLocation = getCurrentRegion().getLocation(entity);
