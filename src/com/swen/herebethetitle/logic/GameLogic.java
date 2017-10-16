@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class GameLogic {
     public static final double VICINITY_RADIUS = 6.0;
 
-    private final int titlesRequired = 3;
+    private final int titlesRequired = 1;
 
     /**
      * The listener notifier.

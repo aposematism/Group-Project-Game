@@ -46,10 +46,11 @@ public class Inventory implements Iterable<Item> {
 		else if(item instanceof Armour)
 			this.armour[((Armour)item).getSlot().ordinal()] = (Armour) item;
 		else
-			this.items.add(item);
-		if(item.getName().equals("Title")){
-			titleCount++;
-		}
+			if(item instanceof Title){
+				titleCount++;
+			}else {
+				this.items.add(item);
+			}
 	}
 
 	/**
