@@ -6,6 +6,8 @@ import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 import com.swen.herebethetitle.util.GridLocation;
+import com.swen.herebethetitle.util.Resources;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -20,7 +22,7 @@ import java.util.List;
  * @author weirjosh
  */
 public class GameCanvas extends Canvas implements GameListener {
-	private static final Image ERROR = new Image("file:res/error.png");
+	private static final Image ERROR = Resources.getImage("error.png");
     private static boolean grid;
 
 	private GameContext context;
@@ -209,11 +211,10 @@ public class GameCanvas extends Canvas implements GameListener {
         }
 }
 
-
     private Image getImage(Entity e) {
         if(e == null) return null;
         if (!imageMap.containsKey(e.getSpritePath())) {
-	        Image image = new Image("file:res/" + e.getSpritePath());
+	        Image image = Resources.getImage(e.getSpritePath());
 
 	        if (image.getHeight() == 0 && image.getWidth() == 0) //Image didn't load properly
 		        image = ERROR;

@@ -18,6 +18,8 @@ import com.swen.herebethetitle.parser.MapParser;
 import com.swen.herebethetitle.parser.ReverseParser;
 import com.swen.herebethetitle.util.Direction;
 import com.swen.herebethetitle.util.GridLocation;
+import com.swen.herebethetitle.util.Resources;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -151,6 +153,7 @@ public class Controller extends Application{
 		initMainMenu();
 		mainMenu = new Scene(mainMenuLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		mainMenu.getStylesheets().add("file:res/mainmenu.css");
+		mainMenu.getStylesheets().add(Resources.getAsString("mainmenu.css"));
 		window.setScene(mainMenu);
 
 		/*initialize the audio manager*/
