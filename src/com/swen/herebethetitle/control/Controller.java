@@ -607,7 +607,7 @@ public class Controller extends Application{
 			window.setScene(victoryScene);
 			return;
 		}
-		if(true) {
+		if(logic.gameLost()) {
 			pauseGame();
 			/*build loss scene*/
 			BorderPane loss = new BorderPane();
