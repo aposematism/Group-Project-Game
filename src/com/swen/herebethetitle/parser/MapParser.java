@@ -62,12 +62,17 @@ public class MapParser {
 		}
 		//If you have entities, take them.
 		if(line.contains("entities:")) {
-			line = reader.readLine();
-			s = new Scanner(line);
-			while (line.contains("=")) {
-				mapCharToEntities(s);
+			try{
 				line = reader.readLine();
 				s = new Scanner(line);
+				while (line.contains("=")) {
+					mapCharToEntities(s);
+					line = reader.readLine();
+					s = new Scanner(line);
+				}
+			}
+			catch(Exception e){
+				throw new Error("Error occured at "+ line);
 			}
 		}
 
