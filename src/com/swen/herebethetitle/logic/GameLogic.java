@@ -153,11 +153,11 @@ public class GameLogic {
             if (npc.isAggressive())
                 attack(npc);
             else if (npc.getBehavior().isPresent() && npc.getBehavior().get() instanceof FriendlyStrategy)
-                startDiscussion(npc);
+                if(canInteractWith(entity)){startDiscussion(npc);}
             else
                 ; // no interactions possible.
         } else
-	        entity.interact(context, notifier);
+	        if(canInteractWith(entity)){entity.interact(context, notifier);}
     }
 
     /***
@@ -177,6 +177,7 @@ public class GameLogic {
     private boolean canInteractWith(Entity entity) {
         GridLocation entityLocation = getCurrentRegion().getLocation(entity);
         GridLocation playerLocation = getCurrentRegion().getLocation(getPlayer());
+        if(entityLocation.equals(playerLocation)) return true;
         return entityLocation.isNeighbouring(playerLocation);
     }
 

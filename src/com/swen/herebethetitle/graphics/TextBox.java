@@ -61,7 +61,7 @@ public class TextBox extends Sprite {
     public void draw(GraphicsContext gc, GridManager g){}
 
     /**
-     * Draw this sprite to the given canvas.
+     * Draw this text box to the given canvas.
      * @param gc the GraphicsContext used to render the image
      * @param g The gridManager for positioning
      * @author weirjosh

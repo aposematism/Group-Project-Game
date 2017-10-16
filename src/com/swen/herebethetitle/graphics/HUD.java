@@ -72,6 +72,7 @@ public class HUD {
     public void drawAll(Sprite weapon, Sprite[] armour, List<Sprite> items, Canvas c) {
         GraphicsContext gc = c.getGraphicsContext2D();
         renderSlot(weapon, weaponGrid, gc);
+
         for(Sprite s: armour){
             renderSlot(s, armourGrid, gc);
         }
