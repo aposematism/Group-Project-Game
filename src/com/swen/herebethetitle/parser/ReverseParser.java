@@ -97,11 +97,6 @@ public class ReverseParser {
 								characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
 								break;
 							}
-							else {
-								characterMap.put(alphabet[k], ent.toString());
-								break;
-							}
-							
 						}
 					}
 				}
