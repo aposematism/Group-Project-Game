@@ -176,7 +176,15 @@ public class ReverseParser {
 					}
 					else if(r.get(col, row).getCharacter().equals("?")) {
 						if(r.get(col, row).getInteractives().isEmpty()) {
-							pw.write(".");
+							if(r.get(col,row).getMapFloor().toString().contains("grass")) {
+								pw.write(",");
+							}
+							else if(r.get(col,row).getMapFloor().toString().contains("dirt")) {
+								pw.write("-");
+							}
+							else if(r.get(col,row).getMapFloor().toString().contains("woodfloor")) {
+								pw.write(".");
+							}
 						}
 					}
 					else{
