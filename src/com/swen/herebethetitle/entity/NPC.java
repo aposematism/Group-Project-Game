@@ -74,12 +74,4 @@ public class NPC extends Mob {
 	public String toString() {
 		return super.toString()+(behavior.isPresent() ? " "+behavior.get().toString() : "");
 	}
-
-	@Override
-	public NPC clone() throws CloneNotSupportedException {
-		if(behavior.isPresent())
-			return new NPC(getName(), getSpritePath(), behavior.get().clone(), getHealth(), getDirection());
-		else
-			return new NPC(getName(), getSpritePath(), getHealth(), getDirection());
-	}
 }

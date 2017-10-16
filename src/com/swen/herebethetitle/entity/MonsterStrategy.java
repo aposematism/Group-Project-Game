@@ -57,9 +57,4 @@ public final class MonsterStrategy extends NPCBehavior {
 
 	@Override
 	public boolean isAggressive() { return true; }
-
-	@Override
-	public MonsterStrategy clone() throws CloneNotSupportedException {
-		return new MonsterStrategy(this.ATTACK_STRENGTH);
-	}
 }

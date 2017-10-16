@@ -29,6 +29,6 @@ public class Floor extends Static {
 	@Override
     public boolean isPenetrable() { return true; }
 
-	@Override
+    @Override
     public String toString() { return super.toString(); }
 }

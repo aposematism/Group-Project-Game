@@ -85,11 +85,4 @@ public final class FriendlyStrategy extends NPCBehavior {
 		s.append("}");
 		return s.toString();
 	}
-
-	@Override
-	public FriendlyStrategy clone() throws CloneNotSupportedException {
-		FriendlyStrategy f =  new FriendlyStrategy();
-		if(dialog.size()>0) f.addDialog(dialog.toArray(new String[dialog.size()]));
-		return f;
-	}
 }

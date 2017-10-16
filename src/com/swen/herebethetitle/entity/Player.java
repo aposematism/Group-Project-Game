@@ -104,9 +104,6 @@ public class Player extends Mob {
 		return super.toString()+" "+wallet+" "+ inventory.toString();
 	}
 
-	@Override
-	public Entity clone() throws CloneNotSupportedException { return this; }
-
 	/**
 	 * Doesn't do anything, Player can't interact with itself
 	 */
