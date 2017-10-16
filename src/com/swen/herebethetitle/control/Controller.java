@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -577,6 +578,41 @@ public class Controller extends Application{
 	 * calls the WorldGraphics to update.
 	 */
 	private void update() {
+		/*check victory and loss conditions*/
+		if(logic.GameWon()) {
+			pauseGame();
+			/*build victory scene*/
+			BorderPane victory = new BorderPane();
+			victory.setPadding(new Insets(50));
+			Scene victoryScene = new Scene(victory, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+			HBox top = new HBox();
+			HBox center = new HBox();
+			HBox bottom = new HBox();
+			top.setAlignment(Pos.CENTER);
+			center.setAlignment(Pos.CENTER);
+			bottom.setAlignment(Pos.CENTER);
+			victory.setTop(top);
+			victory.setBottom(bottom);
+			victory.setCenter(center);
+			
+			Text congratText = new Text("Congratulations!");
+			congratText.setFont(new Font(50.0));
+			top.getChildren().add(congratText);
+			
+			Text youWonText = new Text("You have gained a title, and become a noble Knight!");
+			youWonText.setFont(new Font(20.0));
+			center.getChildren().add(youWonText);
+			
+			window.setScene(victoryScene);
+			return;
+		}
+		if(logic.gameLost()) {
+			pauseGame();
+			//display failure screen
+			
+			return;
+		}
+		
 		/*update game context via logic*/
 		logic.tick();
 		
