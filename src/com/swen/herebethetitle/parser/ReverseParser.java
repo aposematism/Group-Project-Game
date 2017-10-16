@@ -16,7 +16,7 @@ public class ReverseParser {
 	ArrayList<String> entityOutput = new ArrayList<String>();
 	HashMap<String, String> characterMap = new HashMap<String, String>();
 	Region r;
-	String[] alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+	String[] alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 	public ReverseParser(File region) throws IOException, InputMismatchException {
 		reverseScanner(region);
@@ -94,7 +94,7 @@ public class ReverseParser {
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
 							if(t.getMapFloor() != null) {
-								//characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
+								characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
 								break;
 							}
 							else {
