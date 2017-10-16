@@ -102,7 +102,9 @@ The menus and other GUI elements are also implemented here.
 <information here>
 
 ### Game Graphics (Josh Weir)
-
+This library is responsible for rendering the game, World and HUD included. It has helper classes
+for drawing text boxes, health bars, inventory slots, and also manages the transformation of 
+game world coordinates (grid based) into screen coordinates (pixel based).
 [`com.swen.herebethetitle.graphics`](src/com/swen/herebethetitle/graphics)
 
 <information here>

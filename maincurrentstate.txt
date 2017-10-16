@@ -8,7 +8,7 @@ entities:
 , = Floor "Grass" "static/grass.png"
 - = Floor "Dirt" "static/dirt.png"
 . = Floor "Wooden Floor" "static/woodfloor.png"
-/ = Floor "Grass" "static/grass.png" + Weapon "Bronze Sword" "item/sword brown.png" true 12.0
+/ = Floor "Grass" "static/grass.png" + Weapon "Epic Sword" "item/sword purple.png" true 12.0
 0 = Floor "Grass" "static/grass.png" + Static "George Walker Bush" "static/bush 2.png"
 1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 1.png"
 2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 2.png"
@@ -60,8 +60,8 @@ map:
 wwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,,,,,,,56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,y,,,x,,,,r
 w....f...w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,r
-w...?....w,,,,,,,,,,12,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,U,,,,,,r
-w........w,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr,,,,,,,,,,,r
+w........w,,,,,,,,,,12,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,U,,,,,,r
+w......?.w,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr,,,,,,,,,,,r
 wwwwwwwwdw,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,,,,,,,,7,,,,,,,,,,,,,,r,,,,,,,,,,,,,rr,,,,,56,,,r
 w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,8,,,,,,,,,K,,,,rr,,,,,,,,,,,,,rr,,,,,,,,,r
 w........wwwwwwdwwwwrrrrrrrrrrrrrrrrrrrrrrrrrr,,,,,,rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr,,,,,,,,,,,,,rr,,,,,,,,r
