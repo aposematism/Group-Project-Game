@@ -8,7 +8,7 @@
 |----------------|-------------|--------------------------|--------------|-----------------------|--------
 | Dylan McKay    | @mckaydyla  | Pathfinding, Game logic  |              | Entity, Parsing       | `git log --author="Dylan McKay"`
 | Mark Metcalfe  | @metcalmark | Entity system            |              | Parser                | `git log --author="Mark Metcalfe"`
-| Jacob Woods    | @mckiewjaco | GUI                      |              | Graphics              | `git log --author="J Woods"`
+| Jacob Woods    | @mckiewjaco | Controller, Audio        | Game logic   | Graphics              | `git log --author="J Woods"`
 | Jordan Milburn | @milburjord | Map parser               |              | Entity, Pathfinding   | `git log --author="Aposematism"`
 | Josh Weir      | @weirjosh   | Game Graphics            |              | GUI, Game logic       | `git log --author="Josh"`
 
@@ -87,13 +87,17 @@ Interactions are handled by interact(), of which every entity has its own implem
 
 Tests are located inside the [`com.swen.herebethetitle.entity.tests`](src/com.swen.herebethetitle.entity.tests) package.
 
-### GUI (Jacon Woods)
+### Controller (Jacon Woods)
 
-[`com.swen.herebethetitle.model`](src/com/swen/herebethetitle/view)
+[`com.swen.herebethetitle.model`](src/com/swen/herebethetitle/control)
 
 This library wraps the game graphics in a JavaFX application and handles events from user input.
-The Graphics library is used to draw the world, with an HUD implemented in this libary being drawn on top of it.
-The menus and other GUI elements are also implemented here.
+The Graphics library is used to draw the world. Menus are built here using JavaFX.
+
+Controller also handles the "main loop", running from a JavaFX timeline that periodically calls update() internally,
+which calls internal methods and methods in GameLogic to update the game state and then renders the world.
+
+Through the UI built by Controller, the player can load and save the game with the parsing library.
 
 ### Map parser (Jordan Milburn)
 
