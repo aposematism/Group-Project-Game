@@ -225,11 +225,13 @@ public class AudioManager implements GameListener{
 
 	@Override
 	public void onGameWin() {
+		song.stop();
 		playSound(SOUNDCODE_GAMEWIN);
 	}
 
 	@Override
 	public void onGameLose() {
+		song.stop();
 		playSound(SOUNDCODE_GAMELOSE);
 	}
 }
