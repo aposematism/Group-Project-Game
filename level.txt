@@ -42,6 +42,7 @@ T = Floor "Dirt" "static/dirt.png" + Armour "Good Chestplate" "item/torso2.png" 
 L = Floor "Dirt" "static/dirt.png" + Armour "Good Leggings" "item/legs2.png" LEGS 32.0
 P = Floor "Dirt" "static/dirt.png" + Armour "Good Boots" "item/boots2.png" BOOTS 18.0
 x = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25
+X = Floor "Floorboard" "static/woodfloor.png" + Potion "Bread" "item/bread.png" 25.0
 y = Floor "Grass" "static/grass.png" + Potion "Potion" "item/potion.png" 50
 q = Floor "Grass" "static/grass.png" + Potion "Spinach" "item/spinach.png" 100
 1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 1.png"

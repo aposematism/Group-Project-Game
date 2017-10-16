@@ -92,13 +92,11 @@ public class ReverseParser {
 				System.out.println("I found a player!");
 			}
 			else if(ent instanceof NPC){
-				if(characterMap.containsKey(t.getCharacter())){
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
 							characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
 						}
 					}
-				}
 			}
 			else if(!characterMap.containsKey(t.getCharacter())) {//check if you have that entity
 				if(!characterMap.get(t.getCharacter()).equals(ent.toString()) && !t.getCharacter().equals("?")) {//make sure the ent output matches.
