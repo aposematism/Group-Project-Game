@@ -21,6 +21,11 @@ public class Inventory implements Iterable<Item> {
 	private List<Item> items;
 
 	/**
+	 * The amount of title the player currently has.
+	 */
+	private int titleCount = 0;
+
+	/**
 	 * Armour slots, of which there are 4, one slot for each armour slot type
 	 */
 	private Armour[] armour;
@@ -42,6 +47,9 @@ public class Inventory implements Iterable<Item> {
 			this.armour[((Armour)item).getSlot().ordinal()] = (Armour) item;
 		else
 			this.items.add(item);
+		if(item.getName().equals("Title")){
+			titleCount++;
+		}
 	}
 
 	/**
@@ -76,6 +84,11 @@ public class Inventory implements Iterable<Item> {
 		int total = weapon.isPresent() ? items.size() + 1 : items.size();
 		for (Armour a : armour) total = a != null ? total + 1 : total;
 		return total;
+	}
+
+
+	public int getTitleCount(){
+		return titleCount;
 	}
 
 	/**

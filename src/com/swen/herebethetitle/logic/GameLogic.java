@@ -1,9 +1,6 @@
 package com.swen.herebethetitle.logic;
 
-import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.FriendlyStrategy;
-import com.swen.herebethetitle.entity.NPC;
-import com.swen.herebethetitle.entity.Player;
+import com.swen.herebethetitle.entity.*;
 import com.swen.herebethetitle.logic.ai.NpcController;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
 import com.swen.herebethetitle.logic.exceptions.ImpossibleAction;
@@ -26,6 +23,8 @@ import java.util.stream.Collectors;
  */
 public class GameLogic {
     public static final double VICINITY_RADIUS = 6.0;
+
+    private final int titlesRequired = 4;
 
     /**
      * The listener notifier.
@@ -202,6 +201,18 @@ public class GameLogic {
 
         context.getCurrentRegion().move(context.getPlayer(), newLocation);
         notifier.notify(listener -> listener.onPlayerMoved(getPlayer()));
+    }
+
+    public boolean GameWon(){
+        Inventory inv = context.getPlayer().inventory();
+        if(inv.getTitleCount() >= titlesRequired){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean gameLost(){
+        return context.getPlayer().isDead();
     }
 
     /**
