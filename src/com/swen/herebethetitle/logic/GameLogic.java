@@ -62,8 +62,7 @@ public class GameLogic {
         
         // Check for game win.
         if (getPlayer().inventory().containsTitle()) {
-            notifier.notify(l -> l.onGameCompleted());
-	        notifier.notify(l -> l.onGameWin());
+	        notifier.notify(l -> l.onGameCompleted());
         }
 
         // Check for game lost.
@@ -213,7 +212,8 @@ public class GameLogic {
     public boolean GameWon(){
         Inventory inv = context.getPlayer().inventory();
         if(inv.getTitleCount() >= titlesRequired){
-            return true;
+	        notifier.notify(l -> l.onGameWin());
+	        return true;
         }
         return false;
     }
