@@ -1,7 +1,6 @@
 package com.swen.herebethetitle.parser;
 
 import com.swen.herebethetitle.entity.Entity;
-import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 
@@ -114,13 +113,7 @@ public class MapParser {
 
 				try {
 					for (Entity e : entities) {
-						if(!(e instanceof Player)){
-							cloned.add(e.clone());
-						}
-						else{
-							cloned.add(e);
-						}
-
+						cloned.add(e.clone());
 					}
 				} catch (Exception e){
 					e.printStackTrace();
