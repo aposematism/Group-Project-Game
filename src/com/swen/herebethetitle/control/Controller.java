@@ -348,7 +348,7 @@ public class Controller extends Application{
 		quit.setPrefSize(100, 20);
 		quit.setText("Quit");
 		quit.setOnAction(e->{
-			System.exit(0);
+			window.setScene(mainMenu);
 		});
 		optionBox.getChildren().add(quit);
 	}
