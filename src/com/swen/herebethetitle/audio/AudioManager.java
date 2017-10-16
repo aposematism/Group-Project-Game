@@ -112,12 +112,16 @@ public class AudioManager implements GameListener{
 	 * @param s
 	 */
 	public void playSound(int s) {
-		if(playingSounds.size()>=MAX_SOUNDS) {
-			playingSounds.pop().stop();
+		/*first, check the list of playing sounds for stopped sounds*/
+		for(AudioClip a: playingSounds) {
+			if(!a.isPlaying())
+				playingSounds.remove(a);
 		}
-		sounds.get(s).setCycleCount(1);
-		playingSounds.add(sounds.get(s));
-		sounds.get(s).play();
+		if(playingSounds.size()<MAX_SOUNDS) {
+			sounds.get(s).setCycleCount(1);
+			playingSounds.add(sounds.get(s));
+			sounds.get(s).play();
+		}
 	}
 
 	
@@ -226,12 +230,22 @@ public class AudioManager implements GameListener{
 	@Override
 	public void onGameWin() {
 		song.stop();
+		//cull all other sounds
+		for(AudioClip a: playingSounds) {
+			a.stop();
+			playingSounds.remove(a);
+		}
 		playSound(SOUNDCODE_GAMEWIN);
 	}
 
 	@Override
 	public void onGameLose() {
 		song.stop();
+		//cull all other sounds
+		for(AudioClip a: playingSounds) {
+			a.stop();
+			playingSounds.remove(a);
+		}
 		playSound(SOUNDCODE_GAMELOSE);
 	}
 }
