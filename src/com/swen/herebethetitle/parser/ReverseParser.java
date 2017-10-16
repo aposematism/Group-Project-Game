@@ -18,7 +18,7 @@ public class ReverseParser {
 	ArrayList<String> entityOutput = new ArrayList<String>();
 	HashMap<String, String> characterMap = new HashMap<String, String>();
 	Region r;
-	String[] alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+	String[] alphabet = "fFkKnNoOuUvVqQgGzZsS".split("");
 
 	public ReverseParser(File region) throws IOException, InputMismatchException {
 		reverseScanner(region);
@@ -92,14 +92,16 @@ public class ReverseParser {
 				System.out.println("I found a player!");
 			}
 			else if(ent instanceof NPC){
+				System.out.println("I found an NPC!");
 					for(int k = 0; k < alphabet.length; k++) {
-						if(!characterMap.containsKey(alphabet[k])){
+						if(!characterMap.containsKey(alphabet[k]) && !characterMap.containsValue(t.getMapFloor().toString() + " + " + ent.toString())){
 							characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
 						}
 					}
 			}
-			else if(!characterMap.containsKey(t.getCharacter())) {//check if you have that entity
-				if(!characterMap.get(t.getCharacter()).equals(ent.toString()) && !t.getCharacter().equals("?")) {//make sure the ent output matches.
+			else if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
+				System.out.println(characterMap.get(t.getCharacter()));
+				if(!(characterMap.containsValue(ent.toString()) || (characterMap.containsValue(t.getMapFloor().toString() + " + " + ent.toString())))){//make sure the ent output matches.
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
 							if(t.getMapFloor() != null) {
@@ -111,13 +113,11 @@ public class ReverseParser {
 				}
 			}
 			else {//otherwise add it to the map.
-				if(!t.getCharacter().equals("?")) {
-					if(t.getMapFloor() != null) {
-						characterMap.put(t.getCharacter(), t.getMapFloor().toString() + " + " + ent.toString());
-					}
-					else {
-						characterMap.put(t.getCharacter(), ent.toString());
-					}
+				if(t.getMapFloor() != null) {
+					characterMap.put(t.getCharacter(), t.getMapFloor().toString() + " + " + ent.toString());
+				}
+				else {
+					characterMap.put(t.getCharacter(), ent.toString());
 				}
 			}
 		}
@@ -149,16 +149,33 @@ public class ReverseParser {
 			for (int row = 0; row < r.getYSize(); row++) {
 				for (int col = 0; col < r.getXSize(); col++) {
 					boolean isPlayer = false;
+					boolean isNPC = false;
 					for(Entity ent : r.get(col, row).getInteractives()) {
 						if(ent instanceof Player) {
 							isPlayer = true;
+						}
+						if(ent instanceof NPC) {
+							isNPC = true;
 						}
 					}
 					if(isPlayer) {
 						pw.write("?");
 					}
+					else if(isNPC) {
+						for(Entity ent : r.get(col, row).getInteractives()) {
+							if(characterMap.containsValue(r.get(col, row).getMapFloor().toString() + " + " + ent.toString()) && ent.toString().contains("NPC")) {
+								pw.write();
+								break;
+							}
+						}
+					}
 					else if(r.get(col, row).getCharacter().equals("?")) {
-						pw.write(",");
+						for(String l : characterMap.keySet()) {
+							if(characterMap.containsValue(r.get(col, row).getMapFloor().toString())) {
+								pw.write(l);
+								break;
+							}
+						}
 					}
 					else{
 						pw.write(r.get(col, row).getCharacter()); //col = x, row = y
