@@ -51,7 +51,13 @@ public class Tile implements Iterable<Entity> {
 		return neighbours;
 	}
 
-	public boolean contains(Entity entity) { return interactives.contains(entity); }
+	public boolean contains(Entity entity) {
+		if(entity == mapFloor){
+			return true;
+		}else {
+			return interactives.contains(entity);
+		}
+	}
 
 	public boolean remove(Entity entity) {
 	    return interactives.remove(entity);
@@ -89,6 +95,13 @@ public class Tile implements Iterable<Entity> {
 		for (Entity e : interactives)
 			if (!(e instanceof Player))
 				entity = e;
+		return entity;
+	}
+
+	public Entity getTopIncludePlayer(){
+		Entity entity = mapFloor;
+		for (Entity e : interactives)
+			entity = e;
 		return entity;
 	}
 

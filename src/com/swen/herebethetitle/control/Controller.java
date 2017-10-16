@@ -319,7 +319,9 @@ public class Controller extends Application{
 		logic.addGameListener(gameCanvas);
 
 		initPauseMenu();
-
+		
+		gameGUIRoot.requestFocus();
+		
 		return s;
 	}
 
@@ -419,81 +421,90 @@ public class Controller extends Application{
 		if (!isPlaying) return;
 
 		/*movement - may want to implement pathfinding mouse-based movement instead*/
-		try {
 			switch (e.getCode()) {
-				case W:
-					logic.movePlayer(Direction.Up);
-					break;
-				case A:
-					logic.movePlayer(Direction.Left);
-					break;
-				case S:
-					logic.movePlayer(Direction.Down);
-					break;
-				case D:
-					logic.movePlayer(Direction.Right);
-					break;
-				case LEFT:
-					logic.movePlayer(Direction.Left);
-					break;
-				case UP:
-					logic.movePlayer(Direction.Up);
-					break;
-				case RIGHT:
-					logic.movePlayer(Direction.Right);
-					break;
-				case DOWN:
-					logic.movePlayer(Direction.Down);
-					break;
-				case KP_LEFT:
-					logic.movePlayer(Direction.Left);
-					break;
-				case KP_UP:
-					logic.movePlayer(Direction.Up);
-					break;
-				case KP_RIGHT:
-					logic.movePlayer(Direction.Right);
-					break;
-				case KP_DOWN:
-					logic.movePlayer(Direction.Down);
-					break;
-					
-					
-					/*inventory interaction cases*/
-				case DIGIT1:
-					useItemInPlayerInventory(0);
-					break;
-				case DIGIT2:
-					useItemInPlayerInventory(1);
-					break;
-				case DIGIT3:
-					useItemInPlayerInventory(2);
-					break;
-				case DIGIT4:
-					useItemInPlayerInventory(3);
-					break;
-				case DIGIT5:
-					useItemInPlayerInventory(4);
-					break;
-				case DIGIT6:
-					useItemInPlayerInventory(5);
-					break;
-				case DIGIT7:
-					useItemInPlayerInventory(6);
-					break;
-				case DIGIT8:
-					useItemInPlayerInventory(7);
-					break;
-				case DIGIT9:
-					useItemInPlayerInventory(8);
-					break;
-				case DIGIT0:
-					useItemInPlayerInventory(9);
-					break;
+			case W:
+				movePlayerDirectional(Direction.Up);
+				break;
+			case A:
+				movePlayerDirectional(Direction.Left);
+				break;
+			case S:
+				movePlayerDirectional(Direction.Down);
+				break;
+			case D:
+				movePlayerDirectional(Direction.Right);
+				break;
+			case LEFT:
+				movePlayerDirectional(Direction.Left);
+				break;
+			case UP:
+				movePlayerDirectional(Direction.Up);
+				break;
+			case RIGHT:
+				movePlayerDirectional(Direction.Right);
+				break;
+			case DOWN:
+				movePlayerDirectional(Direction.Down);
+				break;
+			case KP_LEFT:
+				movePlayerDirectional(Direction.Left);
+				break;
+			case KP_UP:
+				movePlayerDirectional(Direction.Up);
+				break;
+			case KP_RIGHT:
+				movePlayerDirectional(Direction.Right);
+				break;
+			case KP_DOWN:
+				movePlayerDirectional(Direction.Down);
+				break;
+				
+				
+				/*inventory interaction cases*/
+			case DIGIT1:
+				useItemInPlayerInventory(0);
+				break;
+			case DIGIT2:
+				useItemInPlayerInventory(1);
+				break;
+			case DIGIT3:
+				useItemInPlayerInventory(2);
+				break;
+			case DIGIT4:
+				useItemInPlayerInventory(3);
+				break;
+			case DIGIT5:
+				useItemInPlayerInventory(4);
+				break;
+			case DIGIT6:
+				useItemInPlayerInventory(5);
+				break;
+			case DIGIT7:
+				useItemInPlayerInventory(6);
+				break;
+			case DIGIT8:
+				useItemInPlayerInventory(7);
+				break;
+			case DIGIT9:
+				useItemInPlayerInventory(8);
+				break;
+			case DIGIT0:
+				useItemInPlayerInventory(9);
+				break;
+			default:
+				//Do nothing
+				break;
 			}
-		} catch (InvalidDestination er) {
-			er.printStackTrace();
-		}
+
+	}
+	
+	/**
+	 * Handles creating the PlayerMove when we want to move the player in
+	 * a given direction instead of to a destination.
+	 * @param d direction to try to move the player
+	 */
+	private void movePlayerDirectional(Direction d) {
+		//TODO
 	}
 
 	/**
@@ -639,7 +650,7 @@ public class Controller extends Application{
 			window.setScene(victoryScene);
 			return;
 		}
-		if(true) {
+		if(logic.gameLost()) {
 			pauseGame();
 			/*build loss scene*/
 			BorderPane loss = new BorderPane();
