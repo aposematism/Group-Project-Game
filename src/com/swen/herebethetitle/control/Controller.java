@@ -519,6 +519,10 @@ public class Controller extends Application{
 		}
 		
 		Tile dest = game.getCurrentRegion().get(x, y);
+		if(!dest.isPenetrable()) {
+			//can't move through walls!
+			return;
+		}
 	    this.playerMove = Optional.of(new PlayerMove(game.getPlayer(), dest));
 	}
 
