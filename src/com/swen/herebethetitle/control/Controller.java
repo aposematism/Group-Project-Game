@@ -3,14 +3,12 @@ package com.swen.herebethetitle.control;
 import com.swen.herebethetitle.audio.AudioManager;
 import com.swen.herebethetitle.entity.Entity;
 import com.swen.herebethetitle.entity.Item;
-import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.graphics.GameCanvas;
 import com.swen.herebethetitle.logic.GameLogic;
 import com.swen.herebethetitle.logic.Notifier;
 import com.swen.herebethetitle.logic.ai.Interaction;
 import com.swen.herebethetitle.logic.ai.PlayerMove;
 import com.swen.herebethetitle.logic.exceptions.EntityOutOfRange;
-import com.swen.herebethetitle.logic.exceptions.InvalidDestination;
 import com.swen.herebethetitle.model.GameContext;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -34,7 +32,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -56,15 +53,6 @@ import java.util.Optional;
  *
  */
 
-/*
- * TODO
- *
- * Immediately:
- * -input events for interactions and attacking
- * -Add in subordinate menu functionality for load game & settings
- * -pause menu
- *
- */
 public class Controller extends Application{
 	//constants
 	public static final int DEFAULT_WIDTH = 1000;
@@ -78,7 +66,6 @@ public class Controller extends Application{
 	//main menu fields
 	private Scene mainMenu;
 	private BorderPane mainMenuLayout;
-	private GridPane settingsMenu;
 	//main game UI fields
 	private Scene worldGraphics;
 	private Timeline updateTimeline;
@@ -286,10 +273,6 @@ public class Controller extends Application{
 		}
 
 		initializeNewGame(r);
-		//TODO Needs to be replaced by something better.
-		Player p = game.getPlayer();
-		//System.out.println(p.toString());
-		//System.out.println(game.currentRegion.getLocation(p));
 
 		//play the game
 		worldGraphics = initGameGUI();
@@ -380,7 +363,6 @@ public class Controller extends Application{
 		gameCanvas.getGraphicsContext2D().fillRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		isPlaying = false;
 
-		/*TODO draw the pause menu*/
 		window.setScene(pauseMenu);
 	}
 	/**
@@ -408,7 +390,6 @@ public class Controller extends Application{
 	 * @param e the key event
 	 */
 	private void handleKeyPress(KeyEvent e) {
-		//TODO remove test code; implement final handling
 		System.out.println("Key pressed: " + e.getText());
 		System.out.println("Key pressed: " + e.getCode());
 
@@ -552,7 +533,6 @@ public class Controller extends Application{
 	 * @param e the mouse event
 	 */
 	private void handleMousePressSecondary(MouseEvent e) {
-		// TODO remove test code; implement final handling
 		System.out.println("Secondary mouse press");
 		/*get the cell the player clicked on*/
 		GridLocation mouseLocation = gameCanvas.getMousePos((int)e.getX(), (int)e.getY());
@@ -564,7 +544,6 @@ public class Controller extends Application{
 				Tile playerDestination = game.getCurrentRegion().get(mouseLocation);
 			    this.playerMove = Optional.of(new PlayerMove(game.getPlayer(), playerDestination));
 			}
-			//TODO this
 		}catch(IllegalArgumentException exc) {
 			//do nothing, means we've clicked somewhere we shouldn't have
 			return;
