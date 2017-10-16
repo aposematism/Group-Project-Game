@@ -93,4 +93,8 @@ public interface GameListener {
      * it will stay unlocked.
      */
     void onDoorClosed(Static door);
+
+    void onGameWin();
+
+    void onGameLose();
 }

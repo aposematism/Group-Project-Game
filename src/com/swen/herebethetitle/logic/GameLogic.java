@@ -60,10 +60,16 @@ public class GameLogic {
 
         npcController.tick(context, notifier);
         
-        // Check for game over.
+        // Check for game win.
         if (getPlayer().inventory().containsTitle()) {
             notifier.notify(l -> l.onGameCompleted());
+	        notifier.notify(l -> l.onGameWin());
         }
+
+        // Check for game lost.
+	    if(getPlayer().getHealth()<=Mob.NO_HEALTH){
+        	notifier.notify(l -> l.onGameLose());
+	    }
     }
 
     /**

@@ -36,6 +36,8 @@ public class AudioManager implements GameListener{
 	public static final int SOUNDCODE_DIALOG_MESSAGE = 19;
 	public static final int SOUNDCODE_DIALOG_END = 20;
 	public static final int SOUNDCODE_DOORCLOSE = 21;
+	public static final int SOUNDCODE_GAMEWIN = 22;
+	public static final int SOUNDCODE_GAMELOSE = 23;
 	public static final int SOUNDCODE_MENUSONG = 0;
 	public static final int SOUNDCODE_TOWNSONG = -1;
 	public static final int SOUNDCODE_BATTLESONG = -1;	//TODO get battle music
@@ -79,6 +81,8 @@ public class AudioManager implements GameListener{
 		sounds.put(SOUNDCODE_DIALOG_START, new AudioClip("file:res/sound/dialogstart.mp3"));
 		sounds.put(SOUNDCODE_DIALOG_MESSAGE, new AudioClip("file:res/sound/dialogmessage.mp3"));
 		sounds.put(SOUNDCODE_DIALOG_END, new AudioClip("file:res/sound/dialogend.mp3"));
+		sounds.put(SOUNDCODE_GAMEWIN, new AudioClip("file:res/sound/gamewin.mp3"));
+		sounds.put(SOUNDCODE_GAMELOSE, new AudioClip("file:res/sound/gamelose.mp3"));
 
 		sounds.put(SOUNDCODE_MENUSONG, new AudioClip("file:res/sound/forest_adventure.wav"));
 		sounds.put(SOUNDCODE_TOWNSONG, new AudioClip("file:res/sound/elfish_docks.wav"));
@@ -217,5 +221,15 @@ public class AudioManager implements GameListener{
 	@Override
 	public void onDoorClosed(Static door) {
 		playSound(SOUNDCODE_DOORCLOSE);
+	}
+
+	@Override
+	public void onGameWin() {
+		playSound(SOUNDCODE_GAMEWIN);
+	}
+
+	@Override
+	public void onGameLose() {
+		playSound(SOUNDCODE_GAMELOSE);
 	}
 }

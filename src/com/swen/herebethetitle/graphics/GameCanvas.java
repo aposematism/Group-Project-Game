@@ -309,4 +309,13 @@ public class GameCanvas extends Canvas implements GameListener {
 		
 	}
 
+	@Override
+	public void onGameWin() {
+
+	}
+
+	@Override
+	public void onGameLose() {
+
+	}
 }
