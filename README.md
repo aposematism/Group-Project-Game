@@ -2,6 +2,8 @@
 
 [![pipeline status](https://gitlab.ecs.vuw.ac.nz/metcalmark/swen-222-group-project/badges/master/pipeline.svg)](https://gitlab.ecs.vuw.ac.nz/metcalmark/swen-222-group-project/commits/master)
 
+**Read "Usage" section for instructions on running**
+
 ## Developers
 
 | Name           | Handle      | Maintains                | Code Reviews | Tests                 | Git log
@@ -27,6 +29,9 @@
 Here Be The Title uses Maven for compilation and running tests.
 
 All generated class files and executables are placed into the `target/` folder.
+
+The JAR **must** be run alongside the `res/` folder. It is sufficient to create the JAR,
+and put the `res/` folder next to it to get it working.
 
 ```bash
 # Creates an executable JAR file
