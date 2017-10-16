@@ -87,9 +87,9 @@ Interactions are handled by interact(), of which every entity has its own implem
 
 Tests are located inside the [`com.swen.herebethetitle.entity.tests`](src/com.swen.herebethetitle.entity.tests) package.
 
-### Controller (Jacon Woods)
+### Control (Jacob Woods)
 
-[`com.swen.herebethetitle.model`](src/com/swen/herebethetitle/control)
+[`com.swen.herebethetitle.control`](src/com/swen/herebethetitle/control)
 
 This library wraps the game graphics in a JavaFX application and handles events from user input.
 The Graphics library is used to draw the world. Menus are built here using JavaFX.
@@ -98,6 +98,14 @@ Controller also handles the "main loop", running from a JavaFX timeline that per
 which calls internal methods and methods in GameLogic to update the game state and then renders the world.
 
 Through the UI built by Controller, the player can load and save the game with the parsing library.
+
+### Audio (Jacob Woods)
+
+[`com.swen.herebethetitle.audio`](src/com/swen/herebethetitle/audio)
+
+Library for playing sounds and songs in the main JavaFX thread.
+Loads all sounds as AudioClips internally on construct, which are then played when observer-pattern methods
+are called on it by the game logic, or externally by use of integer soundcodes to play specific sounds or songs.
 
 ### Map parser (Jordan Milburn)
 
