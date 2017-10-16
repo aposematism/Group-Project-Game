@@ -587,10 +587,11 @@ public class Controller extends Application{
 			victory.setPadding(new Insets(50));
 			Scene victoryScene = new Scene(victory, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 			HBox top = new HBox();
-			HBox center = new HBox();
+			VBox center = new VBox();
 			HBox bottom = new HBox();
 			top.setAlignment(Pos.CENTER);
 			center.setAlignment(Pos.CENTER);
+			center.setSpacing(5);
 			bottom.setAlignment(Pos.CENTER);
 			victory.setTop(top);
 			victory.setBottom(bottom);
@@ -600,9 +601,37 @@ public class Controller extends Application{
 			congratText.setFont(new Font(50.0));
 			top.getChildren().add(congratText);
 			
+			Image spooky = new Image("file:res/mob/wizard.png");
+			ImageView spookyView = new ImageView(spooky);
+			center.getChildren().add(spookyView);
+			
 			Text youWonText = new Text("You have gained a title, and become a noble Knight!");
 			youWonText.setFont(new Font(20.0));
 			center.getChildren().add(youWonText);
+			
+			Button newGame = new Button();
+			newGame.setText("New game");
+			newGame.setOnAction(e->{
+				loadGame(new File("res/new_game.txt"));
+			});
+			center.getChildren().add(newGame);
+			
+			Button loadGame = new Button();
+			loadGame.setText("Load game");
+			loadGame.setOnAction(e->{
+				if(chooseLoadFile().isPresent()) {
+					loadGame(chooseLoadFile().get());	
+				}
+			});
+			center.getChildren().add(loadGame);
+			
+			Button quit = new Button();
+			quit.setText("Quit");
+			quit.setOnAction(e->{
+				window.setScene(mainMenu);
+				audio.setSong(AudioManager.SOUNDCODE_MENUSONG);
+			});
+			center.getChildren().add(quit);
 			
 			window.setScene(victoryScene);
 			return;
@@ -618,6 +647,7 @@ public class Controller extends Application{
 			HBox bottom = new HBox();
 			top.setAlignment(Pos.CENTER);
 			center.setAlignment(Pos.CENTER);
+			center.setSpacing(5);
 			bottom.setAlignment(Pos.CENTER);
 			loss.setTop(top);
 			loss.setBottom(bottom);
@@ -634,6 +664,30 @@ public class Controller extends Application{
 			Text youWonText = new Text("You have died. Reload a previous save or begin your adventure again.");
 			youWonText.setFont(new Font(20.0));
 			center.getChildren().add(youWonText);
+			
+			Button newGame = new Button();
+			newGame.setText("New game");
+			newGame.setOnAction(e->{
+				loadGame(new File("res/new_game.txt"));
+			});
+			center.getChildren().add(newGame);
+			
+			Button loadGame = new Button();
+			loadGame.setText("Load game");
+			loadGame.setOnAction(e->{
+				if(chooseLoadFile().isPresent()) {
+					loadGame(chooseLoadFile().get());	
+				}
+			});
+			center.getChildren().add(loadGame);
+			
+			Button quit = new Button();
+			quit.setText("Quit");
+			quit.setOnAction(e->{
+				window.setScene(mainMenu);
+				audio.setSong(AudioManager.SOUNDCODE_MENUSONG);
+			});
+			center.getChildren().add(quit);
 			
 			window.setScene(lossScene);
 			return;
