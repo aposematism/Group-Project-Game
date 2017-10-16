@@ -1,8 +1,8 @@
-this: level
-north: nope
-east: nope
-south: nope
-west: nope
+this: main
+north: none
+east: none
+south: none
+west: none
 
 entities:
 ? = Floor "Floorboard" "static/woodfloor.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory
@@ -45,14 +45,14 @@ x = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25
 X = Floor "Floorboard" "static/woodfloor.png" + Potion "Bread" "item/bread.png" 25.0
 y = Floor "Grass" "static/grass.png" + Potion "Potion" "item/potion.png" 50
 q = Floor "Grass" "static/grass.png" + Potion "Spinach" "item/spinach.png" 100
-1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 1.png"
-2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 2.png"
-3 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 3.png"
-4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 4.png"
-5 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 5.png"
-6 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 6.png"
-7 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 7.png"
-8 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 8.png"
+1 = Floor "Grass" "static/grass.png" + Static "Big Tree" "static/tree 1.png"
+2 = Floor "Grass" "static/grass.png" + Static "Big Tree" "static/tree 2.png"
+3 = Floor "Grass" "static/grass.png" + Static "Big Tree" "static/tree 3.png"
+4 = Floor "Grass" "static/grass.png" + Static "Big Tree" "static/tree 4.png"
+5 = Floor "Grass" "static/grass.png" + Static "Small Tree" "static/tree 5.png"
+6 = Floor "Grass" "static/grass.png" + Static "Small Tree" "static/tree 6.png"
+7 = Floor "Grass" "static/grass.png" + Static "Tall Tree" "static/tree 7.png"
+8 = Floor "Grass" "static/grass.png" + Static "Tall Tree" "static/tree 8.png"
 9 = Floor "Grass" "static/grass.png" + Static "George Herbert Walker Bush" "static/bush 1.png"
 0 = Floor "Grass" "static/grass.png" + Static "George Walker Bush" "static/bush 2.png"
 ~ = Floor "Dirt" "static/dirt.png" + Title "Knighthood" "item/title.png"
