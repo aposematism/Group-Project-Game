@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.parser;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Mob;
 import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
@@ -89,7 +90,16 @@ public class ReverseParser {
 				characterMap.put("?", t.getMapFloor().toString() + " + " + ent.toString());
 				System.out.println("I found a player!");
 			}
-			if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
+			else if(ent instanceof Mob){
+				if(characterMap.containsKey(t.getCharacter())){
+					for(int k = 0; k < alphabet.length; k++) {
+						if(!characterMap.containsKey(alphabet[k])){
+							characterMap.put(alphabet[k], t.getMapFloor().toString() + " + " + ent.toString());
+						}
+					}
+				}
+			}
+			else if(characterMap.containsKey(t.getCharacter())) {//check if you have that entity
 				if(!characterMap.get(t.getCharacter()).equals(ent.toString()) && !t.getCharacter().equals("?")) {//make sure the ent output matches.
 					for(int k = 0; k < alphabet.length; k++) {
 						if(!characterMap.containsKey(alphabet[k])){
