@@ -28,6 +28,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -38,7 +40,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -606,10 +607,35 @@ public class Controller extends Application{
 			window.setScene(victoryScene);
 			return;
 		}
-		if(logic.gameLost()) {
+		if(true) {
 			pauseGame();
-			//display failure screen
+			/*build loss scene*/
+			BorderPane loss = new BorderPane();
+			loss.setPadding(new Insets(50));
+			Scene lossScene = new Scene(loss, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+			HBox top = new HBox();
+			VBox center = new VBox();
+			HBox bottom = new HBox();
+			top.setAlignment(Pos.CENTER);
+			center.setAlignment(Pos.CENTER);
+			bottom.setAlignment(Pos.CENTER);
+			loss.setTop(top);
+			loss.setBottom(bottom);
+			loss.setCenter(center);
 			
+			Text congratText = new Text("Oh dear!");
+			congratText.setFont(new Font(50.0));
+			top.getChildren().add(congratText);
+			
+			Image spooky = new Image("file:res/mob/skeleton.png");
+			ImageView spookyView = new ImageView(spooky);
+			center.getChildren().add(spookyView);
+			
+			Text youWonText = new Text("You have died. Reload a previous save or begin your adventure again.");
+			youWonText.setFont(new Font(20.0));
+			center.getChildren().add(youWonText);
+			
+			window.setScene(lossScene);
 			return;
 		}
 		
