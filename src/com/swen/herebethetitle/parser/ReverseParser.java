@@ -164,8 +164,13 @@ public class ReverseParser {
 					else if(isNPC) {
 						for(Entity ent : r.get(col, row).getInteractives()) {
 							if(characterMap.containsValue(r.get(col, row).getMapFloor().toString() + " + " + ent.toString()) && ent.toString().contains("NPC")) {
-								pw.write();
-								break;
+								for(String s : characterMap.keySet()) {
+									if(characterMap.get(s).equals(r.get(col, row).getMapFloor().toString() + " + " + ent.toString())) {
+										pw.write(s);
+										break;
+									}
+								
+								}
 							}
 						}
 					}
