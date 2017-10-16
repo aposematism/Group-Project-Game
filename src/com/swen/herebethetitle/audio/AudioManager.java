@@ -137,6 +137,19 @@ public class AudioManager implements GameListener{
 		return sounds.get(s).isPlaying();
 	}	
 	
+	/**
+	 * Stops all sounds, including the song, from playing.
+	 */
+	public void cullAllSounds() {
+		if(song!=null) {
+			song.stop();
+		}
+		for(AudioClip a: playingSounds) {
+			a.stop();
+			playingSounds.remove(a);
+		}
+	}
+	
 	/*GameListener methods*/
 	
 	@Override

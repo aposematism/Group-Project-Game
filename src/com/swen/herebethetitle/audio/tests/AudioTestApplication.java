@@ -34,7 +34,7 @@ public class AudioTestApplication extends Application{
 		audio.playSound(AudioManager.SOUNDCODE_ROBOT1);
 		audio.playSound(AudioManager.SOUNDCODE_FOOTSTEP1);
 		//check they are playing
-		if(audio.isPlaying(AudioManager.SOUNDCODE_DEMON1)) {
+		if(!audio.isPlaying(AudioManager.SOUNDCODE_DEMON1)) {
 			return false;
 		}
 		if(!audio.isPlaying(AudioManager.SOUNDCODE_DEMON2)) {
@@ -43,7 +43,7 @@ public class AudioTestApplication extends Application{
 		if(!audio.isPlaying(AudioManager.SOUNDCODE_ROBOT1)) {
 			return false;
 		}
-		return audio.isPlaying(AudioManager.SOUNDCODE_FOOTSTEP1);
+		return !audio.isPlaying(AudioManager.SOUNDCODE_FOOTSTEP1);
 	}
 	
 	/**
@@ -68,96 +68,112 @@ public class AudioTestApplication extends Application{
 	 */
 	public static boolean testGameListenerHandling() {
 		/*game completed*/
+		audio.cullAllSounds();
 	    audio.onGameCompleted();
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_GAMEEND)) {
 	    	System.out.println("Game listener fail: onGameCompleted");
 	    	return false;
 	    }
 	    /*player moved*/
+		audio.cullAllSounds();
 	    audio.onPlayerMoved(null);
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_FOOTSTEP1) && !audio.isPlaying(AudioManager.SOUNDCODE_FOOTSTEP2)) {
 	    	System.out.println("Game listener fail: onPlayerMove");
 	    	return false;
 	    }
 	    /*player attacked*/
+		audio.cullAllSounds();
 	    audio.onPlayerAttacked(null, null);
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE1) && !audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE2)) {
 	    	System.out.println("Game listener fail: onPlayerAttacked");
 	    	return false;
 	    }
 	    /*player killed*/
+		audio.cullAllSounds();
 	    audio.onPlayerKilled(null, null);
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE2)) {
 	    	System.out.println("Game listener fail: onPlayerKilled");
 	    	return false;
 	    }
 	    /*player picked up nonkey item*/
+		audio.cullAllSounds();
 	    audio.onPlayerPickup(null, new DummyItem("dummy", "null"));
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_ITEMPICKUP)) {
 	    	System.out.println("Game listener fail: onPlayerPickup (non-key)");
 	    	return false;
 	    }
 	    /*player picked up key*/
+		audio.cullAllSounds();
 	    audio.onPlayerPickup(null, new Key("dummy", "dummy", 0));
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_KEYPICKUP)) {
 	    	System.out.println("Game listener fail: onPlayerPickup (key)");
 	    	return false;
 	    }
 	    /*player dropped item*/
+		audio.cullAllSounds();
 	    audio.onPlayerDrop(null, new DummyItem("dummy", "null"));
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_ITEMDROPPED)) {
 	    	System.out.println("Game listener fail: onPlayerDrop");
 	    	return false;
 	    }
 	    /*player attacks npc*/
+		audio.cullAllSounds();
 	    audio.onNPCAttacked(null);
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DEMON1)) {
 	    	System.out.println("Game listener fail: onNPCAttacked");
 	    	return false;
 	    }
 	    /*player kills npc*/
+		audio.cullAllSounds();
 	    audio.onNPCKilled(null);
 	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DEMON2)) {
 	    	System.out.println("Game listener fail: onNPCKilled");
 	    	return false;
 	    }
 	    /*dialog begin*/
+		audio.cullAllSounds();
 		audio.onNPCDialogBegin(null);
-		if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE1)) {
+		if(!audio.isPlaying(AudioManager.SOUNDCODE_DIALOG_START)) {
 	    	System.out.println("Game listener fail: onNPCDialogBegin");
 	    	return false;
 	    }
 	    /*dialog message*/
+		audio.cullAllSounds();
 	    audio.onNPCDialogMessage(null, null);
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE1)) {
+	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DIALOG_MESSAGE)) {
 	    	System.out.println("Game listener fail: onNPCDialogMessage");
 	    	return false;
 	    }
 	    /*dialog ends*/
+		audio.cullAllSounds();
 	    audio.onNPCDialogEnd(null);
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_PLAYERDAMAGE2)) {
+	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DIALOG_END)) {
 	    	System.out.println("Game listener fail: NPCDialogEnd");
 	    	return false;
 	    }
 	    /*door unlocked*/
+		audio.cullAllSounds();
 	    audio.onDoorUnlocked(null);
-	    if(!audio.isPlaying(AudioManager.SOUNDCODE_UNLOCK)) {
+	    if(!audio.isPlaying(AudioManager.SOUNDCODE_DOOROPEN)) {
 	    	System.out.println("Game listener fail: onDoorUnlocked");
 	    	return false;
 	    }
 	    /*door unlock failure*/
+		audio.cullAllSounds();
 	    audio.onDoorUnlockFailed(null, null);
 		if (!audio.isPlaying(AudioManager.SOUNDCODE_ERROR)) {
 			System.out.println("Game listener fail: onDoorUnlockFailed");
 	    	return false;
 	    }
 	    /*door opened*/
+		audio.cullAllSounds();
 	    audio.onDoorOpened(null);
 		if (!audio.isPlaying(AudioManager.SOUNDCODE_DOOROPEN)) {
 			System.out.println("Game listener fail: onDoorOpened");
 	    	return false;
 	    }
 	    /*door closed*/
+		audio.cullAllSounds();
 	    audio.onDoorClosed(null);
 		if (!audio.isPlaying(AudioManager.SOUNDCODE_DOORCLOSE)) {
 			System.out.println("Game listener fail: onDoorClosed");
