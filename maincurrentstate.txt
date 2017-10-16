@@ -5,79 +5,77 @@ south: none
 west: none
 
 entities:
-, = Floor "Grass" "static/grass.png"
-- = Floor "Dirt" "static/dirt.png"
-. = Floor "Wooden Floor" "static/woodfloor.png"
-/ = Floor "Dirt" "static/dirt.png" + Weapon "Bronze Sword" "item/sword brown.png" true 12.0
-0 = Floor "Grass" "static/grass.png" + Static "George Walker Bush" "static/bush 2.png"
-1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 1.png"
-2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 2.png"
-3 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 3.png"
-4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 4.png"
-5 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 5.png"
-6 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 6.png"
-7 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 7.png"
-8 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 8.png"
-9 = Floor "Grass" "static/grass.png" + Static "George Herbert Walker Bush" "static/bush 1.png"
-? = Floor "Wooden Floor" "static/woodfloor.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory { Key "Key for door" "item/key blue.png" 70 } { Potion "Bread" "item/bread.png" 25.0 }
 A = Floor "Floorboard" "static/woodfloor.png" + Static "Door" "static/door brown locked.png" Door 70 LOCKED "static/door brown closed.png" "static/door brown open.png"
 B = Floor "Dirt" "static/dirt.png" + Static "Door" "static/door brown locked.png" Door 80 LOCKED "static/door brown closed.png" "static/door brown open.png"
 C = Floor "Dirt" "static/dirt.png" + Static "Door" "static/door brown locked.png" Door 90 LOCKED "static/door brown closed.png" "static/door brown open.png"
 F = Floor "Floorboard" "static/woodfloor.png" + NPC "Locksmith" "mob/wizard.png" 50.0 Left Friendly { "mmmYello?" "Oh hullo!" "To open doors that are locked. you'll need a key" "The one on the floor just over there should do the trick!" "Go get it. then go up to the door and unlock it!" }
 H = Floor "Dirt" "static/dirt.png" + Armour "Good Hat" "item/helmet2.png" HELMET 16.0
-K = Floor "Floorboard" "static/woodfloor.png" + Static "Door" "static/door brown locked.png" Door 0 UNLOCKED "static/door brown closed.png" "static/door brown open.png"
+K = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 10.0
 L = Floor "Dirt" "static/dirt.png" + Armour "Good Leggings" "item/legs2.png" LEGS 32.0
-N = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 10.0
-O = Floor "Dirt" "static/dirt.png" + NPC "Goblin" "mob/goblin.png" 50.0 Down Monster 50.0
+N = Floor "Dirt" "static/dirt.png" + NPC "Goblin" "mob/goblin.png" 50.0 Down Monster 50.0
+O = Floor "Floorboard" "static/woodfloor.png" + NPC "Mine Owner" "mob/wizard.png" 50.0 Left Friendly { "I own this mine!" "You need to be a member of the club and have the club key to get through that door!" "A scrub like you will never be a member!" "Mwahahahah!" "Now off with you peasant!" }
 P = Floor "Dirt" "static/dirt.png" + Armour "Good Boots" "item/boots2.png" BOOTS 18.0
 R = Floor "Dirt" "static/dirt.png" + Static "Large Rock" "static/rock.png"
-U = Floor "Floorboard" "static/woodfloor.png" + NPC "Mine Owner" "mob/wizard.png" 50.0 Left Friendly { "I own this mine!" "You need to be a member of the club and have the club key to get through that door!" "A scrub like you will never be a member!" "Mwahahahah!" "Now off with you peasant!" }
-V = Floor "Dirt" "static/dirt.png" + NPC "Marco the Persistent" "mob/mario.png" 50.0 Left Friendly { "Mama Mia!" "Dear Team 36" "The deadline for phase 1 has passed and you (are the only team that) have not submitted" "I see that you have still not submitted Phase 6." "**You have missed Phase 7.**" }
+U = Floor "Dirt" "static/dirt.png" + NPC "Marco the Persistent" "mob/mario.png" 50.0 Left Friendly { "Mama Mia!" "Dear Team 36" "The deadline for phase 1 has passed and you (are the only team that) have not submitted" "I see that you have still not submitted Phase 6." "**You have missed Phase 7.**" }
 _ = Static "Void" "blank.png"
-a = Floor "Floorboard" "static/woodfloor.png"
+a = Floor "Floorboard" "static/woodfloor.png" + Key "Key for door" "item/key blue.png" 70
 b = Floor "Grass" "static/grass.png" + Key "Key for door" "item/key red.png" 80
 c = Floor "Grass" "static/grass.png" + Key "Key for door" "item/key green.png" 90
 d = Floor "Floorboard" "static/woodfloor.png" + Static "Door" "static/door brown open.png" Door 0 OPEN "static/door brown closed.png" "static/door brown open.png"
 f = Floor "Floorboard" "static/woodfloor.png" + NPC "Friendly Wizard" "mob/wizard.png" 50.0 Left Friendly { "Hi there!" "You're a squire who needs to earn the title of knight!" "Well. gain the title... by finding it... on the ground..." "It makes sense I promise!" "Anyway. to move. simply right click where you want to go" "To interact with stuff. you left click when close by" "Now go up to that door and open it. and then go talk to the locksmith" "Salutations!" }
 h = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Hat" "item/helmet1.png" HELMET 8.0
 k = Floor "Floorboard" "static/woodfloor.png" + NPC "Black Smith" "mob/wizard.png" 50.0 Left Friendly { "Why hello there" "The name's Black..." "...Smith..." "..." "..yeah" "You need some protection!" "It's a scary world out there!" "You'll need some protection" "Feel free to grab some of this armour. its on the house!" "When you pick up new armour and weapons. they'll be automagically equipped if its better than what you've already got." "Good luck on your journey!" }
+, = Floor "Grass" "static/grass.png"
 l = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Leggings" "item/legs1.png" LEGS 16.0
-n = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25.0
-o = Floor "Dirt" "static/dirt.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 30.0
+- = Floor "Dirt" "static/dirt.png"
+. = Floor "Wooden Floor" "static/woodfloor.png"
+n = Floor "Dirt" "static/dirt.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 30.0
+/ = Floor "Dirt" "static/dirt.png" + Weapon "Bronze Sword" "item/sword brown.png" true 12.0
+o = Floor "Dirt" "static/dirt.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 10.0
+0 = Floor "Grass" "static/grass.png" + Static "George Walker Bush" "static/bush 2.png"
 p = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Boots" "item/boots1.png" BOOTS 9.0
+1 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 1.png"
 r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/rock.png"
+2 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 2.png"
+3 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 3.png"
+4 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 4.png"
 t = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Chestplate" "item/torso1.png" TORSO 23.0
-u = Floor "Dirt" "static/dirt.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 10.0
-v = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 30.0
+5 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 5.png"
+u = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 30.0
+6 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 6.png"
 w = Static "Wall" "static/tudorwall.png"
-x = Floor "Grass" "static/grass.png"
+7 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 7.png"
+x = Floor "Grass" "static/grass.png" + Potion "Bread" "item/bread.png" 25.0
+8 = Floor "Grass" "static/grass.png" + Static "Tree" "static/tree 8.png"
+9 = Floor "Grass" "static/grass.png" + Static "George Herbert Walker Bush" "static/bush 1.png"
 y = Floor "Grass" "static/grass.png" + Potion "Potion" "item/potion.png" 50.0
 | = Floor "Floorboard" "static/woodfloor.png" + Weapon "Bronze Sword" "item/sword brown.png" true 12.0
 ~ = Floor "Dirt" "static/dirt.png" + Title "Knighthood" "item/title.png"
+? = Floor "Wooden Floor" "static/woodfloor.png" + Player "Player" "mob/wise old man.png" 100.0 Down 0 Inventory
 
 
 map:
 wwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,N,,,,,,,56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,y,,,x,,,,r
-w.,..f...w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,r
-w........w,,,,,,,,,,12,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,v,,,,,,r
+w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,,,,,,,56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,y,,,x,,,,r
+w....f...w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,r
+w........w,,,,,,,,,,12,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,,u,,,,,,r
 w.......~w,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr,,,,,,,,,,,r
 wwwwwwwwdw,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,,,,,,,,7,,,,,,,,,,,,,,r,,,,,,,,,,,,,rr,,,,,56,,,r
-w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,8,,,,,,,,,N,,,,rr,,,,,,,,,,,,,rr,,,,,,,,,r
+w........w,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,8,,,,,,,,,K,,,,rr,,,,,,,,,,,,,rr,,,,,,,,,r
 w........wwwwwwdwwwwrrrrrrrrrrrrrrrrrrrrrrrrrr,,,,,,rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr,,,,,,,,,,,,,rr,,,,,,,,r
 w.........w........w,,,x,,,,,,,,,,,,,,,y,,,,,rr,,y,,rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr,,,,,,,r
-w.........w....|...w,,,,,,,,,12,,,,,,,N,,,,,,,rrrrrrr,,,,,,,,,,,,,9,,,,,,,,,,,,N,,,,,,,,,,,,,,,56,,,,,,,,,rrr,,,,r
+w.........w....|...w,,,,,,,,,12,,,,,,,K,,,,,,,rrrrrrr,,,,,,,,,,,,,9,,,,,,,,,,,,K,,,,,,,,,,,,,,,56,,,,,,,,,rrr,,,,r
 w....F....A....p...w,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r,,,,r
-w.........w..k.l...w,,,,,,,,,,,,,,,7,,,,,,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,r
-w.......?.w....h...w,,,,,,,,,,,,,,,8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rrr,,,,,,,,0,,,,,,,,,,,,7,,,,,,,,,rr
+w........?w..k.l...w,,,,,,,,,,,,,,,7,,,,,,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,r
+w.........w....h...w,,,,,,,,,,,,,,,8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rrr,,,,,,,,0,,,,,,,,,,,,7,,,,,,,,,rr
 w..a.x....w....t...w,,,,,,,,,,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr,,,,,,,,,,,,,,,,,,,,,8,,,,,,,,r__
 wwwwwwwwwwwwwwwwwwww,,,,,,999,,,,,,,,,,,,,,,,,,34,,,,,,,,,,,,r,,,,,,,rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr___
 r,,L,,,,,,,,,,12,,,,,,,,,,99,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rrr,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,,,,,r____
-rP,,,,,,,,rr,,34,,,,,,,,,,,,,,,,,,,,,,,,,H,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,,,,,,,N,,,,,,,,rr____
+rP,,,,,,,,rr,,34,,,,,,,,,,,,,,,,,,,,,,,,,H,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,,,,,,,K,,,,,,,,rr____
 r,,,,,,,,rr,,,,,,,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr_____
 r,,,,,,,,,,,,,,,,,,,,,56,,,,,,,,,rr34,,,,,,,,,,,,,1212,,,,,,,,,,,,,,,,,,,,,,,,,,,,rrrrr,,,,,,,,wwwwdwwww,,rr______
 ,,,,,,,,,7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,3434rr,,,,,,,,,,,,,,rrrrrrrrrrrrrr,,rryxrrrrrw.......wrrr_______
-,,,56,,,,8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rrr________________rrrr___Rw.....U.wR_________
+,,,56,,,,8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rrr________________rrrr___Rw.....O.wR_________
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,7,,,,,,,,,,,,,,,,,,,,r_________________________Rw.......wR_________
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,5,,,,,6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r_________________________RwwRRBRRwwR_________
 1212121212121212121212121212121212,1212121212121212121212121212121212_________________________RRRR---RRRR_________
@@ -85,18 +83,18 @@ r,,,,,,,,,,,,,,,,,,,,,56,,,,,,,,,rr34,,,,,,,,,,,,,1212,,,,,,,,,,,,,,,,,,,,,,,,,,
 r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r___________RR---RR__________R---R____________
 r,,,,,,,,,,12,,,,,,,r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r___________R--c--R__________R---R____________
 r,,,,,,,,,,34,,,,,,,,,,,,,,,,,,,,,,8,,,,,,,,,,,,r,,,,,,,,,,,,,,,,,,,r___________R-----R__________R---R____________
-r,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r___________RR-o-RR__________R---R____________
+r,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,r___________RR-n-RR__________R---R____________
 r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,r____________R---R___________R---R____________
 r,,,,,,,,,,,,,,,,,,r,,,,,,,,,,,,,,,,,,,,,5,,,,,,,,,,,,,,,,,,,,,,,,,,r____________RR-RR___________R---R____________
 r,,,,,,,,7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,,,,,,,r_____________R-R____________R---R____________
 r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,6,,,,,,,,,,,,,,34,,,,,,,,,,,,,,,,12,,,r_____________R-RRRRRRRRRRRRRR---R____________
-r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,r_____________R-----u------------R____________
+r,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,,r_____________R-----o------------R____________
 r,/,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,br_____________RRRRRRRRRRRRRRRR---R___RRRRRR___
 rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr____________________________R---R__RR----RR__
 _________________________________________________________________________________________________R---RRRR------RR_
 _________________________________________________________________________________________________R---RR---------RR
 _________________________________________________________________RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR-------------RR_
-_______________________________________________________________RRR----O-----------------------------------V---RR__
+_______________________________________________________________RRR----N-----------------------------------U---RR__
 ______________________________________________________________RR----------------------------------------------RR__
 _______________________________________________________________RRR--------------------------------------------RR__
 _________________________________________________________________RR---RRRRRRRRRRRRRRRRRRRRRRRRRRRRR----------RRR__
@@ -104,7 +102,7 @@ _______________________________________________RRRRRRRRRRRRRRRRRRRR---R_________
 _______________________________________________R----------------------R__________________________R---R____________
 _______________________________________________R----------------------R__________________________R---R____________
 _______________________RRRRRRRRRRRRRRRRRRRRRRRRRCCRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR________
-_______________________R-----R-----------------R--R-----------------------R---------------u--------------R________
+_______________________R-----R-----------------R--R-----------------------R---------------o--------------R________
 _______________________R---R-R-RRRRRRRRRRRRR---R--R--RRRRR-R--------------R---------R-----------RR-------R________
 _______________________R---R-R-R---------------R--R--RRR---R-RRRRRR-------R---------------------R--------R________
 _______________________R--RR-R-R--R------RRRRRRR--R--R---R-R------R-------RRRRRR---------RR--------------R________
@@ -116,7 +114,7 @@ _______________________R-R-----RRRRRRRRRRR----------R--R~R-----------R----R----R
 _______________________R-R--RR-----------R----------R--RRR----R----RRRRRR-R----RRRRRRRRRR----RRR__________________
 _______________________R-----R-----------RRRR-RRRRRRR--------------R------R-------------R----R____________________
 _______________________RRRRRRRRRRRRRRRR--R--R-------d--------------R------R----R---R----R--RRR____________________
-_______________________R----------R------R--RoR-----RRRRRRRRRRRRRRRR------R----R---RRRR-R~-R______________________
-_______________________R------RRRRR---------R-R-----R-------R-------------RRRRRR---Ru-RRRRRR______________________
+_______________________R----------R------R--RnR-----RRRRRRRRRRRRRRRR------R----R---RRRR-R~-R______________________
+_______________________R------RRRRR---------R-R-----R-------R-------------RRRRRR---Ro-RRRRRR______________________
 _______________________R-----------------R----R-----R---------------------------------R___________________________
 _______________________RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR___________________________

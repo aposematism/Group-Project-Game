@@ -175,11 +175,8 @@ public class ReverseParser {
 						}
 					}
 					else if(r.get(col, row).getCharacter().equals("?")) {
-						for(String l : characterMap.keySet()) {
-							if(characterMap.containsValue(r.get(col, row).getMapFloor().toString())) {
-								pw.write(l);
-								break;
-							}
+						if(r.get(col, row).getInteractives().isEmpty()) {
+							pw.write(".");
 						}
 					}
 					else{
