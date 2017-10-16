@@ -27,10 +27,10 @@ R = Floor "Dirt" "static/dirt.png" + Static "Large Rock" "static/rock.png"
 r = Floor "Grass" "static/grass.png" + Static "Large Rock" "static/rock.png"
 Z = Floor "Dirt" "static/dirt.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 10.0
 z = Floor "Grass" "static/grass.png" + NPC "Zombie" "mob/zombie.png" 50.0 Down Monster 10.0
-S = Floor "Dirt" "static/dirt.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 10.0
-s = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 10.0
-G = Floor "Dirt" "static/dirt.png" + NPC "Goblin" "mob/goblin.png" 50.0 Down Monster 10.0
-g = Floor "Grass" "static/grass.png" + NPC "Goblin" "mob/goblin.png" 50.0 Down Monster 10.0
+S = Floor "Dirt" "static/dirt.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 30.0
+s = Floor "Grass" "static/grass.png" + NPC "Skeleton" "mob/skeleton.png" 50.0 Down Monster 30.0
+G = Floor "Dirt" "static/dirt.png" + NPC "Goblin" "mob/goblin.png" 50.0 Down Monster 50.0
+g = Floor "Grass" "static/grass.png" + NPC "Goblin" "mob/goblin.png" 50.0 Down Monster 50.0
 | = Floor "Floorboard" "static/woodfloor.png" + Weapon "Bronze Sword" "item/sword brown.png" true 12.0
 h = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Hat" "item/helmet1.png" HELMET 8.0
 t = Floor "Floorboard" "static/woodfloor.png" + Armour "Alright Chestplate" "item/torso1.png" TORSO 23.0
@@ -111,14 +111,14 @@ _______________________R---R-R-RRRRRRRRRRRRR---R--R--RRRRR-R--------------R-----
 _______________________R---R-R-R---------------R--R--RRR---R-RRRRRR-------R---------------------R--------R________
 _______________________R--RR-R-R--R------RRRRRRR--R--R---R-R------R-------RRRRRR---------RR--------------R________
 _______________________R-----RdR--R--~---R-------------RRR-RRRRRddR------------R---------RR--------------R________
-_______________________R----------R------R-----RRRRRR--R-------R---------------R---------------RRRRRRRRRRR________
+_______________________R----------R------R-----RRRRRR--R-------R-------------------------------RRRRRRRRRRR________
 _______________________R-RRRRR-R--RRRRRRRR----------R--R-RRRRR-RRRRR-----------R---------------R__________________
-_______________________R-R--R--R----------------~---R--R-R-----RRRRR-RRRRRR----R----R----------R__________________
+_______________________R-R--R--R--------------------R--R-R-----RRRRR-RRRRRR----R----R----------R__________________
 _______________________R-R-----RRRRRRRRRRR----------R--R~R-----------R----R----R---------------R__________________
 _______________________R-R--RR-----------R----------R--RRR----R----RRRRRR-R----RRRRRRRRRR----RRR__________________
 _______________________R-----R-----------RRRR-RRRRRRR--------------R------R-------------R----R____________________
 _______________________RRRRRRRRRRRRRRRR--R--R-------d--------------R------R----R---R----R--RRR____________________
-_______________________R----------R------R--RSR-----RRRRRRRRRRRRRRRR------R----R---RRRR-R--R______________________
+_______________________R----------R------R--RSR-----RRRRRRRRRRRRRRRR------R----R---RRRR-R~-R______________________
 _______________________R------RRRRR---------R-R-----R-------R-------------RRRRRR---RZ-RRRRRR______________________
 _______________________R-----------------R----R-----R---------------------------------R___________________________
 _______________________RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR___________________________
