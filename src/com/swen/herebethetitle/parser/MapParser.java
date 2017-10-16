@@ -1,6 +1,7 @@
 package com.swen.herebethetitle.parser;
 
 import com.swen.herebethetitle.entity.Entity;
+import com.swen.herebethetitle.entity.Player;
 import com.swen.herebethetitle.model.Region;
 import com.swen.herebethetitle.model.Tile;
 
@@ -100,6 +101,7 @@ public class MapParser {
 	 * @author - Jordan Milburn
 	 * */
 	private void parseStringArray() {
+		int t = 0;
 		regionArray = new Tile[charArray.height()][charArray.width()];
 		for (int row = 0; row < charArray.height(); row++) {
 			for (int col = 0; col < charArray.width(); col++) {
@@ -113,7 +115,7 @@ public class MapParser {
 
 				try {
 					for (Entity e : entities) {
-						cloned.add(e.clone());
+						cloned.add(EntityParser.parse( new Scanner(e.toString())));
 					}
 				} catch (Exception e){
 					e.printStackTrace();

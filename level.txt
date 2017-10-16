@@ -57,7 +57,6 @@ q = Floor "Grass" "static/grass.png" + Potion "Spinach" "item/spinach.png" 100
 M = Floor "Dirt" "static/dirt.png" + NPC "Marco the Persistent" "mob/mario.png" 50.0 Down Friendly { "Mama Mia!" "Dear Team 36" "The deadline for phase 1 has passed and you (are the only team that) have not submitted" "I see that you have still not submitted Phase 6." "**You have missed Phase 7.**" }
 
 
-
 map:
 _____________________________________________________________________________________________________
 wwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
