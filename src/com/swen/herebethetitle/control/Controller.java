@@ -610,6 +610,7 @@ public class Controller extends Application{
 			center.getChildren().add(youWonText);
 			
 			Button newGame = new Button();
+			newGame.setPrefSize(100, 20);
 			newGame.setText("New game");
 			newGame.setOnAction(e->{
 				loadGame(new File("res/new_game.txt"));
@@ -617,6 +618,7 @@ public class Controller extends Application{
 			center.getChildren().add(newGame);
 			
 			Button loadGame = new Button();
+			loadGame.setPrefSize(100, 20);
 			loadGame.setText("Load game");
 			loadGame.setOnAction(e->{
 				if(chooseLoadFile().isPresent()) {
@@ -626,6 +628,7 @@ public class Controller extends Application{
 			center.getChildren().add(loadGame);
 			
 			Button quit = new Button();
+			quit.setPrefSize(100, 20);
 			quit.setText("Quit");
 			quit.setOnAction(e->{
 				window.setScene(mainMenu);
@@ -636,7 +639,7 @@ public class Controller extends Application{
 			window.setScene(victoryScene);
 			return;
 		}
-		if(logic.gameLost()) {
+		if(true) {
 			pauseGame();
 			/*build loss scene*/
 			BorderPane loss = new BorderPane();
@@ -667,12 +670,14 @@ public class Controller extends Application{
 			
 			Button newGame = new Button();
 			newGame.setText("New game");
+			newGame.setPrefSize(100, 20);
 			newGame.setOnAction(e->{
 				loadGame(new File("res/new_game.txt"));
 			});
 			center.getChildren().add(newGame);
 			
 			Button loadGame = new Button();
+			loadGame.setPrefSize(100, 20);
 			loadGame.setText("Load game");
 			loadGame.setOnAction(e->{
 				if(chooseLoadFile().isPresent()) {
@@ -682,6 +687,7 @@ public class Controller extends Application{
 			center.getChildren().add(loadGame);
 			
 			Button quit = new Button();
+			quit.setPrefSize(100, 20);
 			quit.setText("Quit");
 			quit.setOnAction(e->{
 				window.setScene(mainMenu);
