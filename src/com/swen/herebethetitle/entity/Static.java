@@ -56,4 +56,11 @@ public class Static extends Entity {
 	public String toString() {
 		return super.toString()+(behavior.isPresent() ? " "+behavior.get().toString() : "");
 	}
+
+	@Override
+	public Static clone() throws CloneNotSupportedException {
+		Static s = new Static(getName(), getSpritePath());
+		behavior.ifPresent(b->s.setBehavior(b));
+		return s;
+	}
 }

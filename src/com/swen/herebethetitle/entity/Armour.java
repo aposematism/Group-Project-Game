@@ -61,6 +61,11 @@ public final class Armour extends Item {
 	@Override
 	public String toString() { return super.toString()+" "+SLOT+" "+RATING; }
 
+	@Override
+	public Armour clone() throws CloneNotSupportedException {
+		return new Armour(getName(), getSpritePath(), SLOT, RATING);
+	}
+
 	/**
 	 * The four different types of armour there are that covers a body part
 	 */

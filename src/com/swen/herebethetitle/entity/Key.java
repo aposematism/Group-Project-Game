@@ -39,4 +39,8 @@ public final class Key extends Item {
 
 	@Override
 	public String toString() { return super.toString()+" "+KEY; }
+
+	public Key clone() throws CloneNotSupportedException {
+		return new Key(getName(), getSpritePath(), KEY);
+	}
 }

@@ -50,4 +50,9 @@ public abstract class NPCBehavior {
 	public boolean isPenetrable() { return false; }
 	
 	public String toString() { return getClass().getSimpleName().replace("Strategy",""); }
+
+	@Override
+	public NPCBehavior clone() throws CloneNotSupportedException {
+		return (NPCBehavior) super.clone();
+	}
 }

@@ -109,9 +109,18 @@ public class MapParser {
 				Tile tile = new Tile(col, row, character);
 
 				List<Entity> entities = characterMap.get(character);
+				List<Entity> cloned = new ArrayList<>();
 
 				try {
-					tile.add(entities.toArray(new Entity[entities.size()]));
+					for (Entity e : entities) {
+						cloned.add(e.clone());
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+
+				try {
+					tile.add(cloned.toArray(new Entity[cloned.size()]));
 				} catch (NullPointerException e) {
 					e.printStackTrace();
 					throw new InputMismatchException("Missing character mapping for '" + character + "'!");

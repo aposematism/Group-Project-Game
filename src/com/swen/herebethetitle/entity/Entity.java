@@ -61,6 +61,9 @@ public abstract class Entity {
 
 	public String toString() { return getClass().getSimpleName()+" \""+name+"\" \""+spritePath+"\""; }
 
+	@Override
+	public Entity clone() throws CloneNotSupportedException { return (Entity) super.clone(); }
+
 	/**
 	 * Checks if the entity can be walked through.
 	 */

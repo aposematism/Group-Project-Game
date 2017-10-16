@@ -47,4 +47,8 @@ public final class Weapon extends Item {
 	@Override
 	protected void use(GameContext context) {
 	}
+
+	public Weapon clone() throws CloneNotSupportedException {
+		return new Weapon(getName(), getSpritePath(), IS_MELEE, STRENGTH);
+	}
 }

@@ -38,4 +38,9 @@ public final class Potion extends Item {
 
 	@Override
 	public String toString() { return super.toString()+" "+HEALTH_CHANGE; }
+
+	@Override
+	public Potion clone() throws CloneNotSupportedException {
+		return new Potion(getName(), getSpritePath(), HEALTH_CHANGE);
+	}
 }

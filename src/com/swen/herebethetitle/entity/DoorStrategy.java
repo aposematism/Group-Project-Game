@@ -88,6 +88,11 @@ public final class DoorStrategy implements Static.Behavior {
 				KEY + " " + state.toString() + " \"" + closedSprite + "\" \"" + openSprite + "\"";
 	}
 
+	@Override
+	public DoorStrategy clone() throws CloneNotSupportedException {
+		return new DoorStrategy(KEY, state, closedSprite, openSprite);
+	}
+
 	/**
 	 * A door can either be locked, unlocked (but shut), and open
 	 */
