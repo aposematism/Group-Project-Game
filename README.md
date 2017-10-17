@@ -11,7 +11,7 @@
 | Dylan McKay    | @mckaydyla  | Pathfinding, Game logic  |              | Entity, Parsing       | `git log --author="Dylan McKay"`
 | Mark Metcalfe  | @metcalmark | Entity system            |              | Parser                | `git log --author="Mark Metcalfe"`
 | Jacob Woods    | @mckiewjaco | Controller, Audio        | Game logic   | Graphics              | `git log --author="J Woods"`
-| Jordan Milburn | @milburjord | Map parser               |              | Entity, Pathfinding   | `git log --author="Aposematism"`
+| Jordan Milburn | @milburjord | Map parser, ReverseParser|              | Entity, Pathfinding   | `git log --author="Aposematism"`
 | Josh Weir      | @weirjosh   | Game Graphics            |              | GUI, Game logic       | `git log --author="Josh"`
 
 ## Statistics and information
@@ -116,7 +116,7 @@ are called on it by the game logic, or externally by use of integer soundcodes t
 
 [`com.swen.herebethetitle.parser`](src/com/swen/herebethetitle/parser)
 
-<information here>
+This library is responsible for loading, saving and generating the level in the game. It handles this in three classes which each perform a unique function. This involves two libraries, mapParser and EntityParser, which taking the textfile of the level (new_game.txt) and turning it into a region containing all the tiles and entities involved. As well as ReverseParser which handles saving from the region to a textfile and loading from a textfile to a region.
 
 ### Game Graphics (Josh Weir)
 This library is responsible for rendering the game, World and HUD included. It has helper classes

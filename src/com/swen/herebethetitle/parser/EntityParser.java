@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * Helper class with static methods for interpreting a single line in the save file.
  *
- * @author Mark Metcalfe
+ * @author Mark Metcalfe and Jordan Milburn
  */
 public class EntityParser {
 
