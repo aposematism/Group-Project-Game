@@ -267,8 +267,4 @@ public class EntityParser {
 
 		return new Player(name, sprite, health, wallet, direction, items.toArray(new Item[items.size()]));
 	}
-
-	public class SyntaxError extends IOException{
-
-	}
 }
