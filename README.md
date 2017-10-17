@@ -118,6 +118,8 @@ are called on it by the game logic, or externally by use of integer soundcodes t
 
 This library is responsible for loading, saving and generating the level in the game. It handles this in three classes which each perform a unique function. This involves two libraries, mapParser and EntityParser, which taking the textfile of the level (new_game.txt) and turning it into a region containing all the tiles and entities involved. As well as ReverseParser which handles saving from the region to a textfile and loading from a textfile to a region.
 
+Tests are located inside the [`com.swen.herebethetitle.parser.test`](src/com/swen/herebethetitle/parser/test) package.
+
 ### Game Graphics (Josh Weir)
 This library is responsible for rendering the game, World and HUD included. It has helper classes
 for drawing text boxes, health bars, inventory slots, and also manages the transformation of 
