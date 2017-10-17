@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
+/** 
+    This class is for saving to files. It reads the region and writes a new file contains all the items.
+    @Author - Jordan Milburn.
+*/
 public class ReverseParser {
 	
 	ArrayList<Entity> interactives = new ArrayList<Entity>();
