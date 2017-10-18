@@ -30,7 +30,7 @@ public class ReverseParser {
 
 	public ReverseParser(Region reg, File file) {
 		r = reg;
-		parseRegion(reg, file.getPath().replace(file.getName(), ""));
+		parseRegion(reg, file.getPath());
 	}
 	
 	/** 
@@ -64,9 +64,8 @@ public class ReverseParser {
 	 * */
 	public void parseRegion(Region r, String path) {
 		pullEntities(r);
-		String fileName = path + r.getRegionName() + "currentstate.txt";
 		try {
-			writeToFile(fileName);
+			writeToFile(path);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
